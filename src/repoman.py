@@ -1,19 +1,20 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import os
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk,Gdk,GdkPixbuf
+from gi.repository import Gtk,Gdk,GdkPixbuf,GObject,GLib
 gi.require_version('PangoCairo', '1.0')
 import json
-from edupals.ui.n4dgtklogin import *
+#from edupals.ui.n4dgtklogin import *
 import repomanager.RepoManager as RepoManager
 import threading
 import time
 import subprocess
 
 import gettext
-gettext.textdomain('aptsources')
+gettext.textdomain('repoman')
 _ = gettext.gettext
 
 RSRC_DIR='/usr/share/repoman/rsrc'
@@ -42,6 +43,7 @@ class main:
 
 	def _render_gui(self):
 		self.mw=Gtk.Window()
+		self.mw.set_title("RepoMan")
 		self.mw.set_hexpand(True)
 		self.mw.connect("destroy",self._on_destroy)
 		self.mw.set_resizable(False)
@@ -88,7 +90,7 @@ class main:
 		self.box_info.set_margin_left(MARGIN)
 		self.box_info.set_column_spacing(MARGIN)
 		lbl_info=Gtk.Label()
-		info="Repositories must be updated. Update now?"
+		info=_("Repositories must be updated. Update now?")
 		lbl_info.set_markup('<span color="grey">%s</span>'%info)
 #		img_info=Gtk.Image().new_from_icon_name(Gtk.STOCK_REFRESH,Gtk.IconSize.BUTTON)
 		pb_info=GdkPixbuf.Pixbuf.new_from_file_at_scale("%s/stock_refresh.png"%RSRC_DIR,16,16,True)
@@ -180,7 +182,10 @@ class main:
 			lbl_source.set_margin_top(MARGIN)
 			repobox.add(lbl_source)
 			lbl_desc=Gtk.Label()
-			lbl_desc.set_markup('<span size="medium">%s</span>'%sourcedata['desc'])
+			repodesc=''
+			if sourcedata['desc']:
+				repodesc=_(sourcedata['desc'])
+			lbl_desc.set_markup('<span size="medium">%s</span>'%repodesc)
 			lbl_desc.props.halign=Gtk.Align.START
 			repobox.add(lbl_desc)
 			sourcebox.add(repobox)
@@ -271,6 +276,7 @@ class main:
 		boxbtn=Gtk.Box()
 		btn_add=Gtk.Button.new_from_stock(Gtk.STOCK_APPLY)
 		btn_add.connect("clicked",self._begin_add_repo,inp_name,inp_desc,inp_url)
+#		btn_add.connect("clicked",self._add_repo,inp_name,inp_desc,inp_url)
 		boxbtn.set_halign(Gtk.Align.END)
 		boxbtn.add(btn_add)
 		
@@ -291,6 +297,8 @@ class main:
 			self.rev_question.grab_add()
 			self.rev_question.connect('response',self._manage_response,"self._add_repo",args)
 			self.show_question(_("%s is yet configured. Overwrite it?"%name))
+		else:
+			self._add_repo(*args)
 
 	def _add_repo(self,*args):
 		sw_err=False
@@ -382,7 +390,10 @@ class main:
 			lbl_source.set_margin_top(MARGIN)
 			repobox.add(lbl_source)
 			lbl_desc=Gtk.Label()
-			lbl_desc.set_markup('<span size="medium">%s</span>'%sourcedata['desc'])
+			repodesc=''
+			if sourcedata['desc']:
+				repodesc=_(sourcedata['desc'])
+			lbl_desc.set_markup('<span size="medium">%s</span>'%repodesc)
 			lbl_desc.set_halign(Gtk.Align.START)
 			lbl_desc.set_hexpand(True)
 			repobox.add(lbl_desc)

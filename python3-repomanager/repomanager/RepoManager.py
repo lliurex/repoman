@@ -85,6 +85,7 @@ class manager():
 				newrepo.extend(repodata['repos'])
 				newrepo.extend(orig)
 				repos=set(newrepo)
+				sw_status=True
 				try:
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
@@ -94,9 +95,13 @@ class manager():
 								self._debug("Writing line: %s"%repo)
 								fcontent.write("%s\n"%repo)
 				except Exception as e:
+					sw_status=False
 					self._debug("write_repo error: %s"%e)
+				return sw_status
+		#def write_repo
 
 		def write_repo_json(self,data):
+				sw_status=True
 				default_repos=os.listdir(self.available_repos_dir+'/default/')
 				for repo,repodata in data.items():
 					frepo=repo.replace(' ','_').lower()
@@ -112,7 +117,10 @@ class manager():
 						with open(wrkfile,'w') as fcontent:
 							json.dump({repo:repodata},fcontent,sort_keys=True,indent=4,ensure_ascii=False)
 					except Exception as e:
+						sw_status=False
 						self._debug("write_repo_json error: %s"%e)
+					return sw_status
+		#def write_repo_json
 
 		def list_default_repos(self):
 			frepos=[]
@@ -251,8 +259,10 @@ class manager():
 				self._debug("Url: %s"%repo_url)
 			if repo_url:
 				repo[name]['repos']=repo_url
-				self.write_repo_json(repo)
-				self.write_repo(repo)
+				if self.write_repo_json(repo):
+					sw_match=self.write_repo(repo)
+				else:
+					sw_match=False
 			else:
 				sw_match=False
 			return sw_match
