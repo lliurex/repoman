@@ -1,0 +1,10 @@
+{
+    "prueba": {
+        "changed": "false",
+        "desc": "",
+        "enabled": "True",
+        "repos": [
+            "deb"
+        ]
+    }
+}

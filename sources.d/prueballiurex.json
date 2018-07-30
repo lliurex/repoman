@@ -1,0 +1,12 @@
+{
+    "prueballiurex": {
+        "desc": "prueballiurexnet",
+        "disabled_repos": [],
+        "enabled": "True",
+        "repos": [
+            "deb http://lliurex.net/xenial/ xenial-security main multiverse partner restricted universe",
+            "deb http://lliurex.net/xenial/ xenial-updates main multiverse partner restricted universe",
+            "deb http://lliurex.net/xenial/ xenial main multiverse partner preschool restricted universe"
+        ]
+    }
+}

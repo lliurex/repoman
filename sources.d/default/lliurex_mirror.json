@@ -1,0 +1,12 @@
+{
+    "LliureX Mirror": {
+        "changed": true,
+        "desc": "Local repositories",
+        "enabled": "False",
+        "repos": [
+            "http://172.20.8.6/mirror/lliurex xenial main restricted universe multiverse",
+            "http://172.20.8.6/mirror/lliurex xenial-updates main restricted universe multiverse",
+            "http://172.20.8.6/mirror/lliurex xenial-security main restricted universe multiverse"
+        ]
+    }
+}
