@@ -29,6 +29,12 @@ class main:
 
 	def __init__(self):
 		self.dbg=True
+		self.err_msg={1:_("Invalid Url"),
+						2:_("Can't add repository information.\nCheck your permissions"),
+						3:_("Can't write sources file.\nCheck your permissions"),
+						4:_("Repository not found at given Url"),
+						5:_("Repositories failed to update"),
+						}
 		self.result={}		
 		self._set_css_info()
 		self.stack_dir=Gtk.StackTransitionType.SLIDE_LEFT
@@ -108,34 +114,34 @@ class main:
 	#def _render_gui
 
 	def _render_toolbar(self):
-		toolbar=Gtk.Box()
-		toolbar=Gtk.Box(spacing=SPACING)
-		toolbar.set_margin_top(MARGIN)
-		toolbar.set_margin_bottom(MARGIN)
-		toolbar.set_margin_left(MARGIN)
+		self.toolbar=Gtk.Box()
+		self.toolbar=Gtk.Box(spacing=SPACING)
+		self.toolbar.set_margin_top(MARGIN)
+		self.toolbar.set_margin_bottom(MARGIN)
+		self.toolbar.set_margin_left(MARGIN)
 		
 		btn_return=Gtk.Button()#.new_from_stock(Gtk.STOCK_GO_BACK)
 		btn_return.add(Gtk.Image().new_from_icon_name(Gtk.STOCK_HOME,Gtk.IconSize.BUTTON))
 		btn_return.connect("clicked",self._load_screen,"sources")
 		btn_return.props.halign=Gtk.Align.START
 		btn_return.set_tooltip_text(_("Default repositories"))
-		toolbar.add(btn_return)
+		self.toolbar.add(btn_return)
 
 		btn_manage=Gtk.Button()
 		btn_manage.props.halign=Gtk.Align.START
 		btn_manage.add(Gtk.Image().new_from_icon_name(Gtk.STOCK_PROPERTIES,Gtk.IconSize.BUTTON))
 		btn_manage.connect("clicked",self._load_screen,"repolist")
 		btn_manage.set_tooltip_text(_("External repositories"))
-		toolbar.add(btn_manage)
+		self.toolbar.add(btn_manage)
 		
 		btn_add=Gtk.Button()#.new_from_stock(Gtk.STOCK_ADD)
 		btn_add.props.halign=Gtk.Align.START
 		btn_add.add(Gtk.Image().new_from_icon_name(Gtk.STOCK_ADD,Gtk.IconSize.BUTTON))
 		btn_add.connect("clicked",self._load_screen,"newrepo")
 		btn_add.set_tooltip_text(_("Add external repository"))
-		toolbar.add(btn_add)
+		self.toolbar.add(btn_add)
 		
-		return(toolbar)
+		return(self.toolbar)
 	#def _render_toolbar
 
 	def _render_login(self):
@@ -175,6 +181,8 @@ class main:
 			repobox.set_margin_bottom(MARGIN)
 			repobox.set_margin_top(MARGIN)
 			lbl_source=Gtk.Label()
+			lbl_source.set_line_wrap(True)
+			lbl_source.set_lines(-1)
 			lbl_source.props.halign=Gtk.Align.START
 			lbl_source.set_markup('<span size="larger">%s</span>'%source)
 			lbl_source.set_margin_left(MARGIN)
@@ -182,6 +190,8 @@ class main:
 			lbl_source.set_margin_top(MARGIN)
 			repobox.add(lbl_source)
 			lbl_desc=Gtk.Label()
+			lbl_desc.set_line_wrap(True)
+			lbl_desc.set_lines(-1)
 			repodesc=''
 			if sourcedata['desc']:
 				repodesc=_(sourcedata['desc'])
@@ -219,14 +229,26 @@ class main:
 	def _repo_state_changed(self,*args):
 		reponame=args[-1]
 		state=args[-2]
+		widget=args[0]
 		self.repos[reponame].update({'enabled':str(state)})
 		repo={}
 		repo={reponame:self.repos[reponame]}
 		self._debug("New state: %s"%repo)
-		self.sources.write_repo_json(repo)
+		err=0
 		self._debug("Saving repo json: %s"%repo)
-		self.sources.write_repo(repo)
-		self.box_info.show_all()
+		if self.sources.write_repo_json(repo):
+			if self.sources.write_repo(repo)!=True:
+				err=3
+		else:
+			err=2
+		if err:
+			self.stack.set_sensitive(False)
+			self.toolbar.set_sensitive(False)
+			GLib.timeout_add(3000,self.show_info,(self.err_msg[err]),"ERROR_LABEL")
+			widget.set_state(not(state))
+			return True
+		else:
+			self.box_info.show_all()
 	#def _repo_state_changed
 
 	def _render_newrepo(self):
@@ -271,6 +293,7 @@ class main:
 		boxurl.add(lbl_url)
 		inp_url=Gtk.Entry()
 		inp_url.connect("focus-in-event",del_icon,inp_url)
+		inp_url.connect("activate",self._begin_add_repo,inp_name,inp_desc,inp_url)
 		boxurl.add(inp_url)
 		gridbox.attach_next_to(boxurl,boxdesc,Gtk.PositionType.BOTTOM,1,1)
 		boxbtn=Gtk.Box()
@@ -309,6 +332,20 @@ class main:
 			args[-3].set_placeholder_text(_("Name is mandatory"))
 			args[-3].set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY,Gtk.STOCK_DIALOG_ERROR)
 			sw_err=True
+		elif len(name)>40:
+			args[-3].set_placeholder_text(_("Name is too long"))
+			args[-3].set_text("")
+			args[-3].set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY,Gtk.STOCK_DIALOG_ERROR)
+			sw_err=True
+
+		desc_array=desc.split(' ')
+		for element in desc_array:
+			if len(element)>40:
+				args[-2].set_placeholder_text(_("Description is too long"))
+				args[-2].set_text("")
+				args[-2].set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY,Gtk.STOCK_DIALOG_ERROR)
+				sw_err=True
+
 		if not url:
 			args[-1].set_placeholder_text(_("Url is mandatory"))
 			args[-1].set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY,Gtk.STOCK_DIALOG_ERROR)
@@ -318,47 +355,58 @@ class main:
 			if sw_cancel:
 				result=None
 			else:
-				result=self.sources.add_repo(name,desc,url)
-			if result:
-				index=len(self.repos.keys())*2
-				sourcefiles=self.sources.list_sources()
-				self.repos.update(sourcefiles)
-				repobox=Gtk.VBox(True,True)
-				repobox.set_margin_left(MARGIN)
-				repobox.set_margin_right(MARGIN)
-				repobox.set_margin_bottom(MARGIN)
-				repobox.set_margin_top(MARGIN)
-				lbl_source=Gtk.Label()
-				lbl_source.set_markup('<span size="larger">%s</span>'%name)
-				lbl_source.set_halign(Gtk.Align.START)
-				lbl_source.set_hexpand(True)
-				lbl_source.set_margin_left(MARGIN)
-				lbl_source.set_margin_bottom(MARGIN)
-				lbl_source.set_margin_top(MARGIN)
-				repobox.add(lbl_source)
-				lbl_desc=Gtk.Label()
-				lbl_desc.set_markup('<span size="medium">%s</span>'%desc)
-				lbl_desc.set_halign(Gtk.Align.START)
-				lbl_desc.set_hexpand(True)
-				repobox.add(lbl_desc)
-				img_edit=Gtk.Image.new_from_icon_name(Gtk.STOCK_EDIT,Gtk.IconSize.BUTTON)
-				btn_edit=Gtk.Button()
-				btn_edit.add(img_edit)
-				btn_edit.set_valign(Gtk.Align.CENTER)
-				btn_edit.connect("clicked",self._edit_source_file,name)
-				swt_repo=Gtk.Switch()
-				swt_repo.set_halign(Gtk.Align.END)
-				swt_repo.set_active(True)
-				swt_repo.connect("state_set",self._repo_state_changed,name)
-				self.repobox.attach(repobox,0,index,1,1)
-				self.repobox.attach(btn_edit,1,index,1,1)
-				self.repobox.attach(swt_repo,2,index,1,1)
-				self.repobox.attach(Gtk.Separator(),0,index+1,1,1)
-				self.repobox.show_all()
-				GLib.timeout_add(2000,self.show_info,(_("Added new repository %s"%name)))
+				self.stack.set_sensitive(False)
+				self.toolbar.set_sensitive(False)
+				err=self.sources.add_repo(name,desc,url)
+			if err==0:
+				self._insert_sourceslist_item(name,desc,url)
+				GLib.timeout_add(2000,self.show_info,(_("Added repository %s"%name)))
 			else:
-				GLib.timeout_add(2000,self.show_info,(_('Error adding repository %s'%name)),"ERROR_LABEL")
+				#err=1 -> Bad url
+				#err=2 -> Can't write json
+				#err=3 -> Can't write sources
+				#err=4 -> Repository not found at given url
+				GLib.timeout_add(3000,self.show_info,(self.err_msg[err]),"ERROR_LABEL")
 	#def _add_repo
+
+	def _insert_sourceslist_item(self,name,desc,url):
+		index=len(self.repos.keys())*2
+		sourcefiles=self.sources.list_sources()
+		self.repos.update(sourcefiles)
+		repobox=Gtk.VBox(True,True)
+		repobox.set_margin_left(MARGIN)
+		repobox.set_margin_right(MARGIN)
+		repobox.set_margin_bottom(MARGIN)
+		repobox.set_margin_top(MARGIN)
+		lbl_source=Gtk.Label()
+		lbl_source.set_markup('<span size="larger">%s</span>'%name)
+		lbl_source.set_halign(Gtk.Align.START)
+		lbl_source.set_hexpand(True)
+		lbl_source.set_margin_left(MARGIN)
+		lbl_source.set_margin_bottom(MARGIN)
+		lbl_source.set_margin_top(MARGIN)
+		repobox.add(lbl_source)
+		lbl_desc=Gtk.Label()
+		lbl_desc.set_markup('<span size="medium">%s</span>'%desc)
+		lbl_desc.set_halign(Gtk.Align.START)
+		lbl_desc.set_hexpand(True)
+		repobox.add(lbl_desc)
+		img_edit=Gtk.Image.new_from_icon_name(Gtk.STOCK_EDIT,Gtk.IconSize.BUTTON)
+		btn_edit=Gtk.Button()
+		btn_edit.add(img_edit)
+		btn_edit.set_tooltip_text(_("Edit sources file"))
+		btn_edit.set_valign(Gtk.Align.CENTER)
+		btn_edit.connect("clicked",self._edit_source_file,name)
+		swt_repo=Gtk.Switch()
+		swt_repo.set_halign(Gtk.Align.END)
+		swt_repo.set_active(True)
+		swt_repo.connect("state_set",self._repo_state_changed,name)
+		self.repobox.attach(repobox,0,index,1,1)
+		self.repobox.attach(btn_edit,1,index,1,1)
+		self.repobox.attach(swt_repo,2,index,1,1)
+		self.repobox.attach(Gtk.Separator(),0,index+1,1,1)
+		self.repobox.show_all()
+	#def _insert_sourceslist_item
 
 	def _render_repolist(self):
 		scrollbox=Gtk.ScrolledWindow()
@@ -382,6 +430,11 @@ class main:
 			repobox.set_margin_bottom(MARGIN)
 			repobox.set_margin_top(MARGIN)
 			lbl_source=Gtk.Label()
+			lbl_source.set_line_wrap(True)
+			lbl_source.set_lines(-1)
+			lbl_source.set_single_line_mode(False)
+			lbl_source.set_max_width_chars(30)
+			lbl_source.set_width_chars(30)
 			lbl_source.set_markup('<span size="larger">%s</span>'%sourcefile)
 			lbl_source.set_halign(Gtk.Align.START)
 			lbl_source.set_hexpand(True)
@@ -390,15 +443,22 @@ class main:
 			lbl_source.set_margin_top(MARGIN)
 			repobox.add(lbl_source)
 			lbl_desc=Gtk.Label()
+			lbl_desc.set_line_wrap(True)
+			lbl_desc.set_lines(-1)
+			lbl_desc.set_max_width_chars(30)
+			lbl_desc.set_width_chars(30)
+			lbl_desc.set_ellipsize(3)
 			repodesc=''
 			if sourcedata['desc']:
 				repodesc=_(sourcedata['desc'])
+			lbl_desc.set_tooltip_text(repodesc)
 			lbl_desc.set_markup('<span size="medium">%s</span>'%repodesc)
 			lbl_desc.set_halign(Gtk.Align.START)
 			lbl_desc.set_hexpand(True)
 			repobox.add(lbl_desc)
 			img_edit=Gtk.Image.new_from_icon_name(Gtk.STOCK_EDIT,Gtk.IconSize.BUTTON)
 			btn_edit=Gtk.Button()
+			btn_edit.set_tooltip_text(_("Edit sources file"))
 			btn_edit.add(img_edit)
 			btn_edit.set_valign(Gtk.Align.CENTER)
 			btn_edit.connect("clicked",self._edit_source_file,sourcefile)
@@ -431,7 +491,8 @@ class main:
 		spinner=args[-1]
 		spinner.show()
 		spinner.start()
-		self.mw.set_sensitive(False)
+		self.stack.set_sensitive(False)
+		self.toolbar.set_sensitive(False)
 		th=threading.Thread(target=self._update_repos,args=[spinner])
 		th.start()
 		GLib.timeout_add(1500,self._check_update,th,spinner)
@@ -445,12 +506,13 @@ class main:
 		if th.is_alive():
 			return True
 		spinner.stop()
-		self.mw.set_sensitive(True)
+		self.stack.set_sensitive(True)
+		self.toolbar.set_sensitive(True)
 		self.box_info.hide()
 		if self.result['update']:
 			return(self.show_info(_("Repositories updated")))
 		else:
-			return(self.show_info(_("Repositories failed to update"),"ERROR_LABEL"))
+			return(self.show_info(self.err_msg[5],"ERROR_LABEL"))
 	#def _check_update
 
 	def _edit_source_file(self,*args):
@@ -479,6 +541,8 @@ class main:
 	def show_info(self,msg='',style="NOTIF_LABEL"):
 		if self.rev_info.get_reveal_child():
 			self.rev_info.set_reveal_child(False)
+			self.stack.set_sensitive(True)
+			self.toolbar.set_sensitive(True)
 			return False
 		lbl=None
 		for child in self.rev_info.get_children():

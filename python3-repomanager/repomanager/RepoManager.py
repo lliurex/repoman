@@ -211,6 +211,7 @@ class manager():
 		#def list_available_repos
 
 		def add_repo(self,name,desc,url):
+			err=-1
 			repo={}
 			repo[name]={}
 			repo[name]['desc']=desc
@@ -218,19 +219,19 @@ class manager():
 			repo[name]['disabled_repos']=[]
 			#Try to obtain the right repo url
 			repo_array=url.split(' ')
-			sw_match=False
 			repo_url=''
 			item=0
 			for repo_item in repo_array:
 				for repotype in self.repotypes:
 					if repo_item.startswith(repotype):
-						sw_match=True
+						err=0
 						repo_url=repo_item
 						break
-				if sw_match:
+				if err==0:
 					break
 				item+=1
-			if sw_match==False:
+			if err!=0:
+				err=1
 				self._debug("Wrong repo url")
 			else:
 				repo_line=repo_array[item:]
@@ -260,12 +261,16 @@ class manager():
 			if repo_url:
 				repo[name]['repos']=repo_url
 				if self.write_repo_json(repo):
-					sw_match=self.write_repo(repo)
+					if not self.write_repo(repo):
+						#can't write sources
+						err=3
 				else:
-					sw_match=False
+					#Can't write json
+					err=2
 			else:
-				sw_match=False
-			return sw_match
+				#Repository not found at given url
+				err=4
+			return err
 		#def add_repo
 
 		def _get_http_dirs(self,url):
