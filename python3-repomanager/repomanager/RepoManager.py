@@ -55,6 +55,8 @@ class manager():
 				if repodata['enabled'].lower()=='false':
 					removerepos=[]
 					for r in repodata['repos']:
+						r=r.rstrip()
+						print("Removing %s"%r)
 						if r.startswith('deb '):
 							removerepos.append(r)
 						else:
@@ -63,6 +65,7 @@ class manager():
 					wrkfile=self.sources_file
 				else:
 					name=reponame.replace(' ','_').lower()
+					name=reponame.replace(' ','_')
 					if name.endswith(".list"):
 						wrkfile="%s/%s"%(self.sources_dir,name)
 					else:
@@ -89,6 +92,7 @@ class manager():
 				try:
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
+							repo=repo.strip()
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
 								repo=("deb %s"%repo)
 							if repo not in removerepos:
@@ -104,10 +108,10 @@ class manager():
 				sw_status=True
 				default_repos=os.listdir(self.available_repos_dir+'/default/')
 				for repo,repodata in data.items():
-					frepo=repo.replace(' ','_').lower()
+					frepo=repo.replace(' ','_')
 					if not frepo.endswith('.json'):
 						frepo=frepo+'.json'
-					if frepo in default_repos:
+					if (frepo.lower() in default_repos) or (frepo in default_repos):
 						wrkdir=self.available_repos_dir+'/default'
 					else:
 						wrkdir=self.available_repos_dir
@@ -190,17 +194,14 @@ class manager():
 				self._debug("list_available_repos: %s"%e)
 			repos={}
 			for frepo in frepos:
+				rname=frepo.replace("_"," ")
+				rname=rname.replace(".json","")
 				try:
 					with open(self.available_repos_dir+'/'+frepo,'r') as fcontent:
 						repos.update(json.load(fcontent))
 						f_list_name=frepo.replace(".json",".list")
-						rname=frepo.replace("_"," ")
-						rname=rname.replace(".json","")
 						self._debug("Looking for %s/%s"%(self.sources_dir,f_list_name))
-						if os.path.isfile("%s/%s"%(self.sources_dir,f_list_name)):
-							repos[rname]['enabled']="true"
-						else:
-							repos[rname]['enabled']="false"
+						repos[rname]['enabled']=self._check_flist_content("%s/%s"%(self.sources_dir,f_list_name))
 				except Exception as e:
 					self._debug("_list_available_repos error %s: %s"%(frepo,e))
 			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
@@ -209,6 +210,22 @@ class manager():
 				sort_repos.update({repo:repos[repo]})
 			return sort_repos
 		#def list_available_repos
+
+		def _check_flist_content(self,flist):
+			enabled="false"
+			if os.path.isfile(flist):
+				try:
+					with open(flist,'r') as fcontent:
+						flines=fcontent.readlines()
+				except Exception as e:
+					self._debug("_check_flist_content error: %s"%e)
+				if flines:
+					for fline in flines:
+						if fline.strip().startswith('deb'):
+							enabled="true"
+							break
+			return enabled
+
 
 		def add_repo(self,name,desc,url):
 			err=-1
