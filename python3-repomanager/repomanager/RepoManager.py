@@ -56,7 +56,7 @@ class manager():
 					removerepos=[]
 					for r in repodata['repos']:
 						r=r.rstrip()
-						print("Removing %s"%r)
+						self._debug("Removing %s"%r)
 						if r.startswith('deb '):
 							removerepos.append(r)
 						else:

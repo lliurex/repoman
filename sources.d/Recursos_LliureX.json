@@ -4,6 +4,7 @@
         "desc": "Lliurex educational resources",
         "disabled_repos": [],
         "enabled": "True",
+		"protected":"True",
         "repos": [
             "http://lliurex.net/recursos-edu xenial main restricted universe multiverse"
         ]

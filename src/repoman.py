@@ -511,6 +511,9 @@ class main:
 				child.show_all()
 
 		lbl.set_markup(msg)
+		lbl.set_line_wrap(True)
+		lbl.set_lines(-1)
+		lbl.set_max_width_chars(20)
 		lbl.show()
 		self.rev_question.show()
 	#def show_question
