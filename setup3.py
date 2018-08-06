@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # $Id: setup.py,v 1.32 2010/10/17 15:47:21 ghantoos Exp $
 #
@@ -19,13 +19,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
+from setuptools import setup, find_packages
+#from distutils.core import setup
 
 if __name__ == '__main__':
 
-    setup(name='python-repomanager',
+    setup(name='python3-repomanager',
         version='0.1',
-        description='Python repomanager libs',
+        description='Python3 repomanager libs',
         long_description="""""",
         author='Lliurex Team',
         author_email='juanma1980@gmail.com',
@@ -36,7 +37,7 @@ if __name__ == '__main__':
         license='GPL',
         platforms='UNIX',
 #        scripts = [''],
-        package_dir = {'':'python-repomanager'},
+        package_dir = {'':'python3-repomanager'},
         packages = ['repomanager'],
         data_files = [],
         classifiers=[
