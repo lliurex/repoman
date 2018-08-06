@@ -24,6 +24,7 @@ RSRC_DIR='/usr/share/repoman/rsrc'
 JSON_SRC_DIR='/usr/share/repoman/sources.d'
 APT_SRC_DIR='/etc/apt/sources.list.d'
 LOGIN_IMG=RSRC_DIR+'/repoman_login.png'
+LOGIN_BACKGROUND=RSRC_DIR+'/repoman_background.png'
 
 SPACING=6
 MARGIN=6
@@ -175,7 +176,7 @@ class main:
 		login.set_allowed_groups(['adm','teachers'])
 		login.set_login_banner(image=LOGIN_IMG)
 		login.set_label_background(255,255,255,0.3)
-		login.set_mw_background(image='/home/lliurex/repoman_background.png',cover=True)
+		login.set_mw_background(image=LOGIN_BACKGROUND,cover=True)
 		desc=_("From here you can invoke RepoMan's mighty powers to manage your repositories.")
 		login.set_info_text("<span foreground='black'>RepoMan</span>",_("Repositories Manager"),"<span foreground='black'>"+desc+"</span>\n")
 		login.after_validation_goto(self._signin)
