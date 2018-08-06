@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 # $Id: setup.py,v 1.32 2010/10/17 15:47:21 ghantoos Exp $
 #
@@ -23,20 +23,20 @@ from distutils.core import setup
 
 if __name__ == '__main__':
 
-    setup(name='python3-repomanager',
+    setup(name='python-repomanager',
         version='0.1',
-        description='Lliurex store modules',
+        description='N4d repoman modules',
         long_description="""""",
         author='Lliurex Team',
         author_email='juanma1980@gmail.com',
         maintainer='Juanma Navarro',
         maintainer_email='juanma1980@gmail.com',
-        keywords=['software','store','instalar','tienda'],
+        keywords=['software','repositories','repository','manager'],
         url='http://www.lliurex.net',
         license='GPL',
         platforms='UNIX',
 #        scripts = [''],
-        package_dir = {'':'python3-repomanager'},
+        package_dir = {'':'python-repomanager'},
         packages = ['repomanager'],
         data_files = [],
         classifiers=[

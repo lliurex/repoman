@@ -1,20 +1,17 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import os,sys,subprocess
-from urllib.request import Request,urlopen,urlretrieve
+#from urllib.request import Request,urlopen,urlretrieve
+import requests
 from bs4 import BeautifulSoup
 import json
-from collections import OrderedDict
+#from collections import OrderedDict
 class manager():
 		def __init__(self):
 			self.dbg=True
 			self.sources_file='/etc/apt/sources.list'
-#			self.sources_file='/home/lliurex/trabajo/repoman/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
-#			self.sources_dir='/home/lliurex/trabajo/repoman/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'
-#			self.available_repos_dir='/home/lliurex/trabajo/repoman/sources.d'
 			self.default_repos_dir='/usr/share/repoman/sources.d/default'
-#			self.default_repos_dir='/home/lliurex/trabajo/repoman/sources.d/default'
 			self.repotypes=['file:','cdrom:','http:','https:','ftp:','copy:','rsh:','ssh:','ppa:']
 			self.components=['main','universe','multiverse','contrib','non-free','restricted','oss','non-oss','partner','preschool']
 			self.distros=['xenial','xenial-security','xenial-updates','testing','stable']
@@ -148,11 +145,7 @@ class manager():
 					else:
 						repos[reponame]['changed']=False
 					repos[reponame]['enabled']=repostate
-			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
-			sort_repos=OrderedDict()
-			for repo in sorted(repos.keys()):
-				sort_repos.update({repo:repos[repo]})
-			return sort_repos
+			return repos
 		#def list_default_repos
 
 		def list_sources(self):
@@ -177,10 +170,7 @@ class manager():
 					if not fline.startswith('#'):
 						sourcesdict[name]['enabled']="true"
 			sourcesdict.update(self._list_available_repos())
-			sort_repos=OrderedDict()
-			for repo in sorted(sourcesdict.keys()):
-				sort_repos.update({repo:sourcesdict[repo]})
-			return sort_repos
+			return (sourcesdict)
 		#def list_sources
 
 		def _list_available_repos(self):
@@ -204,11 +194,7 @@ class manager():
 						repos[rname]['enabled']=self._check_flist_content("%s/%s"%(self.sources_dir,f_list_name))
 				except Exception as e:
 					self._debug("_list_available_repos error %s: %s"%(frepo,e))
-			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
-			sort_repos=OrderedDict()
-			for repo in sorted(repos.keys()):
-				sort_repos.update({repo:repos[repo]})
-			return sort_repos
+			return repos
 		#def list_available_repos
 
 		def _check_flist_content(self,flist):
@@ -292,17 +278,17 @@ class manager():
 
 		def _get_http_dirs(self,url):
 			def read_dir(url):
-				req=Request(url)
+				req=requests.get(url)
 				dirlist=[]
 				try:
-					content=urlopen(req).read()
+					content=req.text
 					soup=BeautifulSoup(content,'html.parser')
 					links=soup.find_all('a')
 					for link in links:
 						fname=link.extract().get_text()
 						dirlist.append(fname)
-				except:
-					self._debug("Couldn't open %s"%url)
+				except Exception as e:
+						self._debug("Couldn't open %s: %s"%(url,e))
 				return(dirlist)
 
 			repo_url=[]
@@ -342,7 +328,7 @@ class manager():
 		def update_repos(self):
 			ret=True
 			try:
-				subprocess.run(["pkexec","apt-get","update"],check=True)
+				subprocess.check_output(["apt-get","update"],stderr=subprocess.PIPE)
 			except Exception as e:
 				self._debug("Update repos: %s"%e)
 				ret=False

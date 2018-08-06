@@ -7,11 +7,13 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk,GdkPixbuf,GObject,GLib
 gi.require_version('PangoCairo', '1.0')
 import json
-#from edupals.ui.n4dgtklogin import *
-import repomanager.RepoManager as RepoManager
+from edupals.ui.n4dgtklogin import *
+#import repomanager.RepoManager as RepoManager
+import xmlrpc.client as n4d
 import threading
 import time
 import subprocess
+from collections import OrderedDict
 
 import gettext
 gettext.textdomain('repoman')
@@ -21,6 +23,7 @@ RSRC_DIR='/usr/share/repoman/rsrc'
 #RSRC_DIR='/home/lliurex/trabajo/repoman/rsrc'
 JSON_SRC_DIR='/usr/share/repoman/sources.d'
 APT_SRC_DIR='/etc/apt/sources.list.d'
+LOGIN_IMG=RSRC_DIR+'/repoman_login.png'
 
 SPACING=6
 MARGIN=6
@@ -29,17 +32,21 @@ class main:
 
 	def __init__(self):
 		self.dbg=True
+		self.default_editor=''
 		self.err_msg={1:_("Invalid Url"),
 						2:_("Can't add repository information.\nCheck your permissions"),
 						3:_("Can't write sources file.\nCheck your permissions"),
 						4:_("Repository not found at given Url"),
 						5:_("Repositories failed to update"),
-						6:_("Mirror not availabe")
+						6:_("Mirror not availabe"),
+						7:("This repository could'nt be overwrited")
 						}
 		self.result={}		
 		self._set_css_info()
 		self.stack_dir=Gtk.StackTransitionType.SLIDE_LEFT
-		self.sources=RepoManager.manager()
+		self.n4d=None
+		self.credentials=[]
+		self.server=None
 		self.repos={}
 		self._render_gui()
 	#def __init__
@@ -54,8 +61,13 @@ class main:
 		self.mw.set_hexpand(True)
 		self.mw.connect("destroy",self._on_destroy)
 		self.mw.set_resizable(False)
+		self.overlay=Gtk.Stack()
+		self.mw.add(self.overlay)
 		vbox=Gtk.VBox(False,True)
-		self.mw.add(vbox)
+		self.overlay.set_name("WHITE_BACKGROUND")
+		self.overlay.add_titled(vbox,"vbox","vbox")
+		self.overlay.add_titled(self._render_login(),"login","login")
+		self.overlay.set_visible_child_name("login")
 		pb=GdkPixbuf.Pixbuf.new_from_file("%s/repoman.png"%RSRC_DIR)
 		img_banner=Gtk.Image.new_from_pixbuf(pb)
 		img_banner.props.halign=Gtk.Align.CENTER
@@ -89,11 +101,7 @@ class main:
 		self.stack.set_hexpand(True)
 		self.stack.set_transition_duration(1000)
 		self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT)
-#		self.stack.add_titled(self._render_login(), "login", "Login")
-		self.stack.add_titled(self._render_sources(), "sources", "Sources")
-		self.stack.add_titled(self._render_newrepo(), "newrepo", "Newrepo")
-		self.stack.add_titled(self._render_repolist(), "repolist", "Repolist")
-		self.stack.set_visible_child_name("sources")
+#		self.stack.set_visible_child_name("login")
 		vbox.add(self.stack)
 		self.rev_info=Gtk.Revealer()
 		vbox.add(self.rev_info)
@@ -123,6 +131,7 @@ class main:
 		self.box_info.attach(lbl_info,0,0,1,1)
 		self.box_info.attach(btn_info,1,0,1,1)
 		self.box_info.attach(spn_info,0,0,2,1)
+		self.box_info.set_no_show_all(True)
 		btn_info.connect("clicked",self._begin_update_repos,spn_info)
 		vbox.add(self.box_info)
 		Gtk.main()
@@ -160,20 +169,33 @@ class main:
 	#def _render_toolbar
 
 	def _render_login(self):
-		login=N4dGtkLogin()
+		login=N4dGtkLogin(orientation=Gtk.Orientation.VERTICAL)
+#		login=N4dGtkLogin()
+		login.set_mw_proportion_ratio(1,1)
 		login.set_allowed_groups(['adm','teachers'])
-		desc=_("Welcome to RepoMan.\nFrom here you can invoke RepoMan's mighty powers to manage your repositories.")
+		login.set_login_banner(image=LOGIN_IMG)
+		login.set_label_background(255,255,255,0.3)
+		login.set_mw_background(image='/home/lliurex/repoman_background.png',cover=True)
+		desc=_("From here you can invoke RepoMan's mighty powers to manage your repositories.")
 		login.set_info_text("<span foreground='black'>RepoMan</span>",_("Repositories Manager"),"<span foreground='black'>"+desc+"</span>\n")
-#		self.login.set_info_background(image='taskscheduler',cover=True)
-#		login.set_info_background(image=LOGIN_IMG,cover=False)
 		login.after_validation_goto(self._signin)
 		login.hide_server_entry()
-#		login.show_all()
+		login.show_all()
 		return (login)
 
 	def _signin(self,user=None,pwd=None,server=None,data=None):
 #		self.scheduler.set_credentials(user,pwd,server)
-		self.stack.set_visible_child_name("sources")
+#		self.stack.set_visible_child_name("sources")
+		self.credentials=[user,pwd]
+		self.server=server
+		context=ssl._create_unverified_context()
+		self.n4d=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
+		self.stack.add_titled(self._render_sources(), "sources", "Sources")
+		self.stack.add_titled(self._render_newrepo(), "newrepo", "Newrepo")
+		self.stack.add_titled(self._render_repolist(), "repolist", "Repolist")
+		self.overlay.set_transition_duration(1000)
+		self.overlay.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+		self.overlay.set_visible_child_name("vbox")
 		self.mw.show_all()
 	#def _signin
 
@@ -186,7 +208,12 @@ class main:
 		gridbox.set_margin_left(MARGIN)
 		gridbox.set_margin_right(MARGIN)
 		gridbox.set_margin_bottom(MARGIN)
-		self.repos=self.sources.list_default_repos()
+		self.repos=self.n4d.list_default_repos(self.credentials,"RepoManager")['data']
+			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
+		sort_repos=OrderedDict()
+		for repo in sorted(self.repos.keys()):
+			sort_repos.update({repo:self.repos[repo]})
+		self.repos=sort_repos.copy()
 		row=0
 		for source,sourcedata in self.repos.items():
 			desc=''
@@ -200,6 +227,8 @@ class main:
 	#def _render_sources
 
 	def _repo_state_changed(self,*args):
+		self.stack.set_sensitive(False)
+		self.box_info.set_no_show_all(False)
 		reponame=args[-1]
 		state=args[-2]
 		widget=args[0]
@@ -214,18 +243,18 @@ class main:
 			repo={reponame:self.repos[reponame]}
 			self._debug("New state: %s"%repo)
 			self._debug("Saving repo json: %s"%repo)
-			if self.sources.write_repo_json(repo):
-				if self.sources.write_repo(repo)!=True:
+			if self.n4d.write_repo_json(self.credentials,"RepoManager",repo)['status']:
+				if self.n4d.write_repo(self.credentials,"RepoManager",repo)['status']!=True:
 					err=3
 			else:
 				err=2
 		if err:
-			self.stack.set_sensitive(False)
 			self.toolbar.set_sensitive(False)
 			GLib.timeout_add(3000,self.show_info,(self.err_msg[err]),"ERROR_LABEL")
 			widget.set_state(not(state))
 			return True
 		else:
+			self.stack.set_sensitive(True)
 			self.box_info.show_all()
 	#def _repo_state_changed
 
@@ -241,7 +270,11 @@ class main:
 		self.repobox.set_margin_top(MARGIN)
 		self.repobox.set_row_spacing(0)
 		self.repobox.set_name("WHITE_BACKGROUND")
-		sourcefiles=self.sources.list_sources()
+		sourcefiles=self.n4d.list_sources(self.credentials,"RepoManager")['data']
+		sort_repos=OrderedDict()
+		for repo in sorted(sourcefiles.keys()):
+			sort_repos.update({repo:sourcefiles[repo]})
+		sourcefiles=sort_repos.copy()
 		self.repos.update(sourcefiles)
 		row=0
 		for sourcefile,sourcedata in sourcefiles.items():
@@ -319,9 +352,6 @@ class main:
 		desc=args[-2].get_text()
 		url=args[-1].get_text()
 		sw_err=False
-		name=args[-3].get_text()
-		desc=args[-2].get_text()
-		url=args[-1].get_text()
 		if not name:
 			args[-3].set_placeholder_text(_("Name is mandatory"))
 			args[-3].set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY,Gtk.STOCK_DIALOG_ERROR)
@@ -345,7 +375,23 @@ class main:
 			args[-1].set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY,Gtk.STOCK_DIALOG_ERROR)
 			sw_err=True
 		if not sw_err:
-			if os.path.isfile('%s/%s.json'%(JSON_SRC_DIR,name.replace(' ','_'))):
+			listfiles=os.listdir(JSON_SRC_DIR)
+			lowfiles=[]
+			for jsonfile in listfiles:
+				lowfile=jsonfile.lower()
+				lowfiles.append(lowfile)
+			if name.replace(' ','_').lower()+'.json' in lowfiles:
+				#see if the repo is protected
+				for repo in self.repos.keys():
+					if name.lower().replace('_',' ')==repo.lower():
+						if 'protected' in self.repos[repo]:
+							if self.repos[repo]['protected'].lower()=='true':
+								self.stack.set_sensitive(False)
+								self.toolbar.set_sensitive(False)
+								err=7
+								GLib.timeout_add(3000,self.show_info,(self.err_msg[err]),"ERROR_LABEL")
+								return
+
 				self.result.pop('response',None)
 				try:
 					self.rev_question.disconnect_by_func(self._manage_response)
@@ -363,12 +409,23 @@ class main:
 		url=args[-1].get_text()
 		self.stack.set_sensitive(False)
 		self.toolbar.set_sensitive(False)
-		err=self.sources.add_repo(name,desc,url)
+		listfiles=os.listdir(JSON_SRC_DIR)
+		lowfiles={}
+		for jsonfile in listfiles:
+			lowfile=jsonfile.lower()
+			lowfiles[lowfile]=jsonfile
+		lowname=name.replace(' ','_').lower()+'.json'
+		if lowname in lowfiles.keys():
+			name=lowfiles[lowname].replace('.json','').replace('_',' ')
+		err=self.n4d.add_repo(self.credentials,"RepoManager",name,desc,url)['status']
 		if err==0:
 			row=(len(self.repos.keys())*2)
-			sourcefiles=self.sources.list_sources()
+			if name in self.repos.keys():
+				row=-1
+			sourcefiles=self.n4d.list_sources(self.credentials,"RepoManager")['data']
 			self.repos.update(sourcefiles)
-			self._insert_sourceslist_item(self.repobox,name,desc,url,'true',"false",row,True)
+			if row>=0:
+				self._insert_sourceslist_item(self.repobox,name,desc,url,'true',row,True)
 			GLib.timeout_add(2000,self.show_info,(_("Added repository %s"%name)),"NOTIF_LABEL",True)
 		else:
 			#err=1 -> Bad url
@@ -443,7 +500,7 @@ class main:
 	#def _begin_update_repos
 
 	def _update_repos(self,spinner):
-		self.result['update']=self.sources.update_repos()
+		self.result['update']=self.n4d.update_repos(self.credentials,"RepoManager")['status']
 	#def _update_repos
 
 	def _check_update(self,th,spinner):
@@ -465,8 +522,13 @@ class main:
 		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)):
 			edit=True
 			try:
-				subprocess.run(["pluma","%s/%s.list"%(APT_SRC_DIR,sfile)],check=True)
-			except:
+				if self.default_editor=='':
+					self.default_editor=subprocess.check_output(["xdg-mime","query","default","text/plain"],universal_newlines=True).strip().rstrip('.desktop;')
+				if 'DISPLAY' in os.environ.keys():
+					display=os.environ['DISPLAY']
+					subprocess.run(["pkexec","%s"%self.default_editor,"%s/%s.list"%(APT_SRC_DIR,sfile),"--display=%s"%display],check=True)
+			except Exception as e:
+				self._debug("_edit_source_file error: %s"%e)
 				edit=False
 			if edit:
 				newrepos=[]
@@ -478,8 +540,10 @@ class main:
 					self._debug("_edit_source_file failed: %s"%e)
 				if sorted(self.repos[args[-1]]['repos'])!=sorted(newrepos):
 					self.repos[args[-1]]['repos']=newrepos
-					self.sources.write_repo_json({args[-1]:self.repos[args[-1]]})
+					self.n4d.write_repo_json(self.credentials,"RepoManager",{args[-1]:self.repos[args[-1]]})
 					self.box_info.show_all()
+		else:
+			self._debug("File %s/%s not found"%(APT_SRC_DIR,sfile))
 	#def _edit_source_file
 
 	def show_info(self,msg='',style="NOTIF_LABEL",show_info=False):
@@ -588,7 +652,7 @@ class main:
 		}
 
 		#WHITE_BACKGROUND {
-			background:white;
+			background-color:rgba(255,255,255,1);
 		
 		}
 
