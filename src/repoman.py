@@ -468,6 +468,7 @@ class main:
 			btn_edit.connect("clicked",self._edit_source_file,name)
 			sourcebox.attach(btn_edit,1,index,1,1)
 		swt_repo=Gtk.Switch()
+		swt_repo.set_tooltip_text(_("Enable/disable repository")
 		swt_repo.set_halign(Gtk.Align.END)
 		if enabled.lower()=="true":
 			swt_repo.set_active(True)
@@ -524,11 +525,12 @@ class main:
 		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)):
 			edit=True
 			try:
+				display=os.environ['DISPLAY']
 				if self.default_editor=='':
 					self.default_editor=subprocess.check_output(["xdg-mime","query","default","text/plain"],universal_newlines=True).strip().rstrip('.desktop;')
-				if 'DISPLAY' in os.environ.keys():
-					display=os.environ['DISPLAY']
-					subprocess.run(["pkexec","%s"%self.default_editor,"%s/%s.list"%(APT_SRC_DIR,sfile),"--display=%s"%display],check=True)
+				subprocess.run(["xhost","+"])
+				subprocess.run(["pkexec",self.default_editor,"%s/%s.list"%(APT_SRC_DIR,sfile),"--display=%s"%display],check=True)
+				subprocess.run(["xhost","-"])
 			except Exception as e:
 				self._debug("_edit_source_file error: %s"%e)
 				edit=False
