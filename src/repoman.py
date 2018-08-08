@@ -401,7 +401,7 @@ class main:
 					pass
 				self.rev_question.grab_add()
 				self.rev_question.connect('response',self._manage_response,self._add_repo,*args)
-				self.show_question(_("%s already exists. Overwrite it?"%name))
+				self.show_question(_("%s already exists. Overwrite it?")%name)
 			else:
 				self._add_repo(*args)
 
