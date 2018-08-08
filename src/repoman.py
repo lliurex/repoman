@@ -10,6 +10,7 @@ import json
 from edupals.ui.n4dgtklogin import *
 #import repomanager.RepoManager as RepoManager
 import xmlrpc.client as n4d
+import ssl
 import threading
 import time
 import subprocess
