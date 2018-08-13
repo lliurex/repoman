@@ -72,10 +72,18 @@ class color:
 def add_repo():
 	url=action['a']
 	options=_("Y/N")
-	resp=input(_("You're going to add the repo present at %s%s%s. Continue? %s [%s]: ")%(color.BOLD,url,color.END,options,options[-1]))
+	resp=input(_("You're going to add the repo present at %s%s%s. Continue? %s [%s]: ")%(color.UNDERLINE,url,color.END,options,options[-1]))
 	if resp.lower()==options[0].lower():
 		try:
-			name=url.split('/')[2:]
+			proposed_name=url
+			if url.startswith('ppa'):
+				proposed_name=url.replace('ppa:','')
+			if ('//') in proposed_name:
+				name=proposed_name.split('/')[2:]
+			elif (':') in proposed_name:
+				name=proposed_name.split(':')[1:]
+			else:
+				name=proposed_name.split('/')
 		except:
 			name=url
 		try:
@@ -84,7 +92,9 @@ def add_repo():
 			name=name
 		if type(name)==type([]):
 			defname='_'.join(name)
-		name=input(_("Name for the repository: [%s] ")%defname)
+		else:
+			defname=name
+		name=input(_("Name for the repository [%s]: ")%defname)
 		if name.strip()=='':
 			name=defname
 		desc=''
@@ -97,6 +107,8 @@ def add_repo():
 			err=n4dserver.add_repo(n4dcredentials,"RepoManager",name,desc,url)['status']
 			if err:
 				print("\n%s"%error.ADD)
+			else:
+				print(_("Repository %s %sadded successfully%s")%(url,color.BLUE,color.END))
 		except Exception as e:
 			print("add_repo %s"%error.DATA)
 		
@@ -260,8 +272,10 @@ def _n4d_connect():
 def quit(err=0):
 	sys.exit(err)
 
-parms=' '.join(sys.argv[1:]).split("-")
+parms=' '.join(sys.argv[1:]).split(' -')
 for parm in parms:
+	if parm.startswith('-'):
+		parm=parm.lstrip('-')
 	if parm=='':
 		continue
 	parm_key=parm[0:2]

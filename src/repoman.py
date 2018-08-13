@@ -468,7 +468,7 @@ class main:
 			btn_edit.connect("clicked",self._edit_source_file,name)
 			sourcebox.attach(btn_edit,1,index,1,1)
 		swt_repo=Gtk.Switch()
-		swt_repo.set_tooltip_text(_("Enable/disable repository")
+		swt_repo.set_tooltip_text(_("Enable/disable repository"))
 		swt_repo.set_halign(Gtk.Align.END)
 		if enabled.lower()=="true":
 			swt_repo.set_active(True)
@@ -545,7 +545,9 @@ class main:
 				if sorted(self.repos[args[-1]]['repos'])!=sorted(newrepos):
 					self.repos[args[-1]]['repos']=newrepos
 					self.n4d.write_repo_json(self.credentials,"RepoManager",{args[-1]:self.repos[args[-1]]})
+					self.box_info.set_no_show_all(False)
 					self.box_info.show_all()
+					self.box_info.set_no_show_all(True)
 		else:
 			self._debug("File %s/%s not found"%(APT_SRC_DIR,sfile))
 	#def _edit_source_file
