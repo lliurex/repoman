@@ -664,14 +664,14 @@ class main:
 
 		#BLUE_FONT {
 			color: #3366cc;
-			font: Roboto Bold 11;
+			font: 11px Roboto Bold;
 			
 		}	
 		
 
 		#TASKGRID_FONT {
 			color: #3366cc;
-			font: Roboto 11;
+			font: 11px Roboto;
 			
 		}
 
@@ -691,7 +691,7 @@ class main:
 
 		#ERROR_FONT {
 			color: #CC0000;
-			font: Roboto Bold 11; 
+			font: 11px Roboto Bold; 
 		}
 
 		#MENUITEM {
