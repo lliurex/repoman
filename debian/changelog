@@ -1,0 +1,66 @@
+repoman (0.9.0.5.8) xenial; urgency=medium
+
+  * Fix parameter processing
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Thu, 09 Aug 2018 09:34:32 +0200
+
+repoman (0.9.0.5.7) xenial; urgency=medium
+
+  * Ellpisize lbl_source
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 08 Aug 2018 14:30:48 +0200
+
+repoman (0.9.0.5.6) xenial; urgency=medium
+
+  * Fix ppa build
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 08 Aug 2018 11:51:06 +0200
+
+repoman (0.9.0.4.3) xenial; urgency=medium
+
+  * Update rules
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 08 Aug 2018 11:44:51 +0200
+
+repoman (0.9.0.4.2) xenial; urgency=medium
+
+  * Fix chain translation
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 08 Aug 2018 09:53:22 +0200
+
+repoman (0.9.0.4.1) xenial; urgency=medium
+
+  * Update translations
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 08 Aug 2018 09:21:06 +0200
+
+repoman (0.9.0.4) xenial; urgency=medium
+
+  * Add CLI
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 08 Aug 2018 09:02:44 +0200
+
+repoman (0.9.0.3.2) xenial; urgency=medium
+
+  * Add python2/python3 lib
+  * Add n4d plugin
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Mon, 06 Aug 2018 13:28:30 +0200
+
+repoman (0.9.0.2) xenial; urgency=medium
+
+  * Add educational resources 
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 01 Aug 2018 14:39:51 +0200
+
+repoman (0.9.0.1) xenial; urgency=medium
+
+  * RC
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Tue, 31 Jul 2018 12:18:34 +0200
+
+repoman (0.1) xenial; urgency=medium
+
+  * Initial release.
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Fri, 20 Jul 2018 08:44:37 +0200
