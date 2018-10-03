@@ -14,12 +14,12 @@ Description: Lliurex Repository Manager
 
 Package: python3-repomanager
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, python3-requests, python3-bs4
 Description: Lliurex repository manager libs
 
 Package: python-repomanager
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, python-requests, python-bs4
 Description: Lliurex repository manager libs
 
 Package: n4d-repomanager
