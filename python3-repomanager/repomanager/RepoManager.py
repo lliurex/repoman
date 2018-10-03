@@ -8,16 +8,13 @@ class manager():
 		def __init__(self):
 			self.dbg=True
 			self.sources_file='/etc/apt/sources.list'
-#			self.sources_file='/home/lliurex/trabajo/repoman/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
-#			self.sources_dir='/home/lliurex/trabajo/repoman/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'
-#			self.available_repos_dir='/home/lliurex/trabajo/repoman/sources.d'
 			self.default_repos_dir='/usr/share/repoman/sources.d/default'
-#			self.default_repos_dir='/home/lliurex/trabajo/repoman/sources.d/default'
 			self.repotypes=['file:','cdrom:','http:','https:','ftp:','copy:','rsh:','ssh:','ppa:']
 			self.components=['main','universe','multiverse','contrib','non-free','restricted','oss','non-oss','partner','preschool']
-			self.distros=['xenial','xenial-security','xenial-updates','testing','stable']
+			self.distros=['bionic','bionic-security','bionic-updates','testing','stable']
+			self.def_repos=['lliurex 18','lliurex mirror','ubuntu bionic']
 			self.data={}
 
 		def _debug(self,msg):
@@ -61,7 +58,7 @@ class manager():
 							removerepos.append(r)
 						else:
 							removerepos.append('deb '+r)
-				if reponame.lower()=="lliurex 16" or reponame.lower()=="lliurex mirror" or reponame.lower()=="ubuntu xenial":
+				if reponame.lower() in self.def_repos:
 					wrkfile=self.sources_file
 				else:
 					name=reponame.replace(' ','_').lower()

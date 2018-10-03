@@ -468,6 +468,8 @@ class main:
 			btn_edit.connect("clicked",self._edit_source_file,name)
 			sourcebox.attach(btn_edit,1,index,1,1)
 		swt_repo=Gtk.Switch()
+		swt_repo.set_vexpand(False)
+		swt_repo.set_valign(Gtk.Align.CENTER)
 		swt_repo.set_tooltip_text(_("Enable/disable repository"))
 		swt_repo.set_halign(Gtk.Align.END)
 		if enabled.lower()=="true":
@@ -648,7 +650,7 @@ class main:
 			border:0px;
 			padding:0px;
 			background:white;
-			font:grey;
+			color:grey;
 		}
 
 		#COMPONENT{

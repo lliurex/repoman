@@ -1,0 +1,13 @@
+{
+    "Ubuntu bionic": {
+        "changed": true,
+        "desc": "Ubuntu bionic official repositories",
+        "disabled_repos": [],
+        "enabled": "False",
+        "repos": [
+            "http://es.archive.ubuntu.com/ubuntu/ bionic main multiverse restricted universe",
+            "http://es.archive.ubuntu.com/ubuntu/ bionic-security main multiverse restricted universe",
+            "http://es.archive.ubuntu.com/ubuntu/ bionic-updates main multiverse restricted universe"
+        ]
+    }
+}
