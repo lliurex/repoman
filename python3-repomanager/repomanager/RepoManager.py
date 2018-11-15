@@ -252,7 +252,9 @@ class manager():
 				if repo_line[0].startswith('ppa:'):
 					ppa_array=repo_line[0].split('/')
 					ppa_team=ppa_array[0].replace('ppa:','')
-					repo_url=["http://ppa.launchpad.net/%s/%s/ubuntu %s main"%(ppa_team,ppa_array[-1],ppa_array[-1])]
+#					repo_url=["http://ppa.launchpad.net/%s/%s/ubuntu %s main"%(ppa_team,ppa_array[-1],ppa_array[-1])]
+					repo_url="http://ppa.launchpad.net/%s/%s/ubuntu/dists"%(ppa_team,ppa_array[-1])
+					repo_url=self._get_http_dirs(repo_url)
 				else:
 					distro=components=''
 					if len(repo_line)>1:
