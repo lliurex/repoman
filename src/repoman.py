@@ -172,7 +172,6 @@ class main:
 
 	def _render_login(self):
 		login=N4dGtkLogin(orientation=Gtk.Orientation.VERTICAL)
-#		login=N4dGtkLogin()
 		login.set_mw_proportion_ratio(1,1)
 		login.set_allowed_groups(['adm','teachers'])
 		login.set_login_banner(image=LOGIN_IMG)
@@ -186,8 +185,6 @@ class main:
 		return (login)
 
 	def _signin(self,user=None,pwd=None,server=None,data=None):
-#		self.scheduler.set_credentials(user,pwd,server)
-#		self.stack.set_visible_child_name("sources")
 		self.credentials=[user,pwd]
 		self.server=server
 		context=ssl._create_unverified_context()
@@ -211,7 +208,7 @@ class main:
 		gridbox.set_margin_right(MARGIN)
 		gridbox.set_margin_bottom(MARGIN)
 		self.repos=self.n4d.list_default_repos(self.credentials,"RepoManager")['data']
-			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
+		#Sort by relevancy (Lliurex, Local, Ubuntu-*)
 		sort_repos=OrderedDict()
 		for repo in sorted(self.repos.keys()):
 			sort_repos.update({repo:self.repos[repo]})
@@ -446,12 +443,14 @@ class main:
 		repobox.set_margin_top(MARGIN)
 		lbl_source=Gtk.Label()
 		lbl_source.set_markup('<span size="larger">%s</span>'%name)
+		lbl_source.set_tooltip_text('%s'%name)
 		lbl_source.set_halign(Gtk.Align.START)
 		lbl_source.set_hexpand(True)
 		lbl_source.set_margin_left(MARGIN)
 		lbl_source.set_margin_bottom(MARGIN)
 		lbl_source.set_margin_top(MARGIN)
 		lbl_source.props.halign=Gtk.Align.START
+		lbl_source.set_ellipsize(3)
 		repobox.add(lbl_source)
 		lbl_desc=Gtk.Label()
 		lbl_desc.set_ellipsize(3)
@@ -560,7 +559,9 @@ class main:
 			self.stack.set_sensitive(True)
 			self.toolbar.set_sensitive(True)
 			if show_info:
+				self.box_info.set_no_show_all(False)
 				self.box_info.show_all()
+				self.box_info.set_no_show_all(True)
 			return False
 		lbl=None
 		for child in self.rev_info.get_children():
