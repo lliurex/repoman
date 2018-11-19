@@ -641,67 +641,15 @@ class main:
 			padding-bottom:0px;
 		}
 
-		#PLAIN_BTN,#PLAIN_BTN:active{
-			border:0px;
-			padding:0px;
-			background:white;
-		}
-		
-		#PLAIN_BTN_DISABLED,#PLAIN_BTN_DISABLED:active{
-			border:0px;
-			padding:0px;
-			background:white;
-			color:grey;
-		}
-
-		#COMPONENT{
-			padding:3px;
-			border: dashed 1px silver;
-
-		}
-
 		#WHITE_BACKGROUND {
-			background-color:rgba(255,255,255,1);
+			background:white;
+			box-shadow: 1px 1px 1px 10px white;
 		
 		}
-
-		#BLUE_FONT {
-			color: #3366cc;
-			font: 11px Roboto Bold;
-			
-		}	
-		
-
-		#TASKGRID_FONT {
-			color: #3366cc;
-			font: 11px Roboto;
-			
-		}
-
 		#LABEL #LABEL_INSTALL{
 			padding: 6px;
 			margin:6px;
 			font: 12px Roboto;
-		}
-
-		#LABEL_OPTION{
-		
-			font: 48px Roboto;
-			padding: 6px;
-			margin:6px;
-			font-weight:bold;
-		}
-
-		#ERROR_FONT {
-			color: #CC0000;
-			font: 11px Roboto Bold; 
-		}
-
-		#MENUITEM {
-			padding: 12px;
-			margin:6px;
-			font: 24px Roboto;
-			background:white;
 		}
 
 		#BLUEBUTTON {
