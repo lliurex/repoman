@@ -1,18 +1,18 @@
-repoman (0.9.2.2) bionic; urgency=medium
+repoman (0.9.2.2) xenial; urgency=medium
 
   * Gtk3-css: Fix black border on #white background (possible gtk3 bug)
 
  -- Juanma Navarro Mañez <juanma1980@gmail.com>  Mon, 19 Nov 2018 13:04:01 +0100
 
-repoman (0.9.2.1) bionic; urgency=medium
+repoman (0.9.2.1) xenial; urgency=medium
 
   * Get ppa target distro directly from launchpad
 
  -- Juanma Navarro Mañez <juanma1980@gmail.com>  Thu, 15 Nov 2018 14:02:32 +0100
 
-repoman (0.9.1) bionic; urgency=medium
+repoman (0.9.1) xenial; urgency=medium
 
-  * Bionic release
+  * Prepare for Bionic release
 
  -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 03 Oct 2018 13:38:25 +0200
 
