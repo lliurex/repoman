@@ -1,0 +1,13 @@
+{
+    "LliureX 18": {
+        "changed": true,
+        "desc": "Lliurex default repositories",
+        "disabled_repos": [],
+        "enabled": "True",
+        "repos": [
+            "http://lliurex.net/xenial xenial-security main restricted universe multiverse",
+            "http://lliurex.net/xenial xenial-updates main restricted universe multiverse",
+            "http://lliurex.net/xenial xenial main restricted universe multiverse"
+        ]
+    }
+}
