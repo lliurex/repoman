@@ -1,3 +1,9 @@
+repoman (1.0.1) bionic; urgency=medium
+
+  * Change version
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Tue, 04 Dec 2018 12:25:27 +0100
+
 repoman (0.9.2.2) bionic; urgency=medium
 
   * Gtk3-css: Fix black border on #white background (possible gtk3 bug)
