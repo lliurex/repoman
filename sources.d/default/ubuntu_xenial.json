@@ -1,5 +1,5 @@
 {
-    "Ubuntu bionic": {
+    "Ubuntu xenial": {
         "changed": true,
         "desc": "Ubuntu xenial official repositories",
         "disabled_repos": [],
