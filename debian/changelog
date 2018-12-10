@@ -1,3 +1,9 @@
+repoman (1.0.2-bionic) bionic; urgency=medium
+
+  * Fix css for background-color
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Mon, 10 Dec 2018 12:55:51 +0100
+
 repoman (1.0.1-2bionic) bionic; urgency=medium
 
   * Change version
