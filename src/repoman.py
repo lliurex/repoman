@@ -620,7 +620,7 @@ class main:
 		}
 
 		#NOTIF_LABEL{
-			background-color: #3366cc;
+			background: #3366cc;
 			font: 11px Roboto;
 			color:white;
 			border: dashed 1px silver;
@@ -628,7 +628,7 @@ class main:
 		}
 
 		#ERROR_LABEL{
-			background-color: red;
+			background: red;
 			font: 11px Roboto;
 			color:white;
 			border: dashed 1px silver;
@@ -653,7 +653,7 @@ class main:
 		}
 
 		#BLUEBUTTON {
-			background-color: #3366cc;
+			background: #3366cc;
 			color:white;
 			font: 11px Roboto Bold;
 		}
