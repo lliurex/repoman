@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-09 10:16+0200\n"
+"POT-Creation-Date: 2019-02-11 09:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,75 +197,75 @@ msgstr ""
 msgid "Add external repository"
 msgstr ""
 
-#: ../src/repoman.py:181
+#: ../src/repoman.py:180
 msgid ""
 "From here you can invoke RepoMan's mighty powers to manage your repositories."
 msgstr ""
 
-#: ../src/repoman.py:182
+#: ../src/repoman.py:181
 msgid "Repositories Manager"
 msgstr ""
 
-#: ../src/repoman.py:313
+#: ../src/repoman.py:310
 msgid "Name for the repo"
 msgstr ""
 
-#: ../src/repoman.py:324
+#: ../src/repoman.py:321
 msgid "Description"
 msgstr ""
 
-#: ../src/repoman.py:334
+#: ../src/repoman.py:331
 msgid "Url"
 msgstr ""
 
-#: ../src/repoman.py:358
+#: ../src/repoman.py:355
 msgid "Name is mandatory"
 msgstr ""
 
-#: ../src/repoman.py:362
+#: ../src/repoman.py:359
 msgid "Name is too long"
 msgstr ""
 
-#: ../src/repoman.py:370
+#: ../src/repoman.py:367
 msgid "Description is too long"
 msgstr ""
 
-#: ../src/repoman.py:376
+#: ../src/repoman.py:373
 msgid "Url is mandatory"
 msgstr ""
 
-#: ../src/repoman.py:404
+#: ../src/repoman.py:401
 #, python-format
 msgid "%s already exists. Overwrite it?"
 msgstr ""
 
-#: ../src/repoman.py:431
+#: ../src/repoman.py:428
 #, python-format
 msgid "Added repository %s"
 msgstr ""
 
-#: ../src/repoman.py:466
+#: ../src/repoman.py:465
 msgid "Edit sources file"
 msgstr ""
 
-#: ../src/repoman.py:471
+#: ../src/repoman.py:472
 msgid "Enable/disable repository"
 msgstr ""
 
-#: ../src/repoman.py:517
+#: ../src/repoman.py:518
 msgid "Repositories updated"
 msgstr ""
 
-#: json ../sources.d/default/lliurex_16.json
+#: json ../sources.d/default/lliurex_18.json
 msgid "Lliurex default repositories"
 msgstr ""
 
 #: json ../sources.d/default/lliurex_mirror.json
-msgid "Mirror repositories"
+msgid "Local repositories"
 msgstr ""
 
-#: json ../sources.d/default/ubuntu_xenial.json
-msgid "Ubuntu Xenial official repositories"
+#: json ../sources.d/default/ubuntu_bionic.json
+msgid "Ubuntu bionic official repositories"
 msgstr ""
 
 #: json ../sources.d/Recursos_LliureX.json

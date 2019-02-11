@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-09 10:16+0200\n"
-"PO-Revision-Date: 2018-08-09 10:17+0200\n"
+"POT-Creation-Date: 2019-02-11 09:55+0100\n"
+"PO-Revision-Date: 2019-02-11 09:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/repoman-cli.py:32
@@ -206,82 +206,85 @@ msgstr "Repositorios externos"
 msgid "Add external repository"
 msgstr "Añadir repositorio externo"
 
-#: ../src/repoman.py:181
+#: ../src/repoman.py:180
 msgid ""
 "From here you can invoke RepoMan's mighty powers to manage your repositories."
 msgstr ""
 "Permite invocar los superpoderes de RepoMan para administrar los "
 "repositorios del sistema."
 
-#: ../src/repoman.py:182
+#: ../src/repoman.py:181
 msgid "Repositories Manager"
 msgstr "Gestor de repositorios"
 
-#: ../src/repoman.py:313
+#: ../src/repoman.py:310
 msgid "Name for the repo"
 msgstr "Nombre del repo"
 
-#: ../src/repoman.py:324
+#: ../src/repoman.py:321
 msgid "Description"
 msgstr "Descripción"
 
-#: ../src/repoman.py:334
+#: ../src/repoman.py:331
 msgid "Url"
 msgstr "Url"
 
-#: ../src/repoman.py:358
+#: ../src/repoman.py:355
 msgid "Name is mandatory"
 msgstr "El nombre es obligatorio"
 
-#: ../src/repoman.py:362
+#: ../src/repoman.py:359
 msgid "Name is too long"
 msgstr "El nombre es demasiado largo"
 
-#: ../src/repoman.py:370
+#: ../src/repoman.py:367
 msgid "Description is too long"
 msgstr "La descripción es demasiado larga"
 
-#: ../src/repoman.py:376
+#: ../src/repoman.py:373
 msgid "Url is mandatory"
 msgstr "La URL es obligatoria"
 
-#: ../src/repoman.py:404
+#: ../src/repoman.py:401
 #, python-format
 msgid "%s already exists. Overwrite it?"
 msgstr "Ya existe %s. ¿Sobreescribirlo?"
 
-#: ../src/repoman.py:431
+#: ../src/repoman.py:428
 #, python-format
 msgid "Added repository %s"
 msgstr "Añadido el repositorio %s"
 
-#: ../src/repoman.py:466
+#: ../src/repoman.py:465
 msgid "Edit sources file"
 msgstr "Editar fichero de fuentes"
 
-#: ../src/repoman.py:471
+#: ../src/repoman.py:472
 msgid "Enable/disable repository"
 msgstr "Habilita/deshabilita el repositorio"
 
-#: ../src/repoman.py:517
+#: ../src/repoman.py:518
 msgid "Repositories updated"
 msgstr "Repositorios actualizados"
 
-#: json ../sources.d/default/lliurex_16.json
+#: json ../sources.d/default/lliurex_18.json
 msgid "Lliurex default repositories"
 msgstr "Repositorios de LliureX"
 
 #: json ../sources.d/default/lliurex_mirror.json
-msgid "Mirror repositories"
-msgstr "Repositorios del Mirror"
+msgid "Local repositories"
+msgstr "Repositorios locales"
 
-#: json ../sources.d/default/ubuntu_xenial.json
-msgid "Ubuntu Xenial official repositories"
-msgstr "Repositorios oficiales de Ubuntu Xenial"
+#: json ../sources.d/default/ubuntu_bionic.json
+msgid "Ubuntu bionic official repositories"
+msgstr "Repositorios oficiales de Ubuntu Bionic"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Mirror repositories"
+#~ msgstr "Repositorios del Mirror"
 
 #~ msgid "Name for the repository: [%s] "
 #~ msgstr "Nombre del repositorio: [%s]"
