@@ -1,6 +1,7 @@
-repoman (1.0.2-bionic) bionic; urgency=medium
+repoman (1.0.2-lliurex) bionic; urgency=medium
 
-  * Fix css for background-color
+  * Updated translations
+  * Fixed css for background-color
 
  -- Juanma Navarro Mañez <juanma1980@gmail.com>  Mon, 10 Dec 2018 12:55:51 +0100
 
