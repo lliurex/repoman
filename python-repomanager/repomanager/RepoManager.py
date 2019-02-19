@@ -4,6 +4,7 @@ import os,sys,subprocess
 import requests
 from bs4 import BeautifulSoup
 import json
+import re
 #from collections import OrderedDict
 class manager():
 		def __init__(self):
@@ -29,7 +30,7 @@ class manager():
 				with open(self.sources_file,'r') as f:
 					fcontent=f.readlines()
 			except Exception as e:
-				self._debuig("_get_default_repo_status error: %s"%e)
+				self._debug("_get_default_repo_status error: %s"%e)
 			configured_repos=[]
 			for fline in fcontent:
 				configured_repos.append(fline.replace('\n','').replace(' ','').lstrip('deb'))
