@@ -34,7 +34,6 @@ class main:
 
 	def __init__(self):
 		self.dbg=True
-		self.default_editor=''
 		self.err_msg={1:_("Invalid Url"),
 						2:_("Can't add repository information.\nCheck your permissions"),
 						3:_("Can't write sources file.\nCheck your permissions"),
@@ -140,43 +139,47 @@ class main:
 	#def _render_gui
 
 	def _render_toolbar(self):
-		self.toolbar=Gtk.Box()
-		self.toolbar=Gtk.Box(spacing=SPACING)
-		self.toolbar.set_margin_top(MARGIN)
-		self.toolbar.set_margin_bottom(MARGIN)
-		self.toolbar.set_margin_left(MARGIN)
+			#		self.toolbar=Gtk.Box()
+#		self.toolbar=Gtk.Box(spacing=SPACING)
+#		self.toolbar.set_margin_top(MARGIN)
+#		self.toolbar.set_margin_bottom(MARGIN)
+#		self.toolbar.set_margin_left(MARGIN)
+		self.toolbar=Gtk.Toolbar()
+		self.toolbar.set_vexpand(False)
 		
-		btn_return=Gtk.Button()#.new_from_stock(Gtk.STOCK_GO_BACK)
-		btn_return.add(Gtk.Image().new_from_icon_name(Gtk.STOCK_HOME,Gtk.IconSize.BUTTON))
-		btn_return.connect("clicked",self._load_screen,"sources")
-		btn_return.props.halign=Gtk.Align.START
-		btn_return.set_tooltip_text(_("Default repositories"))
-		self.toolbar.add(btn_return)
+		btn_home=Gtk.Button()#.new_from_stock(Gtk.STOCK_GO_BACK)
+		tlb_home=Gtk.ToolButton(btn_home)
+		tlb_home.connect("clicked",self._load_screen,"sources")
+		tlb_home.set_icon_name("go-home")
+		tlb_home.set_tooltip_text(_("Default repositories"))
+		self.toolbar.insert(tlb_home,0)
 
 		btn_manage=Gtk.Button()
-		btn_manage.props.halign=Gtk.Align.START
-		btn_manage.add(Gtk.Image().new_from_icon_name(Gtk.STOCK_PROPERTIES,Gtk.IconSize.BUTTON))
-		btn_manage.connect("clicked",self._load_screen,"repolist")
-		btn_manage.set_tooltip_text(_("External repositories"))
-		self.toolbar.add(btn_manage)
+		tlb_manage=Gtk.ToolButton(btn_manage)
+		tlb_manage.connect("clicked",self._load_screen,"repolist")
+		tlb_manage.set_icon_name("document-properties")
+		tlb_manage.set_tooltip_text(_("External repositories"))
+		self.toolbar.insert(tlb_manage,1)
 		
 		btn_add=Gtk.Button()#.new_from_stock(Gtk.STOCK_ADD)
-		btn_add.props.halign=Gtk.Align.START
-		btn_add.add(Gtk.Image().new_from_icon_name(Gtk.STOCK_ADD,Gtk.IconSize.BUTTON))
-		btn_add.connect("clicked",self._load_screen,"newrepo")
-		btn_add.set_tooltip_text(_("Add external repository"))
-		self.toolbar.add(btn_add)
+		tlb_add=Gtk.ToolButton(btn_add)
+		tlb_add.connect("clicked",self._load_screen,"newrepo")
+		tlb_add.set_icon_name("list-add")
+		tlb_add.set_tooltip_text(_("Add external repositorie"))
+		self.toolbar.insert(tlb_add,2)
 		
 		return(self.toolbar)
 	#def _render_toolbar
 
 	def _render_login(self):
 		login=N4dGtkLogin(orientation=Gtk.Orientation.VERTICAL)
-		login.set_mw_proportion_ratio(1,1)
+#		login=N4dGtkLogin()
+		login.set_mw_proportion_ratio(1,2)
 		login.set_allowed_groups(['adm','teachers'])
 		login.set_login_banner(image=LOGIN_IMG)
 		login.set_label_background(255,255,255,0.3)
-		login.set_mw_background(image=LOGIN_BACKGROUND,cover=True)
+#		login.set_mw_background(image=LOGIN_BACKGROUND,cover=True)
+		login.set_mw_background(from_color="white",to_color="grey",gradient='radial')
 		desc=_("From here you can invoke RepoMan's mighty powers to manage your repositories.")
 		login.set_info_text("<span foreground='black'>RepoMan</span>",_("Repositories Manager"),"<span foreground='black'>"+desc+"</span>\n")
 		login.after_validation_goto(self._signin)
@@ -310,6 +313,7 @@ class main:
 		lbl_name.set_markup("<sup>%s</sup>"%_("Name for the repo"))
 		boxname.add(lbl_name)
 		inp_name=Gtk.Entry()
+		inp_name.set_name("GtkEntry")
 		inp_name.connect("focus-in-event",del_icon,inp_name)
 		boxname.add(inp_name)
 		gridbox.add(boxname)
@@ -321,6 +325,7 @@ class main:
 		lbl_desc.set_markup("<sup>%s</sup>"%_("Description"))
 		boxdesc.add(lbl_desc)
 		inp_desc=Gtk.Entry()
+		inp_desc.set_name("GtkEntry")
 		boxdesc.add(inp_desc)
 		gridbox.attach_next_to(boxdesc,boxname,Gtk.PositionType.BOTTOM,1,1)
 		boxurl=Gtk.VBox(True,True)
@@ -331,6 +336,7 @@ class main:
 		lbl_url.set_markup("<sup>%s</sup>"%_("Url"))
 		boxurl.add(lbl_url)
 		inp_url=Gtk.Entry()
+		inp_url.set_name("GtkEntry")
 		inp_url.connect("focus-in-event",del_icon,inp_url)
 		inp_url.connect("activate",self._begin_add_repo,inp_name,inp_desc,inp_url)
 		boxurl.add(inp_url)
@@ -527,10 +533,8 @@ class main:
 			edit=True
 			try:
 				display=os.environ['DISPLAY']
-				if self.default_editor=='':
-					self.default_editor=subprocess.check_output(["xdg-mime","query","default","text/plain"],universal_newlines=True).strip().rstrip('.desktop;')
 				subprocess.run(["xhost","+"])
-				subprocess.run(["pkexec",self.default_editor,"%s/%s.list"%(APT_SRC_DIR,sfile),"--display=%s"%display],check=True)
+				subprocess.run(["pkexec","kde-open5","%s/%s.list --display %s"%(APT_SRC_DIR,sfile,display)],check=True)
 				subprocess.run(["xhost","-"])
 			except Exception as e:
 				self._debug("_edit_source_file error: %s"%e)
