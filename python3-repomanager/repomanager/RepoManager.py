@@ -311,7 +311,7 @@ class manager():
 			dirlist=read_dir(url)
 			if url.endswith('/dists'):
 				for distro in dirlist:
-					distro=distro.replace('/','')
+					distro=distro.replace('/','').lstrip()
 					self._debug("Distro %s"%distro)
 					if distro in self.distros:
 						url_distro="%s/%s"%(url,distro)
@@ -319,7 +319,7 @@ class manager():
 						componentlist=read_dir(url_distro)
 						components=[]
 						for component in componentlist:
-							component=component.replace('/','')
+							component=component.replace('/','').lstrip()
 							self._debug("Component %s"%component)
 							if component in self.components:
 								components.append(component)
@@ -328,7 +328,7 @@ class manager():
 				componentlist=read_dir(url)
 				components=[]
 				for component in componentlist:
-					component=component.replace('/','')
+					component=component.replace('/','').lstrip()
 					if component in self.components:
 						components.append(component)
 				repo_array=url.split('/')

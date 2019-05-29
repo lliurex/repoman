@@ -256,6 +256,7 @@ class manager():
 						self._debug("Components: %s"%components)
 					if components!='':
 						repo_url=["%s %s %s"%(repo_line[0],distro,' '.join(components))]
+						self._debug("Get component dirs: %s"%repo_url)
 					else:
 						repo_url=repo_line[0]
 						if distro!='':
@@ -264,7 +265,7 @@ class manager():
 							repo_url="%s/dists"%(repo_line[0])
 						self._debug("Get dirs: %s"%repo_url)
 						repo_url=self._get_http_dirs(repo_url)
-				self._debug("Url: %s"%repo_url)
+				self._debug("Url rc: %s"%repo_url)
 			if repo_url:
 				repo[name]['repos']=repo_url
 				if self.write_repo_json(repo):
@@ -302,7 +303,7 @@ class manager():
 			dirlist=read_dir(url)
 			if url.endswith('/dists'):
 				for distro in dirlist:
-					distro=distro.replace('/','')
+					distro=distro.replace('/','').lstrip()
 					self._debug("Distro %s"%distro)
 					if distro in self.distros:
 						url_distro="%s/%s"%(url,distro)
@@ -310,11 +311,13 @@ class manager():
 						componentlist=read_dir(url_distro)
 						components=[]
 						for component in componentlist:
-							component=component.replace('/','')
+							component=component.replace('/','').lstrip()
 							self._debug("Component %s"%component)
 							if component in self.components:
 								components.append(component)
 						repo_url.append("deb %s %s %s"%(url.replace('dists',''),distro,' '.join(components)))
+					else:
+						self._debug("%s not found in %s"%(distro,self.distros))
 			else:
 				componentlist=read_dir(url)
 				components=[]

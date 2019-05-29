@@ -17,6 +17,9 @@ repoman.dbg=False
 key=''
 error_dict={}
 action={}
+reponame=''
+repoinfo=''
+unattended=False
 
 #a->append url
 #p->password
@@ -35,8 +38,11 @@ parms_dict={'a':{'args':1,'long':'add','desc':_("Add repository"),'usage':'=URL'
 			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
 			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
 			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
+			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
+			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
 			'l':{'args':0,'long':'list','desc':_("List repositories"),'usage':''},
 			'le':{'args':0,'long':'list_enabled','desc':_("List enabled repositories"),'usage':''},
+			'y':{'args':0,'long':'yes','desc':_("Yes to all questions (unattended)"),'usage':''},
 			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
 			'h':{'args':0,'long':'help','desc':_("Show help"),'usage':''}
 			}
@@ -71,8 +77,15 @@ class color:
 
 def add_repo():
 	url=action['a']
+	global key
+	global reponame
+	global repoinfo
+	global unattended
 	options=_("Y/N")
-	resp=input(_("You're going to add the repo present at %s%s%s. Continue? %s [%s]: ")%(color.UNDERLINE,url,color.END,options,options[-1]))
+	if not unattended:
+		resp=input(_("You're going to add the repo present at %s%s%s. Continue? %s [%s]: ")%(color.UNDERLINE,url,color.END,options,options[-1]))
+	else:
+		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
 		try:
 			proposed_name=url
@@ -94,11 +107,19 @@ def add_repo():
 			defname='_'.join(name)
 		else:
 			defname=name
-		name=input(_("Name for the repository [%s]: ")%defname)
-		if name.strip()=='':
-			name=defname
-		desc=''
-		desc=input(_("Description for the repository (optional): "))
+		if reponame!='':
+			name=reponame
+		else:
+			if not unattended:
+				name=input(_("Name for the repository [%s]: ")%defname)
+			if name.strip()=='':
+				name=defname
+		if repoinfo!='':
+			desc=repoinfo
+		else:
+			desc=''
+			if not unattended:
+				desc=input(_("Description for the repository (optional): "))
 		try:
 			if key:
 				n4dcredentials=key
@@ -116,12 +137,16 @@ def add_repo():
 
 def disable_repo():
 	repos=_get_repos()
+	global unattended
 	if action['d'].strip().isdigit():
 		reponame=repo_index[int(action['d'])]
 	else:
 		reponame=action['d']
 	options=_("Y/N")
-	resp=input(_("You're going to %sdisable%s repository %s. Continue? %s [%s]: ")%(color.RED,color.END,reponame,options,options[-1]))
+	if not unattended:
+		resp=input(_("You're going to %sdisable%s repository %s. Continue? %s [%s]: ")%(color.RED,color.END,reponame,options,options[-1]))
+	else:
+		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
 		repos[reponame]['enabled']='false'
 		if key:
@@ -140,13 +165,18 @@ def disable_repo():
 #def disable_repo
 
 def enable_repo():
+	global key
+	global unattended
 	repos=_get_repos()
 	if action['e'].strip().isdigit():
 		reponame=repo_index[int(action['e'])]
 	else:
 		reponame=action['e']
 	options=_("Y/N")
-	resp=input(_("You're going to enable repository %s. Continue? %s [%s]: ")%(reponame,options,options[-1]))
+	if not unattended:
+		resp=input(_("You're going to enable repository %s. Continue? %s [%s]: ")%(reponame,options,options[-1]))
+	else:
+		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
 		repos[reponame]['enabled']='true'
 		if key:
@@ -192,6 +222,7 @@ def list_disabled_repos():
 
 def _get_repos():
 	repos={}
+	global key
 	if key:
 		n4dcredentials=key
 	else:
@@ -227,7 +258,7 @@ def _get_repos():
 #def _get_repos
 
 def show_help():
-	print(_("Usage: %s -n repository_name [ -d repository_description ] -u repository_url")%(sys.argv[0]))
+	print(_("Usage: %s ACTION")%(sys.argv[0]))
 	print(_("\nRepoMan"))
 	print(_("\nParameters:"))
 	for parm,data in sorted(parms_dict.items()):
@@ -306,6 +337,12 @@ if error_dict:
 if not action:
 	show_help()
 
+if 'n' in action.keys():
+	reponame=action['n']
+if 'i' in action.keys():
+	repoinfo=action['i']
+if 'y' in action.keys():
+	unattended=True
 
 if 'h' in action.keys():
 	show_help()
