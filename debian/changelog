@@ -1,3 +1,9 @@
+repoman (1.0.4) bionic; urgency=medium
+
+  * Add component preschool to lliurex bionic repo
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Wed, 29 May 2019 15:48:02 +0200
+
 repoman (1.0.3) bionic; urgency=medium
 
   * Add unattended mode
