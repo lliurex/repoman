@@ -1,3 +1,9 @@
+repoman (1.1) bionic; urgency=medium
+
+  * Use localhost when server is not known
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Thu, 06 Jun 2019 12:02:30 +0200
+
 repoman (1.0.4) bionic; urgency=medium
 
   * Add component preschool to lliurex bionic repo
