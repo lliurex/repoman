@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import os,sys
+import os,sys,socket
 import xmlrpc.client as n4d
 import ssl
 from collections import OrderedDict
@@ -11,6 +11,12 @@ _ = gettext.gettext
 
 n4dserver=None
 server='server'
+#Validate if 'server' is a known machine
+try:
+	socket.gethostbyname(server)
+except:
+	server='localhost'
+
 credentials=[]
 repoman=RepoManager.manager()
 repoman.dbg=False
@@ -128,6 +134,7 @@ def add_repo():
 			err=n4dserver.add_repo(n4dcredentials,"RepoManager",name,desc,url)['status']
 			if err:
 				print("\n%s"%error.ADD)
+				print(err)
 			else:
 				print(_("Repository %s %sadded successfully%s")%(url,color.BLUE,color.END))
 		except Exception as e:
