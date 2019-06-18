@@ -3,7 +3,7 @@ import repomanager.RepoManager as RepoMan
 
 class RepoManager():
 	def __init__(self):
-		self.dbg=True
+		self.dbg=False
 		self.repoman=RepoMan.manager()
 
 	def _debug(self,msg):

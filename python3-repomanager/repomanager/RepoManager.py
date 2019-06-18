@@ -6,7 +6,7 @@ import json
 from collections import OrderedDict
 class manager():
 		def __init__(self):
-			self.dbg=True
+			self.dbg=False
 			self.sources_file='/etc/apt/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'

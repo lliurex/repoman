@@ -33,7 +33,7 @@ MARGIN=6
 class main:
 
 	def __init__(self):
-		self.dbg=True
+		self.dbg=False
 		self.err_msg={1:_("Invalid Url"),
 						2:_("Can't add repository information.\nCheck your permissions"),
 						3:_("Can't write sources file.\nCheck your permissions"),
