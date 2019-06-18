@@ -1,3 +1,9 @@
+repoman (1.2) bionic; urgency=medium
+
+  * Fix Lliurex 19 conf file
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Tue, 18 Jun 2019 13:45:43 +0200
+
 repoman (1.1) bionic; urgency=medium
 
   * Use localhost when server is not known
