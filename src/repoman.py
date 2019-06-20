@@ -165,7 +165,7 @@ class main:
 		tlb_add=Gtk.ToolButton(btn_add)
 		tlb_add.connect("clicked",self._load_screen,"newrepo")
 		tlb_add.set_icon_name("list-add")
-		tlb_add.set_tooltip_text(_("Add external repositorie"))
+		tlb_add.set_tooltip_text(_("Add external repository"))
 		self.toolbar.insert(tlb_add,2)
 		
 		return(self.toolbar)
