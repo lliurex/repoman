@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=RepoMan
+GenericName=RepoMan
+Comment=Manage your system repositories
+Comment[es]=Gestiona los repositorios del sistema
+Comment[ca_ES@valencia]=Gestiona els repositoris del sistema
+Comment[ca_ES.UTF-8@valencia]=Gestiona els repositoris del sistema
+Comment[ca]=Manage your system repositories
+Exec=repoman
+Terminal=false
+Type=Application
+Icon=repoman
+Name[ca_ES.UTF-8@valencia]=RepoMan
+Name[ca_ES@valencia]=RepoMan
+Name[ca]=RepoMan
+Name[es]=RepoMan
+Categories=GNOME;GTK;LliureX;Administration;
+TryExec=/usr/bin/repoman

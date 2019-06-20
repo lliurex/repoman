@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+<id>repoman</id>
+<metadata_license>CC0-1.0</metadata_license>
+<name>RepoMan</name>
+<name xml:lang="ca_ES.UTF-8@valencia">RepoMan</name>
+<name xml:lang="ca_ES@valencia">RepoMan</name>
+<name xml:lang="ca">RepoMan</name>
+<name xml:lang="es">RepoMan</name>
+<summary>Manage your repositories</summary>
+<summary xml:lang="es">Gestiona los repositorios del sistema</summary>
+<summary xml:lang="ca_ES@valencia">Gestiona els repositoris del sistema</summary>
+<summary xml:lang="ca_ES.UTF-8@valencia">Gestiona els repositoris del sistema</summary>
+<summary xml:lang="ca">Manage your repositories</summary>
+<description>
+<p>Let RepoMan's mighty power to manage your system repositories with easiness.</p>
+<p xml:lang="es">Permite al increible RepoMan gestionar los repositorios del sistema con sencillez</p>
+<p xml:lang="ca_ES@valencia">Permet al increible RepoMan gestionar els repositoris del sistema amb facilitat</p>
+<p xml:lang="ca_ES.UTF-8@valencia">Permet al increible RepoMan gestionar els repositoris del sistema amb facilitat</p>
+<p xml:lang="ca">Permet al increible RepoMan gestionar els repositoris del sistema amb facilitat</p>
+</description>
+<categories>
+<category>GNOME</category>
+<category>GTK</category>
+<category>Administration</category>
+<category>LliureX</category>
+
+</categories>
+<icon type="stock">repoman</icon>
+<provides><binary>repomanager</binary></provides>
+<keywords>
+<keyword>repository</keyword>
+<keyword>manager</keyword>
+<keyword>apt</keyword>
+<keyword>sources</keyword>
+<keyword>list</keyword>
+<keyword>software</keyword>
+<keyword>store</keyword>
+<keyword>install</keyword>
+</keywords>
+<keywords xml:lang="ca_ES.UTF-8@valencia">
+<keyword>programari</keyword>
+<keyword>gestió</keyword>
+<keyword>botiga</keyword>
+<keyword>fonts</keyword>
+<keyword>instal·lar</keyword>
+</keywords>
+<keywords xml:lang="ca_ES@valencia">
+<keyword>programari</keyword>
+<keyword>gestió</keyword>
+<keyword>botiga</keyword>
+<keyword>fonts</keyword>
+<keyword>instal·lar</keyword>
+</keywords>
+<keywords xml:lang="ca">
+<keyword>programari</keyword>
+<keyword>gestió</keyword>
+<keyword>botiga</keyword>
+<keyword>fonts</keyword>
+<keyword>instal·lar</keyword>
+</keywords>
+<keywords xml:lang="es">
+<keyword>gestión</keyword>
+<keyword>software</keyword>
+<keyword>tienda</keyword>
+<keyword>instalar</keyword>
+<keyword>fuentes</keyword>
+</keywords>
+</component>

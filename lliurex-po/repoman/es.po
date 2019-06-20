@@ -1,0 +1,308 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-11 09:55+0100\n"
+"PO-Revision-Date: 2019-02-11 09:56+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/repoman-cli.py:32
+msgid "Add repository"
+msgstr "Añadir repositorio"
+
+#: ../src/repoman-cli.py:33
+msgid "Disable repo"
+msgstr "Deshabilitar repositorio"
+
+#: ../src/repoman-cli.py:34
+msgid "Enable repo"
+msgstr "Activar repositorio"
+
+#: ../src/repoman-cli.py:35
+msgid "User's password"
+msgstr "Contraseña"
+
+#: ../src/repoman-cli.py:36
+msgid "Username"
+msgstr "Usuario"
+
+#: ../src/repoman-cli.py:37
+msgid "Server url"
+msgstr "Url del Servidor"
+
+#: ../src/repoman-cli.py:38
+msgid "List repositories"
+msgstr "Mostrar todos los repositorios"
+
+#: ../src/repoman-cli.py:39
+msgid "List enabled repositories"
+msgstr "Mostrar los repositorios activos"
+
+#: ../src/repoman-cli.py:40
+msgid "List disabled repositories"
+msgstr "Mostrar los repositorios deshabilitados"
+
+#: ../src/repoman-cli.py:41
+msgid "Show help"
+msgstr "Ayuda"
+
+#: ../src/repoman-cli.py:47 ../src/repoman.py:38
+msgid "Invalid Url"
+msgstr "Url no válida"
+
+#: ../src/repoman-cli.py:48 ../src/repoman.py:39
+msgid ""
+"Can't add repository information.\n"
+"Check your permissions"
+msgstr ""
+"No se puede añadir la información del repositorio\n"
+"Comprueba los permisos"
+
+#: ../src/repoman-cli.py:49 ../src/repoman.py:40
+msgid ""
+"Can't write sources file.\n"
+"Check your permissions"
+msgstr ""
+"No se puede escribir el fichero de fuentes\n"
+"Comprueba los repositorios"
+
+#: ../src/repoman-cli.py:50 ../src/repoman.py:41
+msgid "Repository not found at given Url"
+msgstr "No se encuentra un repositorio en la url indicada"
+
+#: ../src/repoman-cli.py:51 ../src/repoman.py:42
+msgid "Repositories failed to update"
+msgstr "Fallo al actualizar los repositorios"
+
+#: ../src/repoman-cli.py:52 ../src/repoman.py:43
+msgid "Mirror not availabe"
+msgstr "Mirror no disponible"
+
+#: ../src/repoman-cli.py:53
+msgid "This repository could'nt be overwrited"
+msgstr "No se pudo sobreescribir el repositorio"
+
+#: ../src/repoman-cli.py:54
+msgid "Failed to add repo"
+msgstr "Error al añadir repositorio"
+
+#: ../src/repoman-cli.py:55
+msgid "Unknown host"
+msgstr "Servidor desconocido"
+
+#: ../src/repoman-cli.py:56
+msgid "You must be root or supply a valid username/password"
+msgstr "Debes ser root o proporcionar un usuario y contraseña válidos"
+
+#: ../src/repoman-cli.py:57
+msgid "Incorrect username/password"
+msgstr "Usuario o contraseña incorrectos"
+
+#: ../src/repoman-cli.py:58
+msgid "Error retrieving data from server"
+msgstr "Error leyendo la información del servidor"
+
+#: ../src/repoman-cli.py:74 ../src/repoman-cli.py:123 ../src/repoman-cli.py:148
+msgid "Y/N"
+msgstr "S/N"
+
+#: ../src/repoman-cli.py:75
+#, python-format
+msgid "You're going to add the repo present at %s%s%s. Continue? %s [%s]: "
+msgstr "Se va a añadir el repositorio presente en %s%s%s. ¿Continuar? %s [%s]:"
+
+#: ../src/repoman-cli.py:97
+#, python-format
+msgid "Name for the repository [%s]: "
+msgstr "Nombre del repositorio [%s]: "
+
+#: ../src/repoman-cli.py:101
+msgid "Description for the repository (optional): "
+msgstr "Descripción del repositorio (opcional):"
+
+#: ../src/repoman-cli.py:111
+#, python-format
+msgid "Repository %s %sadded successfully%s"
+msgstr "Repositorio %s %sañadido%s"
+
+#: ../src/repoman-cli.py:124
+#, python-format
+msgid "You're going to %sdisable%s repository %s. Continue? %s [%s]: "
+msgstr "Se va a %sdeshabilitar%s el repositorio %s. ¿Continuar? %s [%s]:"
+
+#: ../src/repoman-cli.py:149
+#, python-format
+msgid "You're going to enable repository %s. Continue? %s [%s]: "
+msgstr "Se va activar el repositorio %s. ¿Continuar? %s [%s]:"
+
+#: ../src/repoman-cli.py:169
+msgid "Enabled"
+msgstr "Activo"
+
+#: ../src/repoman-cli.py:173
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#: ../src/repoman-cli.py:230
+#, python-format
+msgid ""
+"Usage: %s -n repository_name [ -d repository_description ] -u repository_url"
+msgstr "Uso: %s -n nombre del repo [ -d descripción ]  -u url del repositorio"
+
+#: ../src/repoman-cli.py:231
+msgid ""
+"\n"
+"RepoMan"
+msgstr ""
+"\n"
+"RepoMan"
+
+#: ../src/repoman-cli.py:232
+msgid ""
+"\n"
+"Parameters:"
+msgstr ""
+"\n"
+"Parámetros:"
+
+#: ../src/repoman-cli.py:295
+#, python-format
+msgid "Invalid value for argument -%s"
+msgstr "Valor no válido para el argumenrto %s"
+
+#: ../src/repoman-cli.py:299
+msgid "Invalid argument"
+msgstr "Argumento inválido"
+
+#: ../src/repoman.py:123
+msgid "Repositories must be updated. Update now?"
+msgstr "Hay que actualizar los repositorios. ¿Actualizar ahora?"
+
+#: ../src/repoman.py:130
+msgid "Update repositories"
+msgstr "Actualizar repositorios"
+
+#: ../src/repoman.py:153
+msgid "Default repositories"
+msgstr "Repositorios por defecto"
+
+#: ../src/repoman.py:160
+msgid "External repositories"
+msgstr "Repositorios externos"
+
+#: ../src/repoman.py:167
+msgid "Add external repository"
+msgstr "Añadir repositorio externo"
+
+#: ../src/repoman.py:180
+msgid ""
+"From here you can invoke RepoMan's mighty powers to manage your repositories."
+msgstr ""
+"Permite invocar los superpoderes de RepoMan para administrar los "
+"repositorios del sistema."
+
+#: ../src/repoman.py:181
+msgid "Repositories Manager"
+msgstr "Gestor de repositorios"
+
+#: ../src/repoman.py:310
+msgid "Name for the repo"
+msgstr "Nombre del repo"
+
+#: ../src/repoman.py:321
+msgid "Description"
+msgstr "Descripción"
+
+#: ../src/repoman.py:331
+msgid "Url"
+msgstr "Url"
+
+#: ../src/repoman.py:355
+msgid "Name is mandatory"
+msgstr "El nombre es obligatorio"
+
+#: ../src/repoman.py:359
+msgid "Name is too long"
+msgstr "El nombre es demasiado largo"
+
+#: ../src/repoman.py:367
+msgid "Description is too long"
+msgstr "La descripción es demasiado larga"
+
+#: ../src/repoman.py:373
+msgid "Url is mandatory"
+msgstr "La URL es obligatoria"
+
+#: ../src/repoman.py:401
+#, python-format
+msgid "%s already exists. Overwrite it?"
+msgstr "Ya existe %s. ¿Sobreescribirlo?"
+
+#: ../src/repoman.py:428
+#, python-format
+msgid "Added repository %s"
+msgstr "Añadido el repositorio %s"
+
+#: ../src/repoman.py:465
+msgid "Edit sources file"
+msgstr "Editar fichero de fuentes"
+
+#: ../src/repoman.py:472
+msgid "Enable/disable repository"
+msgstr "Habilita/deshabilita el repositorio"
+
+#: ../src/repoman.py:518
+msgid "Repositories updated"
+msgstr "Repositorios actualizados"
+
+#: json ../sources.d/default/lliurex_18.json
+msgid "Lliurex default repositories"
+msgstr "Repositorios de LliureX"
+
+#: json ../sources.d/default/lliurex_mirror.json
+msgid "Local repositories"
+msgstr "Repositorios locales"
+
+#: json ../sources.d/default/ubuntu_bionic.json
+msgid "Ubuntu bionic official repositories"
+msgstr "Repositorios oficiales de Ubuntu Bionic"
+
+#: json ../sources.d/Recursos_LliureX.json
+msgid "Lliurex educational resources"
+msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Mirror repositories"
+#~ msgstr "Repositorios del Mirror"
+
+#~ msgid "Name for the repository: [%s] "
+#~ msgstr "Nombre del repositorio: [%s]"
+
+#~ msgid ""
+#~ "Welcome to RepoMan.\n"
+#~ "From here you can invoke RepoMan's mighty powers to manage your "
+#~ "repositories."
+#~ msgstr ""
+#~ "Bienvenido a RepoMan.\n"
+#~ "Desde aquí se pueden usar los increíbles poderes de RepoMan para "
+#~ "gestionar los repositorios."
+
+#~ msgid "%s is yet configured. Overwrite it?"
+#~ msgstr "%s ya está configurado. ¿Sobreescribir?"
+
+#~ msgid "Added new repository %s"
+#~ msgstr "Añadido repositorio %s"
+
+#~ msgid "Error adding repository %s"
+#~ msgstr "Error añadiendo el repositorio %s"
