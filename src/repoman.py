@@ -534,7 +534,7 @@ class main:
 			try:
 				display=os.environ['DISPLAY']
 				subprocess.run(["xhost","+"])
-				subprocess.run(["pkexec","kde-open5","%s/%s.list --display %s"%(APT_SRC_DIR,sfile,display)],check=True)
+				subprocess.run(["pkexec","scite","%s/%s.list"%(APT_SRC_DIR,sfile)],check=True)
 				subprocess.run(["xhost","-"])
 			except Exception as e:
 				self._debug("_edit_source_file error: %s"%e)
