@@ -2,6 +2,8 @@
 import os,sys,subprocess
 #from urllib.request import Request,urlopen,urlretrieve
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 import json
 import re
@@ -16,7 +18,7 @@ class manager():
 			self.repotypes=['file:','cdrom:','http:','https:','ftp:','copy:','rsh:','ssh:','ppa:']
 			self.components=['main','universe','multiverse','contrib','non-free','restricted','oss','non-oss','partner','preschool']
 			self.distros=['bionic','bionic-security','bionic-updates','testing','stable']
-			self.def_repos=['lliurex 18','lliurex mirror','ubuntu bionic']
+			self.def_repos=['lliurex 19','lliurex mirror','ubuntu bionic']
 			self.data={}
 
 		def _debug(self,msg):
@@ -282,8 +284,16 @@ class manager():
 		#def add_repo
 
 		def _get_http_dirs(self,url):
+			session=requests.Session()
+			retry=Retry(connect=3, backoff_factor=0.5)
+			adapter=HTTPAdapter(max_retries=retry)
+			session.mount('http://',adapter)
+			session.mount('https:',adapter)
 			def read_dir(url):
-				req=requests.get(url)
+				try:
+					req=session.get(url, verify=False)
+				except Exception as e:
+					self._debug("Error conneting to %s: %s"%(url,e))
 				dirlist=[]
 				try:
 					content=req.text
