@@ -89,7 +89,7 @@ def add_repo():
 	global unattended
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to add the repo present at %s%s%s. Continue? %s [%s]: ")%(color.UNDERLINE,url,color.END,options,options[-1]))
+			resp=input(_("You're going to add the repo present at %(color1)s%(url)s%(color2)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.UNDERLINE,'url':url,'color2':color.END,'options':options,'default':options[-1]}))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
@@ -136,7 +136,7 @@ def add_repo():
 				print("\n%s"%error.ADD)
 				print(err)
 			else:
-				print(_("Repository %s %sadded successfully%s")%(url,color.BLUE,color.END))
+					print(_("Repository %(url)s %(color1)sadded successfully%(color2)s")%({'url':url,'color1':color.BLUE,'color2':color.END}))
 		except Exception as e:
 			print("add_repo %s"%error.DATA)
 		
@@ -151,7 +151,7 @@ def disable_repo():
 		reponame=action['d']
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to %sdisable%s repository %s. Continue? %s [%s]: ")%(color.RED,color.END,reponame,options,options[-1]))
+		resp=input(_("You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.RED,'color2':color.END,'repo':reponame,'options':options,'default':options[-1]}))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
@@ -181,7 +181,7 @@ def enable_repo():
 		reponame=action['e']
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to enable repository %s. Continue? %s [%s]: ")%(reponame,options,options[-1]))
+		resp=input(_("You're going to enable repository %(name)s. Continue? %(options)s [%(default)s]: ")%({'repo':reponame,'options':options,'default':options[-1]}))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():

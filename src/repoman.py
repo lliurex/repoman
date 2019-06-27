@@ -165,7 +165,7 @@ class main:
 		tlb_add=Gtk.ToolButton(btn_add)
 		tlb_add.connect("clicked",self._load_screen,"newrepo")
 		tlb_add.set_icon_name("list-add")
-		tlb_add.set_tooltip_text(_("Add external repositorie"))
+		tlb_add.set_tooltip_text(_("Add external repository"))
 		self.toolbar.insert(tlb_add,2)
 		
 		return(self.toolbar)
@@ -534,7 +534,7 @@ class main:
 			try:
 				display=os.environ['DISPLAY']
 				subprocess.run(["xhost","+"])
-				subprocess.run(["pkexec","kde-open5","%s/%s.list --display %s"%(APT_SRC_DIR,sfile,display)],check=True)
+				subprocess.run(["pkexec","scite","%s/%s.list"%(APT_SRC_DIR,sfile)],check=True)
 				subprocess.run(["xhost","-"])
 			except Exception as e:
 				self._debug("_edit_source_file error: %s"%e)
