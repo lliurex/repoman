@@ -175,6 +175,7 @@ class main:
 		login=N4dGtkLogin(orientation=Gtk.Orientation.VERTICAL)
 #		login=N4dGtkLogin()
 		login.set_mw_proportion_ratio(1,2)
+		login.set_default_server('localhost')
 		login.set_allowed_groups(['adm','teachers'])
 		login.set_login_banner(image=LOGIN_IMG)
 		login.set_label_background(255,255,255,0.3)
