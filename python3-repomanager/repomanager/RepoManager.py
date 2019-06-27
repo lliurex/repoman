@@ -14,7 +14,7 @@ class manager():
 			self.repotypes=['file:','cdrom:','http:','https:','ftp:','copy:','rsh:','ssh:','ppa:']
 			self.components=['main','universe','multiverse','contrib','non-free','restricted','oss','non-oss','partner','preschool']
 			self.distros=['bionic','bionic-security','bionic-updates','testing','stable']
-			self.def_repos=['lliurex 18','lliurex mirror','ubuntu bionic']
+			self.def_repos=['lliurex 19','lliurex mirror','ubuntu bionic']
 			self.data={}
 
 		def _debug(self,msg):
@@ -291,17 +291,23 @@ class manager():
 
 		def _get_http_dirs(self,url):
 			def read_dir(url):
-				req=Request(url)
 				dirlist=[]
+				sw_ok=True
 				try:
-					content=urlopen(req).read()
-					soup=BeautifulSoup(content,'html.parser')
-					links=soup.find_all('a')
-					for link in links:
-						fname=link.extract().get_text()
-						dirlist.append(fname)
+					req=Request(url)
 				except:
-					self._debug("Couldn't open %s"%url)
+					self._debug("Error requesting %s"%url)
+					sw_ok=False
+				if sw_ok:
+					try:
+						content=urlopen(req).read()
+						soup=BeautifulSoup(content,'html.parser')
+						links=soup.find_all('a')
+						for link in links:
+							fname=link.extract().get_text()
+							dirlist.append(fname)
+					except:
+						self._debug("Couldn't open %s"%url)
 				return(dirlist)
 
 			repo_url=[]
