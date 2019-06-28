@@ -10,7 +10,7 @@ gettext.textdomain('repoman')
 _ = gettext.gettext
 
 n4dserver=None
-server='server'
+server='localhost'
 #Validate if 'server' is a known machine
 try:
 	socket.gethostbyname(server)
@@ -181,7 +181,7 @@ def enable_repo():
 		reponame=action['e']
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to enable repository %(name)s. Continue? %(options)s [%(default)s]: ")%({'repo':reponame,'options':options,'default':options[-1]}))
+		resp=input(_("You're going to enable repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'repo':reponame,'options':options,'default':options[-1]}))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
@@ -191,11 +191,26 @@ def enable_repo():
 		else:
 			n4dcredentials=credentials
 		repo={reponame:repos[reponame]}
-		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
-			if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']!=True:
-				print (error.SOURCES)
+		err=0
+		if reponame.lower()=="lliurex mirror":
+			#Mirror must be checked against server
+			try:
+				server='server'
+				context=ssl._create_unverified_context()
+				n4d_server=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
+				ret=n4d_server.is_mirror_available(n4dcredentials,"MirrorManager")['status']
+				if ret!=True:
+					err=6
+			except:
+				err=6
+		if err:
+			print (error.MIRROR)
 		else:
-			print (error.INFO)
+			if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
+				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']!=True:
+					print (error.SOURCES)
+			else:
+				print (error.INFO)
 #def enable_repo
 
 def list_repos():
