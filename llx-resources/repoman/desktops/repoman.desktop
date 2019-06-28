@@ -17,5 +17,5 @@ Name[ca@valencia]=RepoMan
 Name[ca_ES@valencia]=RepoMan
 Name[ca]=RepoMan
 Name[es_ES]=RepoMan
-Categories=GNOME;GTK;LliureX;Administration;
+Categories=GNOME;GTK;LliureX-Administration;
 TryExec=/usr/bin/repoman
