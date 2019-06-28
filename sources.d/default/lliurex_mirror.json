@@ -4,9 +4,9 @@
         "desc": "Local repositories",
         "enabled": "False",
         "repos": [
-            "http://172.20.8.6/mirror/lliurex xenial main restricted universe multiverse",
-            "http://172.20.8.6/mirror/lliurex xenial-updates main restricted universe multiverse",
-            "http://172.20.8.6/mirror/lliurex xenial-security main restricted universe multiverse"
+            "http://server/mirror/llx19 xenial main restricted universe multiverse",
+            "http://server/mirror/llx19 xenial-updates main restricted universe multiverse",
+            "http://server/mirror/llx19 xenial-security main restricted universe multiverse"
         ]
     }
 }

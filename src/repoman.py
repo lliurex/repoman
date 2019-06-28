@@ -237,8 +237,15 @@ class main:
 		widget=args[0]
 		err=0
 		if reponame.lower()=="lliurex mirror":
-			ret=subprocess.run(["lliurex-version","-m"],universal_newlines=True,stdout=subprocess.PIPE)
-			if ret.stdout.strip()=="False":
+			#Mirror must be checked against server
+			try:
+				server='server'
+				context=ssl._create_unverified_context()
+				n4d_server=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
+				ret=n4d_server.is_mirror_available(self.credentials,"MirrorManager")['status']
+				if ret!=True:
+					err=6
+			except:
 				err=6
 		if err==0:
 			self.repos[reponame].update({'enabled':str(state)})
