@@ -1,3 +1,10 @@
+repoman (1.4.3) bionic; urgency=medium
+
+  * Set login image
+  * Change resources repo from xenial to bionic (unavailable at this moment)
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Fri, 05 Jul 2019 12:51:50 +0200
+
 repoman (1.4.2) bionic; urgency=medium
 
   * Update login background
