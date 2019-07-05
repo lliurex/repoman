@@ -6,7 +6,7 @@
         "enabled": "True",
 		"protected":"True",
         "repos": [
-            "http://lliurex.net/recursos-edu xenial main restricted universe multiverse"
+            "http://lliurex.net/recursos-edu bionic main restricted universe multiverse"
         ]
     }
 }
