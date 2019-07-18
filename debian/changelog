@@ -1,4 +1,4 @@
-repoman (1.4.3) bionic; urgency=medium
+repoman (1.4.3-1) bionic; urgency=medium
 
   * Set login image
   * Change resources repo from xenial to bionic (unavailable at this moment)
