@@ -1,3 +1,9 @@
+repoman (1.4.4) bionic; urgency=medium
+
+  * Fix mirror url
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Fri, 19 Jul 2019 22:32:43 +0200
+
 repoman (1.4.3-1) bionic; urgency=medium
 
   * Set login image
