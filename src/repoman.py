@@ -49,6 +49,7 @@ class main:
 		self.credentials=[]
 		self.server=None
 		self.repos={}
+		self.signals={}
 		self._render_gui()
 	#def __init__
 
@@ -260,9 +261,12 @@ class main:
 				err=2
 		if err:
 			self.toolbar.set_sensitive(False)
-			GLib.timeout_add(3000,self.show_info,(self.err_msg[err]),"ERROR_LABEL")
+			GLib.timeout_add(3000,self.show_info,(self.err_msg[err]),"ERROR_LABEL",False,widget)
+			widget.handler_block(self.signals[widget])
 			widget.set_state(not(state))
-			return True
+			widget.handler_unblock(self.signals[widget])
+
+#			return True
 		else:
 			self.stack.set_sensitive(True)
 			self.box_info.show_all()
@@ -489,7 +493,7 @@ class main:
 			swt_repo.set_active(True)
 		else:
 			swt_repo.set_active(False)
-		swt_repo.connect("state_set",self._repo_state_changed,name)
+		self.signals[swt_repo]=swt_repo.connect("state_set",self._repo_state_changed,name)
 		sourcebox.attach(repobox,0,index,1,1)
 		sourcebox.attach(swt_repo,2,index,1,1)
 		sourcebox.attach(Gtk.Separator(),0,index+1,1,1)
@@ -565,7 +569,7 @@ class main:
 			self._debug("File %s/%s not found"%(APT_SRC_DIR,sfile))
 	#def _edit_source_file
 
-	def show_info(self,msg='',style="NOTIF_LABEL",show_info=False):
+	def show_info(self,msg='',style="NOTIF_LABEL",show_info=False,widget=None):
 		if self.rev_info.get_reveal_child():
 			self.rev_info.set_reveal_child(False)
 			self.stack.set_sensitive(True)
@@ -574,6 +578,11 @@ class main:
 				self.box_info.set_no_show_all(False)
 				self.box_info.show_all()
 				self.box_info.set_no_show_all(True)
+			if widget:
+				if widget in self.signals.keys():
+					widget.handler_block(self.signals[widget])
+					widget.set_active(False)
+					widget.handler_unblock(self.signals[widget])
 			return False
 		lbl=None
 		for child in self.rev_info.get_children():
