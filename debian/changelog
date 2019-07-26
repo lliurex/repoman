@@ -1,3 +1,9 @@
+repoman (1.4.6) bionic; urgency=medium
+
+  * Set background colour
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Fri, 26 Jul 2019 09:51:56 +0200
+
 repoman (1.4.5) bionic; urgency=medium
 
   * Fix graphical bug on enable mirror when no mirror is present
