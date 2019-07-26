@@ -181,7 +181,7 @@ class main:
 		login.set_login_banner(image=LOGIN_IMG)
 		login.set_label_background(255,255,255,0.3)
 #		login.set_mw_background(image=LOGIN_BACKGROUND,cover=True)
-#		login.set_mw_background(from_color="white",to_color="grey",gradient='radial')
+		login.set_mw_background(from_color="white",to_color="grey",gradient='radial')
 		desc=_("From here you can invoke RepoMan's mighty powers to manage your repositories.")
 		login.set_info_text("<span foreground='black'>RepoMan</span>",_("Repositories Manager"),"<span foreground='black'>"+desc+"</span>\n")
 		login.after_validation_goto(self._signin)
