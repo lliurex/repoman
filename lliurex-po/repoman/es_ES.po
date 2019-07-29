@@ -60,7 +60,7 @@ msgstr "Mostrar los repositorios activos"
 
 #: ../src/repoman-cli.py:51
 msgid "Yes to all questions (unattended)"
-msgstr "Si a todas las preguntqas (desatendida)"
+msgstr "Si a todas las preguntas (desatendida)"
 
 #: ../src/repoman-cli.py:52
 msgid "List disabled repositories"
