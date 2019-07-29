@@ -1,8 +1,20 @@
-repoman (1.4.5) bionic; urgency=medium
+repoman (1.4.7) bionic; urgency=medium
 
   * Fix spanish translation
 
  -- Juanma Navarro Mañez <juanma1980@gmail.com>  Mon, 29 Jul 2019 11:33:07 +0200
+
+repoman (1.4.6) bionic; urgency=medium
+
+  * Set background colour
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Fri, 26 Jul 2019 09:51:56 +0200
+
+repoman (1.4.5) bionic; urgency=medium
+
+  * Fix graphical bug on enable mirror when no mirror is present
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Tue, 23 Jul 2019 15:11:57 +0200
 
 repoman (1.4.4) bionic; urgency=medium
 
