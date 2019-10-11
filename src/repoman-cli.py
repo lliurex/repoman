@@ -134,7 +134,9 @@ def add_repo():
 			err=n4dserver.add_repo(n4dcredentials,"RepoManager",name,desc,url)['status']
 			if err:
 				print("\n%s"%error.ADD)
-				print(err)
+				errorDict={"1":error.URL,"2":error.INFO,"3":error.SOURCES,"4":error.REPO}
+				errorMsg=errorDict.get(str(err),error.REPO)
+				print(errorMsg)
 			else:
 					print(_("Repository %(url)s %(color1)sadded successfully%(color2)s")%({'url':url,'color1':color.BLUE,'color2':color.END}))
 		except Exception as e:
