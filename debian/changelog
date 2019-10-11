@@ -1,3 +1,9 @@
+repoman (1.4.8) bionic; urgency=medium
+
+  * Cli errors return messages
+
+ -- Juanma Navarro Mañez <juanma1980@gmail.com>  Fri, 11 Oct 2019 14:22:13 +0200
+
 repoman (1.4.7) bionic; urgency=medium
 
   * Fix spanish translation
