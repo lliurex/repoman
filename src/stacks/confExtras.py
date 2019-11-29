@@ -1,0 +1,95 @@
+#!/usr/bin/python3
+import sys
+import os
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
+		QHeaderView,QTableWidgetSelectionRange
+from PyQt5 import QtGui
+from PyQt5.QtCore import Qt
+from appconfig.appConfigStack import appConfigStack as confStack
+
+import gettext
+_ = gettext.gettext
+
+class confExtras(confStack):
+	def __init_stack__(self):
+		self.dbg=False
+		self._debug("confDefault Load")
+		self.menu_description=(_("Manage custom  repositories"))
+		self.description=(_("Custom repositories"))
+		self.icon=('go-home')
+		self.tooltip=(_("From here you can manage your custom repositories"))
+		self.index=3
+		self.enabled=True
+		self.level='user'
+	#def __init__
+	
+	def _load_screen(self):
+		box=QVBoxLayout()
+		lbl_txt=QLabel(_("Enable or disable extra repositories"))
+		lbl_txt.setAlignment(Qt.AlignTop)
+		box.addWidget(lbl_txt,0)
+		self.table=QTableWidget(1,2)
+		Hheader=self.table.horizontalHeader()
+		Vheader=self.table.verticalHeader()
+		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
+		Vheader.setSectionResizeMode(0,QHeaderView.ResizeToContents)
+		self.table.setShowGrid(False)
+		self.table.setSelectionBehavior(QTableWidget.SelectRows)
+		self.table.setSelectionMode(QTableWidget.SingleSelection)
+		self.table.setEditTriggers(QTableWidget.NoEditTriggers)
+		self.table.horizontalHeader().hide()
+		self.table.verticalHeader().hide()
+		box.addWidget(self.table)
+		self.setLayout(box)
+		self.updateScreen()
+	#def _load_screen
+
+	def updateScreen(self):
+		self.table.clearContents()
+		while self.table.rowCount():
+			self.table.removeRow(0)
+		config=self.getConfig()
+		defaultRepos=self.n4dQuery("RepoManager","list_sources").get('data',None)
+		print(defaultRepos)
+		states={}
+		for repo,data in defaultRepos.items():
+			state=data.get('enabled','false')
+			if state=='true':
+				states[repo]=True
+			else:
+				states[repo]=False
+		row=0
+		for repo,status in states.items():
+			self.table.insertRow(row)
+			self.table.setCellWidget(row,0,QLabel(repo))
+			self.table.setCellWidget(row,1,QCheckBox())
+			row+=1
+	#def _udpate_screen
+	
+	def writeConfig(self):
+		sw_ko=False
+		level=self.level
+		idx=self.cmb_level.currentIndex()
+		if idx==0:
+			configLevel='user'
+		elif idx==1:
+			configLevel='system'
+		elif idx==2:
+			configLevel='n4d'
+
+		if configLevel!=level:
+			if not self.saveChanges('config',configLevel,'system'):
+				self.saveChanges('config',level,'system')
+				sw_ko=True
+		if sw_ko==False:
+			startup=self.chk_startup.isChecked()
+			if self.saveChanges('startup',startup):
+				close=self.chk_close.isChecked()
+				if not self.saveChanges('close',close):
+					sw_ko=True
+			else:
+				sw_ko=True
+		else:
+			sw_ko=True
+	#def writeConfig
+
