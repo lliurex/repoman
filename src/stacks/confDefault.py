@@ -14,7 +14,6 @@ _ = gettext.gettext
 
 class confDefault(confStack):
 	def __init_stack__(self):
-		self.dbg=False
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -35,7 +34,8 @@ class confDefault(confStack):
 		Hheader=self.table.horizontalHeader()
 		Vheader=self.table.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
-		Vheader.setSectionResizeMode(0,QHeaderView.ResizeToContents)
+		Vheader.setSectionResizeMode(0,QHeaderView.Fixed)
+		Vheader.setDefaultSectionSize(64)
 		self.table.setShowGrid(False)
 		self.table.setSelectionBehavior(QTableWidget.SelectRows)
 		self.table.setSelectionMode(QTableWidget.SingleSelection)
@@ -63,35 +63,18 @@ class confDefault(confStack):
 		row=0
 		for repo,status in states.items():
 			self.table.insertRow(row)
-			self.table.setCellWidget(row,0,QLabel(repo))
-			self.table.setCellWidget(row,1,QCheckBox())
+			lbl=QLabel(repo)
+			self.table.setCellWidget(row,0,lbl)
+			chk=QCheckBox()
+			chk.stateChanged.connect(lambda x:self.setChanged(chk))
+			self.table.setCellWidget(row,1,chk)
+			chk.setChecked(status)
 			row+=1
 	#def _udpate_screen
 	
 	def writeConfig(self):
-		sw_ko=False
-		level=self.level
-		idx=self.cmb_level.currentIndex()
-		if idx==0:
-			configLevel='user'
-		elif idx==1:
-			configLevel='system'
-		elif idx==2:
-			configLevel='n4d'
-
-		if configLevel!=level:
-			if not self.saveChanges('config',configLevel,'system'):
-				self.saveChanges('config',level,'system')
-				sw_ko=True
-		if sw_ko==False:
-			startup=self.chk_startup.isChecked()
-			if self.saveChanges('startup',startup):
-				close=self.chk_close.isChecked()
-				if not self.saveChanges('close',close):
-					sw_ko=True
-			else:
-				sw_ko=True
-		else:
-			sw_ko=True
+			#		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
+		res=self.appconf.n4dQuery("RepoManager","write_repo_json").get('data',None)
+		print(res)
 	#def writeConfig
 
