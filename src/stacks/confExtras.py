@@ -10,29 +10,56 @@ from appconfig.appConfigStack import appConfigStack as confStack
 import gettext
 _ = gettext.gettext
 
+class QLabelDescription(QWidget):
+	def __init__(self,label="",description="",parent=None):
+		super (QLabelDescription,self).__init__(parent)
+		self.label=QLabel(label)
+		self.description=QLabel(description)
+		QBox=QVBoxLayout()
+		QBox.addWidget(self.label,1)
+		QBox.addWidget(self.description,0)
+		self.setLayout(QBox)
+		self.show()
+
+	def setText(self,label,description=""):
+		self.label.setText(label)
+		self.description.setText(description)
+
+	def text(self):
+		return([self.label.text(),self.description.text()])
+
 class confExtras(confStack):
 	def __init_stack__(self):
-		self.dbg=False
 		self._debug("confDefault Load")
 		self.menu_description=(_("Manage custom  repositories"))
 		self.description=(_("Custom repositories"))
-		self.icon=('go-home')
+		self.icon=('menu_new')
 		self.tooltip=(_("From here you can manage your custom repositories"))
 		self.index=3
 		self.enabled=True
+		self.defaultRepos={}
 		self.level='user'
 	#def __init__
 	
 	def _load_screen(self):
 		box=QVBoxLayout()
-		lbl_txt=QLabel(_("Enable or disable extra repositories"))
+		info=QWidget()
+		infoBox=QHBoxLayout()
+		lbl_txt=QLabel(_("Manage extra repositories"))
 		lbl_txt.setAlignment(Qt.AlignTop)
-		box.addWidget(lbl_txt,0)
+		infoBox.addWidget(lbl_txt,1)
+		icn_add=QtGui.QIcon().fromTheme('document-new')
+		btn_add=QPushButton()
+		btn_add.setIcon(icn_add)
+		infoBox.addWidget(btn_add,0)
+		info.setLayout(infoBox)
+		box.addWidget(info,0)
 		self.table=QTableWidget(1,2)
 		Hheader=self.table.horizontalHeader()
 		Vheader=self.table.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
-		Vheader.setSectionResizeMode(0,QHeaderView.ResizeToContents)
+		Vheader.setSectionResizeMode(0,QHeaderView.Stretch)
+		Vheader.setDefaultSectionSize(128)
 		self.table.setShowGrid(False)
 		self.table.setSelectionBehavior(QTableWidget.SelectRows)
 		self.table.setSelectionMode(QTableWidget.SingleSelection)
@@ -49,47 +76,40 @@ class confExtras(confStack):
 		while self.table.rowCount():
 			self.table.removeRow(0)
 		config=self.getConfig()
-		defaultRepos=self.n4dQuery("RepoManager","list_sources").get('data',None)
-		print(defaultRepos)
+		self.defaultRepos=self.appConfig.n4dQuery("RepoManager","list_sources").get('data',{})
 		states={}
-		for repo,data in defaultRepos.items():
+		row=0
+		for repo,data in self.defaultRepos.items():
+			self.table.insertRow(row)
 			state=data.get('enabled','false')
 			if state=='true':
-				states[repo]=True
+				state=True
 			else:
-				states[repo]=False
-		row=0
-		for repo,status in states.items():
-			self.table.insertRow(row)
-			self.table.setCellWidget(row,0,QLabel(repo))
-			self.table.setCellWidget(row,1,QCheckBox())
+				state=False
+			description=data.get('desc','')
+			lbl=QLabelDescription(repo,description)
+			self.table.setCellWidget(row,0,lbl)
+			chk=QCheckBox()
+			chk.stateChanged.connect(lambda x:self.setChanged(chk))
+			chk.stateChanged.connect(self.changeState)
+			self.table.setCellWidget(row,1,chk)
+			chk.setChecked(state)
 			row+=1
 	#def _udpate_screen
-	
-	def writeConfig(self):
-		sw_ko=False
-		level=self.level
-		idx=self.cmb_level.currentIndex()
-		if idx==0:
-			configLevel='user'
-		elif idx==1:
-			configLevel='system'
-		elif idx==2:
-			configLevel='n4d'
+	def changeState(self):
+		row=self.table.currentRow()
+		repoWidget=self.table.cellWidget(row,0)
+		stateWidget=self.table.cellWidget(row,1)
+		if repoWidget==None:
+			self._debug("Item not found at %s,%s"%(row,0))
+			return
+		repo=repoWidget.text()[0]
+		state=str(stateWidget.isChecked()).lower()
+		self.defaultRepos[repo]['enabled']="%s"%state
 
-		if configLevel!=level:
-			if not self.saveChanges('config',configLevel,'system'):
-				self.saveChanges('config',level,'system')
-				sw_ko=True
-		if sw_ko==False:
-			startup=self.chk_startup.isChecked()
-			if self.saveChanges('startup',startup):
-				close=self.chk_close.isChecked()
-				if not self.saveChanges('close',close):
-					sw_ko=True
-			else:
-				sw_ko=True
-		else:
-			sw_ko=True
+	def writeConfig(self):
+			#		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
+		for repo in self.defaultRepos.keys():
+			res=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]}).get('data',None)
 	#def writeConfig
 
