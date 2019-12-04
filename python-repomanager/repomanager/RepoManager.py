@@ -117,6 +117,9 @@ class manager():
 					else:
 						wrkdir=self.available_repos_dir
 					wrkfile="%s/%s"%(wrkdir,frepo)
+					if not os.path.isfile(wrkfile):
+						if os.path.isfile(wrkfile.lower()):
+							wrkfile=wrkfile.lower()
 					self._debug("Writing %s"%wrkfile)
 					try:
 						with open(wrkfile,'w') as fcontent:
