@@ -3,9 +3,9 @@ type=python
 path=RepoManager.py
 class=RepoManager
 [METHODS]
-list_default_repos=adm,admins
+list_default_repos=*,anonymous
 write_repo_json=adm,admins
 write_repo=adm,admins
-list_sources=adm,admins
+list_sources=*,anonymous
 add_repo=adm,admins
 update_repos=adm,admins
