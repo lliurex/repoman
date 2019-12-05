@@ -188,7 +188,7 @@ class confExtras(confStack):
 	#def changeState(self)
 
 	def _addRepo(self):
-		self.stack.gotoStack(idx=4,parms="")
+		self.stack.gotoStack(idx=3,parms="")
 	#def _addRepo
 
 	def writeConfig(self):

@@ -18,7 +18,7 @@ class confApp(confStack):
 		self.icon=('dialog-password')
 		self.tooltip=(_("From here you can set the behaviour of the app"))
 		self.index=1
-		self.enabled=True
+		self.enabled=False
 		self.level='system'
 	#def __init__
 	
