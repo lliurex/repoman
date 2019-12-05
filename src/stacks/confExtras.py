@@ -4,25 +4,37 @@ import os
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
 		QHeaderView,QTableWidgetSelectionRange
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,pyqtSignal
 from appconfig.appConfigStack import appConfigStack as confStack
+import subprocess
 
 import gettext
 _ = gettext.gettext
-
+APT_SRC_DIR="/etc/apt/sources.list.d"
 class QLabelDescription(QWidget):
+	clicked=pyqtSignal("PyQt_PyObject")
 	def __init__(self,label="",description="",parent=None):
 		super (QLabelDescription,self).__init__(parent)
+		widget=QWidget()
+		HBox=QHBoxLayout()
 		self.label=QLabel()
 		self.labelText=label
 		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
 		self.label.setStyleSheet("border:0px;margin:0px;")
+		HBox.addWidget(self.label,1)
+		self.btn_edit=QPushButton()
+		icn=QtGui.QIcon().fromTheme('document-edit')
+		self.btn_edit.setIcon(icn)
+		self.btn_edit.clicked.connect(self.editRepo)
+		self.btn_edit.hide()
+		HBox.addWidget(self.btn_edit)
+		widget.setLayout(HBox)
 		self.description=QLabel()
 		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px;margin-top:0px;")
 		self.descriptionText=description
 		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
 		QBox=QVBoxLayout()
-		QBox.addWidget(self.label,1,Qt.AlignBottom)
+		QBox.addWidget(widget,1,Qt.AlignBottom)
 		QBox.addWidget(self.description,1,Qt.AlignTop)
 		self.setLayout(QBox)
 		self.show()
@@ -35,6 +47,15 @@ class QLabelDescription(QWidget):
 
 	def text(self):
 		return([self.labelText,self.descriptionText])
+
+	def showEdit(self):
+		self.btn_edit.show()
+
+	def stateEdit(self,state):
+		self.btn_edit.setEnabled(state)
+
+	def editRepo(self):
+		self.clicked.emit(self.labelText)
 
 class confExtras(confStack):
 	def __init_stack__(self):
@@ -98,6 +119,16 @@ class confExtras(confStack):
 				state=False
 			description=data.get('desc','')
 			lbl=QLabelDescription(repo,description)
+			locked=data.get('protected','false')
+			if type(locked)==type (True):
+				locked=str(locked).lower()
+			else:
+				locked=str(locked).lower()
+				lbl.clicked.connect(self.editRepo)
+			if locked=='false':
+				lbl.showEdit()
+			if not state:
+				lbl.stateEdit(False)
 			self.table.setCellWidget(row,0,lbl)
 			chk=QCheckBox()
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
@@ -108,6 +139,34 @@ class confExtras(confStack):
 			row+=1
 	#def _update_screen
 
+	def editRepo(self,repo,*args):
+		sfile=repo.replace(' ','_')
+		self._debug("Editing %s.list"%sfile)
+		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)):
+			edit=True
+			try:
+				display=os.environ['DISPLAY']
+				subprocess.run(["xhost","+"])
+				subprocess.run(["pkexec","scite","%s/%s.list"%(APT_SRC_DIR,sfile)],check=True)
+				subprocess.run(["xhost","-"])
+			except Exception as e:
+				self._debug("_edit_source_file error: %s"%e)
+				edit=False
+			if edit:
+				newrepos=[]
+				try:
+					with open("%s/%s.list"%(APT_SRC_DIR,sfile),'r') as f:
+						for line in f:
+							newrepos.append(line.strip())
+				except Exception as e:
+					self._debug("_edit_source_file failed: %s"%e)
+				if sorted(self.defaultRepos[repo]['repos'])!=sorted(newrepos):
+					self.defaultRepos[repo]['repos']=newrepos
+					self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
+		else:
+			self._debug("File %s/%s.list not found"%(APT_SRC_DIR,sfile))
+	#def _edit_source_file
+
 	def changeState(self):
 		row=self.table.currentRow()
 		repoWidget=self.table.cellWidget(row,0)
@@ -116,16 +175,20 @@ class confExtras(confStack):
 			self._debug("Item not found at %s,%s"%(row,0))
 			return
 		repo=repoWidget.text()[0]
-		state=str(stateWidget.isChecked()).lower()
-		self.defaultRepos[repo]['enabled']="%s"%state
+		state=False
+		if stateWidget.isChecked():
+			state=True
+		textState=str(state).lower()
+		self.defaultRepos[repo]['enabled']="%s"%textState
+	#def changeState(self)
 
 	def _addRepo(self):
 		self.stack.gotoStack(idx=4,parms="")
 
 	def writeConfig(self):
-			#		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
 		for repo in self.defaultRepos.keys():
 			self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
 			self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
+		self.updateScreen()
 	#def writeConfig
 
