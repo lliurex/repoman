@@ -16,8 +16,9 @@ class QLabelDescription(QWidget):
 		self.label=QLabel()
 		self.labelText=label
 		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
+		self.label.setStyleSheet("border:0px;margin:0px;")
 		self.description=QLabel()
-		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px")
+		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px;margin-top:0px;")
 		self.descriptionText=description
 		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
 		QBox=QVBoxLayout()
@@ -124,7 +125,7 @@ class confExtras(confStack):
 	def writeConfig(self):
 			#		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
 		for repo in self.defaultRepos.keys():
-			self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
-			self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+			self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
+			self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 	#def writeConfig
 

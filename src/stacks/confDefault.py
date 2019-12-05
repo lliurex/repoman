@@ -17,13 +17,14 @@ class QLabelDescription(QWidget):
 		self.label=QLabel()
 		self.labelText=label
 		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
+		self.label.setStyleSheet("border:0px;margin:0px;")
 		self.description=QLabel()
-		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px")
+		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px;margin-top:0px;")
 		self.descriptionText=description
 		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
 		QBox=QVBoxLayout()
-		QBox.addWidget(self.label,1,Qt.AlignBottom)
-		QBox.addWidget(self.description,1,Qt.AlignTop)
+		QBox.addWidget(self.label,-1,Qt.AlignBottom)
+		QBox.addWidget(self.description,Qt.AlignTop)
 		self.setLayout(QBox)
 		self.show()
 
