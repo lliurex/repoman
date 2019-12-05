@@ -23,6 +23,7 @@ class QLabelDescription(QWidget):
 		self.label.setStyleSheet("border:0px;margin:0px;")
 		HBox.addWidget(self.label,1)
 		self.btn_edit=QPushButton()
+		self.btn_edit.setToolTip(_("Edit %s file"%label))
 		icn=QtGui.QIcon().fromTheme('document-edit')
 		self.btn_edit.setIcon(icn)
 		self.btn_edit.clicked.connect(self.editRepo)
@@ -53,6 +54,10 @@ class QLabelDescription(QWidget):
 
 	def stateEdit(self,state):
 		self.btn_edit.setEnabled(state)
+		if state:
+			self.btn_edit.setToolTip(_("Edit %s file"%self.labelText))
+		else:
+			self.btn_edit.setToolTip(_("Enable %s and apply to edit"%self.labelText))
 
 	def editRepo(self):
 		self.clicked.emit(self.labelText)
@@ -184,6 +189,7 @@ class confExtras(confStack):
 
 	def _addRepo(self):
 		self.stack.gotoStack(idx=4,parms="")
+	#def _addRepo
 
 	def writeConfig(self):
 		for repo in self.defaultRepos.keys():
