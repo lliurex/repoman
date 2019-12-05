@@ -89,7 +89,7 @@ class confDefault(confStack):
 			else:
 				state=False
 			description=data.get('desc','')
-			lbl=QLabelDescription(repo,description)
+			lbl=QLabelDescription(repo,_(description))
 			self.table.setCellWidget(row,0,lbl)
 			chk=QCheckBox()
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
