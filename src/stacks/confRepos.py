@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayo
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from appconfig.appConfigStack import appConfigStack as confStack
+from edupals.ui import QAnimatedStatusBar
 
 import gettext
 _ = gettext.gettext
@@ -44,6 +45,8 @@ class confRepos(confStack):
 	
 	def _load_screen(self):
 		box=QVBoxLayout()
+		self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
+		box.addWidget(self.statusBar)
 		self.name=QEditDescription()
 		self.name.setDescription(_("name of the repository"),_("Insert repository name"))
 		box.addWidget(self.name)
@@ -66,6 +69,11 @@ class confRepos(confStack):
 		name=self.name.text()
 		desc=self.desc.text()
 		url=self.url.text()
-		return(self.appConfig.n4dQuery("RepoManager","add_repo","\"%s\",\"%s\",\"%s\""%(name,desc,url)))
+		ret=self.appConfig.n4dQuery("RepoManager","add_repo","\"%s\",\"%s\",\"%s\""%(name,desc,url))
+		status=ret.get('status',1)
+		if status:
+			self.statusBar.setText(_("Error adding repository %s"%name))
+			self.statusBar.show()
+		return(ret)
 	#def writeConfig
 

@@ -115,7 +115,10 @@ class confExtras(confStack):
 		self.defaultRepos=self.appConfig.n4dQuery("RepoManager","list_sources").get('data',{})
 		states={}
 		row=0
-		for repo,data in self.defaultRepos.items():
+		orderedKeys=sorted(self.defaultRepos,key=str.casefold)
+#		for repo,data in sorted(self.defaultRepos.items()):
+		for repo in orderedKeys:
+			data=self.defaultRepos[repo]
 			self.table.insertRow(row)
 			state=data.get('enabled','false')
 			if state=='true':
