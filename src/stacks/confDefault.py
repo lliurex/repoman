@@ -48,6 +48,7 @@ class confDefault(confStack):
 		self.index=2
 		self.enabled=True
 		self.defaultRepos={}
+		self.changed=[]
 		self.level='user'
 	#def __init__
 	
@@ -75,6 +76,7 @@ class confDefault(confStack):
 
 	def updateScreen(self):
 		self.table.clearContents()
+		self.changed=[]
 		while self.table.rowCount():
 			self.table.removeRow(0)
 		config=self.getConfig()
@@ -92,6 +94,7 @@ class confDefault(confStack):
 			lbl=QLabelDescription(repo,_(description))
 			self.table.setCellWidget(row,0,lbl)
 			chk=QCheckBox()
+			chk.setTristate(False)
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
 			chk.stateChanged.connect(lambda x:self.setChanged(chk))
 			chk.stateChanged.connect(self.changeState)
@@ -108,13 +111,31 @@ class confDefault(confStack):
 			self._debug("Item not found at %s,%s"%(row,0))
 			return
 		repo=repoWidget.text()[0]
+		#Check mirror
+		if repo.lower()=="lliurex mirror":
+			#Mirror must be checked against server
+			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
+			if not (ret.get('status',False)):
+				self.showMsg(_("Mirror not available"),'error')
+				self.updateScreen()
+				return
 		state=str(stateWidget.isChecked()).lower()
 		self.defaultRepos[repo]['enabled']="%s"%state
+		if repo not in self.changed:
+			self.changed.append(repo)
+	#def changeState
 
 	def writeConfig(self):
 			#		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
-		for repo in self.defaultRepos.keys():
-			self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
-			self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+		for repo in self.changed:
+			self._debug("Updating %s"%repo)
+			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
+			st=ret.get('status',False)
+			if st:
+				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+				if ret.get('status',False)!=True:
+					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+			else:
+				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 	#def writeConfig
 
