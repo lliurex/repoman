@@ -57,7 +57,9 @@ class confApp(confStack):
 		cursor=QtGui.QCursor(Qt.ArrowCursor)
 		self.setCursor(cursor)
 		self.btn_update.setCursor(cursor)
+	#def _updateRepos
 
 	def _launchUpgrade(self):
 		subprocess.run(["pkexec","/usr/sbin/lliurex-up"])
+	#def _launchUpgrade
 	
