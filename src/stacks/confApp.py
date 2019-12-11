@@ -27,12 +27,12 @@ class confApp(confStack):
 	def _load_screen(self):
 		box=QGridLayout()
 #		self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
-		btn_update=QPushButton(_("Update repositories"))
-		btn_update.clicked.connect(self._updateRepos)
+		self.btn_update=QPushButton(_("Update repositories"))
+		self.btn_update.clicked.connect(self._updateRepos)
 		btn_upgrade=QPushButton(_("Launch Lliurex-Up"))
 		btn_upgrade.clicked.connect(self._launchUpgrade)
 #		box.addWidget(self.statusBar,0,0,1,1)
-		box.addWidget(btn_update,0,0,1,1,Qt.AlignCenter)
+		box.addWidget(self.btn_update,0,0,1,1,Qt.AlignCenter)
 		box.addWidget(btn_upgrade,1,0,1,1,Qt.AlignHCenter|Qt.AlignTop)
 		self.setLayout(box)
 		self.updateScreen()
@@ -46,15 +46,17 @@ class confApp(confStack):
 	def _updateRepos(self):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		self.setCursor(cursor)
-		self.grabMouse()
+		self.btn_update.setCursor(cursor)
+		self.btn_update.setEnabled(False)
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		cursor=QtGui.QCursor(Qt.ArrowCursor)
-		self.setCursor(cursor)
-		self.releaseMouse()
+		self.btn_update.setEnabled(True)
 		if ret.get("status",False):
 			self.showMsg(_("Repositories updated succesfully"))
 		else:
 			self.showMsg(_("Failed to update repositories"),'error')
+		cursor=QtGui.QCursor(Qt.ArrowCursor)
+		self.setCursor(cursor)
+		self.btn_update.setCursor(cursor)
 
 	def _launchUpgrade(self):
 		subprocess.run(["pkexec","/usr/sbin/lliurex-up"])
