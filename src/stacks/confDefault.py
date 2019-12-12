@@ -45,7 +45,7 @@ class confDefault(confStack):
 		self.description=(_("Default repositories"))
 		self.icon=('go-home')
 		self.tooltip=(_("From here you can activate/deactivate the default repositories"))
-		self.index=2
+		self.index=1
 		self.enabled=True
 		self.defaultRepos={}
 		self.changed=[]
