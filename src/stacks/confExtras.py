@@ -96,7 +96,6 @@ class confExtras(confStack):
 		Vheader=self.table.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
 		Vheader.setSectionResizeMode(QHeaderView.ResizeToContents)
-#		Vheader.setDefaultSectionSize(128)
 		self.table.setShowGrid(False)
 		self.table.setSelectionBehavior(QTableWidget.SelectRows)
 		self.table.setSelectionMode(QTableWidget.NoSelection)
@@ -118,7 +117,6 @@ class confExtras(confStack):
 		states={}
 		row=0
 		orderedKeys=sorted(self.defaultRepos,key=str.casefold)
-#		for repo,data in sorted(self.defaultRepos.items()):
 		for repo in orderedKeys:
 			data=self.defaultRepos[repo]
 			self.table.insertRow(row)
@@ -199,7 +197,6 @@ class confExtras(confStack):
 	#def _addRepo
 
 	def writeConfig(self):
-#		for repo in self.defaultRepos.keys():
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
 			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})

@@ -62,7 +62,6 @@ class confDefault(confStack):
 		Vheader=self.table.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
 		Vheader.setSectionResizeMode(QHeaderView.ResizeToContents)
-#		Vheader.setDefaultSectionSize(128)
 		self.table.setShowGrid(False)
 		self.table.setSelectionBehavior(QTableWidget.SelectRows)
 		self.table.setSelectionMode(QTableWidget.NoSelection)
@@ -126,7 +125,6 @@ class confDefault(confStack):
 	#def changeState
 
 	def writeConfig(self):
-			#		if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
 			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
