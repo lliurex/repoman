@@ -39,7 +39,8 @@ class confRepos(confStack):
 		self.icon=('document-new')
 		self.tooltip=(_("From here you can add custom repositories"))
 		self.index=4
-		self.enabled=False
+		self.visible=False
+		self.enabled=True
 		self.level='user'
 	#def __init__
 	
