@@ -73,6 +73,7 @@ class confExtras(confStack):
 		self.enabled=True
 		self.defaultRepos={}
 		self.level='user'
+		self.changed=[]
 	#def __init__
 	
 	def _load_screen(self):
@@ -109,6 +110,7 @@ class confExtras(confStack):
 
 	def updateScreen(self):
 		self.table.clearContents()
+		self.changed=[]
 		while self.table.rowCount():
 			self.table.removeRow(0)
 		config=self.getConfig()
@@ -188,6 +190,8 @@ class confExtras(confStack):
 			state=True
 		textState=str(state).lower()
 		self.defaultRepos[repo]['enabled']="%s"%textState
+		if repo not in self.changed:
+			self.changed.append(repo)
 	#def changeState(self)
 
 	def _addRepo(self):
@@ -195,9 +199,19 @@ class confExtras(confStack):
 	#def _addRepo
 
 	def writeConfig(self):
-		for repo in self.defaultRepos.keys():
-			self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
-			self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
+#		for repo in self.defaultRepos.keys():
+		for repo in self.changed:
+			self._debug("Updating %s"%repo)
+			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
+			st=ret.get('status',False)
+			if st:
+				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+				if ret.get('status',False)!=True:
+					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+			else:
+				self.showMsg(_("Couldn't write info for %s"%repo),'error')
+		if ret.get('status',False)!=True:
+			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 		self.updateScreen()
 	#def writeConfig
 

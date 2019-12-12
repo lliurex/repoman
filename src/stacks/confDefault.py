@@ -137,5 +137,7 @@ class confDefault(confStack):
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
+		if ret.get('status',False)!=True:
+			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 	#def writeConfig
 
