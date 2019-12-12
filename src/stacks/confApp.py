@@ -19,7 +19,7 @@ class confApp(confStack):
 		self.menu_description=(_("Update repositories/System upgrade"))
 		self.icon=('dialog-password')
 		self.tooltip=(_("From here you can update the repositories info or launch lliurex-upgrade"))
-		self.index=5
+		self.index=6
 		self.enabled=True
 		self.level='system'
 	#def __init__
@@ -31,9 +31,12 @@ class confApp(confStack):
 		self.btn_update.clicked.connect(self._updateRepos)
 		btn_upgrade=QPushButton(_("Launch Lliurex-Up"))
 		btn_upgrade.clicked.connect(self._launchUpgrade)
+		btn_install=QPushButton(_("Launch Lliurex-Store"))
+		btn_install.clicked.connect(self._launchStore)
 #		box.addWidget(self.statusBar,0,0,1,1)
-		box.addWidget(self.btn_update,0,0,1,1,Qt.AlignCenter)
-		box.addWidget(btn_upgrade,1,0,1,1,Qt.AlignHCenter|Qt.AlignTop)
+		box.addWidget(self.btn_update,0,0,1,1,Qt.AlignHCenter|Qt.AlignBottom)
+		box.addWidget(btn_upgrade,1,0,1,1,Qt.AlignHCenter)
+		box.addWidget(btn_install,2,0,1,1,Qt.AlignHCenter|Qt.AlignTop)
 		self.setLayout(box)
 		self.updateScreen()
 		return(self)
@@ -63,3 +66,6 @@ class confApp(confStack):
 		subprocess.run(["pkexec","/usr/sbin/lliurex-up"])
 	#def _launchUpgrade
 	
+	def _launchStore(self):
+		subprocess.run(["/usr/bin/lliurex-store"])
+	#def _launchStore
