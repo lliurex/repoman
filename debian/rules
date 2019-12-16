@@ -22,6 +22,6 @@ override_dh_auto_install:
 	python setup.py install --root $(CURDIR)/debian/python-repomanager --prefix=/usr
 	python setup.py clean --all
 
-override_dh_install:
-	marked-man docs/repoman.md > docs/repoman.1
-	dh_install
+#override_dh_install:
+#	marked-man docs/repoman.md > docs/repoman.1
+#	dh_install
