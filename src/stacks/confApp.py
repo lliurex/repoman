@@ -19,7 +19,7 @@ class confApp(confStack):
 		self.menu_description=(_("Update repositories/System upgrade"))
 		self.icon=('dialog-password')
 		self.tooltip=(_("From here you can update the repositories info or launch lliurex-upgrade"))
-		self.index=6
+		self.index=4
 		self.enabled=True
 		self.level='system'
 	#def __init__
