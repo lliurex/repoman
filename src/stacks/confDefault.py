@@ -40,7 +40,7 @@ class QLabelDescription(QWidget):
 
 class confDefault(confStack):
 	def __init_stack__(self):
-		self.dbg=True
+		self.dbg=False
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
