@@ -150,7 +150,7 @@ class confExtras(confStack):
 	def editRepo(self,repo,*args):
 		sfile=repo.replace(' ','_')
 		self._debug("Editing %s.list"%sfile)
-		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)):
+		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)) or os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile.lower())):
 			edit=True
 			try:
 				display=os.environ['DISPLAY']
@@ -162,8 +162,11 @@ class confExtras(confStack):
 				edit=False
 			if edit:
 				newrepos=[]
+				wrkfile="%s/%s.list"%(APT_SRC_DIR,sfile)
+				if not os.path.isfile(wrkfile):
+					wrkfile=wrkfile.lower()
 				try:
-					with open("%s/%s.list"%(APT_SRC_DIR,sfile),'r') as f:
+					with open(wrkfile,'r') as f:
 						for line in f:
 							newrepos.append(line.strip())
 				except Exception as e:
@@ -199,10 +202,10 @@ class confExtras(confStack):
 	def writeConfig(self):
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
-			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
+			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
 			st=ret.get('status',False)
 			if st:
-				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 				if ret.get('status',False)!=True:
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:

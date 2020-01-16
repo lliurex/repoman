@@ -15,11 +15,11 @@ class confApp(confStack):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confApp Load")
-		self.description=(_("System update"))
+		self.description=(_("System tools"))
 		self.menu_description=(_("Update repositories/System upgrade"))
 		self.icon=('dialog-password')
 		self.tooltip=(_("From here you can update the repositories info or launch lliurex-upgrade"))
-		self.index=6
+		self.index=4
 		self.enabled=True
 		self.level='system'
 	#def __init__

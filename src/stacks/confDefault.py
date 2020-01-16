@@ -40,6 +40,7 @@ class QLabelDescription(QWidget):
 
 class confDefault(confStack):
 	def __init_stack__(self):
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -127,10 +128,12 @@ class confDefault(confStack):
 	def writeConfig(self):
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
-			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
+#			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
+			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
 			st=ret.get('status',False)
 			if st:
-				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+#				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 				if ret.get('status',False)!=True:
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
