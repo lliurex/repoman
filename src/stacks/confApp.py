@@ -4,7 +4,7 @@ import os
 import subprocess
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QGridLayout,QHBoxLayout,QComboBox,QCheckBox
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QSize
 from appconfig.appConfigStack import appConfigStack as confStack
 from edupals.ui import QAnimatedStatusBar
 
@@ -25,18 +25,27 @@ class confApp(confStack):
 	#def __init__
 	
 	def _load_screen(self):
-		box=QGridLayout()
+		box=QVBoxLayout()
 #		self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
 		self.btn_update=QPushButton(_("Update repositories"))
+		icn=QtGui.QIcon.fromTheme("view-refresh")
+		self.btn_update.setIcon(icn)
+		self.btn_update.setIconSize(QSize(48,48))
 		self.btn_update.clicked.connect(self._updateRepos)
 		btn_upgrade=QPushButton(_("Launch Lliurex-Up"))
+		icn=QtGui.QIcon.fromTheme("lliurex-up")
+		btn_upgrade.setIcon(icn)
+		btn_upgrade.setIconSize(QSize(48,48))
 		btn_upgrade.clicked.connect(self._launchUpgrade)
 		btn_install=QPushButton(_("Launch Lliurex-Store"))
+		icn=QtGui.QIcon.fromTheme("lliurex-store")
+		btn_install.setIcon(icn)
+		btn_install.setIconSize(QSize(48,48))
 		btn_install.clicked.connect(self._launchStore)
 #		box.addWidget(self.statusBar,0,0,1,1)
-		box.addWidget(self.btn_update,0,0,1,1,Qt.AlignHCenter|Qt.AlignBottom)
-		box.addWidget(btn_upgrade,1,0,1,1,Qt.AlignHCenter)
-		box.addWidget(btn_install,2,0,1,1,Qt.AlignHCenter|Qt.AlignTop)
+		box.addWidget(self.btn_update,Qt.AlignHCenter|Qt.AlignBottom)
+		box.addWidget(btn_upgrade,Qt.AlignHCenter)
+		box.addWidget(btn_install,Qt.AlignHCenter|Qt.AlignTop)
 		self.setLayout(box)
 		self.updateScreen()
 		return(self)
