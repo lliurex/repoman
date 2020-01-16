@@ -66,7 +66,6 @@ class manager():
 					wrkfile=self.sources_file
 				else:
 					name=reponame.replace(' ','_').lower()
-					name=reponame.replace(' ','_')
 					if name.endswith(".list"):
 						wrkfile="%s/%s"%(self.sources_dir,name)
 					else:
@@ -161,8 +160,8 @@ class manager():
 			for sourcefile in sourcefiles:
 				if not sourcefile.endswith(".list"):
 					continue
-				name=sourcefile.replace('.list','')
-				name=name.replace('_',' ')
+				name=sourcefile.replace('_',' ')
+				name=name.replace('.list','')
 				sourcesdict[name]={}
 				sourcesdict[name]['enabled']="false"
 				sourcesdict[name]['desc']=""
@@ -176,11 +175,12 @@ class manager():
 				for fline in flines:
 					if not fline.startswith('#'):
 						sourcesdict[name]['enabled']="true"
-			sourcesdict.update(self._list_available_repos())
+						break
+			sourcesdict.update(self._list_available_repos(sourcesdict))
 			return (sourcesdict)
 		#def list_sources
 
-		def _list_available_repos(self):
+		def _list_available_repos(self,sourcesdict={}):
 			frepos=[]
 			try:
 				tmp_repos=os.listdir(self.available_repos_dir)
@@ -193,6 +193,12 @@ class manager():
 			for frepo in frepos:
 				rname=frepo.replace("_"," ")
 				rname=rname.replace(".json","")
+				if rname in sourcesdict.keys() or rname.lower() in sourcesdict.keys():
+					if sourcesdict.get(rname,""):
+						del sourcesdict[rname]
+					else:
+						del sourcesdict[rname.lower()]
+					
 				try:
 					with open(self.available_repos_dir+'/'+frepo,'r') as fcontent:
 						repos.update(json.load(fcontent))
