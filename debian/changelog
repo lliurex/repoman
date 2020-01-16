@@ -1,11 +1,7 @@
-repoman (2.0.2) bionic; urgency=medium
+repoman (2.0.3) bionic; urgency=medium
 
+  * Hide button in confApp stack
   * Add icons for system apps
-
- -- Juanma1980 <juanma1980@gmail.com>  Thu, 16 Jan 2020 12:08:16 +0100
-
-repoman (2.0.1) bionic; urgency=medium
-
   * Some minor improvements
 
  -- Juanma1980 <juanma1980@gmail.com>  Thu, 16 Jan 2020 11:26:18 +0100
