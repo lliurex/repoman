@@ -22,6 +22,7 @@ class confApp(confStack):
 		self.index=4
 		self.enabled=True
 		self.level='system'
+		self.hideControlButtons()
 	#def __init__
 	
 	def _load_screen(self):
