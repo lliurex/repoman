@@ -1,5 +1,6 @@
-repoman (2.0.3) bionic; urgency=medium
+repoman (2.0.4) bionic; urgency=medium
 
+  * Disabled debug messages
   * Hide button in confApp stack
   * Add icons for system apps
   * Some minor improvements
