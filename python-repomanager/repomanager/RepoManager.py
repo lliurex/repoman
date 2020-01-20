@@ -90,14 +90,16 @@ class manager():
 				repos=set(newrepo)
 				sw_status=True
 				try:
+					filterRepos=[]
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
 							repo=repo.strip()
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
 								repo=("deb %s"%repo)
-							if repo not in removerepos:
+							if repo not in removerepos and repo.replace(" ","") not in filterRepos:
 								self._debug("Writing line: %s"%repo)
 								fcontent.write("%s\n"%repo)
+								filterRepos.append(repo.replace(" ",""))
 				except Exception as e:
 					sw_status=False
 					self._debug("write_repo error: %s"%e)
