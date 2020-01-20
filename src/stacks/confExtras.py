@@ -64,6 +64,7 @@ class QLabelDescription(QWidget):
 
 class confExtras(confStack):
 	def __init_stack__(self):
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Manage custom  repositories"))
 		self.description=(_("Custom repositories"))
@@ -120,7 +121,7 @@ class confExtras(confStack):
 		for repo in orderedKeys:
 			data=self.defaultRepos[repo]
 			self.table.insertRow(row)
-			state=data.get('enabled','false')
+			state=data.get('enabled','false').lower()
 			if state=='true':
 				state=True
 			else:
@@ -211,6 +212,7 @@ class confExtras(confStack):
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret.get('status',False)!=True:
+			self._debug("APT GET UPDATE")
 			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 #		self.updateScreen()
 	#def writeConfig

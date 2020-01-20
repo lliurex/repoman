@@ -171,7 +171,7 @@ class manager():
 				try:
 					with open(self.sources_dir+'/'+sourcefile) as fsource:
 						flines=fsource.readlines()
-				except Excetion as e:
+				except Exception as e:
 					self._debug("list_sources error: %s"%e)
 				sourcesdict[name]['repos']=flines
 				for fline in flines:
@@ -214,6 +214,8 @@ class manager():
 
 		def _check_flist_content(self,flist):
 			enabled="false"
+			if not os.path.isfile(flist):
+				flist=flist.lower()
 			if os.path.isfile(flist):
 				try:
 					with open(flist,'r') as fcontent:
