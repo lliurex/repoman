@@ -1,3 +1,9 @@
+repoman (2.0.5) bionic; urgency=medium
+
+  * Filter duplicate repos
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 20 Jan 2020 09:52:26 +0100
+
 repoman (2.0.4) bionic; urgency=medium
 
   * Disabled debug messages
