@@ -64,6 +64,7 @@ class QLabelDescription(QWidget):
 
 class confExtras(confStack):
 	def __init_stack__(self):
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Manage custom  repositories"))
 		self.description=(_("Custom repositories"))
