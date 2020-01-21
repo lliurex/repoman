@@ -90,14 +90,16 @@ class manager():
 				repos=set(newrepo)
 				sw_status=True
 				try:
+					filterRepos=[]
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
 							repo=repo.strip()
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
 								repo=("deb %s"%repo)
-							if repo not in removerepos:
+							if repo not in removerepos and repo.replace(" ","") not in filterRepos:
 								self._debug("Writing line: %s"%repo)
 								fcontent.write("%s\n"%repo)
+								filterRepos.append(repo.replace(" ",""))
 				except Exception as e:
 					sw_status=False
 					self._debug("write_repo error: %s"%e)
@@ -169,7 +171,7 @@ class manager():
 				try:
 					with open(self.sources_dir+'/'+sourcefile) as fsource:
 						flines=fsource.readlines()
-				except Excetion as e:
+				except Exception as e:
 					self._debug("list_sources error: %s"%e)
 				sourcesdict[name]['repos']=flines
 				for fline in flines:
@@ -212,6 +214,8 @@ class manager():
 
 		def _check_flist_content(self,flist):
 			enabled="false"
+			if not os.path.isfile(flist):
+				flist=flist.lower()
 			if os.path.isfile(flist):
 				try:
 					with open(flist,'r') as fcontent:
