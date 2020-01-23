@@ -357,12 +357,17 @@ class manager():
 
 		def update_repos(self):
 			ret=True
+			msg=''
+			output=""
 			try:
-				subprocess.check_output(["apt-get","update"],stderr=subprocess.PIPE)
-			except Exception as e:
+				output=subprocess.check_output(["apt-get","update"],stderr=subprocess.STDOUT)
+			except subprocess.CalledProcessError as e:
 				self._debug("Update repos: %s"%e)
 				ret=False
-			return(ret)
+				for line in e.output.split("\n"):
+					if line.startswith("E: F"):
+						msg=line
+			return([ret,msg])
 
 #class manager
 	

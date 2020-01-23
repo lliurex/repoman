@@ -29,5 +29,5 @@ class RepoManager():
 		return({'status':status,'data':''})
 		
 	def update_repos(self):
-		status=self.repoman.update_repos()
-		return({'status':status,'data':''})
+		status,msg=self.repoman.update_repos()
+		return({'status':status,'data':msg})
