@@ -218,7 +218,7 @@ class confExtras(confStack):
 				self.showMsg(_("Repositories updated succesfully"))
 			else:
 				self._debug("Error updating: %s"%ret)
-				self.showMsg(_("Failed to update repositories"),'error')
-#		self.updateScreen()
+				self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+		self.updateScreen()
 	#def writeConfig
 

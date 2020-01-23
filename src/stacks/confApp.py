@@ -61,12 +61,14 @@ class confApp(confStack):
 		self.setCursor(cursor)
 		self.btn_update.setCursor(cursor)
 		self.btn_update.setEnabled(False)
+		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		self.btn_update.setEnabled(True)
 		if ret.get("status",False):
 			self.showMsg(_("Repositories updated succesfully"))
 		else:
-			self.showMsg(_("Failed to update repositories"),'error')
+			self._debug("Error updating: %s"%ret)
+			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+		self.btn_update.setEnabled(True)
 		cursor=QtGui.QCursor(Qt.ArrowCursor)
 		self.setCursor(cursor)
 		self.btn_update.setCursor(cursor)
