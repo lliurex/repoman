@@ -1,7 +1,8 @@
-repoman (2.0.6) bionic; urgency=medium
+repoman (2.0.7) bionic; urgency=medium
 
   * Filter duplicate repos
   * Fix file not found when case don't match
+  * Show descriptive error messages 
 
  -- Juanma1980 <juanma1980@gmail.com>  Mon, 20 Jan 2020 09:52:26 +0100
 
