@@ -1,4 +1,4 @@
-repoman (2.0.10) bionic; urgency=medium
+repoman (2.0.11) bionic; urgency=medium
 
   * Restored xenial as repo for educational resources
   * Fix return value from upodate_repos method
