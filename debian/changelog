@@ -1,8 +1,9 @@
-repoman (2.0.11) bionic; urgency=medium
+repoman (2.0.12) bionic; urgency=medium
 
   * Restored xenial as repo for educational resources
   * Fix return value from upodate_repos method
   * Fix block when running external tools
+  * Updated spanish translations
 
  -- Juanma1980 <juanma1980@gmail.com>  Thu, 23 Jan 2020 10:22:59 +0000
 
