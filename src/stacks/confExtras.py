@@ -211,9 +211,14 @@ class confExtras(confStack):
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
-		if ret.get('status',False)!=True:
-			self._debug("APT GET UPDATE")
+		if ret.get('status',False)==True:
+			self._debug("Updating repos")
 			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-#		self.updateScreen()
+			if ret.get("status",False):
+				self.showMsg(_("Repositories updated succesfully"))
+			else:
+				self._debug("Error updating: %s"%ret)
+				self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+		self.updateScreen()
 	#def writeConfig
 
