@@ -30,7 +30,7 @@ class QEditDescription(QWidget):
 	def text(self):
 		return(self.name.text())
 
-class confRepos(confStack):
+class repoTools(confStack):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confRepos Load")
@@ -38,7 +38,7 @@ class confRepos(confStack):
 		self.description=(_("Add repositories"))
 		self.icon=('document-new')
 		self.tooltip=(_("From here you can add custom repositories"))
-		self.index=3
+		self.index=4
 		self.visible=False
 		self.enabled=True
 		self.level='user'
