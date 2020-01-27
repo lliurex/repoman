@@ -70,7 +70,7 @@ class customRepos(confStack):
 		self.description=(_("Custom repositories"))
 		self.icon=('menu_new')
 		self.tooltip=(_("From here you can manage your custom repositories"))
-		self.index=3
+		self.index=2
 		self.enabled=True
 		self.defaultRepos={}
 		self.level='user'

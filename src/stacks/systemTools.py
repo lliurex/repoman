@@ -19,7 +19,7 @@ class systemTools(confStack):
 		self.menu_description=(_("Update repositories/System upgrade"))
 		self.icon=('dialog-password')
 		self.tooltip=(_("From here you can update the repositories info or launch lliurex-upgrade"))
-		self.index=4
+		self.index=3
 		self.enabled=True
 		self.level='system'
 		self.hideControlButtons()
@@ -75,9 +75,10 @@ class systemTools(confStack):
 	#def _updateRepos
 
 	def _launchUpgrade(self):
-		subprocess.run(["pkexec","/usr/sbin/lliurex-up"])
+		subprocess.call(["pkexec","/usr/sbin/lliurex-up"])
 	#def _launchUpgrade
 	
 	def _launchStore(self):
-		subprocess.run(["/usr/bin/lliurex-store"])
+			#		subprocess.Popen("/usr/bin/lliurex-store",stdin=None,stdout=None,stderr=None,shell=False)
+		subprocess.call(["/usr/bin/lliurex-store"])
 	#def _launchStore
