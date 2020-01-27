@@ -11,7 +11,7 @@ from edupals.ui import QAnimatedStatusBar
 import gettext
 _ = gettext.gettext
 
-class confApp(confStack):
+class systemTools(confStack):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confApp Load")

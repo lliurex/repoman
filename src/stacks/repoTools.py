@@ -30,7 +30,7 @@ class QEditDescription(QWidget):
 	def text(self):
 		return(self.name.text())
 
-class confRepos(confStack):
+class repoTools(confStack):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confRepos Load")
