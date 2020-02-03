@@ -8,11 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-01-16 11:19+0100\n"
-=======
-"POT-Creation-Date: 2020-01-27 10:03+0100\n"
->>>>>>> devel
+"POT-Creation-Date: 2020-02-03 11:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,11 +202,7 @@ msgstr ""
 msgid "Update repositories"
 msgstr ""
 
-<<<<<<< HEAD
-#: ../src/repoman.py:155 ../src/stacks/confDefault.py:46
-=======
 #: ../src/repoman.py:155 ../src/stacks/defaultRepos.py:46
->>>>>>> devel
 msgid "Default repositories"
 msgstr ""
 
@@ -281,47 +273,6 @@ msgstr ""
 msgid "Repositories updated"
 msgstr ""
 
-<<<<<<< HEAD
-#: ../src/stacks/confApp.py:18
-msgid "System tools"
-msgstr ""
-
-#: ../src/stacks/confApp.py:19
-msgid "Update repositories/System upgrade"
-msgstr ""
-
-#: ../src/stacks/confApp.py:21
-msgid ""
-"From here you can update the repositories info or launch lliurex-upgrade"
-msgstr ""
-
-#: ../src/stacks/confApp.py:32
-msgid "Launch Lliurex-Up"
-msgstr ""
-
-#: ../src/stacks/confApp.py:34
-msgid "Launch Lliurex-Store"
-msgstr ""
-
-#: ../src/stacks/confApp.py:57
-msgid "Repositories updated succesfully"
-msgstr ""
-
-#: ../src/stacks/confApp.py:59
-msgid "Failed to update repositories"
-msgstr ""
-
-#: ../src/stacks/confDefault.py:45
-msgid "Choose the default repositories"
-msgstr ""
-
-#: ../src/stacks/confDefault.py:48
-msgid "From here you can activate/deactivate the default repositories"
-msgstr ""
-
-#: ../src/stacks/confDefault.py:58
-msgid "Enable or disable default repositories"
-=======
 #: ../src/stacks/customRepos.py:26 ../src/stacks/customRepos.py:58
 #, python-format
 msgid "Edit %s file"
@@ -346,27 +297,18 @@ msgstr ""
 
 #: ../src/stacks/customRepos.py:84
 msgid "Manage extra repositories"
->>>>>>> devel
 msgstr ""
 
 #: ../src/stacks/customRepos.py:91
 msgid "Add new repository"
 msgstr ""
 
-<<<<<<< HEAD
-#: ../src/stacks/confDefault.py:138 ../src/stacks/confExtras.py:210
-=======
 #: ../src/stacks/customRepos.py:211 ../src/stacks/defaultRepos.py:138
->>>>>>> devel
 #, python-format
 msgid "Couldn't write repo %s"
 msgstr ""
 
-<<<<<<< HEAD
-#: ../src/stacks/confDefault.py:140 ../src/stacks/confExtras.py:212
-=======
 #: ../src/stacks/customRepos.py:213 ../src/stacks/defaultRepos.py:140
->>>>>>> devel
 #, python-format
 msgid "Couldn't write info for %s"
 msgstr ""
@@ -392,21 +334,12 @@ msgstr ""
 msgid "From here you can activate/deactivate the default repositories"
 msgstr ""
 
-<<<<<<< HEAD
-#: ../src/stacks/confExtras.py:83
-msgid "Manage extra repositories"
-msgstr ""
-
-#: ../src/stacks/confExtras.py:90
-msgid "Add new repository"
-=======
 #: ../src/stacks/defaultRepos.py:58
 msgid "Enable or disable default repositories"
 msgstr ""
 
 #: ../src/stacks/defaultRepos.py:119
 msgid "Mirror not available"
->>>>>>> devel
 msgstr ""
 
 #: ../src/stacks/repoTools.py:37
@@ -421,33 +354,6 @@ msgstr ""
 msgid "From here you can add custom repositories"
 msgstr ""
 
-<<<<<<< HEAD
-#: ../src/stacks/confRepos.py:52 ../src/stacks/confRepos.py:66
-msgid "name of the repository"
-msgstr ""
-
-#: ../src/stacks/confRepos.py:52 ../src/stacks/confRepos.py:66
-msgid "Insert repository name"
-msgstr ""
-
-#: ../src/stacks/confRepos.py:55
-msgid "Repository's contents"
-msgstr ""
-
-#: ../src/stacks/confRepos.py:55
-msgid "Descriptive description (optional)"
-msgstr ""
-
-#: ../src/stacks/confRepos.py:58
-msgid "Repository's url"
-msgstr ""
-
-#: ../src/stacks/confRepos.py:58
-msgid "Url for the repository"
-msgstr ""
-
-#: ../src/stacks/confRepos.py:76
-=======
 #: ../src/stacks/repoTools.py:52 ../src/stacks/repoTools.py:66
 msgid "name of the repository"
 msgstr ""
@@ -473,7 +379,6 @@ msgid "Url for the repository"
 msgstr ""
 
 #: ../src/stacks/repoTools.py:76
->>>>>>> devel
 #, python-format
 msgid "Error adding repository %s"
 msgstr ""
