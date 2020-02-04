@@ -7,13 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-01-16 11:19+0100\n"
-"PO-Revision-Date: 2020-01-16 11:21+0100\n"
-=======
-"POT-Creation-Date: 2020-01-27 10:03+0100\n"
-"PO-Revision-Date: 2020-01-27 10:05+0100\n"
->>>>>>> devel
+"POT-Creation-Date: 2020-02-03 11:46+0100\n"
+"PO-Revision-Date: 2020-02-03 10:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -222,11 +217,7 @@ msgstr "Hay que actualizar los repositorios. ¿Actualizar ahora?"
 msgid "Update repositories"
 msgstr "Actualizar repositorios"
 
-<<<<<<< HEAD
-#: ../src/repoman.py:155 ../src/stacks/confDefault.py:46
-=======
 #: ../src/repoman.py:155 ../src/stacks/defaultRepos.py:46
->>>>>>> devel
 msgid "Default repositories"
 msgstr "Repositorios por defecto"
 
@@ -299,66 +290,7 @@ msgstr "Habilita/deshabilita el repositorio"
 msgid "Repositories updated"
 msgstr "Repositorios actualizados"
 
-<<<<<<< HEAD
-#: ../src/stacks/confApp.py:18
-msgid "System tools"
-msgstr "Herramientas del sistema"
-
-#: ../src/stacks/confApp.py:19
-msgid "Update repositories/System upgrade"
-msgstr "Actualizar repositorios/sistema"
-
-#: ../src/stacks/confApp.py:21
-msgid ""
-"From here you can update the repositories info or launch lliurex-upgrade"
-msgstr "Desde aquí se pueden actualizar los repositorios y ejecutar LliureX-UP"
-
-#: ../src/stacks/confApp.py:32
-msgid "Launch Lliurex-Up"
-msgstr "Ejecutar LliureX-Up"
-
-#: ../src/stacks/confApp.py:34
-msgid "Launch Lliurex-Store"
-msgstr "Ejecutar LliureX-Store"
-
-#: ../src/stacks/confApp.py:57
-msgid "Repositories updated succesfully"
-msgstr "Repositorios actualizados"
-
-#: ../src/stacks/confApp.py:59
-msgid "Failed to update repositories"
-msgstr "Error actualizando repositorios"
-
-#: ../src/stacks/confDefault.py:45
-msgid "Choose the default repositories"
-msgstr "Seleccionar los repositorios por defecto"
-
-#: ../src/stacks/confDefault.py:48
-msgid "From here you can activate/deactivate the default repositories"
-msgstr "Desde aquí puedes activar/desactivar los repositorios por defecto"
-
-#: ../src/stacks/confDefault.py:58
-msgid "Enable or disable default repositories"
-msgstr "Habilita/deshabilita repositorios por deefecto"
-
-#: ../src/stacks/confDefault.py:119
-msgid "Mirror not available"
-msgstr "Mirror no disponible"
-
-#: ../src/stacks/confDefault.py:138 ../src/stacks/confExtras.py:210
-#, python-format
-msgid "Couldn't write repo %s"
-msgstr "No pude escribir %s"
-
-#: ../src/stacks/confDefault.py:140 ../src/stacks/confExtras.py:212
-#, python-format
-msgid "Couldn't write info for %s"
-msgstr "No pude escribir la información de %s"
-
-#: ../src/stacks/confExtras.py:26 ../src/stacks/confExtras.py:58
-=======
 #: ../src/stacks/customRepos.py:26 ../src/stacks/customRepos.py:58
->>>>>>> devel
 #, python-format
 msgid "Edit %s file"
 msgstr "Editar fichero de %s"
@@ -380,19 +312,11 @@ msgstr "Repositorios personales"
 msgid "From here you can manage your custom repositories"
 msgstr "Desde aquí puedes gestionar tus repositorios personales"
 
-<<<<<<< HEAD
-#: ../src/stacks/confExtras.py:83
-msgid "Manage extra repositories"
-msgstr "Gestiona repositorios personales"
-
-#: ../src/stacks/confExtras.py:90
-=======
 #: ../src/stacks/customRepos.py:84
 msgid "Manage extra repositories"
 msgstr "Gestiona repositorios personales"
 
 #: ../src/stacks/customRepos.py:91
->>>>>>> devel
 msgid "Add new repository"
 msgstr "Añadir repositorio"
 
@@ -449,33 +373,6 @@ msgstr "Añadir repositorio"
 msgid "From here you can add custom repositories"
 msgstr "Desde aquí puedes añadir repositorios personales"
 
-<<<<<<< HEAD
-#: ../src/stacks/confRepos.py:52 ../src/stacks/confRepos.py:66
-msgid "name of the repository"
-msgstr "Nombre del repositorio"
-
-#: ../src/stacks/confRepos.py:52 ../src/stacks/confRepos.py:66
-msgid "Insert repository name"
-msgstr "Introduce el nombre del repositorio"
-
-#: ../src/stacks/confRepos.py:55
-msgid "Repository's contents"
-msgstr "Contenido del repositorio"
-
-#: ../src/stacks/confRepos.py:55
-msgid "Descriptive description (optional)"
-msgstr "Descripción del repositorio (opcional):"
-
-#: ../src/stacks/confRepos.py:58
-msgid "Repository's url"
-msgstr "URL del repositorio"
-
-#: ../src/stacks/confRepos.py:58
-msgid "Url for the repository"
-msgstr "URL del repositorio"
-
-#: ../src/stacks/confRepos.py:76
-=======
 #: ../src/stacks/repoTools.py:52 ../src/stacks/repoTools.py:66
 msgid "name of the repository"
 msgstr "Nombre del repositorio"
@@ -501,7 +398,6 @@ msgid "Url for the repository"
 msgstr "URL del repositorio"
 
 #: ../src/stacks/repoTools.py:76
->>>>>>> devel
 #, python-format
 msgid "Error adding repository %s"
 msgstr "Error añadiendo el repositorio %s"
@@ -521,11 +417,11 @@ msgstr "Desde aquí se pueden actualizar los repositorios y ejecutar LliureX-UP"
 
 #: ../src/stacks/systemTools.py:36
 msgid "Launch Lliurex-Up"
-msgstr "Ejecutar LliureX-UP"
+msgstr "Ejecutar LliureX-Up"
 
 #: ../src/stacks/systemTools.py:41
 msgid "Launch Lliurex-Store"
-msgstr "Ejecutar LliureX Store"
+msgstr "Ejecutar LliureX-Store"
 
 #: json ../sources.d/default/lliurex_19.json
 msgid "Lliurex default repositories"
