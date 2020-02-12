@@ -9,7 +9,7 @@ Homepage: http://lliurex.net
 
 Package: repoman
 Architecture: all
-Depends: n4d-repomanager (= ${binary:Version}), python3-n4dgtklogin(>=0.4.5),python-repomanager,python3-repomanager
+Depends: n4d-repomanager (= ${binary:Version}), python3-n4dgtklogin(>=0.4.5),python-repomanager,python3-repomanager, python3-appconfig(>=0.25)
 Description: Lliurex Repository Manager
 
 Package: python3-repomanager
