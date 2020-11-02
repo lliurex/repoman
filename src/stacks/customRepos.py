@@ -152,6 +152,8 @@ class customRepos(confStack):
 		sfile=repo.replace(' ','_')
 		self._debug("Editing %s.list"%sfile)
 		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)) or os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile.lower())):
+			if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile.lower())):
+				sfile=sfile.lower()
 			edit=True
 			try:
 				display=os.environ['DISPLAY']
