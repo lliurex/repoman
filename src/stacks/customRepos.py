@@ -152,6 +152,8 @@ class customRepos(confStack):
 		sfile=repo.replace(' ','_')
 		self._debug("Editing %s.list"%sfile)
 		if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile)) or os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile.lower())):
+			if os.path.isfile("%s/%s.list"%(APT_SRC_DIR,sfile.lower())):
+				sfile=sfile.lower()
 			edit=True
 			try:
 				display=os.environ['DISPLAY']
@@ -175,6 +177,7 @@ class customRepos(confStack):
 				if sorted(self.defaultRepos[repo]['repos'])!=sorted(newrepos):
 					self.defaultRepos[repo]['repos']=newrepos
 					self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
+					self._updateRepos()
 		else:
 			self._debug("File %s/%s.list not found"%(APT_SRC_DIR,sfile))
 	#def _edit_source_file
@@ -212,13 +215,23 @@ class customRepos(confStack):
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret.get('status',False)==True:
-			self._debug("Updating repos")
-			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-			if ret.get("status",False):
-				self.showMsg(_("Repositories updated succesfully"))
-			else:
-				self._debug("Error updating: %s"%ret)
-				self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self._updateRepos()
 		self.updateScreen()
 	#def writeConfig
+
+	def _updateRepos(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		self.setCursor(cursor)
+		self._debug("Updating repos")
+		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		if ret.get("status",False):
+			self.showMsg(_("Repositories updated succesfully"))
+			self.refresh=True
+			self.changes=False
+		else:
+			self._debug("Error updating: %s"%ret)
+			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+		cursor=QtGui.QCursor(Qt.PointingHandCursor)
+		self.setCursor(cursor)
+	#def _updateRepos
 
