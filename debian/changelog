@@ -1,3 +1,9 @@
+repoman (2.0.15) bionic; urgency=medium
+
+  * Lowercase reponame when repo file is lowercase
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 02 Nov 2020 07:56:53 +0100
+
 repoman (2.0.14) bionic; urgency=medium
 
   * Added dependencies for apconfig and qanimatedstatusbar 
