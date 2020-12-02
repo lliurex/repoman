@@ -40,7 +40,7 @@ class QLabelDescription(QWidget):
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -80,7 +80,21 @@ class defaultRepos(confStack):
 		while self.table.rowCount():
 			self.table.removeRow(0)
 		config=self.getConfig()
-		self.defaultRepos=self.appConfig.n4dQuery("RepoManager","list_default_repos").get('data',{})
+		try:
+                    
+			repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
+			if type(repos)==type(''):
+			#It's a string, something went wrong. Perhaps a llx16 server?
+				if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
+					#Server is a llx16 so switch to localhost
+					self._debug("LLX16 server detected. Switch to localhost")
+					self.errServer=True
+					self.appConfig.n4d.server='localhost'
+					self.appConfig.n4d.n4dClient=None
+					repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
+			self.defaultRepos=repos.get('data',{})
+		except Exception as e:
+			print(self.appConfig.n4dQuery("RepoManager","list_default_repos"))
 		states={}
 		row=0
 		for repo,data in self.defaultRepos.items():
@@ -116,6 +130,7 @@ class defaultRepos(confStack):
 			#Mirror must be checked against server
 			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
 			if not (ret.get('status',False)):
+				self._debug("Mirror not available")
 				self.showMsg(_("Mirror not available"),'error')
 				self.updateScreen()
 				return
