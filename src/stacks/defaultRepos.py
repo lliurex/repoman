@@ -159,12 +159,22 @@ class defaultRepos(confStack):
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret.get('status',False)==True:
-			self._debug("Updating repos")
-			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-			if ret.get("status",False):
-				self.showMsg(_("Repositories updated succesfully"))
-			else:
-				self._debug("Error updating: %s"%ret)
-				self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self._updateRepos()
+		self.updateScreen()
 	#def writeConfig
 
+	def _updateRepos(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		self.setCursor(cursor)
+		self._debug("Updating repos")
+		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		if ret.get("status",False):
+			self.showMsg(_("Repositories updated succesfully"))
+			self.refresh=True
+			self.changes=False
+		else:
+			self._debug("Error updating: %s"%ret)
+			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+		cursor=QtGui.QCursor(Qt.PointingHandCursor)
+		self.setCursor(cursor)
+	#def _updateRepos
