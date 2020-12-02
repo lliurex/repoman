@@ -129,7 +129,12 @@ class defaultRepos(confStack):
 		if repo.lower()=="lliurex mirror":
 			#Mirror must be checked against server
 			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
-			if not (ret.get('status',False)):
+			if (type(ret)==type("")):
+				self._debug("Mirror not available")
+				self.showMsg(_("Mirror not available"),'error')
+				self.updateScreen()
+				return
+			elif not (ret.get('status',False)):
 				self._debug("Mirror not available")
 				self.showMsg(_("Mirror not available"),'error')
 				self.updateScreen()
