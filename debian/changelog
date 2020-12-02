@@ -1,3 +1,9 @@
+repoman (2.1) bionic; urgency=medium
+
+  * Add option for clients that enables localhost repo management
+
+ -- Juanma1980 <juanma1980@gmail.com>  Wed, 02 Dec 2020 13:46:57 +0100
+
 repoman (2.0.16) bionic; urgency=medium
 
   * In a client with a llx16 server switch to localhost
