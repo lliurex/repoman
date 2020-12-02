@@ -64,7 +64,7 @@ class QLabelDescription(QWidget):
 
 class customRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Manage custom  repositories"))
 		self.description=(_("Custom repositories"))
@@ -114,7 +114,17 @@ class customRepos(confStack):
 		while self.table.rowCount():
 			self.table.removeRow(0)
 		config=self.getConfig()
-		self.defaultRepos=self.appConfig.n4dQuery("RepoManager","list_sources").get('data',{})
+		repos=self.appConfig.n4dQuery("RepoManager","list_sources")
+		if (type(repos)==type("")):
+		#It's a string, something went wrong. Perhaps a llx16 server?
+			if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
+				#Server is a llx16 so switch to localhost
+				self._debug("LLX16 server detected. Switch to localhost")
+				self.appConfig.n4d.server='localhost'
+				self.appConfig.n4d.n4dClient=None
+				repos=self.appConfig.n4dQuery("RepoManager","list_sources")
+
+		self.defaultRepos=repos.get('data',{})
 		states={}
 		row=0
 		orderedKeys=sorted(self.defaultRepos,key=str.casefold)
