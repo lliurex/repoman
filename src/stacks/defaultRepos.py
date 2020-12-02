@@ -40,7 +40,7 @@ class QLabelDescription(QWidget):
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=True
+		self.dbg=False
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -129,7 +129,12 @@ class defaultRepos(confStack):
 		if repo.lower()=="lliurex mirror":
 			#Mirror must be checked against server
 			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
-			if not (ret.get('status',False)):
+			if (type(ret)==type("")):
+				self._debug("Mirror not available")
+				self.showMsg(_("Mirror not available"),'error')
+				self.updateScreen()
+				return
+			elif not (ret.get('status',False)):
 				self._debug("Mirror not available")
 				self.showMsg(_("Mirror not available"),'error')
 				self.updateScreen()
@@ -154,12 +159,22 @@ class defaultRepos(confStack):
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret.get('status',False)==True:
-			self._debug("Updating repos")
-			ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-			if ret.get("status",False):
-				self.showMsg(_("Repositories updated succesfully"))
-			else:
-				self._debug("Error updating: %s"%ret)
-				self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self._updateRepos()
+		self.updateScreen()
 	#def writeConfig
 
+	def _updateRepos(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		self.setCursor(cursor)
+		self._debug("Updating repos")
+		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		if ret.get("status",False):
+			self.showMsg(_("Repositories updated succesfully"))
+			self.refresh=True
+			self.changes=False
+		else:
+			self._debug("Error updating: %s"%ret)
+			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+		cursor=QtGui.QCursor(Qt.PointingHandCursor)
+		self.setCursor(cursor)
+	#def _updateRepos
