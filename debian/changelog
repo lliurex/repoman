@@ -1,3 +1,9 @@
+repoman (2.0.16) bionic; urgency=medium
+
+  * In a client with a llx16 server switch to localhost
+
+ -- Juanma1980 <juanma1980@gmail.com>  Wed, 02 Dec 2020 08:26:10 +0100
+
 repoman (2.0.15) bionic; urgency=medium
 
   * Lowercase reponame when repo file is lowercase
