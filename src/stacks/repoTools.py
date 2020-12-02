@@ -38,7 +38,7 @@ class repoTools(confStack):
 		self.description=(_("Add repositories"))
 		self.icon=('document-new')
 		self.tooltip=(_("From here you can add custom repositories"))
-		self.index=4
+		self.index=5
 		self.visible=False
 		self.enabled=True
 		self.level='user'
