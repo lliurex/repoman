@@ -260,6 +260,7 @@ def _get_repos():
 		print (error.DATA)
 		quit(1)
 	else:
+		print(data)
 		repos=data['data']
 	sort_repos=OrderedDict()
 	index=0
