@@ -23,7 +23,7 @@ class manager():
 
 		def _debug(self,msg):
 			if self.dbg:
-				print("RepoManager: %s"%msg)
+				rint("RepoManager: %s"%msg)
 		#def _debug
 
 		def _get_default_repo_status(self,default_repos):
@@ -257,7 +257,7 @@ class manager():
 				repo_line=repo_array[item:]
 				if repo_line[0].startswith('ppa:'):
 					ppa_array=repo_line[0].split('/')
-					ppa_team=ppa_array[0].replace('ppa:','')
+					ppa_team=ppa_array[1].replace('ppa:','')
 #					repo_url=["http://ppa.launchpad.net/%s/%s/ubuntu %s main"%(ppa_team,ppa_array[-1],ppa_array[-1])]
 					repo_url="http://ppa.launchpad.net/%s/%s/ubuntu/dists"%(ppa_team,ppa_array[-1])
 					repo_url=self._get_http_dirs(repo_url)
@@ -315,6 +315,7 @@ class manager():
 					for link in links:
 						fname=link.extract().get_text()
 						dirlist.append(fname)
+						self._debug("Append %s"%(fname))
 				except Exception as e:
 						self._debug("Couldn't open %s: %s"%(url,e))
 				return(dirlist)
