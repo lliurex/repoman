@@ -4,9 +4,9 @@
         "desc": "Local repositories",
         "enabled": "False",
         "repos": [
-            "http://mirror/llx19 bionic main restricted universe multiverse preschool",
-            "http://mirror/llx19 bionic-updates main restricted universe multiverse",
-            "http://mirror/llx19 bionic-security main restricted universe multiverse"
+            "http://mirror/llx19 focal main restricted universe multiverse preschool",
+            "http://mirror/llx19 focal-updates main restricted universe multiverse",
+            "http://mirror/llx19 focal-security main restricted universe multiverse"
         ]
     }
 }
