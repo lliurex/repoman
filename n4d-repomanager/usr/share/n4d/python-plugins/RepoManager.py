@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import repomanager.RepoManager as RepoMan
 import n4d.responses
 
