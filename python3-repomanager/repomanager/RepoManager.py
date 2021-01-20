@@ -23,7 +23,7 @@ class manager():
 
 		def _debug(self,msg):
 			if self.dbg:
-				rint("RepoManager: %s"%msg)
+				print("RepoManager: %s"%msg)
 		#def _debug
 
 		def _get_default_repo_status(self,default_repos):
