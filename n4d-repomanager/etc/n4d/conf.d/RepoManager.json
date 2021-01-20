@@ -1,0 +1,52 @@
+{
+	"SETUP": {
+		"type":"python",
+		"path":"RepoManager.py",
+		"class":"RepoManager"
+	},
+	"METHODS": {
+		"list_default_repos":
+		{
+			"allowed_groups":[
+				"*",
+				"anonymous"
+			]
+		},
+		"write_repo_json":
+		{
+			"allowed_groups":[
+				"adm",
+				"admins"
+			]
+		},
+		"write_repo":
+		{
+			"allowed_groups":[
+				"adm",
+				"admins"
+			]
+		},
+		"list_sources":
+		{
+			"allowed_groups":[
+				"*",
+				"anonymous"
+			]
+		},
+		"add_repo":
+		{
+			"allowed_groups":[
+				"adm",
+				"admins"
+			]
+		},
+		"update_repos":
+		{
+			"allowed_groups":[
+				"adm",
+				"admins"
+			]
+		}
+	}
+
+}

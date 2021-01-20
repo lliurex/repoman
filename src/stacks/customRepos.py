@@ -124,7 +124,7 @@ class customRepos(confStack):
 				self.appConfig.n4d.n4dClient=None
 				repos=self.appConfig.n4dQuery("RepoManager","list_sources")
 
-		self.defaultRepos=repos.get('data',{})
+		self.defaultRepos=repos.get('return',{})
 		states={}
 		row=0
 		orderedKeys=sorted(self.defaultRepos,key=str.casefold)
@@ -216,15 +216,16 @@ class customRepos(confStack):
 	def writeConfig(self):
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
+			self._debug("Updating %s"%self.defaultRepos[repo])
 			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
-			st=ret.get('status',False)
-			if st:
+			st=ret.get('status',-1)
+			if st==0:
 				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
-				if ret.get('status',False)!=True:
+				if ret.get('status',-1)!=0:
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
-		if ret.get('status',False)==True:
+		if ret.get('status',-1)==0:
 			self._updateRepos()
 		self.updateScreen()
 	#def writeConfig
@@ -234,7 +235,7 @@ class customRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		if ret.get("status",False):
+		if ret.get("status",-1)==0:
 			self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True
 			self.changes=False

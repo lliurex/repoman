@@ -32,7 +32,7 @@ class QEditDescription(QWidget):
 
 class repoTools(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confRepos Load")
 		self.menu_description=(_("Add custom  repositories"))
 		self.description=(_("Add repositories"))
@@ -75,6 +75,8 @@ class repoTools(confStack):
 		if status:
 			self.statusBar.setText(_("Error adding repository %s"%name))
 			self.statusBar.show()
+		self.changes=False
+		self.stack.gotoStack(idx=2,parms="")
 		return(ret)
 	#def writeConfig
 

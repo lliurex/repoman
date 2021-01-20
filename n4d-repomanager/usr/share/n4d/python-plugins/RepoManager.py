@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import repomanager.RepoManager as RepoMan
+import n4d.responses
 
 class RepoManager():
 	def __init__(self):
@@ -11,23 +12,36 @@ class RepoManager():
 			print("%s"%msg)
 
 	def list_default_repos(self):
-		return ({'status':True,'data':self.repoman.list_default_repos()})
+		#return ({'status':True,'data':self.repoman.list_default_repos()})
+		return n4d.responses.build_successful_call_response(self.repoman.list_default_repos())
 
 	def write_repo_json(self,data):
 		status=self.repoman.write_repo_json(data)
-		return({'status':status,'data':''})
+		if status:
+			return n4d.responses.build_successful_call_response()
+		else:
+			return n4d.responses.build_failed_call_response(status)
 
 	def write_repo(self,data):
 		status=self.repoman.write_repo(data)
-		return({'status':status,'data':''})
+		if status:
+			return n4d.responses.build_successful_call_response()
+		else:
+			return n4d.responses.build_failed_call_response(status)
 
 	def list_sources(self):	
-		return({'status':True,'data':self.repoman.list_sources()})
+		return n4d.responses.build_successful_call_response(self.repoman.list_sources())
 
 	def add_repo(self,name,desc,url):
 		status=self.repoman.add_repo(name,desc,url)
-		return({'status':status,'data':''})
+		if status==0:
+			return n4d.responses.build_successful_call_response()
+		else:
+			return n4d.responses.build_failed_call_response(status)
 		
 	def update_repos(self):
-		status,msg=self.repoman.update_repos()
-		return({'status':status,'data':msg})
+		status=self.repoman.update_repos()
+		if status==0:
+			return n4d.responses.build_successful_call_response()
+		else:
+			return n4d.responses.build_failed_call_response(status)

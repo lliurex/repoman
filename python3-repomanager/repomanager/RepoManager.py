@@ -1,9 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import os,sys,subprocess
-from urllib.request import Request,urlopen,urlretrieve
+#from urllib.request import Request,urlopen,urlretrieve
+import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 import json
-from collections import OrderedDict
+import re
+#from collections import OrderedDict
 class manager():
 		def __init__(self):
 			self.dbg=True
@@ -13,13 +17,13 @@ class manager():
 			self.default_repos_dir='/usr/share/repoman/sources.d/default'
 			self.repotypes=['file:','cdrom:','http:','https:','ftp:','copy:','rsh:','ssh:','ppa:']
 			self.components=['main','universe','multiverse','contrib','non-free','restricted','oss','non-oss','partner','preschool']
-			self.distros=['bionic','bionic-security','bionic-updates','testing','stable']
-			self.def_repos=['lliurex 19','lliurex mirror','ubuntu bionic']
+			self.distros=['focal','focal-security','focal-updates','testing','stable']
+			self.def_repos=['lliurex 21','lliurex mirror','ubuntu focal']
 			self.data={}
 
 		def _debug(self,msg):
 			if self.dbg:
-				print("RepoManager: %s"%msg)
+				rint("RepoManager: %s"%msg)
 		#def _debug
 
 		def _get_default_repo_status(self,default_repos):
@@ -28,7 +32,7 @@ class manager():
 				with open(self.sources_file,'r') as f:
 					fcontent=f.readlines()
 			except Exception as e:
-				self._debuig("_get_default_repo_status error: %s"%e)
+				self._debug("_get_default_repo_status error: %s"%e)
 			configured_repos=[]
 			for fline in fcontent:
 				configured_repos.append(fline.replace('\n','').replace(' ','').lstrip('deb'))
@@ -62,7 +66,6 @@ class manager():
 					wrkfile=self.sources_file
 				else:
 					name=reponame.replace(' ','_').lower()
-					name=reponame.replace(' ','_')
 					if name.endswith(".list"):
 						wrkfile="%s/%s"%(self.sources_dir,name)
 					else:
@@ -115,6 +118,9 @@ class manager():
 					else:
 						wrkdir=self.available_repos_dir
 					wrkfile="%s/%s"%(wrkdir,frepo)
+					if not os.path.isfile(wrkfile):
+						if os.path.isfile(wrkfile.lower()):
+							wrkfile=wrkfile.lower()
 					self._debug("Writing %s"%wrkfile)
 					try:
 						with open(wrkfile,'w') as fcontent:
@@ -147,11 +153,7 @@ class manager():
 					else:
 						repos[reponame]['changed']=False
 					repos[reponame]['enabled']=repostate
-			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
-			sort_repos=OrderedDict()
-			for repo in sorted(repos.keys()):
-				sort_repos.update({repo:repos[repo]})
-			return sort_repos
+			return repos
 		#def list_default_repos
 
 		def list_sources(self):
@@ -160,8 +162,8 @@ class manager():
 			for sourcefile in sourcefiles:
 				if not sourcefile.endswith(".list"):
 					continue
-				name=sourcefile.replace('.list','')
-				name=name.replace('_',' ')
+				name=sourcefile.replace('_',' ')
+				name=name.replace('.list','')
 				sourcesdict[name]={}
 				sourcesdict[name]['enabled']="false"
 				sourcesdict[name]['desc']=""
@@ -169,20 +171,18 @@ class manager():
 				try:
 					with open(self.sources_dir+'/'+sourcefile) as fsource:
 						flines=fsource.readlines()
-				except Excetion as e:
+				except Exception as e:
 					self._debug("list_sources error: %s"%e)
 				sourcesdict[name]['repos']=flines
 				for fline in flines:
 					if not fline.startswith('#'):
 						sourcesdict[name]['enabled']="true"
-			sourcesdict.update(self._list_available_repos())
-			sort_repos=OrderedDict()
-			for repo in sorted(sourcesdict.keys()):
-				sort_repos.update({repo:sourcesdict[repo]})
-			return sort_repos
+						break
+			sourcesdict.update(self._list_available_repos(sourcesdict))
+			return (sourcesdict)
 		#def list_sources
 
-		def _list_available_repos(self):
+		def _list_available_repos(self,sourcesdict={}):
 			frepos=[]
 			try:
 				tmp_repos=os.listdir(self.available_repos_dir)
@@ -195,6 +195,12 @@ class manager():
 			for frepo in frepos:
 				rname=frepo.replace("_"," ")
 				rname=rname.replace(".json","")
+				if rname in sourcesdict.keys() or rname.lower() in sourcesdict.keys():
+					if sourcesdict.get(rname,""):
+						del sourcesdict[rname]
+					else:
+						del sourcesdict[rname.lower()]
+					
 				try:
 					with open(self.available_repos_dir+'/'+frepo,'r') as fcontent:
 						repos.update(json.load(fcontent))
@@ -203,15 +209,13 @@ class manager():
 						repos[rname]['enabled']=self._check_flist_content("%s/%s"%(self.sources_dir,f_list_name))
 				except Exception as e:
 					self._debug("_list_available_repos error %s: %s"%(frepo,e))
-			#Sort by relevancy (Lliurex, Local, Ubuntu-*)
-			sort_repos=OrderedDict()
-			for repo in sorted(repos.keys()):
-				sort_repos.update({repo:repos[repo]})
-			return sort_repos
+			return repos
 		#def list_available_repos
 
 		def _check_flist_content(self,flist):
 			enabled="false"
+			if not os.path.isfile(flist):
+				flist=flist.lower()
 			if os.path.isfile(flist):
 				try:
 					with open(flist,'r') as fcontent:
@@ -253,7 +257,7 @@ class manager():
 				repo_line=repo_array[item:]
 				if repo_line[0].startswith('ppa:'):
 					ppa_array=repo_line[0].split('/')
-					ppa_team=ppa_array[0].replace('ppa:','')
+					ppa_team=ppa_array[1].replace('ppa:','')
 #					repo_url=["http://ppa.launchpad.net/%s/%s/ubuntu %s main"%(ppa_team,ppa_array[-1],ppa_array[-1])]
 					repo_url="http://ppa.launchpad.net/%s/%s/ubuntu/dists"%(ppa_team,ppa_array[-1])
 					repo_url=self._get_http_dirs(repo_url)
@@ -267,6 +271,7 @@ class manager():
 						self._debug("Components: %s"%components)
 					if components!='':
 						repo_url=["%s %s %s"%(repo_line[0],distro,' '.join(components))]
+						self._debug("Get component dirs: %s"%repo_url)
 					else:
 						repo_url=repo_line[0]
 						if distro!='':
@@ -275,7 +280,7 @@ class manager():
 							repo_url="%s/dists"%(repo_line[0])
 						self._debug("Get dirs: %s"%repo_url)
 						repo_url=self._get_http_dirs(repo_url)
-				self._debug("Url: %s"%repo_url)
+				self._debug("Url rc: %s"%repo_url)
 			if repo_url:
 				repo[name]['repos']=repo_url
 				if self.write_repo_json(repo):
@@ -292,24 +297,27 @@ class manager():
 		#def add_repo
 
 		def _get_http_dirs(self,url):
+			session=requests.Session()
+			retry=Retry(connect=3, backoff_factor=0.5)
+			adapter=HTTPAdapter(max_retries=retry)
+			session.mount('http://',adapter)
+			session.mount('https:',adapter)
 			def read_dir(url):
-				dirlist=[]
-				sw_ok=True
 				try:
-					req=Request(url)
-				except:
-					self._debug("Error requesting %s"%url)
-					sw_ok=False
-				if sw_ok:
-					try:
-						content=urlopen(req).read()
-						soup=BeautifulSoup(content,'html.parser')
-						links=soup.find_all('a')
-						for link in links:
-							fname=link.extract().get_text()
-							dirlist.append(fname)
-					except:
-						self._debug("Couldn't open %s"%url)
+					req=session.get(url, verify=False)
+				except Exception as e:
+					self._debug("Error conneting to %s: %s"%(url,e))
+				dirlist=[]
+				try:
+					content=req.text
+					soup=BeautifulSoup(content,'html.parser')
+					links=soup.find_all('a')
+					for link in links:
+						fname=link.extract().get_text()
+						dirlist.append(fname)
+						self._debug("Append %s"%(fname))
+				except Exception as e:
+						self._debug("Couldn't open %s: %s"%(url,e))
 				return(dirlist)
 
 			repo_url=[]
@@ -332,11 +340,13 @@ class manager():
 							if component in self.components:
 								components.append(component)
 						repo_url.append("deb %s %s %s"%(url.replace('dists',''),distro,' '.join(components)))
+					else:
+						self._debug("%s not found in %s"%(distro,self.distros))
 			else:
 				componentlist=read_dir(url)
 				components=[]
 				for component in componentlist:
-					component=component.replace('/','').lstrip()
+					component=component.replace('/','')
 					if component in self.components:
 						components.append(component)
 				repo_array=url.split('/')
@@ -348,12 +358,17 @@ class manager():
 
 		def update_repos(self):
 			ret=True
+			msg=''
+			output=""
 			try:
-				subprocess.run(["pkexec","apt-get","update"],check=True)
-			except Exception as e:
+				output=subprocess.check_output(["apt-get","update"],stderr=subprocess.STDOUT)
+			except subprocess.CalledProcessError as e:
 				self._debug("Update repos: %s"%e)
 				ret=False
-			return(ret)
+				for line in e.output.split("\n"):
+					if line.startswith("E: F"):
+						msg=line
+			return([ret,msg])
 
 #class manager
 	
