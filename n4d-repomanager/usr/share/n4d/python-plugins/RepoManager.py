@@ -20,28 +20,28 @@ class RepoManager():
 		if status:
 			return n4d.responses.build_successful_call_response()
 		else:
-			return n4d.responses.build_failed_call_response()
+			return n4d.responses.build_failed_call_response(status)
 
 	def write_repo(self,data):
 		status=self.repoman.write_repo(data)
 		if status:
 			return n4d.responses.build_successful_call_response()
 		else:
-			return n4d.responses.build_failed_call_response()
+			return n4d.responses.build_failed_call_response(status)
 
 	def list_sources(self):	
 		return n4d.responses.build_successful_call_response(self.repoman.list_sources())
 
 	def add_repo(self,name,desc,url):
 		status=self.repoman.add_repo(name,desc,url)
-		if status:
+		if status==0:
 			return n4d.responses.build_successful_call_response()
 		else:
-			return n4d.responses.build_failed_call_response()
+			return n4d.responses.build_failed_call_response(status)
 		
 	def update_repos(self):
 		status=self.repoman.update_repos()
-		if status:
+		if status==0:
 			return n4d.responses.build_successful_call_response()
 		else:
-			return n4d.responses.build_failed_call_response()
+			return n4d.responses.build_failed_call_response(status)
