@@ -40,7 +40,7 @@ class QLabelDescription(QWidget):
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=True
+		self.dbg=False
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -83,7 +83,6 @@ class defaultRepos(confStack):
 		try:
                     
 			repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
-			print(repos)
 			if type(repos)==type(''):
 			#It's a string, something went wrong. Perhaps a llx16 server?
 				if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
@@ -169,7 +168,6 @@ class defaultRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		print(ret)
 		if ret.get("status",False):
 			self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True
