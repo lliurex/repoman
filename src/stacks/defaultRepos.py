@@ -40,7 +40,7 @@ class QLabelDescription(QWidget):
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -83,6 +83,7 @@ class defaultRepos(confStack):
 		try:
                     
 			repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
+			print(repos)
 			if type(repos)==type(''):
 			#It's a string, something went wrong. Perhaps a llx16 server?
 				if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
@@ -92,7 +93,7 @@ class defaultRepos(confStack):
 					self.appConfig.n4d.server='localhost'
 					self.appConfig.n4d.n4dClient=None
 					repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
-			self.defaultRepos=repos.get('data',{})
+			self.defaultRepos=repos.get('return',{})
 		except Exception as e:
 			print(self.appConfig.n4dQuery("RepoManager","list_default_repos"))
 		states={}
@@ -151,10 +152,10 @@ class defaultRepos(confStack):
 #			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
 			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
 			st=ret.get('status',False)
-			if st:
+			if st==0:
 #				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
 				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
-				if ret.get('status',False)!=True:
+				if ret.get('status',-1)==0:
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
@@ -168,6 +169,7 @@ class defaultRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		print(ret)
 		if ret.get("status",False):
 			self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True

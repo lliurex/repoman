@@ -164,13 +164,15 @@ def disable_repo():
 			n4dcredentials=credentials
 		repo={reponame:repos[reponame]}
 		try:
-			if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
-				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']!=True:
-					print (error.SOURCES)
-			else:
-				print (error.INFO)
+			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
 		except:
 			print("disable_repo %s"%error.DATA)
+			return
+		if writejson['status']==0:
+			if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
+				print (error.SOURCES)
+		else:
+			print (error.INFO)
 #def disable_repo
 
 def enable_repo():
@@ -208,9 +210,11 @@ def enable_repo():
 		if err:
 			print (error.MIRROR)
 		else:
-			if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
-				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']!=True:
+			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
+			if writejson['status']==0: 
+				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
 					print (error.SOURCES)
+					print(a)
 			else:
 				print (error.INFO)
 #def enable_repo
@@ -260,7 +264,7 @@ def _get_repos():
 		print (error.DATA)
 		quit(1)
 	else:
-		repos=data['data']
+		repos=data['return']
 	sort_repos=OrderedDict()
 	index=0
 	for repo in sorted(repos.keys()):
@@ -272,7 +276,7 @@ def _get_repos():
 		print (error.DATA)
 		quit(1)
 	else:
-		sources=data['data']
+		sources=data['return']
 	for repo in sorted(sources.keys()):
 		sort_repos.update({repo:sources[repo]})
 		repo_index[index]=repo
@@ -307,7 +311,8 @@ def _n4d_connect():
 	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
 	if credentials:
 		try:
-			if not n4dserver.validate_user(credentials[0],credentials[1])[0]:
+			ret=n4dserver.validate_user(credentials[0],credentials[1])
+			if not ret['return'][0]:
 				print(error.CREDENTIALS)
 				quit(1)
 		except:
