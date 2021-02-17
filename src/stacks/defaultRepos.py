@@ -82,19 +82,24 @@ class defaultRepos(confStack):
 		config=self.getConfig()
 		try:
                     
-			repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
-			if type(repos)==type(''):
+			n4dclass="RepoManager"
+			n4dmethod="list_default_repos"
+			repos=self.n4dQuery(n4dclass,n4dmethod)
+			#repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
+			if isinstance(repos,str):
 			#It's a string, something went wrong. Perhaps a llx16 server?
 				if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
 					#Server is a llx16 so switch to localhost
 					self._debug("LLX16 server detected. Switch to localhost")
 					self.errServer=True
-					self.appConfig.n4d.server='localhost'
-					self.appConfig.n4d.n4dClient=None
-					repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
-			self.defaultRepos=repos.get('return',{})
+#					self.appConfig.n4d.server='localhost'
+#					self.appConfig.n4d.n4dClient=None
+					result=self.n4dQuery(n4dclass,n4dmethod)
+					repos=result.get('result',{})
+					#repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
+			self.defaultRepos=repos.copy()
 		except Exception as e:
-			print(self.appConfig.n4dQuery("RepoManager","list_default_repos"))
+			print(self.n4dQuery(n4dclass,n4dmethod))
 		states={}
 		row=0
 		for repo,data in self.defaultRepos.items():
@@ -146,19 +151,18 @@ class defaultRepos(confStack):
 	#def changeState
 
 	def writeConfig(self):
+		ret=True
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
-#			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
+			self._debug("Updating %s"%repo)
 			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
-			st=ret.get('status',False)
-			if st==0:
-#				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
+			if ret:
 				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
-				if ret.get('status',-1)==0:
+				if ret==False:
 					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
 				self.showMsg(_("Couldn't write info for %s"%repo),'error')
-		if ret.get('status',False)==True:
+		if ret==True:
 			self._updateRepos()
 		self.updateScreen()
 	#def writeConfig
@@ -168,7 +172,7 @@ class defaultRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		if ret.get("status",False):
+		if ret:
 			self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True
 			self.changes=False
