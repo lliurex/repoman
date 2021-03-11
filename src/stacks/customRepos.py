@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 import sys
 import os
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
 		QHeaderView,QTableWidgetSelectionRange
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt,pyqtSignal
+from PySide2 import QtGui
+from PySide2.QtCore import Qt,Signal,QObject
 from appconfig.appConfigStack import appConfigStack as confStack
 import subprocess
 
@@ -12,7 +12,7 @@ import gettext
 _ = gettext.gettext
 APT_SRC_DIR="/etc/apt/sources.list.d"
 class QLabelDescription(QWidget):
-	clicked=pyqtSignal("PyQt_PyObject")
+	click_on=Signal(str)
 	def __init__(self,label="",description="",parent=None):
 		super (QLabelDescription,self).__init__(parent)
 		widget=QWidget()
@@ -60,11 +60,11 @@ class QLabelDescription(QWidget):
 			self.btn_edit.setToolTip(_("Enable %s and apply to edit"%self.labelText))
 
 	def editRepo(self):
-		self.clicked.emit(self.labelText)
+		self.click_on.emit(self.labelText)
 
 class customRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Manage custom  repositories"))
 		self.description=(_("Custom repositories"))
@@ -139,11 +139,8 @@ class customRepos(confStack):
 			description=data.get('desc','')
 			lbl=QLabelDescription(repo,description)
 			locked=data.get('protected','false')
-			if type(locked)==type (True):
-				locked=str(locked).lower()
-			else:
-				locked=str(locked).lower()
-				lbl.clicked.connect(self.editRepo)
+			locked=str(locked).lower()
+			lbl.click_on.connect(self.editRepo)
 			if locked=='false':
 				lbl.showEdit()
 			if not state:
@@ -222,9 +219,11 @@ class customRepos(confStack):
 			if ret:
 				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 				if ret==False:
-					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+					pass
+#					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
-				self.showMsg(_("Couldn't write info for %s"%repo),'error')
+				pass
+#				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret==True:
 			self._updateRepos()
 		self.updateScreen()
@@ -236,12 +235,12 @@ class customRepos(confStack):
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 		if ret:
-			self.showMsg(_("Repositories updated succesfully"))
+			#self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True
 			self.changes=False
 		else:
 			self._debug("Error updating: %s"%ret)
-			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			#self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
 		cursor=QtGui.QCursor(Qt.PointingHandCursor)
 		self.setCursor(cursor)
 	#def _updateRepos

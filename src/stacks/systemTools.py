@@ -2,9 +2,9 @@
 import sys
 import os
 import subprocess
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QGridLayout,QHBoxLayout,QComboBox,QCheckBox
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt,QSize
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QGridLayout,QHBoxLayout,QComboBox,QCheckBox
+from PySide2 import QtGui
+from PySide2.QtCore import Qt,QSize
 from appconfig.appConfigStack import appConfigStack as confStack
 from edupals.ui import QAnimatedStatusBar
 
