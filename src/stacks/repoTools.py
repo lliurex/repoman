@@ -5,7 +5,6 @@ from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLa
 from PySide2 import QtGui
 from PySide2.QtCore import Qt
 from appconfig.appConfigStack import appConfigStack as confStack
-from edupals.ui import QAnimatedStatusBar
 
 import gettext
 _ = gettext.gettext
@@ -46,8 +45,8 @@ class repoTools(confStack):
 	
 	def _load_screen(self):
 		box=QVBoxLayout()
-		self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
-		box.addWidget(self.statusBar)
+		#self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
+		#box.addWidget(self.statusBar)
 		self.name=QEditDescription()
 		self.name.setDescription(_("name of the repository"),_("Insert repository name"))
 		box.addWidget(self.name)
