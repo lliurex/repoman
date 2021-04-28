@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 import sys
 import os,subprocess
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QGridLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QGridLayout,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox
+from PySide2 import QtGui
+from PySide2.QtCore import Qt
 from appconfig.appConfigStack import appConfigStack as confStack
-from edupals.ui import QAnimatedStatusBar
 
 import gettext
 _ = gettext.gettext
@@ -37,8 +36,6 @@ class localRepos(confStack):
 
 	def _load_screen(self):
 		box=QGridLayout()
-		self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
-		box.addWidget(self.statusBar)
 		self.btn=QPushButton(self.MSG_ENABLE)
 		self.lbl=QLabel("%s server"%self.MSG_USING)
 		self.btn.clicked.connect(self._enable_localhost)
