@@ -13,7 +13,7 @@ export PYBUILD_DESTDIR_python3=debian/python3-repomanager
 
 %:
 	#dh $@ --with llxsrc,i18n,zero,python3 --buildsystem pybuild
-	dh $@ --with llxsrc,python3 --buildsystem pybuild
+	dh $@ --with llxsrc,i18n,python3,zero --buildsystem pybuild
 
 override_dh_auto_install:
 	dh_auto_install
