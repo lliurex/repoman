@@ -64,7 +64,7 @@ class repoTools(confStack):
 	def updateScreen(self):
 		self.name.setDescription(_("name of the repository"),_("Insert repository name"))
 	#def _udpate_screen
-	
+
 	def writeConfig(self):
 		name=self.name.text()
 		desc=self.desc.text()

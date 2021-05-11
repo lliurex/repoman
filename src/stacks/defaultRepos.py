@@ -157,10 +157,10 @@ class defaultRepos(confStack):
 				ret=self.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 				if ret==False:
 					pass
-#					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
 				pass
-#				self.showMsg(_("Couldn't write info for %s"%repo),'error')
+				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret==True:
 			self._updateRepos()
 		self.updateScreen()
@@ -172,12 +172,12 @@ class defaultRepos(confStack):
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 		if ret:
-			#self.showMsg(_("Repositories updated succesfully"))
+			self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True
 			self.changes=False
 		else:
 			self._debug("Error updating: %s"%ret)
-			#self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
 		cursor=QtGui.QCursor(Qt.PointingHandCursor)
 		self.setCursor(cursor)
 	#def _updateRepos
