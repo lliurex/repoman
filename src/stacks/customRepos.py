@@ -64,7 +64,7 @@ class QLabelDescription(QWidget):
 
 class customRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=True
+		self.dbg=False
 		self._debug("confDefault Load")
 		self.menu_description=(_("Manage custom  repositories"))
 		self.description=(_("Custom repositories"))
@@ -219,11 +219,9 @@ class customRepos(confStack):
 			if ret:
 				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 				if ret==False:
-					pass
-#					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+					self.showMsg(_("Couldn't write repo %s"%repo),'error')
 			else:
-				pass
-#				self.showMsg(_("Couldn't write info for %s"%repo),'error')
+				self.showMsg(_("Couldn't write info for %s"%repo),'error')
 		if ret==True:
 			self._updateRepos()
 		self.updateScreen()
@@ -235,12 +233,12 @@ class customRepos(confStack):
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 		if ret:
-			#self.showMsg(_("Repositories updated succesfully"))
+			self.showMsg(_("Repositories updated succesfully"))
 			self.refresh=True
 			self.changes=False
 		else:
 			self._debug("Error updating: %s"%ret)
-			#self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
 		cursor=QtGui.QCursor(Qt.PointingHandCursor)
 		self.setCursor(cursor)
 	#def _updateRepos

@@ -31,7 +31,7 @@ class QEditDescription(QWidget):
 
 class repoTools(confStack):
 	def __init_stack__(self):
-		self.dbg=True
+		self.dbg=False
 		self._debug("confRepos Load")
 		self.menu_description=(_("Add custom  repositories"))
 		self.description=(_("Add repositories"))
@@ -64,7 +64,7 @@ class repoTools(confStack):
 	def updateScreen(self):
 		self.name.setDescription(_("name of the repository"),_("Insert repository name"))
 	#def _udpate_screen
-	
+
 	def writeConfig(self):
 		name=self.name.text()
 		desc=self.desc.text()
