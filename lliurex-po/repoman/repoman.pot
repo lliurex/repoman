@@ -412,8 +412,8 @@ msgstr ""
 msgid "Local repositories"
 msgstr ""
 
-#: json ../sources.d/default/ubuntu_bionic.json
-msgid "Ubuntu bionic official repositories"
+#: json ../sources.d/default/ubuntu_focal.json
+msgid "Ubuntu focal official repositories"
 msgstr ""
 
 #: json ../sources.d/Recursos_LliureX.json

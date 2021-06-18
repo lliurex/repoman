@@ -468,9 +468,9 @@ msgstr "Repositoris predeterminats de Lliurex"
 msgid "Local repositories"
 msgstr "Repositoris locals"
 
-#: json ../sources.d/default/ubuntu_bionic.json
-msgid "Ubuntu bionic official repositories"
-msgstr "Repositoris oficials d'Ubuntu Bionic"
+#: json ../sources.d/default/ubuntu_focal.json
+msgid "Ubuntu focal official repositories"
+msgstr "Repositoris oficials d'Ubuntu Focal"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
