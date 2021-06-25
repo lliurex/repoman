@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 11:46+0100\n"
-"PO-Revision-Date: 2020-02-03 10:58+0000\n"
+"POT-Creation-Date: 2021-06-25 08:22+0200\n"
+"PO-Revision-Date: 2021-06-25 08:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/repoman-cli.py:41
@@ -70,11 +70,11 @@ msgstr "Mostrar los repositorios deshabilitados"
 msgid "Show help"
 msgstr "Ayuda"
 
-#: ../src/repoman-cli.py:59 ../src/repoman.py:37
+#: ../src/repoman-cli.py:59
 msgid "Invalid Url"
 msgstr "Url no válida"
 
-#: ../src/repoman-cli.py:60 ../src/repoman.py:38
+#: ../src/repoman-cli.py:60
 msgid ""
 "Can't add repository information.\n"
 "Check your permissions"
@@ -82,7 +82,7 @@ msgstr ""
 "No se puede añadir la información del repositorio\n"
 "Comprueba los permisos"
 
-#: ../src/repoman-cli.py:61 ../src/repoman.py:39
+#: ../src/repoman-cli.py:61
 msgid ""
 "Can't write sources file.\n"
 "Check your permissions"
@@ -90,15 +90,15 @@ msgstr ""
 "No se puede escribir el fichero de fuentes\n"
 "Comprueba los repositorios"
 
-#: ../src/repoman-cli.py:62 ../src/repoman.py:40
+#: ../src/repoman-cli.py:62
 msgid "Repository not found at given Url"
 msgstr "No se encuentra un repositorio en la url indicada"
 
-#: ../src/repoman-cli.py:63 ../src/repoman.py:41
+#: ../src/repoman-cli.py:63
 msgid "Repositories failed to update"
 msgstr "Fallo al actualizar los repositorios"
 
-#: ../src/repoman-cli.py:64 ../src/repoman.py:42
+#: ../src/repoman-cli.py:64
 msgid "Mirror not availabe"
 msgstr "Mirror no disponible"
 
@@ -126,7 +126,7 @@ msgstr "Usuario o contraseña incorrectos"
 msgid "Error retrieving data from server"
 msgstr "Error leyendo la información del servidor"
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:154 ../src/repoman-cli.py:184
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:154 ../src/repoman-cli.py:186
 msgid "Y/N"
 msgstr "S/N"
 
@@ -162,7 +162,7 @@ msgstr ""
 "Se va a %(color1)sdeshabilitar%(color2)s el repositorio %(repo)s. "
 "¿Continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:186
+#: ../src/repoman-cli.py:188
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
@@ -171,20 +171,20 @@ msgstr ""
 "Se va activar el repositorio %(repo)s. ¿Continuar? %(options)s "
 "[%(default)s]: "
 
-#: ../src/repoman-cli.py:223
+#: ../src/repoman-cli.py:227
 msgid "Enabled"
 msgstr "Activo"
 
-#: ../src/repoman-cli.py:227
+#: ../src/repoman-cli.py:231
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: ../src/repoman-cli.py:285
+#: ../src/repoman-cli.py:289
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:286
+#: ../src/repoman-cli.py:290
 msgid ""
 "\n"
 "RepoMan"
@@ -192,7 +192,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:287
+#: ../src/repoman-cli.py:291
 msgid ""
 "\n"
 "Parameters:"
@@ -200,95 +200,14 @@ msgstr ""
 "\n"
 "Parámetros:"
 
-#: ../src/repoman-cli.py:350
+#: ../src/repoman-cli.py:355
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no válido para el argumenrto %s"
 
-#: ../src/repoman-cli.py:354
+#: ../src/repoman-cli.py:359
 msgid "Invalid argument"
 msgstr "Argumento inválido"
-
-#: ../src/repoman.py:123
-msgid "Repositories must be updated. Update now?"
-msgstr "Hay que actualizar los repositorios. ¿Actualizar ahora?"
-
-#: ../src/repoman.py:130 ../src/stacks/systemTools.py:31
-msgid "Update repositories"
-msgstr "Actualizar repositorios"
-
-#: ../src/repoman.py:155 ../src/stacks/defaultRepos.py:46
-msgid "Default repositories"
-msgstr "Repositorios por defecto"
-
-#: ../src/repoman.py:162
-msgid "External repositories"
-msgstr "Repositorios externos"
-
-#: ../src/repoman.py:169
-msgid "Add external repository"
-msgstr "Añadir repositorio externo"
-
-#: ../src/repoman.py:185
-msgid ""
-"From here you can invoke RepoMan's mighty powers to manage your repositories."
-msgstr ""
-"Permite invocar los superpoderes de RepoMan para administrar los "
-"repositorios del sistema."
-
-#: ../src/repoman.py:186
-msgid "Repositories Manager"
-msgstr "Gestor de repositorios"
-
-#: ../src/repoman.py:325
-msgid "Name for the repo"
-msgstr "Nombre del repo"
-
-#: ../src/repoman.py:337
-msgid "Description"
-msgstr "Descripción"
-
-#: ../src/repoman.py:348
-msgid "Url"
-msgstr "Url"
-
-#: ../src/repoman.py:373
-msgid "Name is mandatory"
-msgstr "El nombre es obligatorio"
-
-#: ../src/repoman.py:377
-msgid "Name is too long"
-msgstr "El nombre es demasiado largo"
-
-#: ../src/repoman.py:385
-msgid "Description is too long"
-msgstr "La descripción es demasiado larga"
-
-#: ../src/repoman.py:391
-msgid "Url is mandatory"
-msgstr "La URL es obligatoria"
-
-#: ../src/repoman.py:419
-#, python-format
-msgid "%s already exists. Overwrite it?"
-msgstr "Ya existe %s. ¿Sobreescribirlo?"
-
-#: ../src/repoman.py:446
-#, python-format
-msgid "Added repository %s"
-msgstr "Añadido el repositorio %s"
-
-#: ../src/repoman.py:483
-msgid "Edit sources file"
-msgstr "Editar fichero de fuentes"
-
-#: ../src/repoman.py:490
-msgid "Enable/disable repository"
-msgstr "Habilita/deshabilita el repositorio"
-
-#: ../src/repoman.py:536
-msgid "Repositories updated"
-msgstr "Repositorios actualizados"
 
 #: ../src/stacks/customRepos.py:26 ../src/stacks/customRepos.py:58
 #, python-format
@@ -320,22 +239,22 @@ msgstr "Gestiona repositorios personales"
 msgid "Add new repository"
 msgstr "Añadir repositorio"
 
-#: ../src/stacks/customRepos.py:211 ../src/stacks/defaultRepos.py:138
+#: ../src/stacks/customRepos.py:222 ../src/stacks/defaultRepos.py:160
 #, python-format
 msgid "Couldn't write repo %s"
 msgstr "No pude escribir %s"
 
-#: ../src/stacks/customRepos.py:213 ../src/stacks/defaultRepos.py:140
+#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:163
 #, python-format
 msgid "Couldn't write info for %s"
 msgstr "No pude escribir la información de %s"
 
-#: ../src/stacks/customRepos.py:218 ../src/stacks/defaultRepos.py:145
+#: ../src/stacks/customRepos.py:236 ../src/stacks/defaultRepos.py:175
 #: ../src/stacks/systemTools.py:67
 msgid "Repositories updated succesfully"
 msgstr "Repositorios actualizados"
 
-#: ../src/stacks/customRepos.py:221 ../src/stacks/defaultRepos.py:148
+#: ../src/stacks/customRepos.py:241 ../src/stacks/defaultRepos.py:180
 #: ../src/stacks/systemTools.py:70
 #, python-format
 msgid ""
@@ -345,59 +264,81 @@ msgstr ""
 "Error actualizando repositorios\n"
 "%s"
 
-#: ../src/stacks/defaultRepos.py:45
+#: ../src/stacks/defaultRepos.py:48
 msgid "Choose the default repositories"
 msgstr "Seleccionar los repositorios por defecto"
 
-#: ../src/stacks/defaultRepos.py:48
+#: ../src/stacks/defaultRepos.py:49
+msgid "Default repositories"
+msgstr "Repositorios por defecto"
+
+#: ../src/stacks/defaultRepos.py:51
 msgid "From here you can activate/deactivate the default repositories"
 msgstr "Desde aquí puedes activar/desactivar los repositorios por defecto"
 
-#: ../src/stacks/defaultRepos.py:58
+#: ../src/stacks/defaultRepos.py:61
 msgid "Enable or disable default repositories"
 msgstr "Habilita/deshabilita repositorios por deefecto"
 
-#: ../src/stacks/defaultRepos.py:119
-msgid "Mirror not available"
-msgstr "Mirror no disponible"
+#: ../src/stacks/localRepos.py:16
+msgid "Temporaly set localhost as source in a client for modify his repos"
+msgstr ""
+"Activa temporalmente la modificación de los repositorios locales en un "
+"cliente"
 
-#: ../src/stacks/repoTools.py:37
-msgid "Add custom  repositories"
-msgstr "Añadir repositorio personal"
+#: ../src/stacks/localRepos.py:17
+msgid "Modify localhost repos"
+msgstr "Modificar repositorio local"
 
-#: ../src/stacks/repoTools.py:38
-msgid "Add repositories"
-msgstr "Añadir repositorio"
-
-#: ../src/stacks/repoTools.py:40
+#: ../src/stacks/localRepos.py:19 ../src/stacks/repoTools.py:39
 msgid "From here you can add custom repositories"
 msgstr "Desde aquí puedes añadir repositorios personales"
 
-#: ../src/stacks/repoTools.py:52 ../src/stacks/repoTools.py:66
+#: ../src/stacks/localRepos.py:26
+msgid "Enable localhost repos"
+msgstr "Activar repositorio local"
+
+#: ../src/stacks/localRepos.py:27
+msgid "Disable localhost repos"
+msgstr "Deshabilitar repositorio local"
+
+#: ../src/stacks/localRepos.py:28
+msgid "Using repos from"
+msgstr "Usando los repositorios de"
+
+#: ../src/stacks/repoTools.py:36
+msgid "Add custom  repositories"
+msgstr "Añadir repositorio personal"
+
+#: ../src/stacks/repoTools.py:37
+msgid "Add repositories"
+msgstr "Añadir repositorio"
+
+#: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "name of the repository"
 msgstr "Nombre del repositorio"
 
-#: ../src/stacks/repoTools.py:52 ../src/stacks/repoTools.py:66
+#: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "Insert repository name"
 msgstr "Introduce el nombre del repositorio"
 
-#: ../src/stacks/repoTools.py:55
+#: ../src/stacks/repoTools.py:54
 msgid "Repository's contents"
 msgstr "Contenido del repositorio"
 
-#: ../src/stacks/repoTools.py:55
+#: ../src/stacks/repoTools.py:54
 msgid "Descriptive description (optional)"
 msgstr "Descripción del repositorio (opcional):"
 
-#: ../src/stacks/repoTools.py:58
+#: ../src/stacks/repoTools.py:57
 msgid "Repository's url"
 msgstr "URL del repositorio"
 
-#: ../src/stacks/repoTools.py:58
+#: ../src/stacks/repoTools.py:57
 msgid "Url for the repository"
 msgstr "URL del repositorio"
 
-#: ../src/stacks/repoTools.py:76
+#: ../src/stacks/repoTools.py:75
 #, python-format
 msgid "Error adding repository %s"
 msgstr "Error añadiendo el repositorio %s"
@@ -415,6 +356,10 @@ msgid ""
 "From here you can update the repositories info or launch lliurex-upgrade"
 msgstr "Desde aquí se pueden actualizar los repositorios y ejecutar LliureX-UP"
 
+#: ../src/stacks/systemTools.py:31
+msgid "Update repositories"
+msgstr "Actualizar repositorios"
+
 #: ../src/stacks/systemTools.py:36
 msgid "Launch Lliurex-Up"
 msgstr "Ejecutar LliureX-Up"
@@ -423,7 +368,7 @@ msgstr "Ejecutar LliureX-Up"
 msgid "Launch Lliurex-Store"
 msgstr "Ejecutar LliureX-Store"
 
-#: json ../sources.d/default/lliurex_19.json
+#: json ../sources.d/default/lliurex_21.json
 msgid "Lliurex default repositories"
 msgstr "Repositorios de LliureX"
 
@@ -438,6 +383,64 @@ msgstr "Repositorios oficiales de Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Repositories must be updated. Update now?"
+#~ msgstr "Hay que actualizar los repositorios. ¿Actualizar ahora?"
+
+#~ msgid "External repositories"
+#~ msgstr "Repositorios externos"
+
+#~ msgid "Add external repository"
+#~ msgstr "Añadir repositorio externo"
+
+#~ msgid ""
+#~ "From here you can invoke RepoMan's mighty powers to manage your "
+#~ "repositories."
+#~ msgstr ""
+#~ "Permite invocar los superpoderes de RepoMan para administrar los "
+#~ "repositorios del sistema."
+
+#~ msgid "Repositories Manager"
+#~ msgstr "Gestor de repositorios"
+
+#~ msgid "Name for the repo"
+#~ msgstr "Nombre del repo"
+
+#~ msgid "Description"
+#~ msgstr "Descripción"
+
+#~ msgid "Url"
+#~ msgstr "Url"
+
+#~ msgid "Name is mandatory"
+#~ msgstr "El nombre es obligatorio"
+
+#~ msgid "Name is too long"
+#~ msgstr "El nombre es demasiado largo"
+
+#~ msgid "Description is too long"
+#~ msgstr "La descripción es demasiado larga"
+
+#~ msgid "Url is mandatory"
+#~ msgstr "La URL es obligatoria"
+
+#~ msgid "%s already exists. Overwrite it?"
+#~ msgstr "Ya existe %s. ¿Sobreescribirlo?"
+
+#~ msgid "Added repository %s"
+#~ msgstr "Añadido el repositorio %s"
+
+#~ msgid "Edit sources file"
+#~ msgstr "Editar fichero de fuentes"
+
+#~ msgid "Enable/disable repository"
+#~ msgstr "Habilita/deshabilita el repositorio"
+
+#~ msgid "Repositories updated"
+#~ msgstr "Repositorios actualizados"
+
+#~ msgid "Mirror not available"
+#~ msgstr "Mirror no disponible"
 
 #~ msgid ""
 #~ "Usage: %s -n repository_name [ -d repository_description ] -u "

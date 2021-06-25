@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 11:46+0100\n"
-"PO-Revision-Date: 2020-02-03 13:56+0100\n"
+"POT-Creation-Date: 2021-06-25 08:22+0200\n"
+"PO-Revision-Date: 2021-06-25 08:26+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.04.2\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../src/repoman-cli.py:41
 msgid "Add repository"
@@ -69,11 +69,11 @@ msgstr "Mostra els repositoris inhabilitats"
 msgid "Show help"
 msgstr "Mostra l'ajuda"
 
-#: ../src/repoman-cli.py:59 ../src/repoman.py:37
+#: ../src/repoman-cli.py:59
 msgid "Invalid Url"
 msgstr "L'Url no és vàlid"
 
-#: ../src/repoman-cli.py:60 ../src/repoman.py:38
+#: ../src/repoman-cli.py:60
 msgid ""
 "Can't add repository information.\n"
 "Check your permissions"
@@ -81,21 +81,21 @@ msgstr ""
 "No es pot afegir la informació del repositori. Comproveu els vostres "
 "permisos."
 
-#: ../src/repoman-cli.py:61 ../src/repoman.py:39
+#: ../src/repoman-cli.py:61
 msgid ""
 "Can't write sources file.\n"
 "Check your permissions"
 msgstr "No es pot escriure el fitxer de fonts. Comproveu els vostres permisos."
 
-#: ../src/repoman-cli.py:62 ../src/repoman.py:40
+#: ../src/repoman-cli.py:62
 msgid "Repository not found at given Url"
 msgstr "No es troba el repositori a l'Url donat"
 
-#: ../src/repoman-cli.py:63 ../src/repoman.py:41
+#: ../src/repoman-cli.py:63
 msgid "Repositories failed to update"
 msgstr "Ha fallat l'actualització dels repositoris"
 
-#: ../src/repoman-cli.py:64 ../src/repoman.py:42
+#: ../src/repoman-cli.py:64
 msgid "Mirror not availabe"
 msgstr "Mirror no disponible"
 
@@ -124,7 +124,7 @@ msgstr "Nom d'usuari/contrasenya incorrectes"
 msgid "Error retrieving data from server"
 msgstr "S'ha produït un error en recuperar les dades del servidor"
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:154 ../src/repoman-cli.py:184
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:154 ../src/repoman-cli.py:186
 msgid "Y/N"
 msgstr "S/N"
 
@@ -134,9 +134,8 @@ msgid ""
 "You're going to add the repo present at %(color1)s%(url)s%(color2)s. "
 "Continue? %(options)s [%(default)s]: "
 msgstr ""
-"Afegireu el repositori present a %(color1)s%(url)s%(color2)s. Voleu"
-" continuar? "
-"%(options)s [%(default)s]:"
+"Afegireu el repositori present a %(color1)s%(url)s%(color2)s. Voleu "
+"continuar? %(options)s [%(default)s]:"
 
 #: ../src/repoman-cli.py:120
 #, python-format
@@ -158,33 +157,32 @@ msgid ""
 "You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? "
 "%(options)s [%(default)s]: "
 msgstr ""
-"Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu"
-" continuar? "
-"%(options)s [%(default)s]: "
+"Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu "
+"continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:186
+#: ../src/repoman-cli.py:188
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
 "[%(default)s]: "
 msgstr ""
-"Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s ["
-"%(default)s]:"
+"Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s "
+"[%(default)s]:"
 
-#: ../src/repoman-cli.py:223
+#: ../src/repoman-cli.py:227
 msgid "Enabled"
 msgstr "Actiu"
 
-#: ../src/repoman-cli.py:227
+#: ../src/repoman-cli.py:231
 msgid "Disabled"
 msgstr "inhabilitat"
 
-#: ../src/repoman-cli.py:285
+#: ../src/repoman-cli.py:289
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:286
+#: ../src/repoman-cli.py:290
 msgid ""
 "\n"
 "RepoMan"
@@ -192,7 +190,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:287
+#: ../src/repoman-cli.py:291
 msgid ""
 "\n"
 "Parameters:"
@@ -200,93 +198,14 @@ msgstr ""
 "\n"
 "Paràmetres"
 
-#: ../src/repoman-cli.py:350
+#: ../src/repoman-cli.py:355
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no vàlid per a l'argument -%s"
 
-#: ../src/repoman-cli.py:354
+#: ../src/repoman-cli.py:359
 msgid "Invalid argument"
 msgstr "Argument no vàlid"
-
-#: ../src/repoman.py:123
-msgid "Repositories must be updated. Update now?"
-msgstr "Cal actualitzar els repositoris. Voleu actualitzar ara?"
-
-#: ../src/repoman.py:130 ../src/stacks/systemTools.py:31
-msgid "Update repositories"
-msgstr "Actualitza els repositoris"
-
-#: ../src/repoman.py:155 ../src/stacks/defaultRepos.py:46
-msgid "Default repositories"
-msgstr "Repositoris per defecte"
-
-#: ../src/repoman.py:162
-msgid "External repositories"
-msgstr "Repositoris externs"
-
-#: ../src/repoman.py:169
-msgid "Add external repository"
-msgstr "Afig un repositori extern"
-
-#: ../src/repoman.py:185
-msgid ""
-"From here you can invoke RepoMan's mighty powers to manage your repositories."
-msgstr "Invoca els superpoders de Repoman per a gestionar els repositoris"
-
-#: ../src/repoman.py:186
-msgid "Repositories Manager"
-msgstr "Gestor de repositoris"
-
-#: ../src/repoman.py:325
-msgid "Name for the repo"
-msgstr "Nom del repositori"
-
-#: ../src/repoman.py:337
-msgid "Description"
-msgstr "Descripció"
-
-#: ../src/repoman.py:348
-msgid "Url"
-msgstr "URL"
-
-#: ../src/repoman.py:373
-msgid "Name is mandatory"
-msgstr "El nom és obligatori"
-
-#: ../src/repoman.py:377
-msgid "Name is too long"
-msgstr "El nom és massa llarg"
-
-#: ../src/repoman.py:385
-msgid "Description is too long"
-msgstr "La descripció és massa llarga"
-
-#: ../src/repoman.py:391
-msgid "Url is mandatory"
-msgstr "L'URL és obligatori"
-
-#: ../src/repoman.py:419
-#, python-format
-msgid "%s already exists. Overwrite it?"
-msgstr "Ja existeix %s. Voleu sobreescriure-hi?"
-
-#: ../src/repoman.py:446
-#, python-format
-msgid "Added repository %s"
-msgstr "Afig el repositori %s"
-
-#: ../src/repoman.py:483
-msgid "Edit sources file"
-msgstr "Edita el fitxer de fonts"
-
-#: ../src/repoman.py:490
-msgid "Enable/disable repository"
-msgstr "Habilita/ inhabilita un repositori"
-
-#: ../src/repoman.py:536
-msgid "Repositories updated"
-msgstr "Repositoris actualitzats"
 
 #: ../src/stacks/customRepos.py:26 ../src/stacks/customRepos.py:58
 #, python-format
@@ -321,22 +240,22 @@ msgstr "Gestiona els repositoris extra"
 msgid "Add new repository"
 msgstr "Afig un repositori nou"
 
-#: ../src/stacks/customRepos.py:211 ../src/stacks/defaultRepos.py:138
+#: ../src/stacks/customRepos.py:222 ../src/stacks/defaultRepos.py:160
 #, python-format
 msgid "Couldn't write repo %s"
 msgstr "No s'ha pogut escriure el repositori %s"
 
-#: ../src/stacks/customRepos.py:213 ../src/stacks/defaultRepos.py:140
+#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:163
 #, python-format
 msgid "Couldn't write info for %s"
 msgstr "No s'ha pogut escriure la informació per a %s"
 
-#: ../src/stacks/customRepos.py:218 ../src/stacks/defaultRepos.py:145
+#: ../src/stacks/customRepos.py:236 ../src/stacks/defaultRepos.py:175
 #: ../src/stacks/systemTools.py:67
 msgid "Repositories updated succesfully"
 msgstr "Els repositoris s'han actualitzat correctament"
 
-#: ../src/stacks/customRepos.py:221 ../src/stacks/defaultRepos.py:148
+#: ../src/stacks/customRepos.py:241 ../src/stacks/defaultRepos.py:180
 #: ../src/stacks/systemTools.py:70
 #, python-format
 msgid ""
@@ -346,55 +265,75 @@ msgstr ""
 "No s'han pogut actualitzar els repositoris\n"
 "%s"
 
-#: ../src/stacks/defaultRepos.py:45
+#: ../src/stacks/defaultRepos.py:48
 msgid "Choose the default repositories"
 msgstr "Trieu els repositoris per defecte"
 
-#: ../src/stacks/defaultRepos.py:48
+#: ../src/stacks/defaultRepos.py:49
+msgid "Default repositories"
+msgstr "Repositoris per defecte"
+
+#: ../src/stacks/defaultRepos.py:51
 msgid "From here you can activate/deactivate the default repositories"
 msgstr "Des d'ací podeu activar/desactivar els repositoris per defecte"
 
-#: ../src/stacks/defaultRepos.py:58
+#: ../src/stacks/defaultRepos.py:61
 msgid "Enable or disable default repositories"
 msgstr "Habilita/ inhabilita un repositori per defecte"
 
-#: ../src/stacks/defaultRepos.py:119
-msgid "Mirror not available"
-msgstr "Mirror no disponible"
+#: ../src/stacks/localRepos.py:16
+msgid "Temporaly set localhost as source in a client for modify his repos"
+msgstr "Activa temporalment la modificació dels repositoris locals a un client"
 
-#: ../src/stacks/repoTools.py:37
-msgid "Add custom  repositories"
-msgstr "Afig repositoris personalitzats"
+#: ../src/stacks/localRepos.py:17
+msgid "Modify localhost repos"
+msgstr "Modificar repositoris locals"
 
-#: ../src/stacks/repoTools.py:38
-msgid "Add repositories"
-msgstr "Afig repositoris"
-
-#: ../src/stacks/repoTools.py:40
+#: ../src/stacks/localRepos.py:19 ../src/stacks/repoTools.py:39
 msgid "From here you can add custom repositories"
 msgstr "Des d'ací podeu afegir repositoris personalitzats"
 
-#: ../src/stacks/repoTools.py:52 ../src/stacks/repoTools.py:66
+#: ../src/stacks/localRepos.py:26
+msgid "Enable localhost repos"
+msgstr "Activa el repositori local"
+
+#: ../src/stacks/localRepos.py:27
+msgid "Disable localhost repos"
+msgstr "Inhabilita el repositori local"
+
+#: ../src/stacks/localRepos.py:28
+msgid "Using repos from"
+msgstr "Utilitzant repositoris de"
+
+#: ../src/stacks/repoTools.py:36
+msgid "Add custom  repositories"
+msgstr "Afig repositoris personalitzats"
+
+#: ../src/stacks/repoTools.py:37
+msgid "Add repositories"
+msgstr "Afig repositoris"
+
+#: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "name of the repository"
 msgstr "Nom del repositori:"
 
-#: ../src/stacks/repoTools.py:52 ../src/stacks/repoTools.py:66
+#: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "Insert repository name"
 msgstr "Inseriu el nom del repositori"
 
-#: ../src/stacks/repoTools.py:55
+#: ../src/stacks/repoTools.py:54
 msgid "Repository's contents"
 msgstr "Contingut del repositori"
 
-#: ../src/stacks/repoTools.py:55
+#: ../src/stacks/repoTools.py:54
 msgid "Descriptive description (optional)"
 msgstr "Descripció del repositori (opcional):"
 
-#: ../src/stacks/repoTools.py:58
+#: ../src/stacks/repoTools.py:57
 msgid "Repository's url"
 msgstr "URL del repositori"
 
-#: ../src/stacks/repoTools.py:58
+#: ../src/stacks/repoTools.py:57
 msgid "Url for the repository"
 msgstr "URL per al repositori"
 
@@ -422,7 +361,7 @@ msgstr "URL per al repositori"
 # #: ../src/stacks/confRepos.py:58
 # msgid "Url for the repository"
 # msgstr ""
-#: ../src/stacks/repoTools.py:76
+#: ../src/stacks/repoTools.py:75
 #, python-format
 msgid "Error adding repository %s"
 msgstr "S'ha produït un error en afegir el repositori %s"
@@ -449,8 +388,12 @@ msgstr "Actualitza els repositoris o el sistema actualitzat"
 msgid ""
 "From here you can update the repositories info or launch lliurex-upgrade"
 msgstr ""
-"Des d'ací podeu actualitzar la informació dels repositoris o llançar"
-" lliurex-upgrade"
+"Des d'ací podeu actualitzar la informació dels repositoris o llançar lliurex-"
+"upgrade"
+
+#: ../src/stacks/systemTools.py:31
+msgid "Update repositories"
+msgstr "Actualitza els repositoris"
 
 #: ../src/stacks/systemTools.py:36
 msgid "Launch Lliurex-Up"
@@ -460,7 +403,7 @@ msgstr "Llança Lliurex-Up"
 msgid "Launch Lliurex-Store"
 msgstr "Llança Lliurex-Store"
 
-#: json ../sources.d/default/lliurex_19.json
+#: json ../sources.d/default/lliurex_21.json
 msgid "Lliurex default repositories"
 msgstr "Repositoris predeterminats de Lliurex"
 
@@ -475,6 +418,62 @@ msgstr "Repositoris oficials d'Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educatius de Lliurex"
+
+#~ msgid "Repositories must be updated. Update now?"
+#~ msgstr "Cal actualitzar els repositoris. Voleu actualitzar ara?"
+
+#~ msgid "External repositories"
+#~ msgstr "Repositoris externs"
+
+#~ msgid "Add external repository"
+#~ msgstr "Afig un repositori extern"
+
+#~ msgid ""
+#~ "From here you can invoke RepoMan's mighty powers to manage your "
+#~ "repositories."
+#~ msgstr "Invoca els superpoders de Repoman per a gestionar els repositoris"
+
+#~ msgid "Repositories Manager"
+#~ msgstr "Gestor de repositoris"
+
+#~ msgid "Name for the repo"
+#~ msgstr "Nom del repositori"
+
+#~ msgid "Description"
+#~ msgstr "Descripció"
+
+#~ msgid "Url"
+#~ msgstr "URL"
+
+#~ msgid "Name is mandatory"
+#~ msgstr "El nom és obligatori"
+
+#~ msgid "Name is too long"
+#~ msgstr "El nom és massa llarg"
+
+#~ msgid "Description is too long"
+#~ msgstr "La descripció és massa llarga"
+
+#~ msgid "Url is mandatory"
+#~ msgstr "L'URL és obligatori"
+
+#~ msgid "%s already exists. Overwrite it?"
+#~ msgstr "Ja existeix %s. Voleu sobreescriure-hi?"
+
+#~ msgid "Added repository %s"
+#~ msgstr "Afig el repositori %s"
+
+#~ msgid "Edit sources file"
+#~ msgstr "Edita el fitxer de fonts"
+
+#~ msgid "Enable/disable repository"
+#~ msgstr "Habilita/ inhabilita un repositori"
+
+#~ msgid "Repositories updated"
+#~ msgstr "Repositoris actualitzats"
+
+#~ msgid "Mirror not available"
+#~ msgstr "Mirror no disponible"
 
 #~ msgid "Failed to update repositories"
 #~ msgstr "Error al actualitzar els repositoris"
