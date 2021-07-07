@@ -200,11 +200,15 @@ def enable_repo():
 				server='server'
 				context=ssl._create_unverified_context()
 				n4d_server=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-				ret=n4d_server.is_mirror_available(n4dcredentials,"MirrorManager")['status']
-				if ret!=True:
+				ret=n4d_server.is_mirror_available("","MirrorManager")#['status']
+				if isinstance(ret,dict):
+					if ret.get('status')!=True:
+						err=6
+				else:
 					err=6
-			except:
+			except Exception as e:
 				err=6
+				print(e)
 		if err:
 			print (error.MIRROR)
 		else:
