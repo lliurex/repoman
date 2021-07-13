@@ -10,7 +10,7 @@ import re
 #from collections import OrderedDict
 class manager():
 		def __init__(self):
-			self.dbg=False
+			self.dbg=True
 			self.sources_file='/etc/apt/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'
@@ -361,13 +361,19 @@ class manager():
 			msg=''
 			output=""
 			try:
-				output=subprocess.check_output(["apt-get","update"],stderr=subprocess.STDOUT)
+				output=subprocess.run(["apt-get","update"],capture_output=True)
 			except subprocess.CalledProcessError as e:
-				self._debug("Update repos: %s"%e)
+				self._debug("Update repos: {}".format(e))
 				ret=False
-				for line in e.output.split("\n"):
-					if line.startswith("E: F"):
+				for line in output.stderr.decode().split("\n"):
+					if line.startswith("E: "):
 						msg=line
+			if output.stderr.decode():
+				errLines=[]
+				for line in output.stderr.decode().split("\n"):
+					if line not in errLines and line.startswith("E:"):
+						errLines.append(line)
+					msg="\n".join(errLines)
 			return([ret,msg])
 
 #class manager
