@@ -40,8 +40,11 @@ class RepoManager():
 			return n4d.responses.build_failed_call_response(status)
 		
 	def update_repos(self):
-		status=self.repoman.update_repos()
-		if status==0:
-			return n4d.responses.build_successful_call_response()
+		response=self.repoman.update_repos()
+		if isinstance(response,list) and response:
+			if response[0]==True:
+				return n4d.responses.build_successful_call_response(response[1])
+			else:
+				return n4d.responses.build_failed_call_response(status)
 		else:
 			return n4d.responses.build_failed_call_response(status)
