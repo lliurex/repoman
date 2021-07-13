@@ -1,8 +1,9 @@
-repoman (2.2.3) focal; urgency=medium
+repoman (2.2.4) focal; urgency=medium
 
   * Update mirror repo to llx21
   * Add catalan translation
   * Improve error management
+  * Let modify server repositories from clients
 
  -- Juanma1980 <juanma1980@gmail.com>  Mon, 03 May 2021 11:09:07 +0200
 
