@@ -368,11 +368,16 @@ class manager():
 				for line in output.stderr.decode().split("\n"):
 					if line.startswith("E: "):
 						msg=line
+					elif line.startswith("W: ") and ("fetch") in line:
+						msg=line
 			if output.stderr.decode():
 				errLines=[]
 				for line in output.stderr.decode().split("\n"):
-					if line not in errLines and line.startswith("E:"):
-						errLines.append(line)
+					if line not in errLines:
+						if line.startswith("E:"):
+							errLines.append(line)
+						elif line.startswith("W: ") and "fetch" in line:
+							errLines.append(line)
 					msg="\n".join(errLines)
 			return([ret,msg])
 
