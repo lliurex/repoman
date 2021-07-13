@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 08:22+0200\n"
+"POT-Creation-Date: 2021-07-13 16:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,37 +160,37 @@ msgid ""
 "[%(default)s]: "
 msgstr ""
 
-#: ../src/repoman-cli.py:227
+#: ../src/repoman-cli.py:230
 msgid "Enabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:231
+#: ../src/repoman-cli.py:234
 msgid "Disabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:289
+#: ../src/repoman-cli.py:292
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:290
+#: ../src/repoman-cli.py:293
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:291
+#: ../src/repoman-cli.py:294
 msgid ""
 "\n"
 "Parameters:"
 msgstr ""
 
-#: ../src/repoman-cli.py:355
+#: ../src/repoman-cli.py:358
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr ""
 
-#: ../src/repoman-cli.py:359
+#: ../src/repoman-cli.py:362
 msgid "Invalid argument"
 msgstr ""
 
@@ -224,23 +224,22 @@ msgstr ""
 msgid "Add new repository"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:222 ../src/stacks/defaultRepos.py:160
+#: ../src/stacks/customRepos.py:222 ../src/stacks/defaultRepos.py:163
 #, python-format
 msgid "Couldn't write repo %s"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:163
+#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:166
 #, python-format
 msgid "Couldn't write info for %s"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:236 ../src/stacks/defaultRepos.py:175
+#: ../src/stacks/customRepos.py:236 ../src/stacks/defaultRepos.py:197
 #: ../src/stacks/systemTools.py:67
 msgid "Repositories updated succesfully"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:241 ../src/stacks/defaultRepos.py:180
-#: ../src/stacks/systemTools.py:70
+#: ../src/stacks/customRepos.py:241 ../src/stacks/systemTools.py:70
 #, python-format
 msgid ""
 "Failed to update repositories\n"
@@ -261,6 +260,14 @@ msgstr ""
 
 #: ../src/stacks/defaultRepos.py:61
 msgid "Enable or disable default repositories"
+msgstr ""
+
+#: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
+msgid "Mirror not available"
+msgstr ""
+
+#: ../src/stacks/defaultRepos.py:192
+msgid "Failed to update: "
 msgstr ""
 
 #: ../src/stacks/localRepos.py:16

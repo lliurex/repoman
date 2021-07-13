@@ -135,7 +135,7 @@ class defaultRepos(confStack):
 			if (type(ret)==type("")):
 				if ret!="Mirror available":
 					self._debug("Mirror not available")
-					self.showMsg(_("1Mirror not available"),'RepoMan')
+					self.showMsg(_("Mirror not available"),'RepoMan')
 					self.defaultRepos[repo]['enabled']="False"
 					self.updateScreen()
 					return
