@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-13 16:45+0200\n"
-"PO-Revision-Date: 2021-07-13 16:45+0200\n"
+"POT-Creation-Date: 2021-07-13 20:29+0200\n"
+"PO-Revision-Date: 2021-07-13 20:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -285,29 +285,29 @@ msgstr "Mirror no disponible"
 
 #: ../src/stacks/defaultRepos.py:192
 msgid "Failed to update: "
-msgstr "Error actualizando:"
+msgstr "Error actualizando: "
 
 #: ../src/stacks/localRepos.py:16
-msgid "Temporaly set localhost as source in a client for modify his repos"
+msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
 msgstr ""
-"Activa temporalmente la modificación de los repositorios locales en un "
+"Activa temporalmente la modificación de los repositorios DEL SERVIDOR en un "
 "cliente"
 
 #: ../src/stacks/localRepos.py:17
-msgid "Modify localhost repos"
-msgstr "Modificar repositorio local"
+msgid "Modify server repos"
+msgstr "Modificar repositorio del servidor"
 
-#: ../src/stacks/localRepos.py:19 ../src/stacks/repoTools.py:39
-msgid "From here you can add custom repositories"
-msgstr "Desde aquí puedes añadir repositorios personales"
+#: ../src/stacks/localRepos.py:19
+msgid "Enable this to modify the server repositories"
+msgstr "Activa para modificar los repositorios del servidor"
 
 #: ../src/stacks/localRepos.py:26
-msgid "Enable localhost repos"
-msgstr "Activar repositorio local"
+msgid "Enable server repos"
+msgstr "Activar repositorios del servidor"
 
 #: ../src/stacks/localRepos.py:27
-msgid "Disable localhost repos"
-msgstr "Deshabilitar repositorio local"
+msgid "Disable server repos"
+msgstr "Deshabilitar repositorio del servidor"
 
 #: ../src/stacks/localRepos.py:28
 msgid "Using repos from"
@@ -321,9 +321,13 @@ msgstr "Añadir repositorio personal"
 msgid "Add repositories"
 msgstr "Añadir repositorio"
 
+#: ../src/stacks/repoTools.py:39
+msgid "From here you can add custom repositories"
+msgstr "Desde aquí puedes añadir repositorios personales"
+
 #: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "name of the repository"
-msgstr "Nombre del repositorio"
+msgstr "nombre del repositorio"
 
 #: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "Insert repository name"
@@ -390,6 +394,12 @@ msgstr "Repositorios oficiales de Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Enable localhost repos"
+#~ msgstr "Activar repositorio local"
+
+#~ msgid "Disable localhost repos"
+#~ msgstr "Deshabilitar repositorio local"
 
 #~ msgid "1Mirror not available"
 #~ msgstr "Mirror no disponible"

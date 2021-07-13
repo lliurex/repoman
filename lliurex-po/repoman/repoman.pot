@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-13 16:45+0200\n"
+"POT-Creation-Date: 2021-07-13 20:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -271,23 +271,23 @@ msgid "Failed to update: "
 msgstr ""
 
 #: ../src/stacks/localRepos.py:16
-msgid "Temporaly set localhost as source in a client for modify his repos"
+msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
 msgstr ""
 
 #: ../src/stacks/localRepos.py:17
-msgid "Modify localhost repos"
+msgid "Modify server repos"
 msgstr ""
 
-#: ../src/stacks/localRepos.py:19 ../src/stacks/repoTools.py:39
-msgid "From here you can add custom repositories"
+#: ../src/stacks/localRepos.py:19
+msgid "Enable this to modify the server repositories"
 msgstr ""
 
 #: ../src/stacks/localRepos.py:26
-msgid "Enable localhost repos"
+msgid "Enable server repos"
 msgstr ""
 
 #: ../src/stacks/localRepos.py:27
-msgid "Disable localhost repos"
+msgid "Disable server repos"
 msgstr ""
 
 #: ../src/stacks/localRepos.py:28
@@ -300,6 +300,10 @@ msgstr ""
 
 #: ../src/stacks/repoTools.py:37
 msgid "Add repositories"
+msgstr ""
+
+#: ../src/stacks/repoTools.py:39
+msgid "From here you can add custom repositories"
 msgstr ""
 
 #: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
