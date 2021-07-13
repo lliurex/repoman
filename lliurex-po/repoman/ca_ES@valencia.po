@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-13 16:45+0200\n"
-"PO-Revision-Date: 2021-07-13 16:48+0200\n"
+"POT-Creation-Date: 2021-07-13 20:29+0200\n"
+"PO-Revision-Date: 2021-07-13 20:35+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -291,24 +291,25 @@ msgid "Failed to update: "
 msgstr "Error actualitzant: "
 
 #: ../src/stacks/localRepos.py:16
-msgid "Temporaly set localhost as source in a client for modify his repos"
-msgstr "Activa temporalment la modificació dels repositoris locals a un client"
+msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
+msgstr ""
+"Activa temporalment la modificació dels repositoris DEL SERVIDOR a un client"
 
 #: ../src/stacks/localRepos.py:17
-msgid "Modify localhost repos"
-msgstr "Modificar repositoris locals"
+msgid "Modify server repos"
+msgstr "Modificar repositoris del servidor"
 
-#: ../src/stacks/localRepos.py:19 ../src/stacks/repoTools.py:39
-msgid "From here you can add custom repositories"
-msgstr "Des d'ací podeu afegir repositoris personalitzats"
+#: ../src/stacks/localRepos.py:19
+msgid "Enable this to modify the server repositories"
+msgstr "Activar per a modificar els repositoris del servidor"
 
 #: ../src/stacks/localRepos.py:26
-msgid "Enable localhost repos"
-msgstr "Activa el repositori local"
+msgid "Enable server repos"
+msgstr "Activa repositoris del servidor"
 
 #: ../src/stacks/localRepos.py:27
-msgid "Disable localhost repos"
-msgstr "Inhabilita el repositori local"
+msgid "Disable server repos"
+msgstr "Inhabilita repositoris del servidor"
 
 #: ../src/stacks/localRepos.py:28
 msgid "Using repos from"
@@ -321,6 +322,10 @@ msgstr "Afig repositoris personalitzats"
 #: ../src/stacks/repoTools.py:37
 msgid "Add repositories"
 msgstr "Afig repositoris"
+
+#: ../src/stacks/repoTools.py:39
+msgid "From here you can add custom repositories"
+msgstr "Des d'ací podeu afegir repositoris personalitzats"
 
 #: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
 msgid "name of the repository"
@@ -427,6 +432,12 @@ msgstr "Repositoris oficials d'Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educatius de Lliurex"
+
+#~ msgid "Enable localhost repos"
+#~ msgstr "Activa el repositori local"
+
+#~ msgid "Disable localhost repos"
+#~ msgstr "Inhabilita el repositori local"
 
 #~ msgid "Repositories must be updated. Update now?"
 #~ msgstr "Cal actualitzar els repositoris. Voleu actualitzar ara?"
