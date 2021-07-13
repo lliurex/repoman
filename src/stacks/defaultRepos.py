@@ -176,7 +176,7 @@ class defaultRepos(confStack):
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 		errList=[]
 		for line in ret.split("\n"):
-			if line.startswith("E: "):
+			if line.startswith("E: ") or line.startswith("W:"):
 				for name,data in self.defaultRepos.items():
 					for repoLine in data.get('repos',[]):
 						repoItems=repoLine.split(" ")
