@@ -133,13 +133,16 @@ class defaultRepos(confStack):
 			#Mirror must be checked against server
 			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
 			if (type(ret)==type("")):
-				self._debug("Mirror not available")
-				#self.showMsg(_("Mirror not available"),'error')
-				self.updateScreen()
-				return
+				if ret!="Mirror available":
+					self._debug("Mirror not available")
+					self.showMsg(_("1Mirror not available"),'RepoMan')
+					self.defaultRepos[repo]['enabled']="False"
+					self.updateScreen()
+					return
 			elif not (ret.get('status',False)):
 				self._debug("Mirror not available")
-				#self.showMsg(_("Mirror not available"),'error')
+				self.showMsg(_("Mirror not available"),'RepoMan')
+				self.defaultRepos[repo]['enabled']="False"
 				self.updateScreen()
 				return
 		state=str(stateWidget.isChecked()).lower()
@@ -171,13 +174,27 @@ class defaultRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		errList=[]
+		for line in ret.split("\n"):
+			if line.startswith("E: "):
+				for name,data in self.defaultRepos.items():
+					for repoLine in data.get('repos',[]):
+						repoItems=repoLine.split(" ")
+						if repoItems:
+							if repoItems[0] in line:
+								err=" *{}".format(name)
+								if err not in errList:
+									errList.append(err)
+		ret=("\n").join(errList)
 		if ret:
-			self.showMsg(_("Repositories updated succesfully"))
+				#self.showMsg(_("Repositories updated succesfully"))
+			self._debug("Error updating: %s"%ret)
+			ret=_("Failed to update: ")+"\n"+"{}".format(ret)
+			self.showMsg("{}".format(ret),'RepoMan')
 			self.refresh=True
 			self.changes=False
 		else:
-			self._debug("Error updating: %s"%ret)
-			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self.showMsg(_("Repositories updated succesfully"))
 		cursor=QtGui.QCursor(Qt.PointingHandCursor)
 		self.setCursor(cursor)
 	#def _updateRepos
