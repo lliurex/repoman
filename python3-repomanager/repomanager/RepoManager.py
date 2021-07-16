@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pythmn3
 import os,sys,subprocess
 #from urllib.request import Request,urlopen,urlretrieve
 import requests
@@ -35,12 +35,18 @@ class manager():
 				self._debug("_get_default_repo_status error: %s"%e)
 			configured_repos=[]
 			for fline in fcontent:
-				configured_repos.append(fline.replace('\n','').replace(' ','').lstrip('deb'))
+				ordLineArray=fline.split(" ")
+				ordLineArray.sort()
+				ordLine=" ".join(ordLineArray)
+				configured_repos.append(ordLine.replace('\n','').replace(' ','').lstrip('deb'))
 			repostatus={}
 			for reponame,repodata in default_repos.items():
 				repostatus[reponame]="true"
 				for defaultrepo in repodata['repos']:
-					if defaultrepo.replace(' ','') not in configured_repos:
+					defRepoArray=defaultrepo.split(" ")
+					defRepoArray.sort()
+					defRepo=" ".join(defRepoArray)
+					if defRepo.replace(' ','') not in configured_repos:
 						repostatus[reponame]="false"
 						break
 				if 'disabled_repos' in repodata.keys():
@@ -50,7 +56,26 @@ class manager():
 			return repostatus
 		#def _get_repo_status
 
+		def _orderRepo(self,repos):
+			orderRepos=[]
+			for r in repos:
+				r=r.rstrip()
+				#Skip multiple whitespaces
+				r=' '.join(r.split())
+				r.replace("deb ","")
+				rArray=r.split(" ")
+				components=rArray[2:]
+				components.sort()
+				r="{} {}".format(" ".join(rArray[:2])," ".join(components))
+				orderRepos.append(r)
+			return(orderRepos)
+
 		def write_repo(self,data):
+			unorderedRepos=data.copy()
+			for reponame,repodata in unorderedRepos.items():
+				repos=repodata.get('repos',[])
+				repos=self._orderRepo(repos)
+				data[reponame]['repos']=repos
 			for reponame,repodata in data.items():
 				removerepos=[]
 				if repodata['enabled'].lower()=='false':
@@ -85,21 +110,24 @@ class manager():
 							if format_line not in repodata['repos']:
 								orig.append(format_line)
 				newrepo=[]
+				#newrepo.extend(repodata['repos'])
 				newrepo.extend(repodata['repos'])
 				newrepo.extend(orig)
 				repos=set(newrepo)
+				repos=self._orderRepo(repos)
 				sw_status=True
 				try:
 					filterRepos=[]
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
 							repo=repo.strip()
+							repoCheck="{}".format(repo.replace(" ",''))
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
 								repo=("deb %s"%repo)
-							if repo not in removerepos and repo.replace(" ","") not in filterRepos:
+							if repo not in removerepos and repoCheck not in filterRepos:
 								self._debug("Writing line: %s"%repo)
 								fcontent.write("%s\n"%repo)
-								filterRepos.append(repo.replace(" ",""))
+								filterRepos.append(repoCheck.replace(" ",""))
 				except Exception as e:
 					sw_status=False
 					self._debug("write_repo error: %s"%e)
