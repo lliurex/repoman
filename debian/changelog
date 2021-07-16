@@ -1,4 +1,4 @@
-repoman (2.2.5) focal; urgency=medium
+repoman (2.2.5-1lliurex) focal; urgency=medium
 
   * Update mirror repo to llx21
   * Add catalan translation
