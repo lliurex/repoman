@@ -47,8 +47,15 @@ class manager():
 					defRepoArray.sort()
 					defRepo=" ".join(defRepoArray)
 					if defRepo.replace(' ','') not in configured_repos:
-						repostatus[reponame]="false"
-						break
+						lineArray="".join(defRepoArray[:2])
+						sw=False
+						for repo in configured_repos:
+							if lineArray in repo:
+								sw=True
+								break
+						if sw==False:
+							repostatus[reponame]="false"
+							break
 				if 'disabled_repos' in repodata.keys():
 					if repodata['disabled_repos']:
 						repostatus[reponame]="false"
@@ -107,7 +114,13 @@ class manager():
 						format_line=line.replace('\n','').strip()
 						format_line=format_line.replace('deb ','').strip()
 						if format_line:
-							if format_line not in repodata['repos']:
+							lineArray=" ".join(format_line.split(' ')[:2])
+							sw=False
+							for repo in repodata.get('repos',[]):
+								if lineArray in repo:
+									sw=True
+									break
+							if sw==False:
 								orig.append(format_line)
 				newrepo=[]
 				#newrepo.extend(repodata['repos'])
