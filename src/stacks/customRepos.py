@@ -232,14 +232,27 @@ class customRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		errList=[]
+		for line in ret.split("\n"):
+			if line.startswith("E: ") or line.startswith("W:"):
+				for name,data in self.defaultRepos.items():
+					for repoLine in data.get('repos',[]):
+						repoItems=repoLine.split(" ")
+						if repoItems:
+							if repoItems[0] in line:
+								err=" *{}".format(name)
+								if err not in errList:
+									errList.append(err)
+		ret=("\n").join(errList)
 		if ret:
-			self.showMsg(_("Repositories updated succesfully"))
+				#self.showMsg(_("Repositories updated succesfully"))
+			self._debug("Error updating: %s"%ret)
+			ret=_("Failed to update: ")+"\n"+"{}".format(ret)
+			self.showMsg("{}".format(ret),'RepoMan')
 			self.refresh=True
 			self.changes=False
 		else:
-			self._debug("Error updating: %s"%ret)
-			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self.showMsg(_("Repositories updated succesfully"))
 		cursor=QtGui.QCursor(Qt.PointingHandCursor)
 		self.setCursor(cursor)
 	#def _updateRepos
-
