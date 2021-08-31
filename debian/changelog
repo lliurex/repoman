@@ -1,4 +1,4 @@
-repoman (2.3.2) focal; urgency=medium
+repoman (2.3.2.1) focal; urgency=medium
 
   * Fix bug when arch is present in repository url (deb [arch=...] http;//,,,)
 
