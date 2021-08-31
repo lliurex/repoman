@@ -16,12 +16,12 @@ class QLabelDescription(QWidget):
 		super (QLabelDescription,self).__init__(parent)
 		self.label=QLabel()
 		self.labelText=label
-		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
+		self.label.setText('<span style="font-size:14pt"><b>{}</b></span>'.format(label))
 		self.label.setStyleSheet("border:0px;margin:0px;")
 		self.description=QLabel()
 		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px;margin-top:0px;")
 		self.descriptionText=description
-		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
+		self.description.setText('<span style="font-size:10pt; color:grey">{}</span>'.format(description))
 		QBox=QVBoxLayout()
 		QBox.addWidget(self.label,-1,Qt.AlignBottom)
 		QBox.addWidget(self.description,Qt.AlignTop)
@@ -31,9 +31,9 @@ class QLabelDescription(QWidget):
 
 	def setText(self,label,description=""):
 		self.labelText=label
-		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
+		self.label.setText('<span style="font-size:14pt"><b>{}</b></span>'.format(label))
 		self.descriptionText=description
-		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
+		self.description.setText('<span style="font-size:10pt; color:grey">{}</span>'.format(description))
 	#def setText
 
 	def text(self):
