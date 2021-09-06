@@ -1,3 +1,9 @@
+repoman (2.3.2.1-1) focal; urgency=medium
+
+  * Add pyside2 dependencies
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 06 Sep 2021 11:10:15 +0200
+
 repoman (2.3.2.1) focal; urgency=medium
 
   * Fix bug when arch is present in repository url (deb [arch=...] http;//,,,)
