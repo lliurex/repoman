@@ -7,10 +7,13 @@ from requests.packages.urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 import json
 import re
+import logging
 #from collections import OrderedDict
+
 class manager():
 		def __init__(self):
-			self.dbg=True
+			self.dbg=False
+			logging.basicConfig(format='%(message)s')
 			self.sources_file='/etc/apt/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'
@@ -23,7 +26,7 @@ class manager():
 
 		def _debug(self,msg):
 			if self.dbg:
-				print("RepoManager: %s"%msg)
+				logging.warning("RepoManager: {}".format(msg))
 		#def _debug
 
 		def _get_default_repo_status(self,default_repos):
