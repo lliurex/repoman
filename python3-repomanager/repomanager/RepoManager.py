@@ -7,10 +7,13 @@ from requests.packages.urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 import json
 import re
+import logging
 #from collections import OrderedDict
+
 class manager():
 		def __init__(self):
 			self.dbg=False
+			logging.basicConfig(format='%(message)s')
 			self.sources_file='/etc/apt/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'
@@ -23,7 +26,7 @@ class manager():
 
 		def _debug(self,msg):
 			if self.dbg:
-				print("RepoManager: %s"%msg)
+				logging.warning("RepoManager: {}".format(msg))
 		#def _debug
 
 		def _get_default_repo_status(self,default_repos):
@@ -93,7 +96,7 @@ class manager():
 					removerepos=[]
 					for r in repodata['repos']:
 						r=r.rstrip()
-						self._debug("Removing %s"%r)
+						self._debug("Removing {}".format(r))
 						if r.startswith('deb '):
 							removerepos.append(r)
 						else:
@@ -103,9 +106,9 @@ class manager():
 				else:
 					name=reponame.replace(' ','_').lower()
 					if name.endswith(".list"):
-						wrkfile="%s/%s"%(self.sources_dir,name)
+						wrkfile=os.path.join(self.sourced_dir,name)
 					else:
-						wrkfile="%s/%s.list"%(self.sources_dir,name)
+						wrkfile=os.path.join(self.sources_dir,"{}.list".format(name))
 				flines=[]
 				orig=[]
 				if os.path.isfile(wrkfile):
@@ -113,7 +116,7 @@ class manager():
 						with open(wrkfile,'r') as fcontent:
 							flines=fcontent.readlines()
 					except Exception as e:
-						self._debug("write_repo error: %s"%e)
+						self._debug("write_repo error: {}".format(e))
 					for line in flines:
 						format_line=line.replace('\n','').strip()
 						format_line=format_line.replace('deb ','').strip()
@@ -135,19 +138,32 @@ class manager():
 				sw_status=True
 				try:
 					filterRepos=[]
+					mirrorLine=[]
+					repoLine=[]
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
 							repo=repo.strip()
 							repoCheck="{}".format(repo.replace(" ",''))
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
-								repo=("deb %s"%repo)
+								repo=("deb {}".format(repo))
 							if repo not in removerepos and repoCheck not in filterRepos:
-								self._debug("Writing line: %s"%repo)
-								fcontent.write("%s\n"%repo)
-								filterRepos.append(repoCheck.replace(" ",""))
+								if "://mirror/" in repo:
+									self._debug("Mirror line: {}".format(repo))
+									mirrorLine.append(repo)
+									continue
+								else:
+									self._debug("Writing line: {}".format(repo))
+									repoLine.append(repo)
+						if mirrorLine:
+							for repo in mirrorLine:
+								fcontent.write("{}\n".format(repo))
+						if repoLine:
+							for repo in repoLine:
+								fcontent.write("{}\n".format(repo))
+								
 				except Exception as e:
 					sw_status=False
-					self._debug("write_repo error: %s"%e)
+					self._debug("write_repo error: {}".format(e))
 				return sw_status
 		#def write_repo
 

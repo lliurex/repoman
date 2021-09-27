@@ -3,6 +3,9 @@ import sys
 import os
 from PySide2.QtWidgets import QApplication
 from appconfig.appConfigScreen import appConfigScreen as appConfig
+if os.environ.get('SUDO_USER'):
+	print ("Repoman GUI must be launched without sudo")
+	sys.exit(1)
 app=QApplication(["RepoMan"])
 config=appConfig("RepoMan",{'app':app})
 config.setRsrcPath("/usr/share/repoman/rsrc")
