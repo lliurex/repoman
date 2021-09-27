@@ -1,3 +1,10 @@
+repoman (2.4) focal; urgency=medium
+
+  * Fix mirror not being the first repo at sources.list
+  * Fix (block) sudo execution
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 27 Sep 2021 15:23:08 +0200
+
 repoman (2.3.2.1-1) focal; urgency=medium
 
   * Add pyside2 dependencies
