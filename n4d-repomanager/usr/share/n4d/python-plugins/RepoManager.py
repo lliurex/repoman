@@ -32,9 +32,10 @@ class RepoManager():
 	def list_sources(self):	
 		return n4d.responses.build_successful_call_response(self.repoman.list_sources())
 
-	def add_repo(self,name,desc,url):
+	def add_repo(self,data):
+		(name,desc,url)=data.split(",")
 		status=self.repoman.add_repo(name,desc,url)
-		if status==0:
+		if status:
 			return n4d.responses.build_successful_call_response()
 		else:
 			return n4d.responses.build_failed_call_response(status)
