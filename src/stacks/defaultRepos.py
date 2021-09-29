@@ -182,6 +182,8 @@ class defaultRepos(confStack):
 						repoItems=repoLine.split(" ")
 						if repoItems:
 							if repoItems[0] in line:
+								if "NODATA" in line:
+									continue
 								err=" *{}".format(name)
 								if err not in errList:
 									errList.append(err)

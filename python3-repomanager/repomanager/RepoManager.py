@@ -294,6 +294,9 @@ class manager():
 		def add_repo(self,name,desc,url):
 			err=-1
 			repo={}
+			name=name.replace('"','')
+			desc=desc.replace('"','')
+			url=url.replace('"','')
 			repo[name]={}
 			repo[name]['desc']=desc
 			repo[name]['enabled']="true"
@@ -313,7 +316,7 @@ class manager():
 				item+=1
 			if err!=0:
 				err=1
-				self._debug("Wrong repo url")
+				self._debug("Wrong repo url: {}".format(url))
 			else:
 				repo_line=repo_array[item:]
 				if repo_line[0].startswith('ppa:'):
