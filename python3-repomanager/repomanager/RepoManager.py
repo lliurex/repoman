@@ -1,4 +1,4 @@
-#!/usr/bin/env pythmn3
+#!/usr/bin/env python3
 import os,sys,subprocess
 #from urllib.request import Request,urlopen,urlretrieve
 import requests
