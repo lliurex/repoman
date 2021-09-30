@@ -1,6 +1,7 @@
-repoman (2.4.1) focal; urgency=medium
+repoman (2.4.2) focal; urgency=medium
 
   * Bugfix: add repo not working well
+  * repoman-cli offers to update repository info after doing changes
 
  -- Juanma1980 <juanma1980@gmail.com>  Wed, 29 Sep 2021 19:41:31 +0200
 
