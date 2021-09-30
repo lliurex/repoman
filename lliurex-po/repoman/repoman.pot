@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:32+0200\n"
+"POT-Creation-Date: 2021-09-30 09:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,19 +222,19 @@ msgstr ""
 msgid "Add new repository"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:223
-msgid "Couldn't write repo {}"
+#: ../src/stacks/customRepos.py:223 ../src/stacks/defaultRepos.py:162
+msgid "Couldn't write repo"
 msgstr ""
 
 #: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for {}"
+msgid "Couldn't write info for) {}"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:194
+#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
 msgid "Failed to update: "
 msgstr ""
 
-#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:199
+#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:197
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr ""
@@ -259,14 +259,8 @@ msgstr ""
 msgid "Mirror not available"
 msgstr ""
 
-#: ../src/stacks/defaultRepos.py:163
-#, python-format
-msgid "Couldn't write repo %s"
-msgstr ""
-
-#: ../src/stacks/defaultRepos.py:166
-#, python-format
-msgid "Couldn't write info for %s"
+#: ../src/stacks/defaultRepos.py:164
+msgid "Couldn't write info for"
 msgstr ""
 
 #: ../src/stacks/localRepos.py:16
@@ -331,11 +325,11 @@ msgstr ""
 
 #: ../src/stacks/repoTools.py:80 ../src/stacks/repoTools.py:83
 #: ../src/stacks/repoTools.py:85
-msgid "Error adding repository {}"
+msgid "Error adding repository"
 msgstr ""
 
 #: ../src/stacks/repoTools.py:87
-msgid "Added repository {}"
+msgid "Added repository"
 msgstr ""
 
 #: ../src/stacks/systemTools.py:17

@@ -159,11 +159,9 @@ class defaultRepos(confStack):
 			if ret:
 				ret=self.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
 				if ret==False:
-					pass
-					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+					self.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
 			else:
-				pass
-				self.showMsg(_("Couldn't write info for %s"%repo),'error')
+				self.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
 		if ret==True:
 			self._updateRepos()
 		self.updateScreen()

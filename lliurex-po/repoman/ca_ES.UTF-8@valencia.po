@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:32+0200\n"
-"PO-Revision-Date: 2021-09-30 09:37+0200\n"
+"POT-Creation-Date: 2021-09-30 09:45+0200\n"
+"PO-Revision-Date: 2021-09-30 09:47+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -240,19 +240,19 @@ msgstr "Gestiona els repositoris extra"
 msgid "Add new repository"
 msgstr "Afig un repositori nou"
 
-#: ../src/stacks/customRepos.py:223
-msgid "Couldn't write repo {}"
-msgstr "No s'ha pogut escriure el repositori {}"
+#: ../src/stacks/customRepos.py:223 ../src/stacks/defaultRepos.py:162
+msgid "Couldn't write repo"
+msgstr "No s'ha pogut escriure el repositori"
 
 #: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for {}"
-msgstr "No s'ha pogut escriure la informació per a {}"
+msgid "Couldn't write info for) {}"
+msgstr "No s'ha pogut escriure la informació per a"
 
-#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:194
+#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
 msgid "Failed to update: "
 msgstr "Error actualitzant: "
 
-#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:199
+#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:197
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Els repositoris s'han actualitzat correctament"
@@ -277,15 +277,9 @@ msgstr "Habilita/ inhabilita un repositori per defecte"
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
 
-#: ../src/stacks/defaultRepos.py:163
-#, python-format
-msgid "Couldn't write repo %s"
-msgstr "No s'ha pogut escriure el repositori %s"
-
-#: ../src/stacks/defaultRepos.py:166
-#, python-format
-msgid "Couldn't write info for %s"
-msgstr "No s'ha pogut escriure la informació per a %s"
+#: ../src/stacks/defaultRepos.py:164
+msgid "Couldn't write info for"
+msgstr "No s'ha pogut escriure la informació per a"
 
 #: ../src/stacks/localRepos.py:16
 msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
@@ -374,12 +368,12 @@ msgstr "URL per al repositori"
 # msgstr ""
 #: ../src/stacks/repoTools.py:80 ../src/stacks/repoTools.py:83
 #: ../src/stacks/repoTools.py:85
-msgid "Error adding repository {}"
-msgstr "S'ha produït un error en afegir el repositori {}"
+msgid "Error adding repository"
+msgstr "S'ha produït un error en afegir el repositori"
 
 #: ../src/stacks/repoTools.py:87
-msgid "Added repository {}"
-msgstr "Afig el repositori {}"
+msgid "Added repository"
+msgstr "Repositori afegit"
 
 #: ../src/stacks/systemTools.py:17
 msgid "System tools"
@@ -442,6 +436,15 @@ msgstr "Repositoris oficials d'Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educatius de Lliurex"
+
+#~ msgid "Couldn't write repo %s"
+#~ msgstr "No s'ha pogut escriure el repositori %s"
+
+#~ msgid "Couldn't write info for %s"
+#~ msgstr "No s'ha pogut escriure la informació per a %s"
+
+#~ msgid "Added repository {}"
+#~ msgstr "Afig el repositori {}"
 
 #~ msgid "Enable localhost repos"
 #~ msgstr "Activa el repositori local"
