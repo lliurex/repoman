@@ -35,7 +35,7 @@ class RepoManager():
 	def add_repo(self,data):
 		(name,desc,url)=data.split(",")
 		status=self.repoman.add_repo(name,desc,url)
-		if status:
+		if status==0:
 			return n4d.responses.build_successful_call_response()
 		else:
 			return n4d.responses.build_failed_call_response(status)
