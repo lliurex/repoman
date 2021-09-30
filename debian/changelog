@@ -1,3 +1,9 @@
+repoman (2.4.1) focal; urgency=medium
+
+  * Bugfix: add repo not working well
+
+ -- Juanma1980 <juanma1980@gmail.com>  Wed, 29 Sep 2021 19:41:31 +0200
+
 repoman (2.4) focal; urgency=medium
 
   * Fix mirror not being the first repo at sources.list
