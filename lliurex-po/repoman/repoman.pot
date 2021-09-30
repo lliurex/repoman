@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:45+0200\n"
+"POT-Creation-Date: 2021-09-30 09:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,8 +226,8 @@ msgstr ""
 msgid "Couldn't write repo"
 msgstr ""
 
-#: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for) {}"
+#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:164
+msgid "Couldn't write info for"
 msgstr ""
 
 #: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
@@ -257,10 +257,6 @@ msgstr ""
 
 #: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
 msgid "Mirror not available"
-msgstr ""
-
-#: ../src/stacks/defaultRepos.py:164
-msgid "Couldn't write info for"
 msgstr ""
 
 #: ../src/stacks/localRepos.py:16

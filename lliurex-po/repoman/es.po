@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:45+0200\n"
-"PO-Revision-Date: 2021-09-30 09:46+0200\n"
+"POT-Creation-Date: 2021-09-30 09:50+0200\n"
+"PO-Revision-Date: 2021-09-30 09:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -241,8 +241,8 @@ msgstr "Añadir repositorio"
 msgid "Couldn't write repo"
 msgstr "No pude escribir"
 
-#: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for) {}"
+#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:164
+msgid "Couldn't write info for"
 msgstr "No pude escribir la información de"
 
 #: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
@@ -273,10 +273,6 @@ msgstr "Habilita/deshabilita repositorios por deefecto"
 #: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
-
-#: ../src/stacks/defaultRepos.py:164
-msgid "Couldn't write info for"
-msgstr "No pude escribir la información de"
 
 #: ../src/stacks/localRepos.py:16
 msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
@@ -398,6 +394,9 @@ msgstr "Repositorios oficiales de Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Couldn't write info for) {}"
+#~ msgstr "No pude escribir la información de"
 
 #~ msgid "Couldn't write repo %s"
 #~ msgstr "No pude escribir %s"

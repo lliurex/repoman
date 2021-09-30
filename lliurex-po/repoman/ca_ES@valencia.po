@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:45+0200\n"
-"PO-Revision-Date: 2021-09-30 09:47+0200\n"
+"POT-Creation-Date: 2021-09-30 09:50+0200\n"
+"PO-Revision-Date: 2021-09-30 09:50+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -244,8 +244,8 @@ msgstr "Afig un repositori nou"
 msgid "Couldn't write repo"
 msgstr "No s'ha pogut escriure el repositori"
 
-#: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for) {}"
+#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:164
+msgid "Couldn't write info for"
 msgstr "No s'ha pogut escriure la informació per a"
 
 #: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
@@ -276,10 +276,6 @@ msgstr "Habilita/ inhabilita un repositori per defecte"
 #: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
-
-#: ../src/stacks/defaultRepos.py:164
-msgid "Couldn't write info for"
-msgstr "No s'ha pogut escriure la informació per a"
 
 #: ../src/stacks/localRepos.py:16
 msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
@@ -436,6 +432,9 @@ msgstr "Repositoris oficials d'Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educatius de Lliurex"
+
+#~ msgid "Couldn't write info for) {}"
+#~ msgstr "No s'ha pogut escriure la informació per a"
 
 #~ msgid "Couldn't write repo %s"
 #~ msgstr "No s'ha pogut escriure el repositori %s"
