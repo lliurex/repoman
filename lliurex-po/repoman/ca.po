@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-13 20:29+0200\n"
-"PO-Revision-Date: 2021-07-13 20:35+0200\n"
+"POT-Creation-Date: 2021-09-30 09:32+0200\n"
+"PO-Revision-Date: 2021-09-30 09:37+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -126,7 +126,7 @@ msgstr "Nom d'usuari/contrasenya incorrectes"
 msgid "Error retrieving data from server"
 msgstr "S'ha produït un error en recuperar les dades del servidor"
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:154 ../src/repoman-cli.py:186
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:157 ../src/repoman-cli.py:189
 msgid "Y/N"
 msgstr "S/N"
 
@@ -139,21 +139,21 @@ msgstr ""
 "Afegireu el repositori present a %(color1)s%(url)s%(color2)s. Voleu "
 "continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:120
+#: ../src/repoman-cli.py:121
 #, python-format
 msgid "Name for the repository [%s]: "
 msgstr "Nom del repositori [%s]: "
 
-#: ../src/repoman-cli.py:128
+#: ../src/repoman-cli.py:129
 msgid "Description for the repository (optional): "
 msgstr "Descripció del repositori (opcional): "
 
-#: ../src/repoman-cli.py:141
+#: ../src/repoman-cli.py:143
 #, python-format
 msgid "Repository %(url)s %(color1)sadded successfully%(color2)s"
 msgstr "Repositori %(url)s %(color1)safegit correctament%(color2)s"
 
-#: ../src/repoman-cli.py:156
+#: ../src/repoman-cli.py:159
 #, python-format
 msgid ""
 "You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? "
@@ -162,7 +162,7 @@ msgstr ""
 "Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu "
 "continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:188
+#: ../src/repoman-cli.py:191
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
@@ -171,20 +171,20 @@ msgstr ""
 "Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s "
 "[%(default)s]: "
 
-#: ../src/repoman-cli.py:230
+#: ../src/repoman-cli.py:233
 msgid "Enabled"
 msgstr "Actiu"
 
-#: ../src/repoman-cli.py:234
+#: ../src/repoman-cli.py:237
 msgid "Disabled"
 msgstr "Inhabilitat"
 
-#: ../src/repoman-cli.py:292
+#: ../src/repoman-cli.py:295
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:293
+#: ../src/repoman-cli.py:296
 msgid ""
 "\n"
 "RepoMan"
@@ -192,7 +192,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:294
+#: ../src/repoman-cli.py:297
 msgid ""
 "\n"
 "Parameters:"
@@ -200,27 +200,25 @@ msgstr ""
 "\n"
 "Paràmetres:"
 
-#: ../src/repoman-cli.py:358
+#: ../src/repoman-cli.py:361
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no vàlid per a l'argument -%s"
 
-#: ../src/repoman-cli.py:362
+#: ../src/repoman-cli.py:365
 msgid "Invalid argument"
 msgstr "Argument no vàlid"
 
 #: ../src/stacks/customRepos.py:26 ../src/stacks/customRepos.py:58
-#, python-format
-msgid "Edit %s file"
-msgstr "Edita el fitxer %s"
+msgid "Edit {} file"
+msgstr "Edita el fitxer {}"
 
 #: ../src/stacks/customRepos.py:60
-#, python-format
-msgid "Enable %s and apply to edit"
-msgstr "Habilita %s i aplica per a editar"
+msgid "Enable {} and apply to edit"
+msgstr "Habilita {} i aplica per a editar"
 
 #: ../src/stacks/customRepos.py:69
-msgid "Manage custom  repositories"
+msgid "Manage custom repositories"
 msgstr "Gestiona els repositoris personalitzats"
 
 #: ../src/stacks/customRepos.py:70
@@ -242,29 +240,22 @@ msgstr "Gestiona els repositoris extra"
 msgid "Add new repository"
 msgstr "Afig un repositori nou"
 
-#: ../src/stacks/customRepos.py:222 ../src/stacks/defaultRepos.py:163
-#, python-format
-msgid "Couldn't write repo %s"
-msgstr "No s'ha pogut escriure el repositori %s"
+#: ../src/stacks/customRepos.py:223
+msgid "Couldn't write repo {}"
+msgstr "No s'ha pogut escriure el repositori {}"
 
-#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:166
-#, python-format
-msgid "Couldn't write info for %s"
-msgstr "No s'ha pogut escriure la informació per a %s"
+#: ../src/stacks/customRepos.py:225
+msgid "Couldn't write info for {}"
+msgstr "No s'ha pogut escriure la informació per a {}"
 
-#: ../src/stacks/customRepos.py:236 ../src/stacks/defaultRepos.py:197
-#: ../src/stacks/systemTools.py:67
+#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:194
+msgid "Failed to update: "
+msgstr "Error actualitzant: "
+
+#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:199
+#: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Els repositoris s'han actualitzat correctament"
-
-#: ../src/stacks/customRepos.py:241 ../src/stacks/systemTools.py:70
-#, python-format
-msgid ""
-"Failed to update repositories\n"
-"%s"
-msgstr ""
-"No s'han pogut actualitzar els repositoris\n"
-"%s"
 
 #: ../src/stacks/defaultRepos.py:48
 msgid "Choose the default repositories"
@@ -286,9 +277,15 @@ msgstr "Habilita/ inhabilita un repositori per defecte"
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
 
-#: ../src/stacks/defaultRepos.py:192
-msgid "Failed to update: "
-msgstr "Error actualitzant: "
+#: ../src/stacks/defaultRepos.py:163
+#, python-format
+msgid "Couldn't write repo %s"
+msgstr "No s'ha pogut escriure el repositori %s"
+
+#: ../src/stacks/defaultRepos.py:166
+#, python-format
+msgid "Couldn't write info for %s"
+msgstr "No s'ha pogut escriure la informació per a %s"
 
 #: ../src/stacks/localRepos.py:16
 msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
@@ -375,16 +372,20 @@ msgstr "URL per al repositori"
 # #: ../src/stacks/confRepos.py:58
 # msgid "Url for the repository"
 # msgstr ""
-#: ../src/stacks/repoTools.py:75
-#, python-format
-msgid "Error adding repository %s"
-msgstr "S'ha produït un error en afegir el repositori %s"
+#: ../src/stacks/repoTools.py:80 ../src/stacks/repoTools.py:83
+#: ../src/stacks/repoTools.py:85
+msgid "Error adding repository {}"
+msgstr "S'ha produït un error en afegir el repositori {}"
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/repoTools.py:87
+msgid "Added repository {}"
+msgstr "Afig el repositori {}"
+
+#: ../src/stacks/systemTools.py:17
 msgid "System tools"
 msgstr "Eines del sistema"
 
-#: ../src/stacks/systemTools.py:19
+#: ../src/stacks/systemTools.py:18
 msgid "Update repositories/System upgrade"
 msgstr "Actualitza els repositoris o el sistema actualitzat"
 
@@ -398,24 +399,33 @@ msgstr "Actualitza els repositoris o el sistema actualitzat"
 # #: ../src/stacks/systemTools.py:19
 # msgid "Update repositories/System upgrade"
 # msgstr "Actualitza els repositoris"
-#: ../src/stacks/systemTools.py:21
+#: ../src/stacks/systemTools.py:20
 msgid ""
 "From here you can update the repositories info or launch lliurex-upgrade"
 msgstr ""
 "Des d'ací podeu actualitzar la informació dels repositoris o llançar lliurex-"
 "upgrade"
 
-#: ../src/stacks/systemTools.py:31
+#: ../src/stacks/systemTools.py:30
 msgid "Update repositories"
 msgstr "Actualitza els repositoris"
 
-#: ../src/stacks/systemTools.py:36
+#: ../src/stacks/systemTools.py:35
 msgid "Launch Lliurex-Up"
 msgstr "Llança Lliurex-Up"
 
-#: ../src/stacks/systemTools.py:41
+#: ../src/stacks/systemTools.py:40
 msgid "Launch Lliurex-Store"
 msgstr "Llança Lliurex-Store"
+
+#: ../src/stacks/systemTools.py:69
+#, python-format
+msgid ""
+"Failed to update repositories\n"
+"%s"
+msgstr ""
+"No s'han pogut actualitzar els repositoris\n"
+"%s"
 
 #: json ../sources.d/default/lliurex_21.json
 msgid "Lliurex default repositories"
@@ -479,9 +489,6 @@ msgstr "Recursos educatius de Lliurex"
 
 #~ msgid "%s already exists. Overwrite it?"
 #~ msgstr "Ja existeix %s. Voleu sobreescriure-hi?"
-
-#~ msgid "Added repository %s"
-#~ msgstr "Afig el repositori %s"
 
 #~ msgid "Edit sources file"
 #~ msgstr "Edita el fitxer de fonts"
