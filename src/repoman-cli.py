@@ -144,10 +144,12 @@ def add_repo():
 		except Exception as e:
 			print(e)
 			print("add_repo %s"%error.DATA)
+		return(err)
 		
 #def add_repo
 
 def disable_repo():
+	err=0
 	repos=_get_repos()
 	global unattended
 	if action['d'].strip().isdigit():
@@ -170,12 +172,15 @@ def disable_repo():
 			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
 		except:
 			print("disable_repo %s"%error.DATA)
-			return
+			err=1
 		if writejson['status']==0:
 			if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
+				err=1
 				print (error.SOURCES)
 		else:
+			err=1
 			print (error.INFO)
+		return(err)
 #def disable_repo
 
 def enable_repo():
@@ -219,11 +224,22 @@ def enable_repo():
 			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
 			if writejson['status']==0: 
 				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
+					err=1
 					print (error.SOURCES)
 					print(a)
 			else:
+				err=1
 				print (error.INFO)
+		return(err)
 #def enable_repo
+
+def update_repos():
+	options=_("Y/N")
+	resp=''
+	if not unattended:
+		resp=input(_("Repositories changed. Do you want to update info? %(options)s [%(default)s]: ")%({'options':options,'default':options[0]}))
+	if resp.lower()==options[0].lower() or resp=='':
+		os.execv("/usr/bin/apt-get",["update","update"])
 
 def list_repos():
 	repos=_get_repos()
@@ -398,13 +414,17 @@ if not n4dserver:
 
 #process_actions
 if 'a' in action.keys():
-	add_repo()
+	if add_repo()==0:
+		update_repos()
 if 'd' in action.keys():
-	disable_repo()
+	if disable_repo()==0:
+		update_repos()
 if 'e' in action.keys():
-	enable_repo()
-if 'r' in action.keys():
-	remove_repo()
+	if enable_repo()==0:
+		update_repos()
+#if 'r' in action.keys():
+#	if remove_repo()==0:
+#		update_repos()
 if 'l' in action.keys():
 	list_repos()
 if 'ld' in action.keys():
