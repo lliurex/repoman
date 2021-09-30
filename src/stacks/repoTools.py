@@ -77,14 +77,14 @@ class repoTools(confStack):
 		if isinstance(ret,dict):
 			status=ret.get('status',1)
 			if status:
-				self.showMsg(_("Error adding repository {}".format(name)))
+				self.showMsg(_("Error adding repository")+" {}".format(name))
 		elif isinstance(ret,bool):
 			if ret==False:
-				self.showMsg(_("Error adding repository {}".format(name)))
+				self.showMsg(_("Error adding repository")+ "{}".format(name))
 		else:
-			self.showMsg(_("Error adding repository {}".format(name)))
+			self.showMsg(_("Error adding repository")+" {}".format(name))
 		self.changes=False
-		self.showMsg(_("Added repository {}".format(name)))
+		self.showMsg(_("Added repository") + " {}".format(name))
 		self.stack.gotoStack(idx=2,parms="")
 		return(ret)
 	#def writeConfig

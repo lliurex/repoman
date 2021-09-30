@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:32+0200\n"
-"PO-Revision-Date: 2021-09-30 09:36+0200\n"
+"POT-Creation-Date: 2021-09-30 09:45+0200\n"
+"PO-Revision-Date: 2021-09-30 09:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -237,19 +237,19 @@ msgstr "Gestiona repositorios personales"
 msgid "Add new repository"
 msgstr "Añadir repositorio"
 
-#: ../src/stacks/customRepos.py:223
-msgid "Couldn't write repo {}"
-msgstr "No pude escribir {}"
+#: ../src/stacks/customRepos.py:223 ../src/stacks/defaultRepos.py:162
+msgid "Couldn't write repo"
+msgstr "No pude escribir"
 
 #: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for {}"
-msgstr "No pude escribir la información de {}"
+msgid "Couldn't write info for) {}"
+msgstr "No pude escribir la información de"
 
-#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:194
+#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
 msgid "Failed to update: "
 msgstr "Error actualizando: "
 
-#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:199
+#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:197
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Repositorios actualizados"
@@ -274,15 +274,9 @@ msgstr "Habilita/deshabilita repositorios por deefecto"
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
 
-#: ../src/stacks/defaultRepos.py:163
-#, python-format
-msgid "Couldn't write repo %s"
-msgstr "No pude escribir %s"
-
-#: ../src/stacks/defaultRepos.py:166
-#, python-format
-msgid "Couldn't write info for %s"
-msgstr "No pude escribir la información de %s"
+#: ../src/stacks/defaultRepos.py:164
+msgid "Couldn't write info for"
+msgstr "No pude escribir la información de"
 
 #: ../src/stacks/localRepos.py:16
 msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
@@ -348,12 +342,12 @@ msgstr "URL del repositorio"
 
 #: ../src/stacks/repoTools.py:80 ../src/stacks/repoTools.py:83
 #: ../src/stacks/repoTools.py:85
-msgid "Error adding repository {}"
-msgstr "Error añadiendo el repositorio {}"
+msgid "Error adding repository"
+msgstr "Error añadiendo el repositorio"
 
 #: ../src/stacks/repoTools.py:87
-msgid "Added repository {}"
-msgstr "Añadido el repositorio {}"
+msgid "Added repository"
+msgstr "Repositorio añadido"
 
 #: ../src/stacks/systemTools.py:17
 msgid "System tools"
@@ -404,6 +398,15 @@ msgstr "Repositorios oficiales de Ubuntu Focal"
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Couldn't write repo %s"
+#~ msgstr "No pude escribir %s"
+
+#~ msgid "Couldn't write info for %s"
+#~ msgstr "No pude escribir la información de %s"
+
+#~ msgid "Added repository {}"
+#~ msgstr "Añadido el repositorio {}"
 
 #~ msgid "Enable localhost repos"
 #~ msgstr "Activar repositorio local"

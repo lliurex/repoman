@@ -37,7 +37,7 @@ class localRepos(confStack):
 	def _load_screen(self):
 		box=QGridLayout()
 		self.btn=QPushButton(self.MSG_ENABLE)
-		self.lbl=QLabel("%s local"%self.MSG_USING)
+		self.lbl=QLabel("{} local".format(self.MSG_USING))
 		self.btn.clicked.connect(self._enable_server)
 		box.addWidget(self.btn,0,0,1,1,Qt.AlignCenter)
 		box.addWidget(self.lbl,1,0,1,1,Qt.AlignCenter|Qt.AlignTop)
@@ -54,13 +54,13 @@ class localRepos(confStack):
 		if self.localhost==True:
 			self.appConfig.n4d.server='localhost'
 			self.appConfig.n4d.n4dClient=None
-			self.lbl.setText("%s localhost"%self.MSG_USING)
+			self.lbl.setText("{} localhost".format(self.MSG_USING))
 			self.btn.setText(self.MSG_DISABLE)
 			self.localhost=True
 		else:
 			self.appConfig.n4d.server='server'
 			self.appConfig.n4d.n4dClient=None
-			self.lbl.setText("%s server"%self.MSG_USING)
+			self.lbl.setText("{} server".format(self.MSG_USING))
 			self.btn.setText(self.MSG_ENABLE)
 			self.localhost=False
 	#def _enable_localhost
