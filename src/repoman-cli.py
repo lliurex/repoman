@@ -109,8 +109,9 @@ def add_repo():
 			name[0]=name[0].split('.')[-2]
 		except:
 			name=name
-		if type(name)==type([]):
+		if isinstance(name,list):
 			defname='_'.join(name)
+			name=defname
 		else:
 			defname=name
 		if reponame!='':
@@ -131,7 +132,8 @@ def add_repo():
 				n4dcredentials=key
 			else:
 				n4dcredentials=credentials
-			err=n4dserver.add_repo(n4dcredentials,"RepoManager",name,desc,url)['status']
+			err=n4dserver.add_repo(n4dcredentials,"RepoManager",",".join([name,desc,url]))
+			err=err.get(['status'],0)
 			if err:
 				print("\n%s"%error.ADD)
 				errorDict={"1":error.URL,"2":error.INFO,"3":error.SOURCES,"4":error.REPO}
