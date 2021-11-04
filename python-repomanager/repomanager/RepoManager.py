@@ -7,10 +7,13 @@ from requests.packages.urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 import json
 import re
+import logging
 #from collections import OrderedDict
+
 class manager():
 		def __init__(self):
 			self.dbg=True
+			logging.basicConfig(format='%(message)s')
 			self.sources_file='/etc/apt/sources.list'
 			self.sources_dir='/etc/apt/sources.list.d'
 			self.available_repos_dir='/usr/share/repoman/sources.d'
@@ -23,7 +26,7 @@ class manager():
 
 		def _debug(self,msg):
 			if self.dbg:
-				print("RepoManager: %s"%msg)
+				logging.warning("RepoManager: {}".format(msg))
 		#def _debug
 
 		def _get_default_repo_status(self,default_repos):
@@ -35,14 +38,28 @@ class manager():
 				self._debug("_get_default_repo_status error: %s"%e)
 			configured_repos=[]
 			for fline in fcontent:
-				configured_repos.append(fline.replace('\n','').replace(' ','').lstrip('deb'))
+				ordLineArray=fline.split(" ")
+				ordLineArray.sort()
+				ordLine=" ".join(ordLineArray)
+				ordLine=ordLine.replace('\n','').replace(' ','').replace('deb','')
+				configured_repos.append(ordLine)
 			repostatus={}
 			for reponame,repodata in default_repos.items():
 				repostatus[reponame]="true"
 				for defaultrepo in repodata['repos']:
-					if defaultrepo.replace(' ','') not in configured_repos:
-						repostatus[reponame]="false"
-						break
+					defRepoArray=defaultrepo.split(" ")
+					defRepoArray.sort()
+					defRepo=" ".join(defRepoArray)
+					if defRepo.replace(' ','') not in configured_repos:
+						lineArray="".join(defRepoArray[:2])
+						sw=False
+						for repo in configured_repos:
+							if lineArray in repo:
+								sw=True
+								break
+						if sw==False:
+							repostatus[reponame]="false"
+							break
 				if 'disabled_repos' in repodata.keys():
 					if repodata['disabled_repos']:
 						repostatus[reponame]="false"
@@ -50,14 +67,37 @@ class manager():
 			return repostatus
 		#def _get_repo_status
 
+		def _orderRepo(self,repos):
+			orderRepos=[]
+			for r in repos:
+				r=r.rstrip()
+				#Skip multiple whitespaces
+				r=' '.join(r.split())
+				r.replace("deb ","")
+				rArray=r.split(" ")
+				#We need to know where is the url component, in order to calculate the dist and components position
+				#As url can be at position 2 or 3 (deb http://..etc.. or deb [arch] http://...) we look at the string
+				#for a matching :// as is a must for any repo-url (http, https, ftp, file) 
+				urlIdx=[idx for idx in range(len(rArray)) if "://" in rArray[idx]][0]+1
+				components=rArray[urlIdx:]
+				components.sort()
+				r="{} {}".format(" ".join(rArray[:urlIdx])," ".join(components))
+				orderRepos.append(r)
+			return(orderRepos)
+
 		def write_repo(self,data):
+			unorderedRepos=data.copy()
+			for reponame,repodata in unorderedRepos.items():
+				repos=repodata.get('repos',[])
+				repos=self._orderRepo(repos)
+				data[reponame]['repos']=repos
 			for reponame,repodata in data.items():
 				removerepos=[]
 				if repodata['enabled'].lower()=='false':
 					removerepos=[]
 					for r in repodata['repos']:
 						r=r.rstrip()
-						self._debug("Removing %s"%r)
+						self._debug("Removing {}".format(r))
 						if r.startswith('deb '):
 							removerepos.append(r)
 						else:
@@ -67,9 +107,9 @@ class manager():
 				else:
 					name=reponame.replace(' ','_').lower()
 					if name.endswith(".list"):
-						wrkfile="%s/%s"%(self.sources_dir,name)
+						wrkfile=os.path.join(self.sourced_dir,name)
 					else:
-						wrkfile="%s/%s.list"%(self.sources_dir,name)
+						wrkfile=os.path.join(self.sources_dir,"{}.list".format(name))
 				flines=[]
 				orig=[]
 				if os.path.isfile(wrkfile):
@@ -77,32 +117,54 @@ class manager():
 						with open(wrkfile,'r') as fcontent:
 							flines=fcontent.readlines()
 					except Exception as e:
-						self._debug("write_repo error: %s"%e)
+						self._debug("write_repo error: {}".format(e))
 					for line in flines:
 						format_line=line.replace('\n','').strip()
 						format_line=format_line.replace('deb ','').strip()
 						if format_line:
-							if format_line not in repodata['repos']:
+							lineArray=" ".join(format_line.split(' ')[:2])
+							sw=False
+							for repo in repodata.get('repos',[]):
+								if lineArray in repo:
+									sw=True
+									break
+							if sw==False:
 								orig.append(format_line)
 				newrepo=[]
+				#newrepo.extend(repodata['repos'])
 				newrepo.extend(repodata['repos'])
 				newrepo.extend(orig)
 				repos=set(newrepo)
+				repos=self._orderRepo(repos)
 				sw_status=True
 				try:
 					filterRepos=[]
+					mirrorLine=[]
+					repoLine=[]
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
 							repo=repo.strip()
+							repoCheck="{}".format(repo.replace(" ",''))
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
-								repo=("deb %s"%repo)
-							if repo not in removerepos and repo.replace(" ","") not in filterRepos:
-								self._debug("Writing line: %s"%repo)
-								fcontent.write("%s\n"%repo)
-								filterRepos.append(repo.replace(" ",""))
+								repo=("deb {}".format(repo))
+							if repo not in removerepos and repoCheck not in filterRepos:
+								if "://mirror/" in repo:
+									self._debug("Mirror line: {}".format(repo))
+									mirrorLine.append(repo)
+									continue
+								else:
+									self._debug("Writing line: {}".format(repo))
+									repoLine.append(repo)
+						if mirrorLine:
+							for repo in mirrorLine:
+								fcontent.write("{}\n".format(repo))
+						if repoLine:
+							for repo in repoLine:
+								fcontent.write("{}\n".format(repo))
+								
 				except Exception as e:
 					sw_status=False
-					self._debug("write_repo error: %s"%e)
+					self._debug("write_repo error: {}".format(e))
 				return sw_status
 		#def write_repo
 
@@ -233,6 +295,9 @@ class manager():
 		def add_repo(self,name,desc,url):
 			err=-1
 			repo={}
+			name=name.replace('"','')
+			desc=desc.replace('"','')
+			url=url.replace('"','')
 			repo[name]={}
 			repo[name]['desc']=desc
 			repo[name]['enabled']="true"
@@ -252,12 +317,12 @@ class manager():
 				item+=1
 			if err!=0:
 				err=1
-				self._debug("Wrong repo url")
+				self._debug("Wrong repo url: {}".format(url))
 			else:
 				repo_line=repo_array[item:]
 				if repo_line[0].startswith('ppa:'):
 					ppa_array=repo_line[0].split('/')
-					ppa_team=ppa_array[0].replace('ppa:','')
+					ppa_team=ppa_array[1].replace('ppa:','')
 #					repo_url=["http://ppa.launchpad.net/%s/%s/ubuntu %s main"%(ppa_team,ppa_array[-1],ppa_array[-1])]
 					repo_url="http://ppa.launchpad.net/%s/%s/ubuntu/dists"%(ppa_team,ppa_array[-1])
 					repo_url=self._get_http_dirs(repo_url)
@@ -315,6 +380,7 @@ class manager():
 					for link in links:
 						fname=link.extract().get_text()
 						dirlist.append(fname)
+						self._debug("Append %s"%(fname))
 				except Exception as e:
 						self._debug("Couldn't open %s: %s"%(url,e))
 				return(dirlist)
@@ -360,13 +426,24 @@ class manager():
 			msg=''
 			output=""
 			try:
-				output=subprocess.check_output(["apt-get","update"],stderr=subprocess.STDOUT)
+				output=subprocess.run(["apt-get","update"],capture_output=True)
 			except subprocess.CalledProcessError as e:
-				self._debug("Update repos: %s"%e)
+				self._debug("Update repos: {}".format(e))
 				ret=False
-				for line in e.output.split("\n"):
-					if line.startswith("E: F"):
+				for line in output.stderr.decode().split("\n"):
+					if line.startswith("E: "):
 						msg=line
+					elif line.startswith("W: ") and ("fetch") in line:
+						msg=line
+			if output.stderr.decode():
+				errLines=[]
+				for line in output.stderr.decode().split("\n"):
+					if line not in errLines:
+						if line.startswith("E:"):
+							errLines.append(line)
+						elif line.startswith("W: ") and "fetch" in line:
+							errLines.append(line)
+					msg="\n".join(errLines)
 			return([ret,msg])
 
 #class manager

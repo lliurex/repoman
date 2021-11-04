@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayo
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt,QSize
 from appconfig.appConfigStack import appConfigStack as confStack
-from edupals.ui import QAnimatedStatusBar
 
 import gettext
 _ = gettext.gettext

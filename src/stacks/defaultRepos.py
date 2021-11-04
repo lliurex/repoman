@@ -3,39 +3,42 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
 		QHeaderView,QTableWidgetSelectionRange
-
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from appconfig.appConfigStack import appConfigStack as confStack
-
 import gettext
 _ = gettext.gettext
 
 class QLabelDescription(QWidget):
+
+
 	def __init__(self,label="",description="",parent=None):
 		super (QLabelDescription,self).__init__(parent)
 		self.label=QLabel()
 		self.labelText=label
-		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
+		self.label.setText('<span style="font-size:14pt"><b>{}</b></span>'.format(label))
 		self.label.setStyleSheet("border:0px;margin:0px;")
 		self.description=QLabel()
 		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px;margin-top:0px;")
 		self.descriptionText=description
-		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
+		self.description.setText('<span style="font-size:10pt; color:grey">{}</span>'.format(description))
 		QBox=QVBoxLayout()
 		QBox.addWidget(self.label,-1,Qt.AlignBottom)
 		QBox.addWidget(self.description,Qt.AlignTop)
 		self.setLayout(QBox)
 		self.show()
+	#def __init__
 
 	def setText(self,label,description=""):
 		self.labelText=label
-		self.label.setText('<span style="font-size:14pt"><b>%s</b></span>'%label)
+		self.label.setText('<span style="font-size:14pt"><b>{}</b></span>'.format(label))
 		self.descriptionText=description
-		self.description.setText('<span style="font-size:10pt; color:grey">%s</span>'%description)
+		self.description.setText('<span style="font-size:10pt; color:grey">{}</span>'.format(description))
+	#def setText
 
 	def text(self):
 		return([self.labelText,self.descriptionText])
+	#def text
 #class QLabelDescription
 
 class defaultRepos(confStack):
@@ -52,7 +55,7 @@ class defaultRepos(confStack):
 		self.changed=[]
 		self.level='user'
 	#def __init__
-	
+
 	def _load_screen(self):
 		box=QVBoxLayout()
 		lbl_txt=QLabel(_("Enable or disable default repositories"))
@@ -81,20 +84,20 @@ class defaultRepos(confStack):
 			self.table.removeRow(0)
 		config=self.getConfig()
 		try:
-                    
-			repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
-			if type(repos)==type(''):
+			n4dclass="RepoManager"
+			n4dmethod="list_default_repos"
+			repos=self.n4dQuery(n4dclass,n4dmethod)
+			if isinstance(repos,str):
 			#It's a string, something went wrong. Perhaps a llx16 server?
 				if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
 					#Server is a llx16 so switch to localhost
 					self._debug("LLX16 server detected. Switch to localhost")
 					self.errServer=True
-					self.appConfig.n4d.server='localhost'
-					self.appConfig.n4d.n4dClient=None
-					repos=self.appConfig.n4dQuery("RepoManager","list_default_repos")
-			self.defaultRepos=repos.get('data',{})
+					repos=self.n4dQuery(n4dclass,n4dmethod)
+			if repos.get('status',0)!=-1:
+				self.defaultRepos=repos.get('data',{}).copy()
 		except Exception as e:
-			print(self.appConfig.n4dQuery("RepoManager","list_default_repos"))
+			self._debug(self.n4dQuery(n4dclass,n4dmethod))
 		states={}
 		row=0
 		for repo,data in self.defaultRepos.items():
@@ -130,13 +133,16 @@ class defaultRepos(confStack):
 			#Mirror must be checked against server
 			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
 			if (type(ret)==type("")):
-				self._debug("Mirror not available")
-				self.showMsg(_("Mirror not available"),'error')
-				self.updateScreen()
-				return
+				if ret!="Mirror available":
+					self._debug("Mirror not available")
+					self.showMsg(_("Mirror not available"),'RepoMan')
+					self.defaultRepos[repo]['enabled']="False"
+					self.updateScreen()
+					return
 			elif not (ret.get('status',False)):
 				self._debug("Mirror not available")
-				self.showMsg(_("Mirror not available"),'error')
+				self.showMsg(_("Mirror not available"),'RepoMan')
+				self.defaultRepos[repo]['enabled']="False"
 				self.updateScreen()
 				return
 		state=str(stateWidget.isChecked()).lower()
@@ -146,19 +152,17 @@ class defaultRepos(confStack):
 	#def changeState
 
 	def writeConfig(self):
+		ret=True
 		for repo in self.changed:
 			self._debug("Updating %s"%repo)
-#			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo.lower():self.defaultRepos[repo]})
-			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
-			st=ret.get('status',False)
-			if st:
-#				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo.lower():self.defaultRepos[repo]})
-				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
-				if ret.get('status',False)!=True:
-					self.showMsg(_("Couldn't write repo %s"%repo),'error')
+			ret=self.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
+			if ret:
+				ret=self.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
+				if ret==False:
+					self.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
 			else:
-				self.showMsg(_("Couldn't write info for %s"%repo),'error')
-		if ret.get('status',False)==True:
+				self.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
+		if ret==True:
 			self._updateRepos()
 		self.updateScreen()
 	#def writeConfig
@@ -168,13 +172,30 @@ class defaultRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		if ret.get("status",False):
-			self.showMsg(_("Repositories updated succesfully"))
+		ret=ret.get('data','')
+		errList=[]
+		for line in ret.split("\n"):
+			if line.startswith("E: ") or line.startswith("W:"):
+				for name,data in self.defaultRepos.items():
+					for repoLine in data.get('repos',[]):
+						repoItems=repoLine.split(" ")
+						if repoItems:
+							if repoItems[0] in line:
+								if "NODATA" in line:
+									continue
+								err=" *{}".format(name)
+								if err not in errList:
+									errList.append(err)
+		ret=("\n").join(errList)
+		if ret:
+				#self.showMsg(_("Repositories updated succesfully"))
+			self._debug("Error updating: %s"%ret)
+			ret=_("Failed to update: ")+"\n"+"{}".format(ret)
+			self.showMsg("{}".format(ret),'RepoMan')
 			self.refresh=True
 			self.changes=False
 		else:
-			self._debug("Error updating: %s"%ret)
-			self.showMsg(_("Failed to update repositories\n%s"%ret.get('data')),'error')
+			self.showMsg(_("Repositories updated succesfully"))
 		cursor=QtGui.QCursor(Qt.PointingHandCursor)
 		self.setCursor(cursor)
 	#def _updateRepos

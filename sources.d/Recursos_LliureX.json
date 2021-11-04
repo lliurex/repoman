@@ -3,10 +3,10 @@
         "changed": true,
         "desc": "Lliurex educational resources",
         "disabled_repos": [],
-        "enabled": "True",
+        "enabled": "False",
 		"protected":"True",
         "repos": [
-            "http://lliurex.net/recursos-edu xenial main restricted universe multiverse"
+            "http://lliurex.net/recursos-edu xenial main"
         ]
     }
 }
