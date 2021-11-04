@@ -69,6 +69,8 @@ class manager():
 		def _orderRepo(self,repos):
 			orderRepos=[]
 			for r in repos:
+				if r.startswith("#"):
+					continue
 				r=r.rstrip()
 				#Skip multiple whitespaces
 				r=' '.join(r.split())
