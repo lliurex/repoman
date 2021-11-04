@@ -78,7 +78,8 @@ class manager():
 				#We need to know where is the url component, in order to calculate the dist and components position
 				#As url can be at position 2 or 3 (deb http://..etc.. or deb [arch] http://...) we look at the string
 				#for a matching :// as is a must for any repo-url (http, https, ftp, file) 
-				urlIdx=[idx for idx in range(len(rArray)) if "://" in rArray[idx]][0]+1
+				#The next item of a repo definition is the distro at position url+1 (item 3 or 4), hence the +2
+				urlIdx=[idx for idx in range(len(rArray)) if "://" in rArray[idx]][0]+2
 				components=rArray[urlIdx:]
 				components.sort()
 				r="{} {}".format(" ".join(rArray[:urlIdx])," ".join(components))
