@@ -226,7 +226,6 @@ def enable_repo():
 				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
 					err=1
 					print (error.SOURCES)
-					print(a)
 			else:
 				err=1
 				print (error.INFO)
