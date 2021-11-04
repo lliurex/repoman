@@ -19,13 +19,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
+from setuptools import setup, find_packages
+#from distutils.core import setup
 
 if __name__ == '__main__':
 
     setup(name='python-repomanager',
         version='0.1',
-        description='Python repomanager libs',
+        description='Python2 repomanager libs',
         long_description="""""",
         author='Lliurex Team',
         author_email='juanma1980@gmail.com',
