@@ -1,4 +1,4 @@
-repoman (2.4.1-1llx19) bionic; urgency=medium
+repoman (2.4.2-0llx19) bionic; urgency=medium
 
   * Backport from llx21
 
@@ -37,7 +37,7 @@ repoman (2.0.14) bionic; urgency=medium
 repoman (2.0.13) bionic; urgency=medium
 
   * Restored xenial as repo for educational resources
-  * Fix return value from upodate_repos method
+  * Fix return value from update_repos method
   * Fix block when running external tools
   * Updated spanish translations
 
