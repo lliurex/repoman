@@ -74,6 +74,9 @@ class defaultRepos(confStack):
 		self.table.verticalHeader().hide()
 		box.addWidget(self.table)
 		self.setLayout(box)
+		config=self.getConfig()
+		self.appConfig.n4d.server='localhost'
+		self.appConfig.n4d.n4dClient=None
 		self.updateScreen()
 	#def _load_screen
 
