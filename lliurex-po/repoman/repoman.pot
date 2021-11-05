@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:50+0200\n"
+"POT-Creation-Date: 2021-11-05 10:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,7 +121,8 @@ msgstr ""
 msgid "Error retrieving data from server"
 msgstr ""
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:157 ../src/repoman-cli.py:189
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:159 ../src/repoman-cli.py:194
+#: ../src/repoman-cli.py:236
 msgid "Y/N"
 msgstr ""
 
@@ -146,51 +147,57 @@ msgstr ""
 msgid "Repository %(url)s %(color1)sadded successfully%(color2)s"
 msgstr ""
 
-#: ../src/repoman-cli.py:159
+#: ../src/repoman-cli.py:161
 #, python-format
 msgid ""
 "You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? "
 "%(options)s [%(default)s]: "
 msgstr ""
 
-#: ../src/repoman-cli.py:191
+#: ../src/repoman-cli.py:196
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
 "[%(default)s]: "
 msgstr ""
 
-#: ../src/repoman-cli.py:233
+#: ../src/repoman-cli.py:239
+#, python-format
+msgid ""
+"Repositories changed. Do you want to update info? %(options)s [%(default)s]: "
+msgstr ""
+
+#: ../src/repoman-cli.py:248
 msgid "Enabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:237
+#: ../src/repoman-cli.py:252
 msgid "Disabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:295
+#: ../src/repoman-cli.py:310
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:296
+#: ../src/repoman-cli.py:311
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:297
+#: ../src/repoman-cli.py:312
 msgid ""
 "\n"
 "Parameters:"
 msgstr ""
 
-#: ../src/repoman-cli.py:361
+#: ../src/repoman-cli.py:376
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr ""
 
-#: ../src/repoman-cli.py:365
+#: ../src/repoman-cli.py:380
 msgid "Invalid argument"
 msgstr ""
 
