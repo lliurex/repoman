@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:45+0200\n"
-"PO-Revision-Date: 2021-09-30 09:46+0200\n"
+"POT-Creation-Date: 2021-11-05 07:37+0100\n"
+"PO-Revision-Date: 2021-11-05 07:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/repoman-cli.py:41
@@ -126,7 +126,8 @@ msgstr "Usuario o contraseña incorrectos"
 msgid "Error retrieving data from server"
 msgstr "Error leyendo la información del servidor"
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:157 ../src/repoman-cli.py:189
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:159 ../src/repoman-cli.py:194
+#: ../src/repoman-cli.py:238
 msgid "Y/N"
 msgstr "S/N"
 
@@ -153,7 +154,7 @@ msgstr "Descripción del repositorio (opcional): "
 msgid "Repository %(url)s %(color1)sadded successfully%(color2)s"
 msgstr "Repositorio %(url)s %(color1)sañadido%(color2)s"
 
-#: ../src/repoman-cli.py:159
+#: ../src/repoman-cli.py:161
 #, python-format
 msgid ""
 "You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? "
@@ -162,7 +163,7 @@ msgstr ""
 "Se va a %(color1)sdeshabilitar%(color2)s el repositorio %(repo)s. "
 "¿Continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:191
+#: ../src/repoman-cli.py:196
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
@@ -171,20 +172,27 @@ msgstr ""
 "Se va activar el repositorio %(repo)s. ¿Continuar? %(options)s "
 "[%(default)s]: "
 
-#: ../src/repoman-cli.py:233
+#: ../src/repoman-cli.py:241
+#, python-format
+msgid ""
+"Repositories changed. Do you want to update info? %(options)s [%(default)s]: "
+msgstr ""
+"Los repositorios han cambiado. Actualizarlos? %(options)s [%(default)s]: "
+
+#: ../src/repoman-cli.py:250
 msgid "Enabled"
 msgstr "Activo"
 
-#: ../src/repoman-cli.py:237
+#: ../src/repoman-cli.py:254
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: ../src/repoman-cli.py:295
+#: ../src/repoman-cli.py:312
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:296
+#: ../src/repoman-cli.py:313
 msgid ""
 "\n"
 "RepoMan"
@@ -192,7 +200,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:297
+#: ../src/repoman-cli.py:314
 msgid ""
 "\n"
 "Parameters:"
@@ -200,12 +208,12 @@ msgstr ""
 "\n"
 "Parámetros:"
 
-#: ../src/repoman-cli.py:361
+#: ../src/repoman-cli.py:378
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no válido para el argumenrto %s"
 
-#: ../src/repoman-cli.py:365
+#: ../src/repoman-cli.py:382
 msgid "Invalid argument"
 msgstr "Argumento inválido"
 
@@ -237,19 +245,19 @@ msgstr "Gestiona repositorios personales"
 msgid "Add new repository"
 msgstr "Añadir repositorio"
 
-#: ../src/stacks/customRepos.py:223 ../src/stacks/defaultRepos.py:162
+#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:165
 msgid "Couldn't write repo"
 msgstr "No pude escribir"
 
-#: ../src/stacks/customRepos.py:225
-msgid "Couldn't write info for) {}"
+#: ../src/stacks/customRepos.py:227 ../src/stacks/defaultRepos.py:167
+msgid "Couldn't write info for"
 msgstr "No pude escribir la información de"
 
-#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
+#: ../src/stacks/customRepos.py:254 ../src/stacks/defaultRepos.py:196
 msgid "Failed to update: "
 msgstr "Error actualizando: "
 
-#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:197
+#: ../src/stacks/customRepos.py:259 ../src/stacks/defaultRepos.py:201
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Repositorios actualizados"
@@ -270,13 +278,9 @@ msgstr "Desde aquí puedes activar/desactivar los repositorios por defecto"
 msgid "Enable or disable default repositories"
 msgstr "Habilita/deshabilita repositorios por deefecto"
 
-#: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
+#: ../src/stacks/defaultRepos.py:141 ../src/stacks/defaultRepos.py:147
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
-
-#: ../src/stacks/defaultRepos.py:164
-msgid "Couldn't write info for"
-msgstr "No pude escribir la información de"
 
 #: ../src/stacks/localRepos.py:16
 msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
@@ -383,7 +387,7 @@ msgstr ""
 "Error actualizando repositorios\n"
 "%s"
 
-#: json ../sources.d/default/lliurex_21.json
+#: json ../sources.d/default/lliurex_19.json
 msgid "Lliurex default repositories"
 msgstr "Repositorios de LliureX"
 
@@ -391,13 +395,16 @@ msgstr "Repositorios de LliureX"
 msgid "Local repositories"
 msgstr "Repositorios locales"
 
-#: json ../sources.d/default/ubuntu_focal.json
-msgid "Ubuntu focal official repositories"
-msgstr "Repositorios oficiales de Ubuntu Focal"
+#: json ../sources.d/default/ubuntu_bionic.json
+msgid "Ubuntu bionic official repositories"
+msgstr "Repositorios oficiales de Ubuntu Bionic"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
 msgstr "Recursos educativos de Lliurex"
+
+#~ msgid "Couldn't write info for) {}"
+#~ msgstr "No pude escribir la información de"
 
 #~ msgid "Couldn't write repo %s"
 #~ msgstr "No pude escribir %s"
