@@ -1,4 +1,4 @@
-repoman (2.4.2-llx21) focal; urgency=medium
+repoman (2.4.2-llx21-1) focal; urgency=medium
 
   * Bugfix: add repo not working well
   * repoman-cli offers to update repository info after doing changes
