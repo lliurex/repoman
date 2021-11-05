@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 09:50+0200\n"
-"PO-Revision-Date: 2021-09-30 09:50+0200\n"
+"POT-Creation-Date: 2021-11-05 07:37+0100\n"
+"PO-Revision-Date: 2021-11-05 07:40+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: ../src/repoman-cli.py:41
 msgid "Add repository"
@@ -126,7 +126,8 @@ msgstr "Nom d'usuari/contrasenya incorrectes"
 msgid "Error retrieving data from server"
 msgstr "S'ha produït un error en recuperar les dades del servidor"
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:157 ../src/repoman-cli.py:189
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:159 ../src/repoman-cli.py:194
+#: ../src/repoman-cli.py:238
 msgid "Y/N"
 msgstr "S/N"
 
@@ -153,7 +154,7 @@ msgstr "Descripció del repositori (opcional): "
 msgid "Repository %(url)s %(color1)sadded successfully%(color2)s"
 msgstr "Repositori %(url)s %(color1)safegit correctament%(color2)s"
 
-#: ../src/repoman-cli.py:159
+#: ../src/repoman-cli.py:161
 #, python-format
 msgid ""
 "You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? "
@@ -162,7 +163,7 @@ msgstr ""
 "Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu "
 "continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:191
+#: ../src/repoman-cli.py:196
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
@@ -171,20 +172,28 @@ msgstr ""
 "Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s "
 "[%(default)s]: "
 
-#: ../src/repoman-cli.py:233
+#: ../src/repoman-cli.py:241
+#, python-format
+msgid ""
+"Repositories changed. Do you want to update info? %(options)s [%(default)s]: "
+msgstr ""
+"Els repositoris han canviat. Voleu actualitzar-los? %(options)s "
+"[%(default)s]: "
+
+#: ../src/repoman-cli.py:250
 msgid "Enabled"
 msgstr "Actiu"
 
-#: ../src/repoman-cli.py:237
+#: ../src/repoman-cli.py:254
 msgid "Disabled"
 msgstr "Inhabilitat"
 
-#: ../src/repoman-cli.py:295
+#: ../src/repoman-cli.py:312
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:296
+#: ../src/repoman-cli.py:313
 msgid ""
 "\n"
 "RepoMan"
@@ -192,7 +201,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:297
+#: ../src/repoman-cli.py:314
 msgid ""
 "\n"
 "Parameters:"
@@ -200,12 +209,12 @@ msgstr ""
 "\n"
 "Paràmetres:"
 
-#: ../src/repoman-cli.py:361
+#: ../src/repoman-cli.py:378
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no vàlid per a l'argument -%s"
 
-#: ../src/repoman-cli.py:365
+#: ../src/repoman-cli.py:382
 msgid "Invalid argument"
 msgstr "Argument no vàlid"
 
@@ -240,19 +249,19 @@ msgstr "Gestiona els repositoris extra"
 msgid "Add new repository"
 msgstr "Afig un repositori nou"
 
-#: ../src/stacks/customRepos.py:223 ../src/stacks/defaultRepos.py:162
+#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:165
 msgid "Couldn't write repo"
 msgstr "No s'ha pogut escriure el repositori"
 
-#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:164
+#: ../src/stacks/customRepos.py:227 ../src/stacks/defaultRepos.py:167
 msgid "Couldn't write info for"
 msgstr "No s'ha pogut escriure la informació per a"
 
-#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
+#: ../src/stacks/customRepos.py:254 ../src/stacks/defaultRepos.py:196
 msgid "Failed to update: "
 msgstr "Error actualitzant: "
 
-#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:197
+#: ../src/stacks/customRepos.py:259 ../src/stacks/defaultRepos.py:201
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Els repositoris s'han actualitzat correctament"
@@ -273,7 +282,7 @@ msgstr "Des d'ací podeu activar/desactivar els repositoris per defecte"
 msgid "Enable or disable default repositories"
 msgstr "Habilita/ inhabilita un repositori per defecte"
 
-#: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
+#: ../src/stacks/defaultRepos.py:141 ../src/stacks/defaultRepos.py:147
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
 
@@ -417,7 +426,7 @@ msgstr ""
 "No s'han pogut actualitzar els repositoris\n"
 "%s"
 
-#: json ../sources.d/default/lliurex_21.json
+#: json ../sources.d/default/lliurex_19.json
 msgid "Lliurex default repositories"
 msgstr "Repositoris predeterminats de Lliurex"
 
@@ -425,9 +434,9 @@ msgstr "Repositoris predeterminats de Lliurex"
 msgid "Local repositories"
 msgstr "Repositoris locals"
 
-#: json ../sources.d/default/ubuntu_focal.json
-msgid "Ubuntu focal official repositories"
-msgstr "Repositoris oficials d'Ubuntu Focal"
+#: json ../sources.d/default/ubuntu_bionic.json
+msgid "Ubuntu bionic official repositories"
+msgstr "Repositoris oficials d'Ubuntu Bionic"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
