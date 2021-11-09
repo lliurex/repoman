@@ -55,14 +55,14 @@ class localRepos(confStack):
 			self.appConfig.n4d.server='localhost'
 			self.appConfig.n4d.n4dClient=None
 			self.lbl.setText("{} localhost".format(self.MSG_USING))
-			self.btn.setText(self.MSG_DISABLE)
-			self.localhost=True
+			self.btn.setText(self.MSG_ENABLE)
+			self.localhost=False
 		else:
 			self.appConfig.n4d.server='server'
 			self.appConfig.n4d.n4dClient=None
 			self.lbl.setText("{} server".format(self.MSG_USING))
-			self.btn.setText(self.MSG_ENABLE)
-			self.localhost=False
+			self.btn.setText(self.MSG_DISABLE)
+			self.localhost=True
 	#def _enable_localhost
 			
 #	def writeConfig(self):
