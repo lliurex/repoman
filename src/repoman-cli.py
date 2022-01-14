@@ -347,6 +347,7 @@ def _n4d_connect():
 		except:
 			print(error.USER)
 			quit(1)
+	print(n4dserver)
 	return(n4dserver)
 #def _n4d_connect
 
