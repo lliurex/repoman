@@ -169,12 +169,29 @@ def disable_repo():
 			n4dcredentials=credentials
 		repo={reponame:repos[reponame]}
 		try:
-			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
+			writejsonResult=n4dserver.write_repo_json(n4dcredentials,"RepoManager",data=repo)
 		except:
 			print("disable_repo %s"%error.DATA)
 			err=1
-		if writejson['status']==0:
-			if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
+		result=1
+		if isinstance(writejsonResult,dict):
+			result=writejsonResult.get('status')
+		elif isinstance(writejsonResult,bool):
+			if writejsonResult:
+				result=0
+		if result==0:
+			try:
+				writeResult=n4dserver.write_repo(n4dcredentials,"RepoManager",data=repo)
+			except:
+				print("disable_repo %s"%error.DATA)
+				err=1
+			result=1
+			if isinstance(writeResult,dict):
+				result=writeResult.get('status')
+			elif isinstance(writejsonResult,bool):
+				if writejsonResult:
+					result=0
+			if result!=0:
 				err=1
 				print (error.SOURCES)
 		else:
@@ -221,9 +238,23 @@ def enable_repo():
 		if err:
 			print (error.MIRROR)
 		else:
-			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
-			if writejson['status']==0: 
-				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']:
+			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",data=repo)
+			if isinstance(writejson,bool):
+				status=1
+				if writejson:
+					status=0
+			elif isinstance(writejson,dict):
+				status=writejson.get('status',-1)
+
+			if status==0: 
+				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",data=repo)
+				if isinstance(writerepo,bool):
+					status=1
+					if writerepo:
+						status=0
+				elif isinstance(writerepo,dict):
+					status=writerepo.get('status',-1)
+				if status!=0: 
 					err=1
 					print (error.SOURCES)
 			else:
@@ -278,14 +309,14 @@ def _get_repos():
 		n4dcredentials=credentials
 	try:
 		data=n4dserver.list_default_repos(n4dcredentials,"RepoManager")
-	except:
+	except Exception as e:
 		print(error.DATA)
 		quit(1)
 	if type(data)==type(''):
 		print (error.DATA)
 		quit(1)
 	else:
-		repos=data['return']
+		repos=data.get('return',data)
 	sort_repos=OrderedDict()
 	index=0
 	for repo in sorted(repos.keys()):
@@ -297,7 +328,7 @@ def _get_repos():
 		print (error.DATA)
 		quit(1)
 	else:
-		sources=data['return']
+		sources=data.get('return',data)
 	for repo in sorted(sources.keys()):
 		sort_repos.update({repo:sources[repo]})
 		repo_index[index]=repo
@@ -330,24 +361,33 @@ def _n4d_connect():
 	ret=True
 	context=ssl._create_unverified_context()
 	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-	if credentials:
-		try:
-			ret=n4dserver.validate_user(credentials[0],credentials[1])
-			if not ret['return'][0]:
+	#Test if proxy is well stablished
+	try:
+		n4dserver.__ServerProxy__request("fakeCall",("",""))
+	except ConnectionRefusedError as e:
+	#Use local lib
+		print("Using LTSP compat mode")
+		n4dserver=repoman
+		sw=False
+	
+	if sw:
+		if credentials:
+			try:
+				ret=n4dserver.validate_user(credentials[0],credentials[1])
+				if not ret['return'][0]:
+					print(error.CREDENTIALS)
+					quit(1)
+			except:
 				print(error.CREDENTIALS)
 				quit(1)
-		except:
-			print(error.CREDENTIALS)
-			quit(1)
-	else:
-		try:
-			global key
-			with open('/etc/n4d/key','r') as fkey:
-				key=fkey.readlines()[0].strip()
-		except:
-			print(error.USER)
-			quit(1)
-	print(n4dserver)
+		else:
+			try:
+				global key
+				with open('/etc/n4d/key','r') as fkey:
+					key=fkey.readlines()[0].strip()
+			except:
+				print(error.USER)
+				quit(1)
 	return(n4dserver)
 #def _n4d_connect
 
