@@ -87,7 +87,11 @@ class manager():
 				orderRepos.append(r)
 			return(orderRepos)
 
-		def write_repo(self,*args,data={}):
+		def write_repo(self,data,*args):
+			if not isinstance(data,dict):
+				if len(args)>0:
+					if isinstance(args[-1],dict):
+							data=args[-1]
 			unorderedRepos=data.copy()
 			for reponame,repodata in unorderedRepos.items():
 				repos=repodata.get('repos',[])
@@ -170,29 +174,33 @@ class manager():
 				return sw_status
 		#def write_repo
 
-		def write_repo_json(self,*args,data={}):
-				sw_status=True
-				default_repos=os.listdir(self.available_repos_dir+'/default/')
-				for repo,repodata in data.items():
-					frepo=repo.replace(' ','_')
-					if not frepo.endswith('.json'):
-						frepo=frepo+'.json'
-					if (frepo.lower() in default_repos) or (frepo in default_repos):
-						wrkdir=self.available_repos_dir+'/default'
-					else:
-						wrkdir=self.available_repos_dir
-					wrkfile="%s/%s"%(wrkdir,frepo)
-					if not os.path.isfile(wrkfile):
-						if os.path.isfile(wrkfile.lower()):
-							wrkfile=wrkfile.lower()
-					self._debug("Writing %s"%wrkfile)
-					try:
-						with open(wrkfile,'w') as fcontent:
-							json.dump({repo:repodata},fcontent,sort_keys=True,indent=4,ensure_ascii=False)
-					except Exception as e:
-						sw_status=False
-						self._debug("write_repo_json error: %s"%e)
-					return sw_status
+		def write_repo_json(self,data,*args):
+			if not isinstance(data,dict):
+				if len(args)>0:
+					if isinstance(args[-1],dict):
+							data=args[-1]
+			sw_status=True
+			default_repos=os.listdir(self.available_repos_dir+'/default/')
+			for repo,repodata in data.items():
+				frepo=repo.replace(' ','_')
+				if not frepo.endswith('.json'):
+					frepo=frepo+'.json'
+				if (frepo.lower() in default_repos) or (frepo in default_repos):
+					wrkdir=self.available_repos_dir+'/default'
+				else:
+					wrkdir=self.available_repos_dir
+				wrkfile="%s/%s"%(wrkdir,frepo)
+				if not os.path.isfile(wrkfile):
+					if os.path.isfile(wrkfile.lower()):
+						wrkfile=wrkfile.lower()
+				self._debug("Writing %s"%wrkfile)
+				try:
+					with open(wrkfile,'w') as fcontent:
+						json.dump({repo:repodata},fcontent,sort_keys=True,indent=4,ensure_ascii=False)
+				except Exception as e:
+					sw_status=False
+					self._debug("write_repo_json error: %s"%e)
+				return sw_status
 		#def write_repo_json
 
 		def list_default_repos(self,*args):

@@ -169,7 +169,7 @@ def disable_repo():
 			n4dcredentials=credentials
 		repo={reponame:repos[reponame]}
 		try:
-			writejsonResult=n4dserver.write_repo_json(n4dcredentials,"RepoManager",data=repo)
+			writejsonResult=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
 		except:
 			print("disable_repo %s"%error.DATA)
 			err=1
@@ -181,7 +181,7 @@ def disable_repo():
 				result=0
 		if result==0:
 			try:
-				writeResult=n4dserver.write_repo(n4dcredentials,"RepoManager",data=repo)
+				writeResult=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
 			except:
 				print("disable_repo %s"%error.DATA)
 				err=1
@@ -238,16 +238,18 @@ def enable_repo():
 		if err:
 			print (error.MIRROR)
 		else:
-			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",data=repo)
+			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
+			status=1
 			if isinstance(writejson,bool):
-				status=1
 				if writejson:
 					status=0
 			elif isinstance(writejson,dict):
+				print(writejson)
 				status=writejson.get('status',-1)
+			print(status)
 
 			if status==0: 
-				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",data=repo)
+				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
 				if isinstance(writerepo,bool):
 					status=1
 					if writerepo:
@@ -362,6 +364,7 @@ def _n4d_connect():
 	context=ssl._create_unverified_context()
 	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
 	#Test if proxy is well stablished
+	sw=True
 	try:
 		n4dserver.__ServerProxy__request("fakeCall",("",""))
 	except ConnectionRefusedError as e:
