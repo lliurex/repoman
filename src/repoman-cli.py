@@ -244,9 +244,7 @@ def enable_repo():
 				if writejson:
 					status=0
 			elif isinstance(writejson,dict):
-				print(writejson)
 				status=writejson.get('status',-1)
-			print(status)
 
 			if status==0: 
 				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
