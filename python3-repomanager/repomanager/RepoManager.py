@@ -87,7 +87,7 @@ class manager():
 				orderRepos.append(r)
 			return(orderRepos)
 
-		def write_repo(self,data):
+		def write_repo(self,*args,data={}):
 			unorderedRepos=data.copy()
 			for reponame,repodata in unorderedRepos.items():
 				repos=repodata.get('repos',[])
@@ -170,7 +170,7 @@ class manager():
 				return sw_status
 		#def write_repo
 
-		def write_repo_json(self,data):
+		def write_repo_json(self,*args,data={}):
 				sw_status=True
 				default_repos=os.listdir(self.available_repos_dir+'/default/')
 				for repo,repodata in data.items():
@@ -195,7 +195,7 @@ class manager():
 					return sw_status
 		#def write_repo_json
 
-		def list_default_repos(self):
+		def list_default_repos(self,*args):
 			frepos=[]
 			try:
 				frepos=os.listdir(self.default_repos_dir)
@@ -220,7 +220,7 @@ class manager():
 			return repos
 		#def list_default_repos
 
-		def list_sources(self):
+		def list_sources(self,*args):
 			sourcesdict={}
 			sourcefiles=os.listdir(self.sources_dir)
 			for sourcefile in sourcefiles:

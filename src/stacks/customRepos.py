@@ -148,7 +148,7 @@ class customRepos(confStack):
 			self.table.setCellWidget(row,0,lbl)
 			chk=QCheckBox()
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
-			chk.stateChanged.connect(lambda x:self.setChanged(chk))
+			chk.stateChanged.connect(lambda x:self.setChanged(chk.isChecked()))
 			chk.stateChanged.connect(self.changeState)
 			self.table.setCellWidget(row,1,chk)
 			chk.setChecked(state)

@@ -43,7 +43,7 @@ class QLabelDescription(QWidget):
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -113,7 +113,7 @@ class defaultRepos(confStack):
 			chk=QCheckBox()
 			chk.setTristate(False)
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
-			chk.stateChanged.connect(lambda x:self.setChanged(chk))
+			chk.stateChanged.connect(lambda x:self.setChanged(chk.isChecked()))
 			chk.stateChanged.connect(self.changeState)
 			self.table.setCellWidget(row,1,chk)
 			chk.setChecked(state)
@@ -132,6 +132,14 @@ class defaultRepos(confStack):
 		if repo.lower()=="lliurex mirror":
 			#Mirror must be checked against server
 			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
+			if isinstance(ret,dict):
+				if ret.get('status')==-1:
+					self._debug("Mirror not available")
+					self.showMsg(_("Mirror not available"),'RepoMan')
+					self.defaultRepos[repo]['enabled']="False"
+					self.updateScreen()
+					return
+
 			if (type(ret)==type("")):
 				if ret!="Mirror available":
 					self._debug("Mirror not available")

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 import os,subprocess
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QGridLayout,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QGridLayout
 from PySide2 import QtGui
 from PySide2.QtCore import Qt
 from appconfig.appConfigStack import appConfigStack as confStack
