@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 10:01+0100\n"
-"PO-Revision-Date: 2021-11-05 10:02+0100\n"
+"POT-Creation-Date: 2022-01-19 10:36+0100\n"
+"PO-Revision-Date: 2022-01-19 10:39+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -126,8 +126,8 @@ msgstr "Nom d'usuari/contrasenya incorrectes"
 msgid "Error retrieving data from server"
 msgstr "S'ha produït un error en recuperar les dades del servidor"
 
-#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:159 ../src/repoman-cli.py:194
-#: ../src/repoman-cli.py:236
+#: ../src/repoman-cli.py:90 ../src/repoman-cli.py:159 ../src/repoman-cli.py:211
+#: ../src/repoman-cli.py:267
 msgid "Y/N"
 msgstr "S/N"
 
@@ -163,7 +163,7 @@ msgstr ""
 "Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu "
 "continuar? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:196
+#: ../src/repoman-cli.py:213
 #, python-format
 msgid ""
 "You're going to enable repository %(repo)s. Continue? %(options)s "
@@ -172,26 +172,26 @@ msgstr ""
 "Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s "
 "[%(default)s]: "
 
-#: ../src/repoman-cli.py:239
+#: ../src/repoman-cli.py:270
 #, python-format
 msgid ""
 "Repositories changed. Do you want to update info? %(options)s [%(default)s]: "
 msgstr "Actualitzar els repositoris? %(options)s [%(default)s]: "
 
-#: ../src/repoman-cli.py:248
+#: ../src/repoman-cli.py:279
 msgid "Enabled"
 msgstr "Actiu"
 
-#: ../src/repoman-cli.py:252
+#: ../src/repoman-cli.py:283
 msgid "Disabled"
 msgstr "Inhabilitat"
 
-#: ../src/repoman-cli.py:310
+#: ../src/repoman-cli.py:341
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:311
+#: ../src/repoman-cli.py:342
 msgid ""
 "\n"
 "RepoMan"
@@ -199,7 +199,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:312
+#: ../src/repoman-cli.py:343
 msgid ""
 "\n"
 "Parameters:"
@@ -207,12 +207,12 @@ msgstr ""
 "\n"
 "Paràmetres:"
 
-#: ../src/repoman-cli.py:376
+#: ../src/repoman-cli.py:418
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no vàlid per a l'argument -%s"
 
-#: ../src/repoman-cli.py:380
+#: ../src/repoman-cli.py:422
 msgid "Invalid argument"
 msgstr "Argument no vàlid"
 
@@ -247,19 +247,25 @@ msgstr "Gestiona els repositoris extra"
 msgid "Add new repository"
 msgstr "Afig un repositori nou"
 
-#: ../src/stacks/customRepos.py:223 ../src/stacks/defaultRepos.py:162
+#: ../src/stacks/customRepos.py:128
+msgid "N4d is down. Check the state of N4d server"
+msgstr ""
+"No es pot conectar amb el servidor N4d. \n"
+"Revise l'estat del servei."
+
+#: ../src/stacks/customRepos.py:227 ../src/stacks/defaultRepos.py:170
 msgid "Couldn't write repo"
 msgstr "No s'ha pogut escriure el repositori"
 
-#: ../src/stacks/customRepos.py:225 ../src/stacks/defaultRepos.py:164
+#: ../src/stacks/customRepos.py:229 ../src/stacks/defaultRepos.py:172
 msgid "Couldn't write info for"
 msgstr "No s'ha pogut escriure la informació per a"
 
-#: ../src/stacks/customRepos.py:251 ../src/stacks/defaultRepos.py:192
+#: ../src/stacks/customRepos.py:255 ../src/stacks/defaultRepos.py:200
 msgid "Failed to update: "
 msgstr "Error actualitzant: "
 
-#: ../src/stacks/customRepos.py:256 ../src/stacks/defaultRepos.py:197
+#: ../src/stacks/customRepos.py:260 ../src/stacks/defaultRepos.py:205
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Els repositoris s'han actualitzat correctament"
@@ -280,7 +286,8 @@ msgstr "Des d'ací podeu activar/desactivar els repositoris per defecte"
 msgid "Enable or disable default repositories"
 msgstr "Habilita/ inhabilita un repositori per defecte"
 
-#: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:144
+#: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:146
+#: ../src/stacks/defaultRepos.py:152
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
 
