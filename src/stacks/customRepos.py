@@ -115,14 +115,18 @@ class customRepos(confStack):
 			self.table.removeRow(0)
 		config=self.getConfig()
 		repos=self.appConfig.n4dQuery("RepoManager","list_sources")
-		if (type(repos)==type("")):
+		if isinstance(repos,str):
 		#It's a string, something went wrong. Perhaps a llx16 server?
-			if isinstance(repos,str):
-				#Server is a llx16 so switch to localhost
-				self._debug("LLX16 server detected. Switch to localhost")
-				self.appConfig.n4d.server='localhost'
-				self.appConfig.n4d.n4dClient=None
-				repos=self.appConfig.n4dQuery("RepoManager","list_sources")
+			#Server is a llx16 so switch to localhost
+			self._debug("LLX16 server detected. Switch to localhost")
+			self.appConfig.n4d.server='localhost'
+			self.appConfig.n4d.n4dClient=None
+			repos=self.appConfig.n4dQuery("RepoManager","list_sources")
+		elif isinstance(repos,dict):
+			status=repos.get('status',None)
+			if status!=0 and status!=None:
+				self.showMsg(_("N4d is down. Check the state of N4d server"))
+				return
 
 		self.defaultRepos=repos.copy()
 		states={}
