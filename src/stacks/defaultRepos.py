@@ -113,7 +113,7 @@ class defaultRepos(confStack):
 			chk=QCheckBox()
 			chk.setTristate(False)
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
-			chk.stateChanged.connect(lambda x:self.setChanged(chk.isChecked()))
+			chk.stateChanged.connect(lambda x:self.setChanged(True))
 			chk.stateChanged.connect(self.changeState)
 			self.table.setCellWidget(row,1,chk)
 			chk.setChecked(state)
