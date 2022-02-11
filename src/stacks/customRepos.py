@@ -152,7 +152,7 @@ class customRepos(confStack):
 			self.table.setCellWidget(row,0,lbl)
 			chk=QCheckBox()
 			chk.setStyleSheet("margin-left:50%;margin-right:50%")
-			chk.stateChanged.connect(lambda x:self.setChanged(chk.isChecked()))
+			chk.stateChanged.connect(lambda x:self.setChanged(True))
 			chk.stateChanged.connect(self.changeState)
 			self.table.setCellWidget(row,1,chk)
 			chk.setChecked(state)
@@ -202,11 +202,8 @@ class customRepos(confStack):
 			self._debug("Item not found at {},0".format(row))
 			return
 		repo=repoWidget.text()[0]
-		state=False
-		if stateWidget.isChecked():
-			state=True
-		textState=str(state).lower()
-		self.defaultRepos[repo]['enabled']="{}".format(textState)
+		state=str(stateWidget.isChecked()).lower()
+		self.defaultRepos[repo]['enabled']="%s"%state
 		if repo not in self.changed:
 			self.changed.append(repo)
 	#def changeState(self)
