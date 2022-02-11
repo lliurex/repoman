@@ -1,6 +1,12 @@
+repoman (2.4.4) focal; urgency=medium
+
+  * Bugfix: changes detection not working on custom repositories
+
+ -- Juanma1980 <juanma1980@gmail.com>  Fri, 11 Feb 2022 13:05:58 +0100
+
 repoman (2.4.3-5llx21) focal; urgency=medium
 
-  * Add compartibility with LTSP
+  * Add compatibility with LTSP
 
  -- Juanma1980 <juanma1980@gmail.com>  Tue, 18 Jan 2022 11:57:08 +0100
 
