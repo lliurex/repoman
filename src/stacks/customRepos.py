@@ -161,16 +161,16 @@ class customRepos(confStack):
 
 	def editRepo(self,repo,*args):
 		sfile=repo.replace(' ','_')
-		self._debug("Editing %s.list"%sfile)
-		if os.path.isfile(os.path.join(APT_SRC_DIR,sfile)) or os.path.isfile(os.path.join(APT_SRC_DIR,sfile.lower)):
-			if os.path.isfile(os.path.join(APT_SRC_DIR,sfile.lower)):
-				sfile=sfile.lower()
+		self._debug("Editing {}.list".format(sfile))
+		fpath="{}.list".format(os.path.join(APT_SRC_DIR,sfile))
+		if os.path.isfile(fpath) or os.path.isfile(fpath.lower()):
+			if os.path.isfile(fpath.lower()):
+				fpath=fpath.lower()
 			edit=True
 			try:
 				display=os.environ['DISPLAY']
 				subprocess.run(["xhost","+"])
-				subprocess.run(["pkexec","scite","%s/%s.list"%(APT_SRC_DIR,sfile)],check=True)
-				subprocess.run(["pkexec","scite",os.path.join(APT_SRC_DIR,"{}.list".format(sfile))],check=True)
+				subprocess.run(["pkexec","scite",fpath],check=True)
 				subprocess.run(["xhost","-"])
 			except Exception as e:
 				self._debug("_edit_source_file error: %s"%e)
@@ -191,7 +191,7 @@ class customRepos(confStack):
 					self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
 					self._updateRepos()
 		else:
-			self._debug("File {} not found".format(os.join.path(APT_SRC_DIR,"{}.list".format(sfile))))
+			self._debug("File {} not found".format(fpath))
 	#def _edit_source_file
 
 	def changeState(self):
