@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-19 10:36+0100\n"
-"PO-Revision-Date: 2022-01-19 10:37+0100\n"
+"POT-Creation-Date: 2022-11-28 09:51+0100\n"
+"PO-Revision-Date: 2022-11-28 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../src/repoman-cli.py:41
 msgid "Add repository"
@@ -248,19 +248,19 @@ msgstr "Añadir repositorio"
 msgid "N4d is down. Check the state of N4d server"
 msgstr "N4d no disponible. Revise el estado del servicio"
 
-#: ../src/stacks/customRepos.py:227 ../src/stacks/defaultRepos.py:170
+#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:170
 msgid "Couldn't write repo"
 msgstr "No pude escribir"
 
-#: ../src/stacks/customRepos.py:229 ../src/stacks/defaultRepos.py:172
+#: ../src/stacks/customRepos.py:226 ../src/stacks/defaultRepos.py:172
 msgid "Couldn't write info for"
 msgstr "No pude escribir la información de"
 
-#: ../src/stacks/customRepos.py:255 ../src/stacks/defaultRepos.py:200
+#: ../src/stacks/customRepos.py:252 ../src/stacks/defaultRepos.py:200
 msgid "Failed to update: "
 msgstr "Error actualizando: "
 
-#: ../src/stacks/customRepos.py:260 ../src/stacks/defaultRepos.py:205
+#: ../src/stacks/customRepos.py:257 ../src/stacks/defaultRepos.py:205
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Repositorios actualizados"
@@ -391,7 +391,7 @@ msgstr ""
 "Error actualizando repositorios\n"
 "%s"
 
-#: json ../sources.d/default/lliurex_21.json
+#: json ../sources.d/default/lliurex_23.json
 msgid "Lliurex default repositories"
 msgstr "Repositorios de LliureX"
 
@@ -399,9 +399,9 @@ msgstr "Repositorios de LliureX"
 msgid "Local repositories"
 msgstr "Repositorios locales"
 
-#: json ../sources.d/default/ubuntu_focal.json
-msgid "Ubuntu focal official repositories"
-msgstr "Repositorios oficiales de Ubuntu Focal"
+#: json ../sources.d/default/ubuntu_jammy.json
+msgid "Ubuntu jammy official repositories"
+msgstr "Repositorios oficiales de Ubuntu Jammy"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
