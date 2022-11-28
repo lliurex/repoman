@@ -20,8 +20,8 @@ class manager():
 			self.default_repos_dir='/usr/share/repoman/sources.d/default'
 			self.repotypes=['file:','cdrom:','http:','https:','ftp:','copy:','rsh:','ssh:','ppa:']
 			self.components=['main','universe','multiverse','contrib','non-free','restricted','oss','non-oss','partner','preschool']
-			self.distros=['focal','focal-security','focal-updates','testing','stable']
-			self.def_repos=['lliurex 21','lliurex mirror','ubuntu focal']
+			self.distros=['jammy','jammy-security','jammy-updates','testing','stable']
+			self.def_repos=['lliurex 23','lliurex mirror','ubuntu jammy']
 			self.data={}
 
 		def _debug(self,msg):
