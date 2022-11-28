@@ -1,5 +1,5 @@
 {
-    "Ubuntu focal": {
+    "Ubuntu jammy": {
         "changed": true,
         "desc": "Ubuntu jammy official repositories",
         "disabled_repos": [],
