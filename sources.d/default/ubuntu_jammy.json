@@ -5,9 +5,12 @@
         "disabled_repos": [],
         "enabled": "False",
         "repos": [
-            "http://es.archive.ubuntu.com/ubuntu/ jammy main multiverse restricted universe",
-            "http://es.archive.ubuntu.com/ubuntu/ jammy-security main multiverse restricted universe",
-            "http://es.archive.ubuntu.com/ubuntu/ jammy-updates main multiverse restricted universe"
+			"http://es.archive.ubuntu.com/ubuntu/ jammy main restricted",
+			"http://es.archive.ubuntu.com/ubuntu/ jammy multiverse",
+			"http://es.archive.ubuntu.com/ubuntu/ jammy universe",
+			"http://es.archive.ubuntu.com/ubuntu/ jammy-updates main restricted",
+			"http://es.archive.ubuntu.com/ubuntu/ jammy-updates multiverse",
+			"http://es.archive.ubuntu.com/ubuntu/ jammy-updates universe"
         ]
     }
 }
