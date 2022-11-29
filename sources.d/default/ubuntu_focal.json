@@ -1,9 +1,9 @@
 {
     "Ubuntu focal": {
-        "changed": true,
+        "changed": false,
         "desc": "Ubuntu focal official repositories",
         "disabled_repos": [],
-        "enabled": "False",
+        "enabled": "true",
         "repos": [
             "http://archive.ubuntu.com/ubuntu/ focal main multiverse restricted universe",
             "http://archive.ubuntu.com/ubuntu/ focal-security main multiverse restricted universe",
