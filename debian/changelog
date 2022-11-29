@@ -1,3 +1,9 @@
+repoman (2.5) focal; urgency=medium
+
+  * Window resizable
+
+ -- Juanma1980 <juanma1980@gmail.com>  Tue, 29 Nov 2022 15:40:02 +0100
+
 repoman (2.4.5) focal; urgency=medium
 
   * Bugfix: changes detection not working on custom repositories
