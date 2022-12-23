@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-28 09:51+0100\n"
-"PO-Revision-Date: 2022-11-28 09:53+0100\n"
+"PO-Revision-Date: 2022-12-23 08:11+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../src/repoman-cli.py:41
 msgid "Add repository"
@@ -391,7 +391,7 @@ msgstr "Eines del sistema"
 
 #: ../src/stacks/systemTools.py:18
 msgid "Update repositories/System upgrade"
-msgstr "Actualitza els repositoris o el sistema actualitzat"
+msgstr "Actualitza els repositoris o el sistema"
 
 # #: ../src/stacks/repoTools.py:76
 # #, python-format
