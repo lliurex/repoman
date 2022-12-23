@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-28 09:51+0100\n"
-"PO-Revision-Date: 2022-11-28 09:52+0100\n"
+"PO-Revision-Date: 2022-12-23 08:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../src/repoman-cli.py:41
 msgid "Add repository"
@@ -368,7 +368,7 @@ msgstr "Actualizar repositorios/sistema"
 #: ../src/stacks/systemTools.py:20
 msgid ""
 "From here you can update the repositories info or launch lliurex-upgrade"
-msgstr "Desde aquí se pueden actualizar los repositorios y ejecutar LliureX-UP"
+msgstr "Desde aquí se pueden actualizar los repositorios o el sistema"
 
 #: ../src/stacks/systemTools.py:30
 msgid "Update repositories"
