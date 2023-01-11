@@ -69,7 +69,7 @@ class manager():
 		def _orderRepo(self,repos):
 			orderRepos=[]
 			for r in repos:
-				if r.startswith("#"):
+				if r.startswith("#") or len(r.split())==0:
 					continue
 				r=r.rstrip()
 				#Skip multiple whitespaces
@@ -150,6 +150,8 @@ class manager():
 					with open(wrkfile,'w') as fcontent:
 						for repo in sorted(repos):
 							repo=repo.strip()
+							if len(repo)==0:
+								continue
 							repoCheck="{}".format(repo.replace(" ",''))
 							if not repo.startswith("deb ") and not repo.startswith("deb-src ") and not repo.startswith('#'):
 								repo=("deb {}".format(repo))
