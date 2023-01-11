@@ -1,3 +1,9 @@
+repoman (2.5.2.1) focal; urgency=medium
+
+  * BUGFIX: whitelines in sources.list
+
+ -- Juanma1980 <juanma1980@gmail.com>  Wed, 11 Jan 2023 10:23:50 +0100
+
 repoman (2.5.2) focal; urgency=medium
 
   * Window resizable
