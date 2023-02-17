@@ -1,3 +1,9 @@
+repoman (2.5.2.1-1lliurex) focal; urgency=medium
+
+  * Fix ubuntu sources file without repositories
+
+ -- Juanma1980 <juanma1980@gmail.com>  Fri, 17 Feb 2023 12:45:27 +0100
+
 repoman (2.5.2.1) focal; urgency=medium
 
   * BUGFIX: whitelines in sources.list
