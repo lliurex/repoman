@@ -1,0 +1,16 @@
+{
+    "Ubuntu focal": {
+        "changed": true,
+        "desc": "Ubuntu focal official repositories",
+        "disabled_repos": [],
+        "enabled": "False",
+        "repos": [
+			"http://es.archive.ubuntu.com/ubuntu/ focal main restricted",
+			"http://es.archive.ubuntu.com/ubuntu/ focal multiverse",
+			"http://es.archive.ubuntu.com/ubuntu/ focal universe",
+			"http://es.archive.ubuntu.com/ubuntu/ focal-updates main restricted",
+			"http://es.archive.ubuntu.com/ubuntu/ focal-updates multiverse",
+			"http://es.archive.ubuntu.com/ubuntu/ focal-updates universe"
+        ]
+    }
+}
