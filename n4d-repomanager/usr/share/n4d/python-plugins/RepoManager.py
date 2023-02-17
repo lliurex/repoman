@@ -2,7 +2,7 @@
 import repomanager.RepoManager as RepoMan
 import n4d.responses
 
-class RepoManager():
+class RepoManager:
 	def __init__(self):
 		self.dbg=False
 		self.repoman=RepoMan.manager()
