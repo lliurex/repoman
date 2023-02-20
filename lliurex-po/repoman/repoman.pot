@@ -380,8 +380,8 @@ msgstr ""
 msgid "Local repositories"
 msgstr ""
 
-#: json ../sources.d/default/ubuntu_jammy.json
-msgid "Ubuntu jammy official repositories"
+#: json ../sources.d/default/ubuntu_focal.json
+msgid "Ubuntu focal official repositories"
 msgstr ""
 
 #: json ../sources.d/Recursos_LliureX.json
