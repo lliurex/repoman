@@ -1,4 +1,4 @@
-repoman (2.6.1) focal; urgency=medium
+repoman (2.6.2) focal; urgency=medium
 
   * Add sudo as allowed group for repoman
   * Minor changes
