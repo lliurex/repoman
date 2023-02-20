@@ -399,9 +399,9 @@ msgstr "Repositorios de LliureX"
 msgid "Local repositories"
 msgstr "Repositorios locales"
 
-#: json ../sources.d/default/ubuntu_jammy.json
-msgid "Ubuntu jammy official repositories"
-msgstr "Repositorios oficiales de Ubuntu Jammy"
+#: json ../sources.d/default/ubuntu_focal.json
+msgid "Ubuntu focal official repositories"
+msgstr "Repositorios oficiales de Ubuntu Focal"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"
