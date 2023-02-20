@@ -1,3 +1,10 @@
+repoman (2.6) focal; urgency=medium
+
+  * Add sudo as allowed group for repoman
+  * Minor changes
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 20 Feb 2023 06:38:23 +0000
+
 repoman (2.5.2.1-1lliurex) focal; urgency=medium
 
   * Fix ubuntu sources file without repositories
