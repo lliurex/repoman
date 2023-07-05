@@ -234,6 +234,8 @@ class customRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		if not isinstance(ret,str):
+			ret=""
 		errList=[]
 		for line in ret.split("\n"):
 			if line.startswith("E: ") or line.startswith("W:"):
