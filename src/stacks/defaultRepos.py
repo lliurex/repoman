@@ -4,14 +4,34 @@ import os
 from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
 		QHeaderView,QTableWidgetSelectionRange
 from PySide2 import QtGui
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt,QThread
 from appconfig.appConfigStack import appConfigStack as confStack
+import time
 import gettext
 _ = gettext.gettext
 
+class processRepos(QThread):
+	def __init__(self,widget,parent=None):
+		QThread.__init__(self, parent)
+		self.widget=widget
+
+	def run(self):
+		QApplication.processEvents()
+		for repo in self.widget.changed:
+			self.widget._debug("Updating {}".format(repo))
+			ret=self.widget.n4dQuery("RepoManager","write_repo_json",{repo:self.widget.defaultRepos[repo]})
+			if ret:
+				ret=self.widget.n4dQuery("RepoManager","write_repo",{repo:self.widget.defaultRepos[repo]})
+				if ret==False:
+					self.widget.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
+			else:
+				self.widget.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
+		if ret==True:
+			self.widget._updateRepos()
+		return(True)
+#class processRepos
+
 class QLabelDescription(QWidget):
-
-
 	def __init__(self,label="",description="",parent=None):
 		super (QLabelDescription,self).__init__(parent)
 		self.label=QLabel()
@@ -125,7 +145,7 @@ class defaultRepos(confStack):
 		repoWidget=self.table.cellWidget(row,0)
 		stateWidget=self.table.cellWidget(row,1)
 		if repoWidget==None:
-			self._debug("Item not found at %s,%s"%(row,0))
+			self._debug("Item not found at {0},{1}".format(row,0))
 			return
 		repo=repoWidget.text()[0]
 		#Check mirror
@@ -154,30 +174,22 @@ class defaultRepos(confStack):
 				self.updateScreen()
 				return
 		state=str(stateWidget.isChecked()).lower()
-		self.defaultRepos[repo]['enabled']="%s"%state
+		self.defaultRepos[repo]['enabled']="{}".format(state)
 		if repo not in self.changed:
 			self.changed.append(repo)
 	#def changeState
 
 	def writeConfig(self):
-		ret=True
-		for repo in self.changed:
-			self._debug("Updating %s"%repo)
-			ret=self.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
-			if ret:
-				ret=self.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
-				if ret==False:
-					self.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
-			else:
-				self.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
-		if ret==True:
-			self._updateRepos()
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		oldcursor=self.cursor()
+		self.setCursor(cursor)
+		process=processRepos(self)
+		process.run()
+		self.setCursor(oldcursor)
 		self.updateScreen()
 	#def writeConfig
 
 	def _updateRepos(self):
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
 		errList=[]
@@ -196,13 +208,11 @@ class defaultRepos(confStack):
 		ret=("\n").join(errList)
 		if ret:
 				#self.showMsg(_("Repositories updated succesfully"))
-			self._debug("Error updating: %s"%ret)
+			self._debug("Error updating: {}".format(ret))
 			ret=_("Failed to update: ")+"\n"+"{}".format(ret)
 			self.showMsg("{}".format(ret),'RepoMan')
 			self.refresh=True
 			self.changes=False
 		else:
 			self.showMsg(_("Repositories updated succesfully"))
-		cursor=QtGui.QCursor(Qt.PointingHandCursor)
-		self.setCursor(cursor)
 	#def _updateRepos
