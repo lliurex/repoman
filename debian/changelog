@@ -1,3 +1,9 @@
+repoman (2.6.5) focal-updates; urgency=medium
+
+  * Minor bugfix
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 24 Jul 2023 11:28:24 +0200
+
 repoman (2.6.4) focal-updates; urgency=medium
 
   * Improve visual feedback
