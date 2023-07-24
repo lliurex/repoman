@@ -150,7 +150,8 @@ class customRepos(confStack):
 			if status!=0 and status!=None:
 				self.showMsg(_("N4d is down. Check the state of N4d server"))
 				return
-
+		if not isinstance(repos,dict):
+			repos={}
 		self.defaultRepos=repos.copy()
 		states={}
 		row=0
