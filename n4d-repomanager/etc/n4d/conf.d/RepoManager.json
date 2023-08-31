@@ -16,6 +16,7 @@
 		{
 			"allowed_groups":[
 				"adm",
+				"sudo",
 				"admins"
 			]
 		},
@@ -23,6 +24,7 @@
 		{
 			"allowed_groups":[
 				"adm",
+				"sudo",
 				"admins"
 			]
 		},
@@ -37,6 +39,7 @@
 		{
 			"allowed_groups":[
 				"adm",
+				"sudo",
 				"admins"
 			]
 		},
@@ -44,6 +47,7 @@
 		{
 			"allowed_groups":[
 				"adm",
+				"sudo",
 				"admins"
 			]
 		}

@@ -4,13 +4,36 @@ import os
 from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
 		QHeaderView,QTableWidgetSelectionRange
 from PySide2 import QtGui
-from PySide2.QtCore import Qt,Signal,QObject
+from PySide2.QtCore import Qt,Signal,QObject,QThread
 from appconfig.appConfigStack import appConfigStack as confStack
 import subprocess
 
 import gettext
 _ = gettext.gettext
 APT_SRC_DIR="/etc/apt/sources.list.d"
+
+class processRepos(QThread):
+	def __init__(self,widget,parent=None):
+		QThread.__init__(self, parent)
+		self.widget=widget
+
+	def run(self):
+		QApplication.processEvents()
+		for repo in self.widget.changed:
+			self.widget._debug("Updating {}".format(repo))
+			self.widget._debug("Updating %s"%self.widget.defaultRepos[repo])
+			ret=self.widget.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.widget.defaultRepos[repo]})
+			if ret:
+				ret=self.widget.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.widget.defaultRepos[repo]})
+				if ret==False:
+					self.widget.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
+			else:
+				self.widget.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
+		if ret==True:
+			self.widget._updateRepos()
+		return(True)
+#class processRepos
+
 class QLabelDescription(QWidget):
 	click_on=Signal(str)
 	def __init__(self,label="",description="",parent=None):
@@ -127,7 +150,8 @@ class customRepos(confStack):
 			if status!=0 and status!=None:
 				self.showMsg(_("N4d is down. Check the state of N4d server"))
 				return
-
+		if not isinstance(repos,dict):
+			repos={}
 		self.defaultRepos=repos.copy()
 		states={}
 		row=0
@@ -213,19 +237,12 @@ class customRepos(confStack):
 	#def _addRepo
 
 	def writeConfig(self):
-		ret=True
-		for repo in self.changed:
-			self._debug("Updating {}".format(repo))
-			self._debug("Updating %s"%self.defaultRepos[repo])
-			ret=self.appConfig.n4dQuery("RepoManager","write_repo_json",{repo:self.defaultRepos[repo]})
-			if ret:
-				ret=self.appConfig.n4dQuery("RepoManager","write_repo",{repo:self.defaultRepos[repo]})
-				if ret==False:
-					self.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
-			else:
-				self.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
-		if ret==True:
-			self._updateRepos()
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		oldcursor=self.cursor()
+		self.setCursor(cursor)
+		process=processRepos(self)
+		process.run()
+		self.setCursor(oldcursor)
 		self.updateScreen()
 	#def writeConfig
 
@@ -234,6 +251,8 @@ class customRepos(confStack):
 		self.setCursor(cursor)
 		self._debug("Updating repos")
 		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
+		if not isinstance(ret,str):
+			ret=""
 		errList=[]
 		for line in ret.split("\n"):
 			if line.startswith("E: ") or line.startswith("W:"):
