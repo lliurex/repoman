@@ -28,6 +28,10 @@ class QEditDescription(QWidget):
 
 	def text(self):
 		return(self.name.text())
+	
+	def setText(self,text):
+		self.name.setText(text)
+#class QEditDescription
 
 class repoTools(confStack):
 	def __init_stack__(self):
@@ -45,8 +49,6 @@ class repoTools(confStack):
 	
 	def _load_screen(self):
 		box=QVBoxLayout()
-		#self.statusBar=QAnimatedStatusBar.QAnimatedStatusBar()
-		#box.addWidget(self.statusBar)
 		self.name=QEditDescription()
 		self.name.setDescription(_("name of the repository"),_("Insert repository name"))
 		box.addWidget(self.name)
@@ -64,6 +66,12 @@ class repoTools(confStack):
 	def updateScreen(self):
 		self.name.setDescription(_("name of the repository"),_("Insert repository name"))
 	#def _udpate_screen
+	
+	def _reset_screen(self,*args):
+		self.name.setText("")
+		self.desc.setText("")
+		self.url.setText("")
+	#def _reset_screen
 
 	def writeConfig(self):
 		name=self.name.text()
