@@ -1,0 +1,13 @@
+{
+    "LliureX 23": {
+        "changed": true,
+        "desc": "Lliurex default repositories",
+        "disabled_repos": [],
+        "enabled": "True",
+        "repos": [
+            "http://lliurex.net/jammy jammy-security main restricted universe multiverse",
+            "http://lliurex.net/jammy jammy-updates main restricted universe multiverse",
+            "http://lliurex.net/jammy jammy main restricted universe multiverse preschool"
+        ]
+    }
+}
