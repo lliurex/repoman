@@ -109,8 +109,9 @@ def add_repo():
 			name[0]=name[0].split('.')[-2]
 		except:
 			name=name
-		if type(name)==type([]):
+		if isinstance(name,list):
 			defname='_'.join(name)
+			name=defname
 		else:
 			defname=name
 		if reponame!='':
@@ -131,7 +132,8 @@ def add_repo():
 				n4dcredentials=key
 			else:
 				n4dcredentials=credentials
-			err=n4dserver.add_repo(n4dcredentials,"RepoManager",name,desc,url)['status']
+			err=n4dserver.add_repo(n4dcredentials,"RepoManager",",".join([name,desc,url]))
+			err=err.get('status',0)
 			if err:
 				print("\n%s"%error.ADD)
 				errorDict={"1":error.URL,"2":error.INFO,"3":error.SOURCES,"4":error.REPO}
@@ -140,11 +142,14 @@ def add_repo():
 			else:
 					print(_("Repository %(url)s %(color1)sadded successfully%(color2)s")%({'url':url,'color1':color.BLUE,'color2':color.END}))
 		except Exception as e:
+			print(e)
 			print("add_repo %s"%error.DATA)
+		return(err)
 		
 #def add_repo
 
 def disable_repo():
+	err=0
 	repos=_get_repos()
 	global unattended
 	if action['d'].strip().isdigit():
@@ -164,13 +169,35 @@ def disable_repo():
 			n4dcredentials=credentials
 		repo={reponame:repos[reponame]}
 		try:
-			if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
-				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']!=True:
-					print (error.SOURCES)
-			else:
-				print (error.INFO)
+			writejsonResult=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
 		except:
 			print("disable_repo %s"%error.DATA)
+			err=1
+		result=1
+		if isinstance(writejsonResult,dict):
+			result=writejsonResult.get('status')
+		elif isinstance(writejsonResult,bool):
+			if writejsonResult:
+				result=0
+		if result==0:
+			try:
+				writeResult=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
+			except:
+				print("disable_repo %s"%error.DATA)
+				err=1
+			result=1
+			if isinstance(writeResult,dict):
+				result=writeResult.get('status')
+			elif isinstance(writejsonResult,bool):
+				if writejsonResult:
+					result=0
+			if result!=0:
+				err=1
+				print (error.SOURCES)
+		else:
+			err=1
+			print (error.INFO)
+		return(err)
 #def disable_repo
 
 def enable_repo():
@@ -200,20 +227,49 @@ def enable_repo():
 				server='server'
 				context=ssl._create_unverified_context()
 				n4d_server=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-				ret=n4d_server.is_mirror_available(n4dcredentials,"MirrorManager")['status']
-				if ret!=True:
+				ret=n4d_server.is_mirror_available("","MirrorManager")
+				if isinstance(ret,dict):
+					if ret.get('status',-1)!=0:
+						err=6
+				else:
 					err=6
 			except:
 				err=6
 		if err:
 			print (error.MIRROR)
 		else:
-			if n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)['status']:
-				if n4dserver.write_repo(n4dcredentials,"RepoManager",repo)['status']!=True:
+			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
+			status=1
+			if isinstance(writejson,bool):
+				if writejson:
+					status=0
+			elif isinstance(writejson,dict):
+				status=writejson.get('status',-1)
+
+			if status==0: 
+				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
+				if isinstance(writerepo,bool):
+					status=1
+					if writerepo:
+						status=0
+				elif isinstance(writerepo,dict):
+					status=writerepo.get('status',-1)
+				if status!=0: 
+					err=1
 					print (error.SOURCES)
 			else:
+				err=1
 				print (error.INFO)
+		return(err)
 #def enable_repo
+
+def update_repos():
+	options=_("Y/N")
+	resp=''
+	if not unattended:
+		resp=input(_("Repositories changed. Do you want to update info? %(options)s [%(default)s]: ")%({'options':options,'default':options[0]}))
+	if resp.lower()==options[0].lower() or resp=='':
+		os.execv("/usr/bin/apt-get",["update","update"])
 
 def list_repos():
 	repos=_get_repos()
@@ -253,14 +309,14 @@ def _get_repos():
 		n4dcredentials=credentials
 	try:
 		data=n4dserver.list_default_repos(n4dcredentials,"RepoManager")
-	except:
+	except Exception as e:
 		print(error.DATA)
 		quit(1)
 	if type(data)==type(''):
 		print (error.DATA)
 		quit(1)
 	else:
-		repos=data['data']
+		repos=data.get('return',data)
 	sort_repos=OrderedDict()
 	index=0
 	for repo in sorted(repos.keys()):
@@ -272,7 +328,7 @@ def _get_repos():
 		print (error.DATA)
 		quit(1)
 	else:
-		sources=data['data']
+		sources=data.get('return',data)
 	for repo in sorted(sources.keys()):
 		sort_repos.update({repo:sources[repo]})
 		repo_index[index]=repo
@@ -305,22 +361,34 @@ def _n4d_connect():
 	ret=True
 	context=ssl._create_unverified_context()
 	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-	if credentials:
-		try:
-			if not n4dserver.validate_user(credentials[0],credentials[1])[0]:
+	#Test if proxy is well stablished
+	sw=True
+	try:
+		n4dserver.__ServerProxy__request("fakeCall",("",""))
+	except ConnectionRefusedError as e:
+	#Use local lib
+		print("Using LTSP compat mode")
+		n4dserver=repoman
+		sw=False
+	
+	if sw:
+		if credentials:
+			try:
+				ret=n4dserver.validate_user(credentials[0],credentials[1])
+				if not ret['return'][0]:
+					print(error.CREDENTIALS)
+					quit(1)
+			except:
 				print(error.CREDENTIALS)
 				quit(1)
-		except:
-			print(error.CREDENTIALS)
-			quit(1)
-	else:
-		try:
-			global key
-			with open('/etc/n4d/key','r') as fkey:
-				key=fkey.readlines()[0].strip()
-		except:
-			print(error.USER)
-			quit(1)
+		else:
+			try:
+				global key
+				with open('/etc/n4d/key','r') as fkey:
+					key=fkey.readlines()[0].strip()
+			except:
+				print(error.USER)
+				quit(1)
 	return(n4dserver)
 #def _n4d_connect
 
@@ -387,13 +455,17 @@ if not n4dserver:
 
 #process_actions
 if 'a' in action.keys():
-	add_repo()
+	if add_repo()==0:
+		update_repos()
 if 'd' in action.keys():
-	disable_repo()
+	if disable_repo()==0:
+		update_repos()
 if 'e' in action.keys():
-	enable_repo()
-if 'r' in action.keys():
-	remove_repo()
+	if enable_repo()==0:
+		update_repos()
+#if 'r' in action.keys():
+#	if remove_repo()==0:
+#		update_repos()
 if 'l' in action.keys():
 	list_repos()
 if 'ld' in action.keys():
