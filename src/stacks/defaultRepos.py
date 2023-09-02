@@ -63,7 +63,7 @@ class QLabelDescription(QWidget):
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
-		self.dbg=False
+		self.dbg=True
 		self._debug("confDefault Load")
 		self.menu_description=(_("Choose the default repositories"))
 		self.description=(_("Default repositories"))
@@ -114,6 +114,9 @@ class defaultRepos(confStack):
 					self._debug("LLX16 server detected. Switch to localhost")
 					self.errServer=True
 					repos=self.n4dQuery(n4dclass,n4dmethod)
+			print("******")
+			print(repos)
+			print("******")
 			if repos.get('status',0)!=-1:
 				self.defaultRepos=repos.copy()
 		except Exception as e:
