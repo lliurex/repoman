@@ -35,15 +35,20 @@ class manager():
 		oneLine={}
 		for repo in repos:
 			info=repo.split(" ")
-			#Check if ok
-			if info[0]!="deb":
-				continue
 			urlIdx=1
 			while "://" not in info[urlIdx]:
 				urlIdx+=1
 				if urlIdx>=(len(info)):
+					urlIdx-=1
 					break
+			#Check if ok
+			if info[0]!="deb":
+				if "://" in info[urlIdx]:
+					info.insert(0,"deb")
+				else:
+					continue
 			url=info[urlIdx]+str(urlIdx)
+			print(url)
 			release=info[urlIdx+1]
 			components=info[urlIdx+2:]
 			extracomponents=oneLine.get(url,{}).get(release,[])
@@ -52,6 +57,9 @@ class manager():
 			components.extend(extracomponents)
 			oneLine[url].update({release:components})
 		repos=[]
+		print("-------")
+		print(oneLine)
+		print("-------")
 		for url,releases in oneLine.items():
 			trusted=""
 			if url[-1]=="2":
@@ -59,7 +67,6 @@ class manager():
 			for release in releases.keys():
 				line="deb{0} {1} {2} {3}".format(trusted,url[:-1],release," ".join(oneLine[url][release]))
 				if line not in repos:
-					print("Add {}*".format(line))
 					repos.append(line)
 		return (repos)
 	#def _getOneLineSource
@@ -79,7 +86,6 @@ class manager():
 			ordLine=" ".join(ordLineArray)
 			configured_repos.append(ordLine.replace('\n','').replace(' ','').lstrip('deb').replace("/",""))
 		repostatus={}
-		print(configured_repos)
 		for reponame,repodata in default_repos.items():
 			repostatus[reponame]="true"
 			for defaultrepo in repodata['repos']:
@@ -173,6 +179,13 @@ class manager():
 								break
 						if sw==False:
 							orig.append(format_line)
+				print("&&&&&&")
+				print(orig)
+				print("&&&&&&")
+				orig=self._getOneLineSource(orig)
+				print("&&&&&&")
+				print(orig)
+				print("&&&&&&")
 			newrepo=[]
 			#newrepo.extend(repodata['repos'])
 			newrepo.extend(repodata['repos'])

@@ -19,7 +19,7 @@ except:
 
 credentials=[]
 repoman=RepoManager.manager()
-repoman.dbg=True
+repoman.dbg=False
 key=''
 error_dict={}
 action={}
