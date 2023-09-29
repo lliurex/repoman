@@ -76,6 +76,8 @@ class manager():
 				r=' '.join(r.split())
 				r.replace("deb ","")
 				rArray=r.split(" ")
+				if len(rArray<4):
+					continue
 				#We need to know where is the url component, in order to calculate the dist and components position
 				#As url can be at position 2 or 3 (deb http://..etc.. or deb [arch] http://...) we look at the string
 				#for a matching :// as is a must for any repo-url (http, https, ftp, file) 
