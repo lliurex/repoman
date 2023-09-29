@@ -117,7 +117,7 @@ class manager():
 			#As url can be at position 2 or 3 (deb http://..etc.. or deb [arch] http://...) we look at the string
 			#for a matching :// as is a must for any repo-url (http, https, ftp, file) 
 			#The next item of a repo definition is the distro at position url+1 (item 3 or 4), hence the +1
-			urlIdx=[idx for idx in range(len(rArray)) if "://" in rArray[idx]][0]+2
+			urlIdx=[idx for idx in range(len(rArray)) if ":/" in rArray[idx]][0]+2
 			components=rArray[urlIdx:]
 			components.sort()
 			r="{} {}".format(" ".join(rArray[:urlIdx])," ".join(components))
