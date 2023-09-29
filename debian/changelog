@@ -1,3 +1,9 @@
+repoman (2.6.7) focal-updates; urgency=medium
+
+  * Fix bug when there're only file-type repositories
+
+ -- Juanma1980 <juanma1980@gmail.com>  Fri, 29 Sep 2023 09:31:16 +0200
+
 repoman (2.6.6) focal-updates; urgency=medium
 
   * Add reset_screen when adding new repos
