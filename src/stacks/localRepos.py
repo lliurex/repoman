@@ -29,7 +29,10 @@ class localRepos(confStack):
 	#def __init__
 
 	def _chk_client(self):
-		flavour=subprocess.check_output(['lliurex-version','-f']).decode()
+		try:
+			flavour=subprocess.check_output(['lliurex-version','-f']).decode()
+		except:
+			flavour=[]
 		if 'client' in flavour:
 			return True
 		return False
