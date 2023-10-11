@@ -12,7 +12,7 @@ import logging
 
 class manager():
 	def __init__(self):
-		self.dbg=False
+		self.dbg=True
 		logging.basicConfig(format='%(message)s')
 		self.sources_file='/etc/apt/sources.list'
 		self.sources_dir='/etc/apt/sources.list.d'
@@ -27,42 +27,7 @@ class manager():
 	def _debug(self,msg):
 		if self.dbg:
 			logging.warning("RepoManager: {}".format(msg))
-			print(msg)
 	#def _debug
-
-	def _getOneLineSource(self,repos):
-		#Generate one  line for each repo
-		oneLine={}
-		for repo in repos:
-			info=repo.split(" ")
-			#Check if ok
-			if info[0]!="deb":
-				continue
-			urlIdx=1
-			while "://" not in info[urlIdx]:
-				urlIdx+=1
-				if urlIdx>=(len(info)):
-					break
-			url=info[urlIdx]+str(urlIdx)
-			release=info[urlIdx+1]
-			components=info[urlIdx+2:]
-			extracomponents=oneLine.get(url,{}).get(release,[])
-			if url not in oneLine.keys():
-				oneLine[url]={}
-			components.extend(extracomponents)
-			oneLine[url].update({release:components})
-		repos=[]
-		for url,releases in oneLine.items():
-			trusted=""
-			if url[-1]=="2":
-				trusted=" [trusted=yes]"
-			for release in releases.keys():
-				line="deb{0} {1} {2} {3}".format(trusted,url[:-1],release," ".join(oneLine[url][release]))
-				if line not in repos:
-					self._debug("Add {}*".format(line))
-					repos.append(line)
-		return (repos)
-	#def _getOneLineSource
 
 	def _get_default_repo_status(self,default_repos):
 		fcontent=[]
@@ -71,7 +36,6 @@ class manager():
 				fcontent=f.readlines()
 		except Exception as e:
 			self._debug("_get_default_repo_status error: %s"%e)
-		fcontent=self._getOneLineSource(fcontent)
 		configured_repos=[]
 		for fline in fcontent:
 			ordLineArray=fline.split(" ")
@@ -79,7 +43,6 @@ class manager():
 			ordLine=" ".join(ordLineArray)
 			configured_repos.append(ordLine.replace('\n','').replace(' ','').lstrip('deb').replace("/",""))
 		repostatus={}
-		self._debug(configured_repos)
 		for reponame,repodata in default_repos.items():
 			repostatus[reponame]="true"
 			for defaultrepo in repodata['repos']:
