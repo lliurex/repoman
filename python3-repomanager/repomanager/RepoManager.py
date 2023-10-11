@@ -12,7 +12,7 @@ import logging
 
 class manager():
 	def __init__(self):
-		self.dbg=True
+		self.dbg=False
 		logging.basicConfig(format='%(message)s')
 		self.sources_file='/etc/apt/sources.list'
 		self.sources_dir='/etc/apt/sources.list.d'
@@ -67,6 +67,7 @@ class manager():
 			for release in releases.keys():
 				line="deb{0} {1} {2} {3}".format(trusted,url[:-1],release," ".join(oneLine[url][release]))
 				if line not in repos:
+					self._debug("Add {}*".format(line))
 					repos.append(line)
 		return (repos)
 	#def _getOneLineSource
@@ -86,6 +87,7 @@ class manager():
 			ordLine=" ".join(ordLineArray)
 			configured_repos.append(ordLine.replace('\n','').replace(' ','').lstrip('deb').replace("/",""))
 		repostatus={}
+		self._debug(configured_repos)
 		for reponame,repodata in default_repos.items():
 			repostatus[reponame]="true"
 			for defaultrepo in repodata['repos']:
@@ -123,7 +125,7 @@ class manager():
 			#As url can be at position 2 or 3 (deb http://..etc.. or deb [arch] http://...) we look at the string
 			#for a matching :// as is a must for any repo-url (http, https, ftp, file) 
 			#The next item of a repo definition is the distro at position url+1 (item 3 or 4), hence the +1
-			urlIdx=[idx for idx in range(len(rArray)) if "://" in rArray[idx]][0]+2
+			urlIdx=[idx for idx in range(len(rArray)) if ":/" in rArray[idx]][0]+2
 			components=rArray[urlIdx:]
 			components.sort()
 			r="{} {}".format(" ".join(rArray[:urlIdx])," ".join(components))
