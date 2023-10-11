@@ -12,7 +12,7 @@ import logging
 
 class manager():
 	def __init__(self):
-		self.dbg=True
+		self.dbg=False
 		logging.basicConfig(format='%(message)s')
 		self.sources_file='/etc/apt/sources.list'
 		self.sources_dir='/etc/apt/sources.list.d'
@@ -49,7 +49,8 @@ class manager():
 				defRepoArray=defaultrepo.split(" ")
 				defRepoArray.sort()
 				defRepo=" ".join(defRepoArray)
-				if defRepo.replace(' ','').replace("/","") not in configured_repos:
+				raw=defRepo.replace(' ','').lstrip('deb').replace("/","").strip()
+				if raw not in configured_repos:
 					lineArray="".join(defRepoArray[:2])
 					sw=False
 					for repo in configured_repos:
