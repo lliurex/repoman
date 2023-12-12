@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-28 09:51+0100\n"
-"PO-Revision-Date: 2022-12-23 08:12+0100\n"
+"POT-Creation-Date: 2023-10-11 16:51+0200\n"
+"PO-Revision-Date: 2023-10-11 16:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../src/repoman-cli.py:41
 msgid "Add repository"
@@ -216,73 +216,73 @@ msgstr "Valor no válido para el argumenrto %s"
 msgid "Invalid argument"
 msgstr "Argumento inválido"
 
-#: ../src/stacks/customRepos.py:26 ../src/stacks/customRepos.py:58
-msgid "Edit {} file"
-msgstr "Editar fichero {}"
-
-#: ../src/stacks/customRepos.py:60
-msgid "Enable {} and apply to edit"
-msgstr "Activa {} y aplica para poder editar"
-
-#: ../src/stacks/customRepos.py:69
-msgid "Manage custom repositories"
-msgstr "Gestiona repositorios personales"
-
-#: ../src/stacks/customRepos.py:70
-msgid "Custom repositories"
-msgstr "Repositorios personales"
-
-#: ../src/stacks/customRepos.py:72
-msgid "From here you can manage your custom repositories"
-msgstr "Desde aquí puedes gestionar tus repositorios personales"
-
-#: ../src/stacks/customRepos.py:84
-msgid "Manage extra repositories"
-msgstr "Gestiona repositorios personales"
-
-#: ../src/stacks/customRepos.py:91
-msgid "Add new repository"
-msgstr "Añadir repositorio"
-
-#: ../src/stacks/customRepos.py:128
-msgid "N4d is down. Check the state of N4d server"
-msgstr "N4d no disponible. Revise el estado del servicio"
-
-#: ../src/stacks/customRepos.py:224 ../src/stacks/defaultRepos.py:170
+#: ../src/stacks/customRepos.py:29 ../src/stacks/defaultRepos.py:26
 msgid "Couldn't write repo"
 msgstr "No pude escribir"
 
-#: ../src/stacks/customRepos.py:226 ../src/stacks/defaultRepos.py:172
+#: ../src/stacks/customRepos.py:31 ../src/stacks/defaultRepos.py:28
 msgid "Couldn't write info for"
 msgstr "No pude escribir la información de"
 
-#: ../src/stacks/customRepos.py:252 ../src/stacks/defaultRepos.py:200
+#: ../src/stacks/customRepos.py:49 ../src/stacks/customRepos.py:81
+msgid "Edit {} file"
+msgstr "Editar fichero {}"
+
+#: ../src/stacks/customRepos.py:83
+msgid "Enable {} and apply to edit"
+msgstr "Activa {} y aplica para poder editar"
+
+#: ../src/stacks/customRepos.py:92
+msgid "Manage custom repositories"
+msgstr "Gestiona repositorios personales"
+
+#: ../src/stacks/customRepos.py:93
+msgid "Custom repositories"
+msgstr "Repositorios personales"
+
+#: ../src/stacks/customRepos.py:95
+msgid "From here you can manage your custom repositories"
+msgstr "Desde aquí puedes gestionar tus repositorios personales"
+
+#: ../src/stacks/customRepos.py:107
+msgid "Manage extra repositories"
+msgstr "Gestiona repositorios personales"
+
+#: ../src/stacks/customRepos.py:114
+msgid "Add new repository"
+msgstr "Añadir repositorio"
+
+#: ../src/stacks/customRepos.py:151
+msgid "N4d is down. Check the state of N4d server"
+msgstr "N4d no disponible. Revise el estado del servicio"
+
+#: ../src/stacks/customRepos.py:271 ../src/stacks/defaultRepos.py:212
 msgid "Failed to update: "
 msgstr "Error actualizando: "
 
-#: ../src/stacks/customRepos.py:257 ../src/stacks/defaultRepos.py:205
+#: ../src/stacks/customRepos.py:276 ../src/stacks/defaultRepos.py:217
 #: ../src/stacks/systemTools.py:66
 msgid "Repositories updated succesfully"
 msgstr "Repositorios actualizados"
 
-#: ../src/stacks/defaultRepos.py:48
+#: ../src/stacks/defaultRepos.py:68
 msgid "Choose the default repositories"
 msgstr "Seleccionar los repositorios por defecto"
 
-#: ../src/stacks/defaultRepos.py:49
+#: ../src/stacks/defaultRepos.py:69
 msgid "Default repositories"
 msgstr "Repositorios por defecto"
 
-#: ../src/stacks/defaultRepos.py:51
+#: ../src/stacks/defaultRepos.py:71
 msgid "From here you can activate/deactivate the default repositories"
 msgstr "Desde aquí puedes activar/desactivar los repositorios por defecto"
 
-#: ../src/stacks/defaultRepos.py:61
+#: ../src/stacks/defaultRepos.py:81
 msgid "Enable or disable default repositories"
 msgstr "Habilita/deshabilita repositorios por deefecto"
 
-#: ../src/stacks/defaultRepos.py:138 ../src/stacks/defaultRepos.py:146
-#: ../src/stacks/defaultRepos.py:152
+#: ../src/stacks/defaultRepos.py:158 ../src/stacks/defaultRepos.py:166
+#: ../src/stacks/defaultRepos.py:172
 msgid "Mirror not available"
 msgstr "Mirror no disponible"
 
@@ -312,48 +312,48 @@ msgstr "Deshabilitar repositorio del servidor"
 msgid "Using repos from"
 msgstr "Usando los repositorios de"
 
-#: ../src/stacks/repoTools.py:36
+#: ../src/stacks/repoTools.py:40
 msgid "Add custom  repositories"
 msgstr "Añadir repositorio personal"
 
-#: ../src/stacks/repoTools.py:37
+#: ../src/stacks/repoTools.py:41
 msgid "Add repositories"
 msgstr "Añadir repositorio"
 
-#: ../src/stacks/repoTools.py:39
+#: ../src/stacks/repoTools.py:43
 msgid "From here you can add custom repositories"
 msgstr "Desde aquí puedes añadir repositorios personales"
 
-#: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
+#: ../src/stacks/repoTools.py:53 ../src/stacks/repoTools.py:67
 msgid "name of the repository"
 msgstr "nombre del repositorio"
 
-#: ../src/stacks/repoTools.py:51 ../src/stacks/repoTools.py:65
+#: ../src/stacks/repoTools.py:53 ../src/stacks/repoTools.py:67
 msgid "Insert repository name"
 msgstr "Introduce el nombre del repositorio"
 
-#: ../src/stacks/repoTools.py:54
+#: ../src/stacks/repoTools.py:56
 msgid "Repository's contents"
 msgstr "Contenido del repositorio"
 
-#: ../src/stacks/repoTools.py:54
+#: ../src/stacks/repoTools.py:56
 msgid "Descriptive description (optional)"
 msgstr "Descripción del repositorio (opcional):"
 
-#: ../src/stacks/repoTools.py:57
+#: ../src/stacks/repoTools.py:59
 msgid "Repository's url"
 msgstr "URL del repositorio"
 
-#: ../src/stacks/repoTools.py:57
+#: ../src/stacks/repoTools.py:59
 msgid "Url for the repository"
 msgstr "URL del repositorio"
 
-#: ../src/stacks/repoTools.py:80 ../src/stacks/repoTools.py:83
-#: ../src/stacks/repoTools.py:85
+#: ../src/stacks/repoTools.py:88 ../src/stacks/repoTools.py:91
+#: ../src/stacks/repoTools.py:93
 msgid "Error adding repository"
 msgstr "Error añadiendo el repositorio"
 
-#: ../src/stacks/repoTools.py:87
+#: ../src/stacks/repoTools.py:95
 msgid "Added repository"
 msgstr "Repositorio añadido"
 
@@ -399,9 +399,9 @@ msgstr "Repositorios de LliureX"
 msgid "Local repositories"
 msgstr "Repositorios locales"
 
-#: json ../sources.d/default/ubuntu_focal.json
-msgid "Ubuntu focal official repositories"
-msgstr "Repositorios oficiales de Ubuntu Focal"
+#: json ../sources.d/default/ubuntu_jammy.json
+msgid "Ubuntu jammy official repositories"
+msgstr "Repositorios oficiales de Ubuntu Jammy"
 
 #: json ../sources.d/Recursos_LliureX.json
 msgid "Lliurex educational resources"

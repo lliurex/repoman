@@ -1,0 +1,2 @@
+/usr/share/repoman/bin/repoman-qt.py /usr/bin/repoman
+/usr/share/repoman/bin/repoman-cli.py /usr/bin/repoman-cli

@@ -114,9 +114,6 @@ class defaultRepos(confStack):
 					self._debug("LLX16 server detected. Switch to localhost")
 					self.errServer=True
 					repos=self.n4dQuery(n4dclass,n4dmethod)
-			self.debug("******")
-			self.debug(repos)
-			self.debug("******")
 			if repos.get('status',0)!=-1:
 				self.defaultRepos=repos.copy()
 		except Exception as e:

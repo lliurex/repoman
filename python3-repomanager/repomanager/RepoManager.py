@@ -27,7 +27,6 @@ class manager():
 	def _debug(self,msg):
 		if self.dbg:
 			logging.warning("RepoManager: {}".format(msg))
-			print(msg)
 	#def _debug
 
 	def _getOneLineSource(self,repos):
@@ -79,7 +78,6 @@ class manager():
 				fcontent=f.readlines()
 		except Exception as e:
 			self._debug("_get_default_repo_status error: %s"%e)
-		fcontent=self._getOneLineSource(fcontent)
 		configured_repos=[]
 		for fline in fcontent:
 			ordLineArray=fline.split(" ")
@@ -87,14 +85,14 @@ class manager():
 			ordLine=" ".join(ordLineArray)
 			configured_repos.append(ordLine.replace('\n','').replace(' ','').lstrip('deb').replace("/",""))
 		repostatus={}
-		self._debug(configured_repos)
 		for reponame,repodata in default_repos.items():
 			repostatus[reponame]="true"
 			for defaultrepo in repodata['repos']:
 				defRepoArray=defaultrepo.split(" ")
 				defRepoArray.sort()
 				defRepo=" ".join(defRepoArray)
-				if defRepo.replace(' ','').replace("/","") not in configured_repos:
+				raw=defRepo.replace(' ','').lstrip('deb').replace("/","").strip()
+				if raw not in configured_repos:
 					lineArray="".join(defRepoArray[:2])
 					sw=False
 					for repo in configured_repos:
