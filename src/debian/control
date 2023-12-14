@@ -1,0 +1,23 @@
+Source: repoman
+Section: admin
+Priority: optional
+Maintainer: Equipo LliureX <lliurex@gva.es>
+Uploaders: M.Angel Juan <m.angel.juan@gmail.com>, Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>, Hector Garcia Huerta <lliurex_devel1@edu.gva.es>, Daniel Duran Vecino <daduve@gmail.com>, Juanma Navarro <juanma1980@gmail.com>, Juan Ramon Pelegrina <juapesai@hotmail.com>
+Build-Depends: llxsrchelper,debhelper (>= 7.0),dh-python,python3-all,python3-setuptools,zero-dev,python3-poinstaller
+Standards-Version: 3.9.5
+Homepage: http://lliurex.net
+
+Package: repoman
+Architecture: all
+Depends: n4d-repomanager (= ${binary:Version}), python3-repomanager, python3-appconfig(>=0.25), python3-pyside2.qtwidgets, python3-pyside2.qtquick,qml-module-edupals-n4d-agent,scite
+Description: Lliurex Repository Manager
+
+Package: python3-repomanager
+Architecture: all
+Depends: python3-requests, python3-bs4
+Description: Lliurex repository manager libs
+
+Package: n4d-repomanager
+Architecture: all
+Depends: python3-repomanager (= ${binary:Version})
+Description: Lliurex N4d plugin
