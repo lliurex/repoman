@@ -15,6 +15,6 @@ config.setBanner('repoman_banner.png')
 config.setBackgroundImage('repoman_login.svg')
 config.setConfig(confDirs={'system':'/usr/share/repoman','user':'%s/.config'%os.environ['HOME']},confFile="repoman.conf")
 config.Show()
-config.resize(config.width(),config.sizeHint().height()*1.2)
-
+config.setMinimumWidth(config.sizeHint().width()*1.5)
+config.setMinimumHeight(config.sizeHint().width()*0.75)
 app.exec_()

@@ -1,16 +1,12 @@
 #!/usr/bin/python3
 import os,sys,socket
-import xmlrpc.client as n4d
-import ssl
 from collections import OrderedDict
 
-import repomanager.RepoManager as RepoManager
+from repoman import repomanager 
 import gettext
 gettext.textdomain('repoman')
 _ = gettext.gettext
 
-n4dserver=None
-server='localhost'
 #Validate if 'server' is a known machine
 try:
 	socket.gethostbyname(server)
@@ -18,7 +14,7 @@ except:
 	server='localhost'
 
 credentials=[]
-repoman=RepoManager.manager()
+repoman=repomanager.manager()
 repoman.dbg=False
 key=''
 error_dict={}
@@ -41,11 +37,11 @@ unattended=False
 parms_dict={'a':{'args':1,'long':'add','desc':_("Add repository"),'usage':'=URL'},
 			'd':{'args':1,'long':'disable','desc':_("Disable repo"),'usage':'=(repository_name|repository_index)'},
 			'e':{'args':1,'long':'enable','desc':_("Enable repo"),'usage':'=(repository_name|repository_index)'},
-			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
-			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
-			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
-			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
-			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
+#			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
+#			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
+#			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
+#			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
+#			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
 			'l':{'args':0,'long':'list','desc':_("List repositories"),'usage':''},
 			'le':{'args':0,'long':'list_enabled','desc':_("List enabled repositories"),'usage':''},
 			'y':{'args':0,'long':'yes','desc':_("Yes to all questions (unattended)"),'usage':''},
@@ -64,10 +60,10 @@ class error:
 	MIRROR=_("Mirror not availabe")
 	OVERWRITE=_("This repository could'nt be overwrited")
 	ADD=_("Failed to add repo")
-	N4D=_("Unknown host")
 	USER=_("You must be root or supply a valid username/password")
 	CREDENTIALS=_("Incorrect username/password")
 	DATA=_("Error retrieving data from server")
+#class error
 
 class color:
    PURPLE = '\033[95m'
@@ -80,8 +76,24 @@ class color:
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
+#class color
 
-def add_repo():
+def addRepo():
+	url=action['a']
+	options=_("Y/N")
+	name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
+	desc=url
+	if not unattended:
+			resp=input(_("You're going to add the repo present at {0}{1}{2}. Continue? {3} [{4}]: ").format(color.UNDERLINE,url,color.END,options,options[-1]))
+			if resp.lower()==options[0].lower():
+				name=input(_("Name for the repository [{}]: ".format(name)))
+				desc=input(_("Description:  [{}]: ").format(url))
+			else:
+				return()
+	repoman.addRepo(action["a"],name=name,desc=desc)
+#def addRepo
+
+def addRepo2():
 	url=action['a']
 	global key
 	global reponame
@@ -132,7 +144,7 @@ def add_repo():
 				n4dcredentials=key
 			else:
 				n4dcredentials=credentials
-			err=n4dserver.add_repo(n4dcredentials,"RepoManager",",".join([name,desc,url]))
+			err=n4dserver.addRepo(n4dcredentials,"RepoManager",",".join([name,desc,url]))
 			err=err.get('status',0)
 			if err:
 				print("\n%s"%error.ADD)
@@ -143,165 +155,116 @@ def add_repo():
 					print(_("Repository %(url)s %(color1)sadded successfully%(color2)s")%({'url':url,'color1':color.BLUE,'color2':color.END}))
 		except Exception as e:
 			print(e)
-			print("add_repo %s"%error.DATA)
+			print("addRepo %s"%error.DATA)
 		return(err)
 		
-#def add_repo
+#def addRepo
 
-def disable_repo():
-	err=0
-	repos=_get_repos()
-	global unattended
-	if action['d'].strip().isdigit():
-		reponame=repo_index[int(action['d'])]
+def disableRepo():
+	targetrepo=action['d']
+	repomanRepos=repoman.getRepos()
+	output=_formatOutput(repomanRepos,False,False)
+	reponame=""
+	if targetrepo.isdigit():
+		line=output[int(targetrepo)]
+		reponame=line.split(":")[0]
+		targetrepo=line
 	else:
-		reponame=action['d']
+		for line in output:
+			if targetrepo.replace(" ","").strip().lower() in line.replace(" ","").strip().lower():
+				reponame=line.split(":")[0]
+				targetrepo=line
+				break
+
 	options=_("Y/N")
 	if not unattended:
 		resp=input(_("You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.RED,'color2':color.END,'repo':reponame,'options':options,'default':options[-1]}))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		repos[reponame]['enabled']='false'
-		if key:
-			n4dcredentials=key
-		else:
-			n4dcredentials=credentials
-		repo={reponame:repos[reponame]}
-		try:
-			writejsonResult=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
-		except:
-			print("disable_repo %s"%error.DATA)
-			err=1
-		result=1
-		if isinstance(writejsonResult,dict):
-			result=writejsonResult.get('status')
-		elif isinstance(writejsonResult,bool):
-			if writejsonResult:
-				result=0
-		if result==0:
-			try:
-				writeResult=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
-			except:
-				print("disable_repo %s"%error.DATA)
-				err=1
-			result=1
-			if isinstance(writeResult,dict):
-				result=writeResult.get('status')
-			elif isinstance(writejsonResult,bool):
-				if writejsonResult:
-					result=0
-			if result!=0:
-				err=1
-				print (error.SOURCES)
-		else:
-			err=1
-			print (error.INFO)
-		return(err)
-#def disable_repo
+		repoman.disableRepoByName(reponame)
+#def disableRepo
 
-def enable_repo():
-	global key
-	global unattended
-	repos=_get_repos()
-	if action['e'].strip().isdigit():
-		reponame=repo_index[int(action['e'])]
+def enableRepo():
+	targetrepo=action['e']
+	repomanRepos=repoman.getRepos()
+	output=_formatOutput(repomanRepos,False,False)
+	reponame=""
+	if targetrepo.isdigit():
+		line=output[int(targetrepo)]
+		reponame=line.split(":")[0]
+		targetrepo=line
 	else:
-		reponame=action['e']
+		for line in output:
+			if targetrepo.replace(" ","").strip().lower() in line.replace(" ","").strip().lower():
+				reponame=line.split(":")[0]
+				targetrepo=line
+				break
+
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to enable repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'repo':reponame,'options':options,'default':options[-1]}))
+		resp=input(_("You're going to %(color1)senable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.RED,'color2':color.END,'repo':reponame,'options':options,'default':options[-1]}))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		repos[reponame]['enabled']='true'
-		if key:
-			n4dcredentials=key
-		else:
-			n4dcredentials=credentials
-		repo={reponame:repos[reponame]}
-		err=0
-		if reponame.lower()=="lliurex mirror":
-			#Mirror must be checked against server
-			try:
-				server='server'
-				context=ssl._create_unverified_context()
-				n4d_server=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-				ret=n4d_server.is_mirror_available("","MirrorManager")
-				if isinstance(ret,dict):
-					if ret.get('status',-1)!=0:
-						err=6
-				else:
-					err=6
-			except:
-				err=6
-		if err:
-			print (error.MIRROR)
-		else:
-			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
-			status=1
-			if isinstance(writejson,bool):
-				if writejson:
-					status=0
-			elif isinstance(writejson,dict):
-				status=writejson.get('status',-1)
-
-			if status==0: 
-				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
-				if isinstance(writerepo,bool):
-					status=1
-					if writerepo:
-						status=0
-				elif isinstance(writerepo,dict):
-					status=writerepo.get('status',-1)
-				if status!=0: 
-					err=1
-					print (error.SOURCES)
-			else:
-				err=1
-				print (error.INFO)
-		return(err)
-#def enable_repo
-
-def update_repos():
+		repoman.enableRepoByName(reponame)
+def updateRepos():
 	options=_("Y/N")
 	resp=''
 	if not unattended:
 		resp=input(_("Repositories changed. Do you want to update info? %(options)s [%(default)s]: ")%({'options':options,'default':options[0]}))
 	if resp.lower()==options[0].lower() or resp=='':
 		os.execv("/usr/bin/apt-get",["update","update"])
+#def updateRepos():
 
-def list_repos():
-	repos=_get_repos()
-	if repos:
-		index=0
-		for repo,data in repos.items():
-			enabled=_("Enabled")
+def _formatOutput(repomanRepos,enabled,disabled):
+	output=[]
+	if len(repomanRepos)>0:
+		output=[]
+		sortKeys=list(repomanRepos.keys())
+		sortKeys.sort()
+		for sourcesUrl in sortKeys:
+			sw_omit=False
 			printcolor=color.GREEN
-			if data['enabled'].lower()=='false':
-				printcolor=color.RED
-				enabled=_('Disabled')
-			print("%s) %s: %s %s%s%s"%(index,repo,data['desc'],printcolor,enabled,color.END))
-			index+=1
+			msgEnabled=_('Enabled')
+			for release,releasedata in repomanRepos[sourcesUrl].items():
+				if releasedata.get('enabled',False)==False:
+					printcolor=color.RED
+					msgEnabled=_('Disabled')
+					if enabled==True:
+						sw_omit=True
+				elif disabled==True:
+					sw_omit=True
+				name=releasedata.get("name",sourcesUrl)
+				desc=releasedata.get("desc","")
+			if sw_omit==False:
+				if desc!="":
+					desc=_(desc)
+				output.append("{0}: {1} {2}{3}{4}".format(name,desc,printcolor,msgEnabled,color.END))
+		output.sort()
+	return(output)
+#def _formatOutput
 
-def list_enabled_repos():
-	repos=_get_repos()
-	if repos:
-		for repo,data in repos.items():
-			if data['enabled'].lower()=='true':
-				print("%s: %s"%(repo,data['desc']))
-#def list_enabled_repos
+def listRepoS(enabled=False,disabled=False):
+	index=0
+	repomanRepos=repoman.getRepos()
+	output=_formatOutput(repomanRepos,enabled,disabled)
+	for line in output:
+		print("{0}) {1}".format(index,line))
+		index+=1
+#def listRepoS
 
-def list_disabled_repos():
-	repos=_get_repos()
-	if repos:
-		for repo,data in repos.items():
-			if data['enabled'].lower()=='false':
-				print("%s: %s"%(repo,data['desc']))
-#def list_disabled_repos
+def listEnabledRepos():
+	listRepoS(enabled=True)
+#def listEnabledRepos
 
-def _get_repos():
-	repos={}
+def listDisabledRepos():
+	listRepoS(disabled=True)
+#def listDisabledRepos
+
+def _getSystemRepos():
+	repos=repoman.getSystemRepos()
+	return(repos)
 	global key
 	if key:
 		n4dcredentials=key
@@ -335,7 +298,7 @@ def _get_repos():
 		index+=1
 	repos=sort_repos.copy()
 	return(repos)
-#def _get_repos
+#def _getSystemRepos
 
 def show_help():
 	print(_("Usage: %s ACTION")%(sys.argv[0]))
@@ -358,6 +321,7 @@ def set_server(ip):
 #def set_server
 
 def _n4d_connect():
+	return
 	ret=True
 	context=ssl._create_unverified_context()
 	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
@@ -446,30 +410,24 @@ if 'u' in action.keys():
 	if len(credentials)<2:
 		credentials=['','']
 	credentials[0]=action['u']
-if 's' in action.keys():
-	server=action['s']
-n4dserver=_n4d_connect()
-if not n4dserver:
-	print(error.N4D)
-	quit(1)
 
 #process_actions
 if 'a' in action.keys():
-	if add_repo()==0:
-		update_repos()
+	if addRepo()==0:
+		updateRepos()
 if 'd' in action.keys():
-	if disable_repo()==0:
-		update_repos()
+	if disableRepo()==0:
+		updateRepos()
 if 'e' in action.keys():
-	if enable_repo()==0:
-		update_repos()
+	if enableRepo()==0:
+		updateRepos()
 #if 'r' in action.keys():
 #	if remove_repo()==0:
-#		update_repos()
+#		updateRepos()
 if 'l' in action.keys():
-	list_repos()
+	listRepoS()
 if 'ld' in action.keys():
-	list_disabled_repos()
+	listDisabledRepos()
 if 'le' in action.keys():
-	list_enabled_repos()
+	listEnabledRepos()
 

@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 import sys
 import os
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox,QTableWidget,\
-		QHeaderView,QTableWidgetSelectionRange
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QListWidgetItem,QCheckBox,QSizePolicy
 from PySide2 import QtGui
 from PySide2.QtCore import Qt,QThread
 from appconfig.appConfigStack import appConfigStack as confStack
+from appconfig.appconfigControls import *
+from repoman import repomanager
+import subprocess
 import time
 import gettext
 _ = gettext.gettext
@@ -13,206 +15,166 @@ _ = gettext.gettext
 class processRepos(QThread):
 	def __init__(self,widget,parent=None):
 		QThread.__init__(self, parent)
+		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
 		self.widget=widget
 
 	def run(self):
-		QApplication.processEvents()
-		for repo in self.widget.changed:
-			self.widget._debug("Updating {}".format(repo))
-			ret=self.widget.n4dQuery("RepoManager","write_repo_json",{repo:self.widget.defaultRepos[repo]})
-			if ret:
-				ret=self.widget.n4dQuery("RepoManager","write_repo",{repo:self.widget.defaultRepos[repo]})
-				if ret==False:
-					self.widget.showMsg(_("Couldn't write repo")+" {}".format(repo),'error')
-			else:
-				self.widget.showMsg(_("Couldn't write info for")+" {}".format(repo),'error')
-		if ret==True:
-			self.widget._updateRepos()
+		for i in range(0,self.widget.rowCount()):
+			w=self.widget.cellWidget(i,0)
+			state=w.chkState.isChecked()
+			subprocess.run(["pkexec",self.repohelper,w.text.text(),str(state)])
 		return(True)
 #class processRepos
 
-class QLabelDescription(QWidget):
-	def __init__(self,label="",description="",parent=None):
-		super (QLabelDescription,self).__init__(parent)
-		self.label=QLabel()
-		self.labelText=label
-		self.label.setText('<span style="font-size:14pt"><b>{}</b></span>'.format(label))
-		self.label.setStyleSheet("border:0px;margin:0px;")
-		self.description=QLabel()
-		self.description.setStyleSheet("border:3px solid silver;border-top:0px;border-right:0px;border-left:0px;margin-top:0px;")
-		self.descriptionText=description
-		self.description.setText('<span style="font-size:10pt; color:grey">{}</span>'.format(description))
-		QBox=QVBoxLayout()
-		QBox.addWidget(self.label,-1,Qt.AlignBottom)
-		QBox.addWidget(self.description,Qt.AlignTop)
-		self.setLayout(QBox)
-		self.show()
+class QRepoItem(QWidget):
+	stateChanged=Signal("bool")
+	def __init__(self,parent=None):
+		QWidget.__init__(self, parent)
+		self.file=""
+		lay=QGridLayout()
+		self.text=QLabel()
+		self.text.setStyleSheet("font: bold large;")
+		font=self.text.font()
+		font.setPointSize(font.pointSize()+2)
+		self.text.setFont(font)
+		self.desc=QLabel()
+		self.btnEdit=QPushButton()
+		self.btnEdit.setIcon(QtGui.QIcon.fromTheme("document-edit"))
+		self.btnEdit.clicked.connect(self._editFile)
+		self.chkState=QCheckBox()
+		self.chkState.stateChanged.connect(self.emitState)
+		lay.addWidget(self.text,0,0,1,1,Qt.AlignLeft)
+		lay.addWidget(self.desc,1,0,2,1,Qt.AlignLeft)
+		lay.addWidget(self.btnEdit,0,1,1,1,Qt.AlignRight|Qt.AlignCenter)
+		lay.addWidget(self.chkState,0,2,1,1,Qt.AlignRight|Qt.AlignCenter)
+#		self.text.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+		lay.setColumnStretch(0,1)
+		self.setLayout(lay)
+		parent=self.parent
 	#def __init__
 
-	def setText(self,label,description=""):
-		self.labelText=label
-		self.label.setText('<span style="font-size:14pt"><b>{}</b></span>'.format(label))
-		self.descriptionText=description
-		self.description.setText('<span style="font-size:10pt; color:grey">{}</span>'.format(description))
+	def setFile(self,file):
+		self.file=file
+	#def setFile
+
+	def setText(self,txt):
+		self.text.setText("{}".format(txt))
+		restricted=["lliurex 23","lliurex mirror","ubuntu jammy"]
+		if txt.lower() in restricted:
+			self.btnEdit.setVisible(False)
+		self.text.adjustSize()
 	#def setText
 
-	def text(self):
-		return([self.labelText,self.descriptionText])
-	#def text
-#class QLabelDescription
+	def setDesc(self,txt):
+		self.desc.setText("<i>{}</i>".format(txt))
+		self.desc.adjustSize()
+	#def setDesc
+
+	def setState(self,state):
+		self.chkState.setChecked(state)
+	#def setState
+	
+	def setBtnIcn(self,icon):
+		pass
+	#def setBtnIcn
+
+	def _editFile(self):
+		print(self.file)
+		subprocess.run(["kwrite",self.file])
+
+	def emitState(self):
+		self.stateChanged.emit(self.chkState.isChecked())
+	#def emitState
+#class QRepoItem
 
 class defaultRepos(confStack):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confDefault Load")
-		self.menu_description=(_("Choose the default repositories"))
-		self.description=(_("Default repositories"))
+		self.menu_description=(_("Manage system repositories"))
+		self.description=(_("System repositories"))
 		self.icon=('go-home')
-		self.tooltip=(_("From here you can activate/deactivate the default repositories"))
+		self.tooltip=(_("From here you can activate/deactivate the system repositories"))
 		self.index=1
 		self.enabled=True
 		self.defaultRepos={}
 		self.changed=[]
-		self.level='user'
+		self.width=0
+		self.height=0
+		self.repoman=repomanager.manager()
 	#def __init__
 
 	def _load_screen(self):
-		box=QVBoxLayout()
-		lbl_txt=QLabel(_("Enable or disable default repositories"))
-		lbl_txt.setAlignment(Qt.AlignTop)
-		box.addWidget(lbl_txt,0)
-		self.table=QTableWidget(1,2)
-		Hheader=self.table.horizontalHeader()
-		Vheader=self.table.verticalHeader()
+		box=QGridLayout()
+		self.lstRepositories=QTableWidget(1,1)
+		Hheader=self.lstRepositories.horizontalHeader()
+		Vheader=self.lstRepositories.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
 		Vheader.setSectionResizeMode(QHeaderView.ResizeToContents)
-		self.table.setShowGrid(False)
-		self.table.setSelectionBehavior(QTableWidget.SelectRows)
-		self.table.setSelectionMode(QTableWidget.NoSelection)
-		self.table.setEditTriggers(QTableWidget.NoEditTriggers)
-		self.table.horizontalHeader().hide()
-		self.table.verticalHeader().hide()
-		box.addWidget(self.table)
+		self.lstRepositories.setShowGrid(False)
+		self.lstRepositories.setSelectionBehavior(QTableWidget.SelectRows)
+		self.lstRepositories.setSelectionMode(QTableWidget.NoSelection)
+		self.lstRepositories.setEditTriggers(QTableWidget.NoEditTriggers)
+		self.lstRepositories.horizontalHeader().hide()
+		self.lstRepositories.verticalHeader().hide()
+		self.lstRepositories.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+		self.lstRepositories.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+		box.addWidget(self.lstRepositories,0,0,1,1)
+		box.setColumnStretch(0,1)
 		self.setLayout(box)
-		self.updateScreen()
+		self.lstRepositories.setStyleSheet( "QTableWidget::item {""border-bottom-style: solid;border-width:3px;border-color:silver;""}")
 	#def _load_screen
 
 	def updateScreen(self):
-		self.table.clearContents()
-		self.changed=[]
-		while self.table.rowCount():
-			self.table.removeRow(0)
-		config=self.getConfig()
-		try:
-			n4dclass="RepoManager"
-			n4dmethod="list_default_repos"
-			repos=self.n4dQuery(n4dclass,n4dmethod)
-			if isinstance(repos,str):
-			#It's a string, something went wrong. Perhaps a llx16 server?
-				if (repos=="METHOD NOT ALLOWED FOR YOUR GROUPS"):
-					#Server is a llx16 so switch to localhost
-					self._debug("LLX16 server detected. Switch to localhost")
-					self.errServer=True
-					repos=self.n4dQuery(n4dclass,n4dmethod)
-			if repos.get('status',0)!=-1:
-				self.defaultRepos=repos.copy()
-		except Exception as e:
-			self._debug(self.n4dQuery(n4dclass,n4dmethod))
-		states={}
-		row=0
-		for repo,data in self.defaultRepos.items():
-			self.table.insertRow(row)
-			state=data.get('enabled','false')
-			if state=='true':
-				state=True
-			else:
-				state=False
-			description=data.get('desc','')
-			lbl=QLabelDescription(repo,_(description))
-			self.table.setCellWidget(row,0,lbl)
-			chk=QCheckBox()
-			chk.setTristate(False)
-			chk.setStyleSheet("margin-left:50%;margin-right:50%")
-			chk.stateChanged.connect(lambda x:self.setChanged(True))
-			chk.stateChanged.connect(self.changeState)
-			self.table.setCellWidget(row,1,chk)
-			chk.setChecked(state)
-			row+=1
+		self.lstRepositories.setRowCount(0)
+		self.lstRepositories.setColumnCount(1)
+		repos=self.repoman.getRepos()
+		sortrepos=self._sortRepos(repos)
+		for reponame,repodata in sortrepos.items():
+			if len(reponame)<=0:
+				continue
+			w=QRepoItem(self.lstRepositories)
+			w.stateChanged.connect(self._stateChanged)
+			w.setText(reponame)
+			desc=repodata.get("desc","")
+			if len(desc)==0:
+				desc=os.path.basename(repodata.get("file",""))
+			w.setDesc(desc)
+			w.setFile(repodata.get("file",""))
+			w.setState(repodata.get("enabled",False))
+			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
+			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)
 	#def _udpate_screen
 
-	def changeState(self):
-		row=self.table.currentRow()
-		repoWidget=self.table.cellWidget(row,0)
-		stateWidget=self.table.cellWidget(row,1)
-		if repoWidget==None:
-			self._debug("Item not found at {0},{1}".format(row,0))
-			return
-		repo=repoWidget.text()[0]
-		#Check mirror
-		if repo.lower()=="lliurex mirror":
-			#Mirror must be checked against server
-			ret=self.appConfig.n4dQuery("MirrorManager","is_mirror_available")
-			if isinstance(ret,dict):
-				if ret.get('status')==-1:
-					self._debug("Mirror not available")
-					self.showMsg(_("Mirror not available"),'RepoMan')
-					self.defaultRepos[repo]['enabled']="False"
-					self.updateScreen()
-					return
+	def _stateChanged(self,*args):
+		self.setChanged(True)
 
-			if (type(ret)==type("")):
-				if ret!="Mirror available":
-					self._debug("Mirror not available")
-					self.showMsg(_("Mirror not available"),'RepoMan')
-					self.defaultRepos[repo]['enabled']="False"
-					self.updateScreen()
-					return
-			elif not (ret.get('status',False)):
-				self._debug("Mirror not available")
-				self.showMsg(_("Mirror not available"),'RepoMan')
-				self.defaultRepos[repo]['enabled']="False"
-				self.updateScreen()
-				return
-		state=str(stateWidget.isChecked()).lower()
-		self.defaultRepos[repo]['enabled']="{}".format(state)
-		if repo not in self.changed:
-			self.changed.append(repo)
-	#def changeState
+	def _sortRepos(self,repos):
+		sortrepos={}
+		for url in self.repoman.sortContents(list(repos.keys())):
+			for release,releasedata in repos[url].items():
+				name=releasedata.get("name","")
+				desc=releasedata.get("desc","")
+				file=releasedata.get("file","")
+				if name not in sortrepos.keys() and len(name)>0:
+					sortrepos[name]={"desc":desc,"enabled":releasedata.get("enabled",False),"file":file}
+		return(sortrepos)
+	#def _sortRepos
 
 	def writeConfig(self):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
-		oldcursor=self.cursor()
+		self.oldcursor=self.cursor()
 		self.setCursor(cursor)
-		process=processRepos(self)
-		process.run()
-		self.setCursor(oldcursor)
-		self.updateScreen()
+		self.process=processRepos(self.lstRepositories)
+		self.process.finished.connect(self._endProcess)
+		self.process.start()
 	#def writeConfig
+
+	def _endProcess(self,*args):
+		self.setCursor(self.oldcursor)
+		self.updateScreen()
+	#def _endProcess
 
 	def _updateRepos(self):
 		self._debug("Updating repos")
-		ret=self.appConfig.n4dQuery("RepoManager","update_repos")
-		errList=[]
-		for line in ret.split("\n"):
-			if line.startswith("E: ") or line.startswith("W:"):
-				for name,data in self.defaultRepos.items():
-					for repoLine in data.get('repos',[]):
-						repoItems=repoLine.split(" ")
-						if repoItems:
-							if repoItems[0] in line:
-								if "NODATA" in line:
-									continue
-								err=" *{}".format(name)
-								if err not in errList:
-									errList.append(err)
-		ret=("\n").join(errList)
-		if ret:
-				#self.showMsg(_("Repositories updated succesfully"))
-			self._debug("Error updating: {}".format(ret))
-			ret=_("Failed to update: ")+"\n"+"{}".format(ret)
-			self.showMsg("{}".format(ret),'RepoMan')
-			self.refresh=True
-			self.changes=False
-		else:
-			self.showMsg(_("Repositories updated succesfully"))
 	#def _updateRepos
