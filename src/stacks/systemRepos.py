@@ -12,6 +12,11 @@ import time
 import gettext
 _ = gettext.gettext
 
+i18n={"MENU":_("Manage system repositories"),
+	"DESC":_("System repositories"),
+	"TOOLTIP":_("From here you can activate/deactivate the system repositories")
+	}
+
 class processRepos(QThread):
 	def __init__(self,widget,parent=None):
 		QThread.__init__(self, parent)
@@ -87,14 +92,14 @@ class QRepoItem(QWidget):
 	#def emitState
 #class QRepoItem
 
-class defaultRepos(confStack):
+class systemRepos(confStack):
 	def __init_stack__(self):
 		self.dbg=False
-		self._debug("confDefault Load")
-		self.menu_description=(_("Manage system repositories"))
-		self.description=(_("System repositories"))
+		self._debug("systemRepos Load")
+		self.menu_description=(i18n.get("MENU"))
+		self.description=(i18n.get("DESC"))
 		self.icon=('go-home')
-		self.tooltip=(_("From here you can activate/deactivate the system repositories"))
+		self.tooltip=(i18n.get("TOOLTIP"))
 		self.index=1
 		self.enabled=True
 		self.defaultRepos={}

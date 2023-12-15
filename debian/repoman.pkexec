@@ -1,8 +1,8 @@
 [
     {
-        "cmd": "/usr/bin/scite",
-        "prefix": "net.lliurex.scite",
-        "nameaction": "open-scite",
+        "cmd": "/usr/share/repoman/helper/repomanpk.py",
+        "prefix": "net.lliurex.repoman",
+        "nameaction": "manager",
         "icon": "scite",
         "auths": [
             {
