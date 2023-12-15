@@ -22,8 +22,12 @@ class processRepos(QThread):
 		QThread.__init__(self, parent)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
 		self.widget=widget
+		self.parent=parent
 
 	def run(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		if self.parent:
+			self.parent.setCursor(cursor)
 		for i in range(0,self.widget.rowCount()):
 			w=self.widget.cellWidget(i,0)
 			state=w.chkState.isChecked()
@@ -52,7 +56,6 @@ class QRepoItem(QWidget):
 		lay.addWidget(self.desc,1,0,2,1,Qt.AlignLeft)
 		lay.addWidget(self.btnEdit,0,1,1,1,Qt.AlignRight|Qt.AlignCenter)
 		lay.addWidget(self.chkState,0,2,1,1,Qt.AlignRight|Qt.AlignCenter)
-#		self.text.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 		lay.setColumnStretch(0,1)
 		self.setLayout(lay)
 		parent=self.parent
@@ -84,8 +87,8 @@ class QRepoItem(QWidget):
 	#def setBtnIcn
 
 	def _editFile(self):
-		print(self.file)
 		subprocess.run(["kwrite",self.file])
+	#def _editFile
 
 	def emitState(self):
 		self.stateChanged.emit(self.chkState.isChecked())
@@ -106,6 +109,7 @@ class systemRepos(confStack):
 		self.changed=[]
 		self.width=0
 		self.height=0
+		self.oldcursor=self.cursor()
 		self.repoman=repomanager.manager()
 	#def __init__
 
@@ -153,6 +157,7 @@ class systemRepos(confStack):
 
 	def _stateChanged(self,*args):
 		self.setChanged(True)
+	#def _stateChanged
 
 	def _sortRepos(self,repos):
 		sortrepos={}
@@ -167,17 +172,16 @@ class systemRepos(confStack):
 	#def _sortRepos
 
 	def writeConfig(self):
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		self.oldcursor=self.cursor()
-		self.setCursor(cursor)
-		self.process=processRepos(self.lstRepositories)
+		self.process=processRepos(self.lstRepositories,self)
 		self.process.finished.connect(self._endProcess)
 		self.process.start()
 	#def writeConfig
 
 	def _endProcess(self,*args):
-		self.setCursor(self.oldcursor)
+		self.changes=False
 		self.updateScreen()
+		self.setCursor(self.oldcursor)
+		self.setChanged(False)
 	#def _endProcess
 
 	def _updateRepos(self):
