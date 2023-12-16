@@ -138,7 +138,7 @@ class systemRepos(confStack):
 		self.lstRepositories.setRowCount(0)
 		self.lstRepositories.setColumnCount(1)
 		repos=self.repoman.getRepos()
-		sortrepos=self._sortRepos(repos)
+		sortrepos=self.repoman.sortJsonRepos(repos)
 		for reponame,repodata in sortrepos.items():
 			if len(reponame)<=0:
 				continue
@@ -158,18 +158,6 @@ class systemRepos(confStack):
 	def _stateChanged(self,*args):
 		self.setChanged(True)
 	#def _stateChanged
-
-	def _sortRepos(self,repos):
-		sortrepos={}
-		for url in self.repoman.sortContents(list(repos.keys())):
-			for release,releasedata in repos[url].items():
-				name=releasedata.get("name","")
-				desc=releasedata.get("desc","")
-				file=releasedata.get("file","")
-				if name not in sortrepos.keys() and len(name)>0:
-					sortrepos[name]={"desc":desc,"enabled":releasedata.get("enabled",False),"file":file}
-		return(sortrepos)
-	#def _sortRepos
 
 	def writeConfig(self):
 		self.process=processRepos(self.lstRepositories,self)
