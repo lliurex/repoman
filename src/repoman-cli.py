@@ -222,8 +222,7 @@ def _formatOutput(repomanRepos,enabled,disabled):
 	if len(repomanRepos)>0:
 		output=[]
 		sortKeys=list(repomanRepos.keys())
-		sortKeys.sort()
-		for sourcesUrl in sortKeys:
+		for sourcesUrl in repomanRepos.keys():
 			sw_omit=False
 			printcolor=color.GREEN
 			msgEnabled=_('Enabled')
@@ -241,7 +240,7 @@ def _formatOutput(repomanRepos,enabled,disabled):
 				if desc!="":
 					desc=_(desc)
 				output.append("{0}: {1} {2}{3}{4}".format(name,desc,printcolor,msgEnabled,color.END))
-		output.sort()
+	#	output.sort()
 	return(output)
 #def _formatOutput
 
