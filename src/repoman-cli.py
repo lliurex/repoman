@@ -23,6 +23,25 @@ reponame=''
 repoinfo=''
 unattended=False
 
+i18n={
+	"POLKIT":_("Manage repositories requires admin authentification"),
+	"HLP_ADD":_("Add repository"),
+	"HLP_DISABLE":_("Disable repo"),
+	"HLP_ENABLE":_("Enable repo"),
+	"HLP_LIST":_("List repositories"),
+	"HLP_LISTE":_("List enabled repositories"),
+	"HLP_LISTD":_("List disabled repositories"),
+	"HLP_YES":_("Assume \"yes\" to all questions"),
+	"OPTIONS":_("Y/N"),
+	"MSG_ADD":_("You're going to add the repo present at"),
+	"MSG_CONTINUE":_("Continue?"),
+	"REPONAME":_("Name for the repository"),
+	"REPODESC":_("Description:"),
+	"MSG_YOU":_("You're going to"),
+	"MSG_DISABLE":_("disable"),
+	"MSG_ENABLE":_("enable"),
+	"REPOSITORY":_("repository"),
+	"MSG_UPDATE":_("Repositories changed. Do you want to update info?")}
 #a->append url
 #p->password
 #u->user
@@ -34,18 +53,18 @@ unattended=False
 #l-> list repos
 #le -> list enabled repos
 #ld -> list disabled repos
-parms_dict={'a':{'args':1,'long':'add','desc':_("Add repository"),'usage':'=URL'},
-			'd':{'args':1,'long':'disable','desc':_("Disable repo"),'usage':'=(repository_name|repository_index)'},
-			'e':{'args':1,'long':'enable','desc':_("Enable repo"),'usage':'=(repository_name|repository_index)'},
+parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'},
+			'd':{'args':1,'long':'disable','desc':i18n.get("HELP_DISABLE"),'usage':'(repository_name|repository_index)'},
+			'e':{'args':1,'long':'enable','desc':i18n.get("HELP_ENABLE"),'usage':'(repository_name|repository_index)'},
 #			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
 #			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
 #			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
 #			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
 #			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
-			'l':{'args':0,'long':'list','desc':_("List repositories"),'usage':''},
-			'le':{'args':0,'long':'list_enabled','desc':_("List enabled repositories"),'usage':''},
-			'y':{'args':0,'long':'yes','desc':_("Yes to all questions (unattended)"),'usage':''},
-			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
+			'l':{'args':0,'long':'list','desc':i18n.get("HLP_LIST"),'usage':''},
+#			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
+			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':i18n.get("HLP_YES")},
+#			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
 			'h':{'args':0,'long':'help','desc':_("Show help"),'usage':''}
 			}
 
@@ -78,86 +97,22 @@ class color:
    END = '\033[0m'
 #class color
 
+
+
 def addRepo():
 	url=action['a']
 	options=_("Y/N")
 	name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
 	desc=url
 	if not unattended:
-			resp=input(_("You're going to add the repo present at {0}{1}{2}. Continue? {3} [{4}]: ").format(color.UNDERLINE,url,color.END,options,options[-1]))
+			resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 			if resp.lower()==options[0].lower():
-				name=input(_("Name for the repository [{}]: ".format(name)))
-				desc=input(_("Description:  [{}]: ").format(url))
+				name=input("{0} [{1}]".format(i18n.get("REPONAME",name)))
+				desc=input("{0} [{1}]".format(i18n.get("REPODESC",url)))
 			else:
 				return()
-	repoman.addRepo(action["a"],name=name,desc=desc)
-#def addRepo
-
-def addRepo2():
-	url=action['a']
-	global key
-	global reponame
-	global repoinfo
-	global unattended
-	options=_("Y/N")
-	if not unattended:
-			resp=input(_("You're going to add the repo present at %(color1)s%(url)s%(color2)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.UNDERLINE,'url':url,'color2':color.END,'options':options,'default':options[-1]}))
-	else:
-		resp=options[0].lower()
-	if resp.lower()==options[0].lower():
-		try:
-			proposed_name=url
-			if url.startswith('ppa'):
-				proposed_name=url.replace('ppa:','')
-			if ('//') in proposed_name:
-				name=proposed_name.split('/')[2:]
-			elif (':') in proposed_name:
-				name=proposed_name.split(':')[1:]
-			else:
-				name=proposed_name.split('/')
-		except:
-			name=url
-		try:
-			name[0]=name[0].split('.')[-2]
-		except:
-			name=name
-		if isinstance(name,list):
-			defname='_'.join(name)
-			name=defname
-		else:
-			defname=name
-		if reponame!='':
-			name=reponame
-		else:
-			if not unattended:
-				name=input(_("Name for the repository [%s]: ")%defname)
-			if name.strip()=='':
-				name=defname
-		if repoinfo!='':
-			desc=repoinfo
-		else:
-			desc=''
-			if not unattended:
-				desc=input(_("Description for the repository (optional): "))
-		try:
-			if key:
-				n4dcredentials=key
-			else:
-				n4dcredentials=credentials
-			err=n4dserver.addRepo(n4dcredentials,"RepoManager",",".join([name,desc,url]))
-			err=err.get('status',0)
-			if err:
-				print("\n%s"%error.ADD)
-				errorDict={"1":error.URL,"2":error.INFO,"3":error.SOURCES,"4":error.REPO}
-				errorMsg=errorDict.get(str(err),error.REPO)
-				print(errorMsg)
-			else:
-					print(_("Repository %(url)s %(color1)sadded successfully%(color2)s")%({'url':url,'color1':color.BLUE,'color2':color.END}))
-		except Exception as e:
-			print(e)
-			print("addRepo %s"%error.DATA)
-		return(err)
-		
+	subprocess.run(["pkexec",self.repohelper,action["a"],"Add",reponame,repodesc])
+	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
 def disableRepo():
@@ -178,11 +133,12 @@ def disableRepo():
 
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.RED,'color2':color.END,'repo':reponame,'options':options,'default':options[-1]}))
+		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_DISABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		repoman.disableRepoByName(reponame)
+		subprocess.run(["pkexec",self.repohelper,reponame,"False"])
+		#repoman.disableRepoByName(reponame)
 #def disableRepo
 
 def enableRepo():
@@ -203,16 +159,19 @@ def enableRepo():
 
 	options=_("Y/N")
 	if not unattended:
-		resp=input(_("You're going to %(color1)senable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.RED,'color2':color.END,'repo':reponame,'options':options,'default':options[-1]}))
+		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		repoman.enableRepoByName(reponame)
+		subprocess.run(["pkexec",self.repohelper,reponame,"True"])
+		#repoman.enableRepoByName(reponame)
+#def enableRepo
+
 def updateRepos():
 	options=_("Y/N")
 	resp=''
 	if not unattended:
-		resp=input(_("Repositories changed. Do you want to update info? %(options)s [%(default)s]: ")%({'options':options,'default':options[0]}))
+		resp=input("{0} {1} [{2}]: ".format(i18n.get("MSG_UPDATE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[0]))
 	if resp.lower()==options[0].lower() or resp=='':
 		os.execv("/usr/bin/apt-get",["update","update"])
 #def updateRepos():
@@ -246,6 +205,7 @@ def _formatOutput(repomanRepos,enabled,disabled):
 
 def listRepoS(enabled=False,disabled=False):
 	index=0
+	repoman.isMirrorEnabled()
 	repomanRepos=repoman.getRepos()
 	output=_formatOutput(repomanRepos,enabled,disabled)
 	for line in output:
@@ -304,9 +264,9 @@ def show_help():
 	print(_("\nRepoMan"))
 	print(_("\nParameters:"))
 	for parm,data in sorted(parms_dict.items()):
-		print("-%s, --%s%s\t\t%s"%(parm,data['long'],data['usage'],data['desc']))
-
-	quit(0)
+		print("-{0}, --{1} {2}".format(parm,data['long'],data['usage'],data['desc']))
+	sys.exit(0)
+#def show_help
 
 def set_credentials(user='',pwd=''):
 	if user:

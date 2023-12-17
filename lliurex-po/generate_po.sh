@@ -16,12 +16,3 @@ do
 	echo '' >> repoman/repoman.pot
 
 done
-for i in ../sources.d/*json
-do
-	echo "#: json $i" >> repoman/repoman.pot
-	a=$(grep \"desc\": $i | cut -d "\"" -f4)
-	echo 'msgid "'${a}'"' >> repoman/repoman.pot
-	echo 'msgstr ""'>> repoman/repoman.pot
-	echo '' >> repoman/repoman.pot
-
-done
