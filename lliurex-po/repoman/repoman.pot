@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-17 08:33+0100\n"
+"POT-Creation-Date: 2023-12-18 07:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,161 +18,157 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/repoman-cli.py:27
-msgid "Manage repositories requires admin authentification"
-msgstr ""
-
-#: ../src/repoman-cli.py:28
 msgid "Add repository"
 msgstr ""
 
-#: ../src/repoman-cli.py:29
+#: ../src/repoman-cli.py:28
 msgid "Disable repo"
 msgstr ""
 
-#: ../src/repoman-cli.py:30
+#: ../src/repoman-cli.py:29
 msgid "Enable repo"
 msgstr ""
 
-#: ../src/repoman-cli.py:31
+#: ../src/repoman-cli.py:30
 msgid "List repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:31
 msgid "List enabled repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:32
 msgid "List disabled repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:34
+#: ../src/repoman-cli.py:33
 msgid "Assume \"yes\" to all questions"
 msgstr ""
 
-#: ../src/repoman-cli.py:35 ../src/repoman-cli.py:104 ../src/repoman-cli.py:134
-#: ../src/repoman-cli.py:160 ../src/repoman-cli.py:171
+#: ../src/repoman-cli.py:34 ../src/repoman-cli.py:103 ../src/repoman-cli.py:133
+#: ../src/repoman-cli.py:159 ../src/repoman-cli.py:170
 msgid "Y/N"
 msgstr ""
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:35
 msgid "You're going to add the repo present at"
 msgstr ""
 
-#: ../src/repoman-cli.py:37
+#: ../src/repoman-cli.py:36
 msgid "Continue?"
 msgstr ""
 
-#: ../src/repoman-cli.py:38
+#: ../src/repoman-cli.py:37
 msgid "Name for the repository"
 msgstr ""
 
-#: ../src/repoman-cli.py:39
+#: ../src/repoman-cli.py:38
 msgid "Description:"
 msgstr ""
 
-#: ../src/repoman-cli.py:40
+#: ../src/repoman-cli.py:39
 msgid "You're going to"
 msgstr ""
 
-#: ../src/repoman-cli.py:41
+#: ../src/repoman-cli.py:40
 msgid "disable"
 msgstr ""
 
-#: ../src/repoman-cli.py:42
+#: ../src/repoman-cli.py:41
 msgid "enable"
 msgstr ""
 
-#: ../src/repoman-cli.py:43
+#: ../src/repoman-cli.py:42
 msgid "repository"
 msgstr ""
 
-#: ../src/repoman-cli.py:44
+#: ../src/repoman-cli.py:43
 msgid "Repositories changed. Do you want to update info?"
 msgstr ""
 
-#: ../src/repoman-cli.py:68
+#: ../src/repoman-cli.py:67
 msgid "Show help"
 msgstr ""
 
-#: ../src/repoman-cli.py:74
+#: ../src/repoman-cli.py:73
 msgid "Invalid Url"
 msgstr ""
 
-#: ../src/repoman-cli.py:75
+#: ../src/repoman-cli.py:74
 msgid ""
 "Can't add repository information.\n"
 "Check your permissions"
 msgstr ""
 
-#: ../src/repoman-cli.py:76
+#: ../src/repoman-cli.py:75
 msgid ""
 "Can't write sources file.\n"
 "Check your permissions"
 msgstr ""
 
-#: ../src/repoman-cli.py:77
+#: ../src/repoman-cli.py:76
 msgid "Repository not found at given Url"
 msgstr ""
 
-#: ../src/repoman-cli.py:78
+#: ../src/repoman-cli.py:77
 msgid "Repositories failed to update"
 msgstr ""
 
-#: ../src/repoman-cli.py:79
+#: ../src/repoman-cli.py:78
 msgid "Mirror not availabe"
 msgstr ""
 
-#: ../src/repoman-cli.py:80
+#: ../src/repoman-cli.py:79
 msgid "This repository could'nt be overwrited"
 msgstr ""
 
-#: ../src/repoman-cli.py:81
+#: ../src/repoman-cli.py:80
 msgid "Failed to add repo"
 msgstr ""
 
-#: ../src/repoman-cli.py:82
+#: ../src/repoman-cli.py:81
 msgid "You must be root or supply a valid username/password"
 msgstr ""
 
-#: ../src/repoman-cli.py:83
+#: ../src/repoman-cli.py:82
 msgid "Incorrect username/password"
 msgstr ""
 
-#: ../src/repoman-cli.py:84
+#: ../src/repoman-cli.py:83
 msgid "Error retrieving data from server"
 msgstr ""
 
-#: ../src/repoman-cli.py:187
+#: ../src/repoman-cli.py:186
 msgid "Enabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:191
+#: ../src/repoman-cli.py:190
 msgid "Disabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:263
+#: ../src/repoman-cli.py:262
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:264
+#: ../src/repoman-cli.py:263
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:265
+#: ../src/repoman-cli.py:264
 msgid ""
 "\n"
 "Parameters:"
 msgstr ""
 
-#: ../src/repoman-cli.py:341
+#: ../src/repoman-cli.py:340
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr ""
 
-#: ../src/repoman-cli.py:345
+#: ../src/repoman-cli.py:344
 msgid "Invalid argument"
 msgstr ""
 
@@ -263,5 +259,9 @@ msgstr ""
 
 #: json ../sources.d/default/ubuntu_jammy.json
 msgid "Ubuntu jammy official repositories"
+msgstr ""
+
+#: polkit
+msgid "This action requieres administrator rights"
 msgstr ""
 

@@ -16,3 +16,9 @@ do
 	echo '' >> repoman/repoman.pot
 
 done
+
+echo "#: polkit" >> repoman/repoman.pot
+a="This action requieres administrator rights"
+echo 'msgid "'${a}'"' >> repoman/repoman.pot
+echo 'msgstr ""'>> repoman/repoman.pot
+echo '' >> repoman/repoman.pot

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-17 08:33+0100\n"
-"PO-Revision-Date: 2023-12-17 08:33+0100\n"
+"POT-Creation-Date: 2023-12-18 07:59+0100\n"
+"PO-Revision-Date: 2023-12-18 08:01+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -18,87 +18,83 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: ../src/repoman-cli.py:27
-msgid "Manage repositories requires admin authentification"
-msgstr "Gestionar repositoris requereix permissos d'administrador"
-
-#: ../src/repoman-cli.py:28
 msgid "Add repository"
 msgstr "Afig un repositori"
 
-#: ../src/repoman-cli.py:29
+#: ../src/repoman-cli.py:28
 msgid "Disable repo"
 msgstr "Inhabilita el repositori"
 
-#: ../src/repoman-cli.py:30
+#: ../src/repoman-cli.py:29
 msgid "Enable repo"
 msgstr "Activa el repositori"
 
-#: ../src/repoman-cli.py:31
+#: ../src/repoman-cli.py:30
 msgid "List repositories"
 msgstr "Mostra els repositoris"
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:31
 msgid "List enabled repositories"
 msgstr "Mostra els repositoris habilitats"
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:32
 msgid "List disabled repositories"
 msgstr "Mostra els repositoris inhabilitats"
 
-#: ../src/repoman-cli.py:34
+#: ../src/repoman-cli.py:33
 msgid "Assume \"yes\" to all questions"
 msgstr "Si a totes les preguntes (desatesa)"
 
-#: ../src/repoman-cli.py:35 ../src/repoman-cli.py:104 ../src/repoman-cli.py:134
-#: ../src/repoman-cli.py:160 ../src/repoman-cli.py:171
+#: ../src/repoman-cli.py:34 ../src/repoman-cli.py:103 ../src/repoman-cli.py:133
+#: ../src/repoman-cli.py:159 ../src/repoman-cli.py:170
 msgid "Y/N"
 msgstr "S/N"
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:35
 msgid "You're going to add the repo present at"
 msgstr "S'afegirá el repo present a"
 
-#: ../src/repoman-cli.py:37
+#: ../src/repoman-cli.py:36
 msgid "Continue?"
 msgstr "Continuar?"
 
-#: ../src/repoman-cli.py:38
+#: ../src/repoman-cli.py:37
 msgid "Name for the repository"
 msgstr "Nom del repositori"
 
-#: ../src/repoman-cli.py:39
+#: ../src/repoman-cli.py:38
 msgid "Description:"
 msgstr "Descripció:"
 
-#: ../src/repoman-cli.py:40
+#: ../src/repoman-cli.py:39
 msgid "You're going to"
 msgstr "Es va a"
 
-#: ../src/repoman-cli.py:41
+#: ../src/repoman-cli.py:40
 msgid "disable"
 msgstr "desactivar"
 
-#: ../src/repoman-cli.py:42
+#: ../src/repoman-cli.py:41
 msgid "enable"
 msgstr "activar"
 
-#: ../src/repoman-cli.py:43
+#: ../src/repoman-cli.py:42
 msgid "repository"
 msgstr "repositori"
 
-#: ../src/repoman-cli.py:44
+#: ../src/repoman-cli.py:43
 msgid "Repositories changed. Do you want to update info?"
 msgstr "Actualitzar els repositoris?"
 
-#: ../src/repoman-cli.py:68
+#: ../src/repoman-cli.py:67
 msgid "Show help"
 msgstr "Mostra l'ajuda"
 
-#: ../src/repoman-cli.py:74
+#: ../src/repoman-cli.py:73
 msgid "Invalid Url"
 msgstr "L'Url no és vàlid"
 
-#: ../src/repoman-cli.py:75
+#: ../src/repoman-cli.py:74
 msgid ""
 "Can't add repository information.\n"
 "Check your permissions"
@@ -106,7 +102,7 @@ msgstr ""
 "No es pot afegir la informació del repositori.\n"
 "Comproveu els vostres permisos"
 
-#: ../src/repoman-cli.py:76
+#: ../src/repoman-cli.py:75
 msgid ""
 "Can't write sources file.\n"
 "Check your permissions"
@@ -114,53 +110,53 @@ msgstr ""
 "No es pot escriure el fitxer de fonts.\n"
 "Comproveu els vostres permisos"
 
-#: ../src/repoman-cli.py:77
+#: ../src/repoman-cli.py:76
 msgid "Repository not found at given Url"
 msgstr "No es troba el repositori a l'Url donat"
 
-#: ../src/repoman-cli.py:78
+#: ../src/repoman-cli.py:77
 msgid "Repositories failed to update"
 msgstr "Ha fallat l'actualització dels repositoris"
 
-#: ../src/repoman-cli.py:79
+#: ../src/repoman-cli.py:78
 msgid "Mirror not availabe"
 msgstr "Mirror no disponible"
 
-#: ../src/repoman-cli.py:80
+#: ../src/repoman-cli.py:79
 msgid "This repository could'nt be overwrited"
 msgstr "No s'ha pogut sobreescriure el repositori"
 
-#: ../src/repoman-cli.py:81
+#: ../src/repoman-cli.py:80
 msgid "Failed to add repo"
 msgstr "S'ha produït un error en afegir el repositori"
 
-#: ../src/repoman-cli.py:82
+#: ../src/repoman-cli.py:81
 msgid "You must be root or supply a valid username/password"
 msgstr ""
 "Heu de ser usuari primari o subministrar un nom d'usuari/contrasenya vàlids"
 
-#: ../src/repoman-cli.py:83
+#: ../src/repoman-cli.py:82
 msgid "Incorrect username/password"
 msgstr "Nom d'usuari/contrasenya incorrectes"
 
-#: ../src/repoman-cli.py:84
+#: ../src/repoman-cli.py:83
 msgid "Error retrieving data from server"
 msgstr "S'ha produït un error en recuperar les dades del servidor"
 
-#: ../src/repoman-cli.py:187
+#: ../src/repoman-cli.py:186
 msgid "Enabled"
 msgstr "Actiu"
 
-#: ../src/repoman-cli.py:191
+#: ../src/repoman-cli.py:190
 msgid "Disabled"
 msgstr "Inhabilitat"
 
-#: ../src/repoman-cli.py:263
+#: ../src/repoman-cli.py:262
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:264
+#: ../src/repoman-cli.py:263
 msgid ""
 "\n"
 "RepoMan"
@@ -168,7 +164,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:265
+#: ../src/repoman-cli.py:264
 msgid ""
 "\n"
 "Parameters:"
@@ -176,12 +172,12 @@ msgstr ""
 "\n"
 "Paràmetres:"
 
-#: ../src/repoman-cli.py:341
+#: ../src/repoman-cli.py:340
 #, python-format
 msgid "Invalid value for argument -%s"
 msgstr "Valor no vàlid per a l'argument -%s"
 
-#: ../src/repoman-cli.py:345
+#: ../src/repoman-cli.py:344
 msgid "Invalid argument"
 msgstr "Argument no vàlid"
 
@@ -268,11 +264,11 @@ msgstr "Actualitza els repositoris"
 
 #: ../src/stacks/systemTools.py:18
 msgid "Lliurex pinning ENABLED"
-msgstr "Prioritat per a paquets LliureX ACTIVA"
+msgstr "Prioritza els repositoris de Lliurex"
 
 #: ../src/stacks/systemTools.py:19
 msgid "Lliurex pinning DISABLED"
-msgstr "Prioritar per a paquets LliureX INACTIVA"
+msgstr "Prioritza els repositoris de Lliurex"
 
 #: json ../sources.d/default/lliurex_23.json
 msgid "Lliurex default repositories"
@@ -285,6 +281,13 @@ msgstr "Repositoris locals"
 #: json ../sources.d/default/ubuntu_jammy.json
 msgid "Ubuntu jammy official repositories"
 msgstr "Repositoris oficials d'Ubuntu Jammy"
+
+#: polkit
+msgid "This action requieres administrator rights"
+msgstr "Aquesta acció requereix drets d'administrador"
+
+#~ msgid "Manage repositories requires admin authentification"
+#~ msgstr "Gestionar repositoris requereix permissos d'administrador"
 
 #~ msgid "User's password"
 #~ msgstr "Contrasenya"
