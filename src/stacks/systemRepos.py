@@ -151,6 +151,8 @@ class systemRepos(confStack):
 			w.setDesc(desc)
 			w.setFile(repodata.get("file",""))
 			w.setState(repodata.get("enabled",False))
+			available=repodata.get("available",False)
+			w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
 			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)
 	#def _udpate_screen

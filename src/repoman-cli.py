@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import os,sys,socket
 from collections import OrderedDict
-
+import subprocess
 from repoman import repomanager 
 import gettext
 gettext.textdomain('repoman')
@@ -22,8 +22,12 @@ action={}
 reponame=''
 repoinfo=''
 unattended=False
+REPOHELPER="/usr/share/repoman/helper/repomanpk.py"
 
 i18n={
+	"DISABLED":_('Disabled'),
+	"ENABLED":_('Enabled'),
+	"FORBIDDEN":_("This repo needs external configuration"),
 	"HLP_ADD":_("Add repository"),
 	"HLP_DISABLE":_("Disable repo"),
 	"HLP_ENABLE":_("Enable repo"),
@@ -31,16 +35,17 @@ i18n={
 	"HLP_LISTE":_("List enabled repositories"),
 	"HLP_LISTD":_("List disabled repositories"),
 	"HLP_YES":_("Assume \"yes\" to all questions"),
-	"OPTIONS":_("Y/N"),
 	"MSG_ADD":_("You're going to add the repo present at"),
 	"MSG_CONTINUE":_("Continue?"),
-	"REPONAME":_("Name for the repository"),
-	"REPODESC":_("Description:"),
-	"MSG_YOU":_("You're going to"),
 	"MSG_DISABLE":_("disable"),
 	"MSG_ENABLE":_("enable"),
+	"MSG_UPDATE":_("Repositories changed. Do you want to update info?"),
+	"MSG_YOU":_("You're going to"),
+	"OPTIONS":_("Y/N"),
+	"REPODESC":_("Description:"),
+	"REPONAME":_("Name for the repository"),
 	"REPOSITORY":_("repository"),
-	"MSG_UPDATE":_("Repositories changed. Do you want to update info?")}
+	"UNAVAILABLE":_("Unavailable")}
 #a->append url
 #p->password
 #u->user
@@ -110,12 +115,11 @@ def addRepo():
 				desc=input("{0} [{1}]".format(i18n.get("REPODESC",url)))
 			else:
 				return()
-	subprocess.run(["pkexec",self.repohelper,action["a"],"Add",reponame,repodesc])
+	subprocess.run(["pkexec",REPOHELPER,action["a"],"Add",reponame,repodesc])
 	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
-def disableRepo():
-	targetrepo=action['d']
+def _getRepoName(targetrepo):
 	repomanRepos=repoman.getRepos()
 	output=_formatOutput(repomanRepos,False,False)
 	reponame=""
@@ -129,6 +133,15 @@ def disableRepo():
 				reponame=line.split(":")[0]
 				targetrepo=line
 				break
+	return(targetrepo,reponame)
+#def _getRepoName
+
+def disableRepo():
+	targetrepo=action['d']
+	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
+		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
+		sys.exit(1)
 
 	options=_("Y/N")
 	if not unattended:
@@ -136,25 +149,16 @@ def disableRepo():
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		subprocess.run(["pkexec",self.repohelper,reponame,"False"])
+		subprocess.run(["pkexec",REPOHELPER,reponame,"False"])
 		#repoman.disableRepoByName(reponame)
 #def disableRepo
 
 def enableRepo():
 	targetrepo=action['e']
-	repomanRepos=repoman.getRepos()
-	output=_formatOutput(repomanRepos,False,False)
-	reponame=""
-	if targetrepo.isdigit():
-		line=output[int(targetrepo)]
-		reponame=line.split(":")[0]
-		targetrepo=line
-	else:
-		for line in output:
-			if targetrepo.replace(" ","").strip().lower() in line.replace(" ","").strip().lower():
-				reponame=line.split(":")[0]
-				targetrepo=line
-				break
+	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
+		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
+		sys.exit(1)
 
 	options=_("Y/N")
 	if not unattended:
@@ -162,7 +166,7 @@ def enableRepo():
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		subprocess.run(["pkexec",self.repohelper,reponame,"True"])
+		subprocess.run(["pkexec",REPOHELPER,reponame,"True"])
 		#repoman.enableRepoByName(reponame)
 #def enableRepo
 
@@ -183,15 +187,18 @@ def _formatOutput(repomanRepos,enabled,disabled):
 		for sourcesUrl in repomanRepos.keys():
 			sw_omit=False
 			printcolor=color.GREEN
-			msgEnabled=_('Enabled')
+			msgEnabled=i18n.get("ENABLED")
 			for release,releasedata in repomanRepos[sourcesUrl].items():
 				if releasedata.get('enabled',False)==False:
 					printcolor=color.RED
-					msgEnabled=_('Disabled')
+					msgEnabled=i18n.get("DISABLED")
 					if enabled==True:
 						sw_omit=True
 				elif disabled==True:
 					sw_omit=True
+				if releasedata.get("available",True)==False:
+					printcolor=color.DARKCYAN
+					msgEnabled=i18n.get("UNAVAILABLE")
 				name=releasedata.get("name",sourcesUrl)
 				desc=releasedata.get("desc","")
 			if sw_omit==False:
