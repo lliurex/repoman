@@ -3,6 +3,8 @@
         "cmd": "/usr/share/repoman/helper/repomanpk.py",
         "prefix": "net.lliurex.repoman",
         "nameaction": "manager",
+		"domain": "repoman",
+		"message": "Administration rights are required for this action",
         "icon": "scite",
         "auths": [
             {
