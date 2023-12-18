@@ -24,7 +24,6 @@ repoinfo=''
 unattended=False
 
 i18n={
-	"POLKIT":_("Manage repositories requires admin authentification"),
 	"HLP_ADD":_("Add repository"),
 	"HLP_DISABLE":_("Disable repo"),
 	"HLP_ENABLE":_("Enable repo"),
