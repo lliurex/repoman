@@ -18,6 +18,7 @@ i18n={
 	"BADARGVALUE":_("Invalid value for argument"),
 	"DISABLED":_('Disabled'),
 	"ENABLED":_('Enabled'),
+	"ERROR":_('Operation failed'),
 	"FORBIDDEN":_("This repo needs external configuration"),
 	"HLP_ADD":_("Add repository"),
 	"HLP_DISABLE":_("Disable repo"),
@@ -36,6 +37,7 @@ i18n={
 	"REPODESC":_("Description:"),
 	"REPONAME":_("Name for the repository"),
 	"REPOSITORY":_("repository"),
+	"SUCESS":_("Ok"),
 	"UNAVAILABLE":_("Unavailable")
 	}
 #a->append url
@@ -66,20 +68,6 @@ parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'}
 
 repo_index={}
 
-class error:
-	URL=_("Invalid Url")
-	INFO=_("Can't add repository information.\nCheck your permissions")
-	SOURCES=_("Can't write sources file.\nCheck your permissions")
-	REPO=_("Repository not found at given Url")
-	UPDATE=_("Repositories failed to update")
-	MIRROR=_("Mirror not availabe")
-	OVERWRITE=_("This repository could'nt be overwrited")
-	ADD=_("Failed to add repo")
-	USER=_("You must be root or supply a valid username/password")
-	CREDENTIALS=_("Incorrect username/password")
-	DATA=_("Error retrieving data from server")
-#class error
-
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -93,6 +81,15 @@ class color:
    END = '\033[0m'
 #class color
 
+def _runHelper(*args):
+	cmd=["pkexec",REPOHELPER]
+	cmd.extend(args)
+	proc=subprocess.run(cmd)
+	if proc.returncode!=0:
+		print(i18n.get("ERROR"))
+	quit(proc.returncode)
+#def _runHelper
+
 def addRepo():
 	url=action['a']
 	options=i18n.get("OPTIONS")
@@ -105,7 +102,7 @@ def addRepo():
 			desc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),url))
 		else:
 			return()
-	subprocess.run(["pkexec",REPOHELPER,action["a"],"Add",name,desc])
+	_runHelper(action["a"],"Add",name,desc)
 	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
@@ -114,9 +111,10 @@ def _getRepoName(targetrepo):
 	output=_formatOutput(repomanRepos,False,False)
 	reponame=""
 	if targetrepo.isdigit():
-		line=output[int(targetrepo)]
-		reponame=line.split(":")[0]
-		targetrepo=line
+		if len(output)>int(targetrepo):
+			line=output[int(targetrepo)]
+			reponame=line.split(":")[0]
+			targetrepo=line
 	else:
 		for line in output:
 			if targetrepo.replace(" ","").strip().lower() in line.replace(" ","").strip().lower():
@@ -142,8 +140,7 @@ def disableRepo():
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		subprocess.run(["pkexec",REPOHELPER,reponame,"False"])
-		#repoman.disableRepoByName(reponame)
+		_runHelper(reponame,"False")
 #def disableRepo
 
 def enableRepo():
@@ -162,8 +159,7 @@ def enableRepo():
 	if not unattended:
 		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	if resp.lower()==options[0].lower():
-		subprocess.run(["pkexec",REPOHELPER,reponame,"True"])
-		#repoman.enableRepoByName(reponame)
+		_runHelper(reponame,"True")
 #def enableRepo
 
 def updateRepos():
@@ -222,44 +218,6 @@ def listDisabledRepos():
 	listRepos(disabled=True)
 #def listDisabledRepos
 
-def _getSystemRepos():
-	repos=repoman.getSystemRepos()
-	return(repos)
-	global key
-	if key:
-		n4dcredentials=key
-	else:
-		n4dcredentials=credentials
-	try:
-		data=n4dserver.list_default_repos(n4dcredentials,"RepoManager")
-	except Exception as e:
-		print(error.DATA)
-		quit(1)
-	if type(data)==type(''):
-		print (error.DATA)
-		quit(1)
-	else:
-		repos=data.get('return',data)
-	sort_repos=OrderedDict()
-	index=0
-	for repo in sorted(repos.keys()):
-		sort_repos.update({repo:repos[repo]})
-		repo_index[index]=repo
-		index+=1
-	data=n4dserver.list_sources(n4dcredentials,"RepoManager")
-	if type(data)==type(''):
-		print (error.DATA)
-		quit(1)
-	else:
-		sources=data.get('return',data)
-	for repo in sorted(sources.keys()):
-		sort_repos.update({repo:sources[repo]})
-		repo_index[index]=repo
-		index+=1
-	repos=sort_repos.copy()
-	return(repos)
-#def _getSystemRepos
-
 def show_help():
 	print(_("Usage: %s ACTION")%(sys.argv[0]))
 	print(_("\nRepoMan"))
@@ -269,57 +227,11 @@ def show_help():
 	sys.exit(0)
 #def show_help
 
-def set_credentials(user='',pwd=''):
-	if user:
-		credentials[0]=user
-	if pwd:
-		credentials[1]=pwd
-#def set_credentials
-
-def set_server(ip):
-	server=ip
-#def set_server
-
-def _n4d_connect():
-	return
-	ret=True
-	context=ssl._create_unverified_context()
-	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-	#Test if proxy is well stablished
-	sw=True
-	try:
-		n4dserver.__ServerProxy__request("fakeCall",("",""))
-	except ConnectionRefusedError as e:
-	#Use local lib
-		print("Using LTSP compat mode")
-		n4dserver=repoman
-		sw=False
-	
-	if sw:
-		if credentials:
-			try:
-				ret=n4dserver.validate_user(credentials[0],credentials[1])
-				if not ret['return'][0]:
-					print(error.CREDENTIALS)
-					quit(1)
-			except:
-				print(error.CREDENTIALS)
-				quit(1)
-		else:
-			try:
-				global key
-				with open('/etc/n4d/key','r') as fkey:
-					key=fkey.readlines()[0].strip()
-			except:
-				print(error.USER)
-				quit(1)
-	return(n4dserver)
-#def _n4d_connect
-
 def quit(err=0):
 	sys.exit(err)
 
 parms=' '.join(sys.argv[1:]).split(' -')
+msg=""
 for parm in parms:
 	if parm.startswith('-'):
 		parm=parm.lstrip('-')
@@ -339,13 +251,14 @@ for parm in parms:
 		if parms_dict[parm_key]['args'] and parm.strip():
 			action.update({parm_key:parm.strip()})
 		elif parms_dict[parm_key]['args']:
-			error_dict[parm_key]="{} {}".format(i18n.get("BARDARGVALUE"),parm_array[0])
+			msg="{} {}".format(i18n.get("BARDARGVALUE"),parm_array[0])
 		else:
 			action.update({parm_key:parm.strip()})
 	else:
-		error_dict[parm_key]=i18n.get("BADARG")
+		msg=i18n.get("BADARG")
 
 if not action:
+	print(msg)
 	show_help()
 
 if 'n' in action.keys():
