@@ -12,12 +12,15 @@ import time
 import gettext
 _ = gettext.gettext
 
-i18n={"MENU":_("Manage system repositories"),
+i18n={
 	"DESC":_("System repositories"),
+	"ERROR":_("Error in:"),
+	"MENU":_("Manage system repositories"),
 	"TOOLTIP":_("From here you can activate/deactivate the system repositories")
 	}
 
 class processRepos(QThread):
+	onError=Signal(list)
 	def __init__(self,widget,parent=None):
 		QThread.__init__(self, parent)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
@@ -28,12 +31,17 @@ class processRepos(QThread):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		if self.parent:
 			self.parent.setCursor(cursor)
+		err=[]
 		for i in range(0,self.widget.rowCount()):
 			w=self.widget.cellWidget(i,0)
 			if w.changed==False:
 				continue
 			state=w.isChecked()
-			subprocess.run(["pkexec",self.repohelper,w.text(),str(state)])
+			proc=subprocess.run(["pkexec",self.repohelper,w.text(),str(state)])
+			if proc.returncode!=0:
+				err.append(w.text())
+		if len(err)>0:
+			self.onError.emit(err)
 		return(True)
 #class processRepos
 
@@ -176,9 +184,15 @@ class systemRepos(confStack):
 
 	def writeConfig(self):
 		self.process=processRepos(self.lstRepositories,self)
+		self.process.onError.connect(self._onError)
 		self.process.finished.connect(self._endProcess)
 		self.process.start()
 	#def writeConfig
+
+	def _onError(self,err):
+		print("error")
+		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
+	#def _onError
 
 	def _endProcess(self,*args):
 		self.changes=False

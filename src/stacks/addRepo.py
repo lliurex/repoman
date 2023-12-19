@@ -10,24 +10,36 @@ import subprocess
 import gettext
 _ = gettext.gettext
 
-i18n={"REPONAME":_("name of the repository"),
+i18n={
+	"ERROR":_("An error ocurred"),
 	"INSERTREPONAME":_("Insert repository name"),
+	"MSG_ADD":_("Repository added"),
 	"REPOCONTENT":_("Repository's contents"),
 	"REPODESC":_("Descriptive description (optional)"),
+	"REPONAME":_("name of the repository"),
 	"REPOURL":_("Repository's url"),
 	"REPOURLDESC":_("Url for the repository")
 	}
 
 class processRepos(QThread):
+	onError=Signal(list)
 	def __init__(self,url,name="",desc="",parent=None):
 		QThread.__init__(self, parent)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
 		self.url=url
 		self.name=name
 		self.desc=desc
+		self.parent=parent
 
 	def run(self):
-		subprocess.run(["pkexec",self.repohelper,self.url,"Add",self.name,self.desc])
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		if self.parent:
+			self.parent.setCursor(cursor)
+		err=[]
+		proc=subprocess.run(["pkexec",self.repohelper,self.url,"Add",self.name,self.desc])
+		if proc.returncode!=0:
+			err.append(self.url)
+			self.onError.emit(err)
 		return(True)
 #class processRepos
 
@@ -41,6 +53,7 @@ class addRepo(confStack):
 		self.tooltip=(_("From here you can add custom repositories"))
 		self.index=2
 		self.visible=True
+		self.oldcursor=self.cursor()
 		self.enabled=True
 		self.level='user'
 	#def __init__
@@ -73,6 +86,10 @@ class addRepo(confStack):
 		self.url.setText("")
 	#def _reset_screen
 
+	def _onError(self,err):
+		self.showMsg("{}:\n".format(i18n.get("ERROR"),"\n".join(err)))
+	#def _onError
+
 	def writeConfig(self):
 		url=self.url.text()
 		if len(url)<=0:
@@ -86,11 +103,12 @@ class addRepo(confStack):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		oldcursor=self.cursor()
 		self.setCursor(cursor)
-		process=processRepos(url,name,desc)
-		process.run()
-		self.setCursor(oldcursor)
-		self.updateScreen()
-
-		self.showMsg(_("Added repository") + " {}".format(name))
+		self.process=processRepos(url,name,desc,self)
+		self.process.onError.connect(self._onError)
+		self.process.finished.connect(self._endProcess)
+		self.process.start()
 	#def writeConfig
-
+	
+	def _endProcess(self):
+		self.setCursor(self.oldcursor)
+		self.stack.gotoStack(idx=1,parms="")
