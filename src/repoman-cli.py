@@ -1,30 +1,21 @@
 #!/usr/bin/python3
-import os,sys,socket
+import os,sys
 from collections import OrderedDict
 import subprocess
 from repoman import repomanager 
 import gettext
+from rebost import store
 gettext.textdomain('repoman')
 _ = gettext.gettext
 
-#Validate if 'server' is a known machine
-try:
-	socket.gethostbyname(server)
-except:
-	server='localhost'
-
-credentials=[]
 repoman=repomanager.manager()
-repoman.dbg=False
-key=''
-error_dict={}
 action={}
-reponame=''
-repoinfo=''
 unattended=False
 REPOHELPER="/usr/share/repoman/helper/repomanpk.py"
 
 i18n={
+	"BADARG":_("Invalid argument"),
+	"BADARGVALUE":_("Invalid value for argument"),
 	"DISABLED":_('Disabled'),
 	"ENABLED":_('Enabled'),
 	"FORBIDDEN":_("This repo needs external configuration"),
@@ -45,7 +36,8 @@ i18n={
 	"REPODESC":_("Description:"),
 	"REPONAME":_("Name for the repository"),
 	"REPOSITORY":_("repository"),
-	"UNAVAILABLE":_("Unavailable")}
+	"UNAVAILABLE":_("Unavailable")
+	}
 #a->append url
 #p->password
 #u->user
@@ -101,21 +93,19 @@ class color:
    END = '\033[0m'
 #class color
 
-
-
 def addRepo():
 	url=action['a']
-	options=_("Y/N")
+	options=i18n.get("OPTIONS")
 	name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
 	desc=url
 	if not unattended:
-			resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
-			if resp.lower()==options[0].lower():
-				name=input("{0} [{1}]".format(i18n.get("REPONAME",name)))
-				desc=input("{0} [{1}]".format(i18n.get("REPODESC",url)))
-			else:
-				return()
-	subprocess.run(["pkexec",REPOHELPER,action["a"],"Add",reponame,repodesc])
+		resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+		if resp.lower()==options[0].lower():
+			name=input("{0} [{1}]: ".format(i18n.get("REPONAME"),name))
+			desc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),url))
+		else:
+			return()
+	subprocess.run(["pkexec",REPOHELPER,action["a"],"Add",name,desc])
 	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
@@ -139,11 +129,14 @@ def _getRepoName(targetrepo):
 def disableRepo():
 	targetrepo=action['d']
 	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if len(reponame)<=0:
+		print("{}{} {}{}".format(color.DARKCYAN,targetrepo,i18n.get("UNAVAILABLE"),color.END))
+		sys.exit(1)
 	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
 		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
 		sys.exit(1)
 
-	options=_("Y/N")
+	options=i18n.get("OPTIONS")
 	if not unattended:
 		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_DISABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	else:
@@ -156,27 +149,30 @@ def disableRepo():
 def enableRepo():
 	targetrepo=action['e']
 	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if len(reponame)<=0:
+		print("{}{} {}{}".format(color.DARKCYAN,targetrepo,i18n.get("UNAVAILABLE"),color.END))
+		sys.exit(1)
+		
 	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
 		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
 		sys.exit(1)
 
-	options=_("Y/N")
+	options=i18n.get("OPTIONS")
+	resp=options[0].lower()
 	if not unattended:
 		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
-	else:
-		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
 		subprocess.run(["pkexec",REPOHELPER,reponame,"True"])
 		#repoman.enableRepoByName(reponame)
 #def enableRepo
 
 def updateRepos():
-	options=_("Y/N")
-	resp=''
+	options=i18n.get("OPTIONS")
+	resp=options[0].lower()
 	if not unattended:
 		resp=input("{0} {1} [{2}]: ".format(i18n.get("MSG_UPDATE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[0]))
-	if resp.lower()==options[0].lower() or resp=='':
-		os.execv("/usr/bin/apt-get",["update","update"])
+	if resp.lower()==options[0].lower():
+		store.client().update()
 #def updateRepos():
 
 def _formatOutput(repomanRepos,enabled,disabled):
@@ -209,22 +205,21 @@ def _formatOutput(repomanRepos,enabled,disabled):
 	return(output)
 #def _formatOutput
 
-def listRepoS(enabled=False,disabled=False):
+def listRepos(enabled=False,disabled=False):
 	index=0
-	repoman.isMirrorEnabled()
 	repomanRepos=repoman.getRepos()
 	output=_formatOutput(repomanRepos,enabled,disabled)
 	for line in output:
 		print("{0}) {1}".format(index,line))
 		index+=1
-#def listRepoS
+#def listRepos
 
 def listEnabledRepos():
-	listRepoS(enabled=True)
+	listRepos(enabled=True)
 #def listEnabledRepos
 
 def listDisabledRepos():
-	listRepoS(disabled=True)
+	listRepos(disabled=True)
 #def listDisabledRepos
 
 def _getSystemRepos():
@@ -344,17 +339,12 @@ for parm in parms:
 		if parms_dict[parm_key]['args'] and parm.strip():
 			action.update({parm_key:parm.strip()})
 		elif parms_dict[parm_key]['args']:
-			error_dict[parm_key]=_("Invalid value for argument -%s"%(parm_array[0]))
+			error_dict[parm_key]="{} {}".format(i18n.get("BARDARGVALUE"),parm_array[0])
 		else:
 			action.update({parm_key:parm.strip()})
 	else:
-		error_dict[parm_key]=_("Invalid argument")
+		error_dict[parm_key]=i18n.get("BADARG")
 
-if error_dict:
-	print()
-	for err,msg in error_dict.items():
-		print("%s: %s"%(err,msg))
-	show_help()
 if not action:
 	show_help()
 
@@ -390,7 +380,7 @@ if 'e' in action.keys():
 #	if remove_repo()==0:
 #		updateRepos()
 if 'l' in action.keys():
-	listRepoS()
+	listRepos()
 if 'ld' in action.keys():
 	listDisabledRepos()
 if 'le' in action.keys():

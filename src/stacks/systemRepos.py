@@ -30,8 +30,10 @@ class processRepos(QThread):
 			self.parent.setCursor(cursor)
 		for i in range(0,self.widget.rowCount()):
 			w=self.widget.cellWidget(i,0)
-			state=w.chkState.isChecked()
-			subprocess.run(["pkexec",self.repohelper,w.text.text(),str(state)])
+			if w.changed==False:
+				continue
+			state=w.isChecked()
+			subprocess.run(["pkexec",self.repohelper,w.text(),str(state)])
 		return(True)
 #class processRepos
 
@@ -41,36 +43,41 @@ class QRepoItem(QWidget):
 		QWidget.__init__(self, parent)
 		self.file=""
 		lay=QGridLayout()
-		self.text=QLabel()
-		self.text.setStyleSheet("font: bold large;")
-		font=self.text.font()
+		self.lbltext=QLabel()
+		self.lbltext.setStyleSheet("font: bold large;")
+		font=self.lbltext.font()
 		font.setPointSize(font.pointSize()+2)
-		self.text.setFont(font)
+		self.lbltext.setFont(font)
 		self.desc=QLabel()
 		self.btnEdit=QPushButton()
 		self.btnEdit.setIcon(QtGui.QIcon.fromTheme("document-edit"))
 		self.btnEdit.clicked.connect(self._editFile)
 		self.chkState=QCheckBox()
 		self.chkState.stateChanged.connect(self.emitState)
-		lay.addWidget(self.text,0,0,1,1,Qt.AlignLeft)
+		lay.addWidget(self.lbltext,0,0,1,1,Qt.AlignLeft)
 		lay.addWidget(self.desc,1,0,2,1,Qt.AlignLeft)
 		lay.addWidget(self.btnEdit,0,1,1,1,Qt.AlignRight|Qt.AlignCenter)
 		lay.addWidget(self.chkState,0,2,1,1,Qt.AlignRight|Qt.AlignCenter)
 		lay.setColumnStretch(0,1)
+		self.changed=False
 		self.setLayout(lay)
 		parent=self.parent
 	#def __init__
+
+	def isChecked(self):
+		return(self.chkState.isChecked())
+	#def isChecked
 
 	def setFile(self,file):
 		self.file=file
 	#def setFile
 
 	def setText(self,txt):
-		self.text.setText("{}".format(txt))
+		self.lbltext.setText("{}".format(txt))
 		restricted=["lliurex 23","lliurex mirror","ubuntu jammy"]
 		if txt.lower() in restricted:
 			self.btnEdit.setVisible(False)
-		self.text.adjustSize()
+		self.lbltext.adjustSize()
 	#def setText
 
 	def setDesc(self,txt):
@@ -86,12 +93,17 @@ class QRepoItem(QWidget):
 		pass
 	#def setBtnIcn
 
+	def text(self):
+		return(self.lbltext.text())
+	#def text
+
 	def _editFile(self):
 		subprocess.run(["kwrite",self.file])
 	#def _editFile
 
 	def emitState(self):
 		self.stateChanged.emit(self.chkState.isChecked())
+		self.changed=True
 	#def emitState
 #class QRepoItem
 
@@ -151,6 +163,7 @@ class systemRepos(confStack):
 			w.setDesc(desc)
 			w.setFile(repodata.get("file",""))
 			w.setState(repodata.get("enabled",False))
+			w.changed=False
 			available=repodata.get("available",False)
 			w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
