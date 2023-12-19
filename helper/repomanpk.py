@@ -2,14 +2,18 @@
 import sys
 from repoman import repomanager
 import subprocess
+
+class err:
+	SIGNED=10
+
 repo=repomanager.manager()
 if len(sys.argv)>=3:
 	name=sys.argv[1]
 	state=sys.argv[2]
 	if state=="True":
-		repo.enableRepoByName(name)
+		ret=repo.enableRepoByName(name)
 	elif state=="False":
-		repo.disableRepoByName(name)
+		ret=repo.disableRepoByName(name)
 	elif state=="Add":
 		reponame=""
 		repodesc=""
@@ -18,8 +22,13 @@ if len(sys.argv)>=3:
 		if len(sys.argv)>4:
 			repodesc=sys.argv[4]
 		if name.startswith("ppa:"):
-			subprocess.run(["add-apt-repository","-y",name])
+			proc=subprocess.run(["add-apt-repository","-y",name])
+			ret=proc.returncode
 		else:
-			repo.addRepo(name,reponame,repodesc)
+			if "signed-by" in name.lower():
+				ret=err.SIGNED
+			else:
+				ret=repo.addRepo(name,reponame,repodesc)
 	elif state=="Pin":
-		repo.reversePinning()
+		ret=repo.reversePinning()
+sys.exit(ret)
