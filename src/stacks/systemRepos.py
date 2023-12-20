@@ -56,6 +56,7 @@ class QRepoItem(QWidget):
 		font=self.lbltext.font()
 		font.setPointSize(font.pointSize()+2)
 		self.lbltext.setFont(font)
+		self.name=""
 		self.desc=QLabel()
 		self.btnEdit=QPushButton()
 		self.btnEdit.setIcon(QtGui.QIcon.fromTheme("document-edit"))
@@ -81,7 +82,11 @@ class QRepoItem(QWidget):
 	#def setFile
 
 	def setText(self,txt):
-		self.lbltext.setText("{}".format(txt))
+		self.name=txt
+		dsptxt=txt
+		if ".list" in txt:
+			dsptxt=txt.split(".list")[0]
+		self.lbltext.setText("{}".format(dsptxt))
 		restricted=["lliurex 23","lliurex mirror","ubuntu jammy"]
 		if txt.lower() in restricted:
 			self.btnEdit.setVisible(False)
@@ -102,7 +107,7 @@ class QRepoItem(QWidget):
 	#def setBtnIcn
 
 	def text(self):
-		return(self.lbltext.text())
+		return(self.name)
 	#def text
 
 	def _editFile(self):
