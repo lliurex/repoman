@@ -209,7 +209,7 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 	if len(repomanRepos)>0:
 		output=[]
 		sortKeys=list(repomanRepos.keys())
-		for sourcesUrl in repomanRepos.keys():
+		for sourcesUrl in sortKeys:
 			repos=[]
 			sw_omit=False
 			printcolor=color.GREEN
@@ -232,7 +232,7 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 			if sw_omit==False:
 				if desc!="":
 					desc=_(desc)
-				output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0],desc,printcolor,msgEnabled,color.END))
+				output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0].split(".sources")[0],desc,printcolor,msgEnabled,color.END))
 				if show==True:
 					output.append("\t** File: {} **".format(file))
 					output.append("\t{}".format("\n\t".join(repos)))
