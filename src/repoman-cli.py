@@ -196,7 +196,7 @@ def _formatOutput(repomanRepos,enabled,disabled):
 			if sw_omit==False:
 				if desc!="":
 					desc=_(desc)
-				output.append("{0}: {1} {2}{3}{4}".format(name,desc,printcolor,msgEnabled,color.END))
+				output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0],desc,printcolor,msgEnabled,color.END))
 	#	output.sort()
 	return(output)
 #def _formatOutput
@@ -261,25 +261,9 @@ if not action:
 	print(msg)
 	show_help()
 
-if 'n' in action.keys():
-	reponame=action['n']
-if 'i' in action.keys():
-	repoinfo=action['i']
 if 'y' in action.keys():
 	unattended=True
-
-if 'h' in action.keys():
 	show_help()
-if 'p' in action.keys():
-	if len(credentials)<2:
-		credentials=['','']
-	credentials[1]=action['p']
-if 'u' in action.keys():
-	if len(credentials)<2:
-		credentials=['','']
-	credentials[0]=action['u']
-
-#process_actions
 if 'a' in action.keys():
 	if addRepo()==0:
 		updateRepos()
@@ -294,8 +278,4 @@ if 'e' in action.keys():
 #		updateRepos()
 if 'l' in action.keys():
 	listRepos()
-if 'ld' in action.keys():
-	listDisabledRepos()
-if 'le' in action.keys():
-	listEnabledRepos()
 
