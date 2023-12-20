@@ -24,8 +24,10 @@ i18n={
 	"HLP_DISABLE":_("Disable repo"),
 	"HLP_ENABLE":_("Enable repo"),
 	"HLP_LIST":_("List repositories"),
-	"HLP_LISTE":_("List enabled repositories"),
+	"HLP_LIST":_("List enabled repositories"),
 	"HLP_LISTD":_("List disabled repositories"),
+	"HLP_OPTIONS":_("(name|index)"),
+	"HLP_SHOW":_("Show detailed information"),
 	"HLP_YES":_("Assume \"yes\" to all questions"),
 	"MSG_ADD":_("You're going to add the repo present at"),
 	"MSG_CONTINUE":_("Continue?"),
@@ -52,14 +54,15 @@ i18n={
 #le -> list enabled repos
 #ld -> list disabled repos
 parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'},
-			'd':{'args':1,'long':'disable','desc':i18n.get("HELP_DISABLE"),'usage':'(repository_name|repository_index)'},
-			'e':{'args':1,'long':'enable','desc':i18n.get("HELP_ENABLE"),'usage':'(repository_name|repository_index)'},
+			'd':{'args':1,'long':'disable','desc':i18n.get("HLP_DISABLE"),'usage':i18n.get("HLP_OPTIONS")},
+			'e':{'args':1,'long':'enable','desc':i18n.get("HLP_ENABLE"),'usage':i18n.get("HLP_OPTIONS")},
 #			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
 #			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
 #			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
 #			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
 #			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
 			'l':{'args':0,'long':'list','desc':i18n.get("HLP_LIST"),'usage':''},
+			's':{'args':0,'long':'show','desc':i18n.get("HLP_SHOW"),'usage':''},
 #			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
 			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':i18n.get("HLP_YES")},
 #			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
@@ -171,12 +174,13 @@ def updateRepos():
 		store.client().update()
 #def updateRepos():
 
-def _formatOutput(repomanRepos,enabled,disabled):
+def _formatOutput(repomanRepos,enabled,disabled,show=False):
 	output=[]
 	if len(repomanRepos)>0:
 		output=[]
 		sortKeys=list(repomanRepos.keys())
 		for sourcesUrl in repomanRepos.keys():
+			repos=[]
 			sw_omit=False
 			printcolor=color.GREEN
 			msgEnabled=i18n.get("ENABLED")
@@ -193,19 +197,26 @@ def _formatOutput(repomanRepos,enabled,disabled):
 					msgEnabled=i18n.get("UNAVAILABLE")
 				name=releasedata.get("name",sourcesUrl)
 				desc=releasedata.get("desc","")
+				repos.append(releasedata.get("raw",[]))
+				file=releasedata.get("file","")
 			if sw_omit==False:
 				if desc!="":
 					desc=_(desc)
 				output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0],desc,printcolor,msgEnabled,color.END))
-	#	output.sort()
+				if show==True:
+					output.append("\t** File: {} **".format(file))
+					output.append("\t{}".format("\n\t".join(repos)))
 	return(output)
 #def _formatOutput
 
-def listRepos(enabled=False,disabled=False):
+def listRepos(enabled=False,disabled=False,show=False):
 	index=0
 	repomanRepos=repoman.getRepos()
-	output=_formatOutput(repomanRepos,enabled,disabled)
+	output=_formatOutput(repomanRepos,enabled,disabled,show)
 	for line in output:
+		if line.startswith("\t"):
+			print("{1}".format(index,line))
+			continue
 		print("{0}) {1}".format(index,line))
 		index+=1
 #def listRepos
@@ -223,7 +234,7 @@ def show_help():
 	print(_("\nRepoMan"))
 	print(_("\nParameters:"))
 	for parm,data in sorted(parms_dict.items()):
-		print("-{0}, --{1} {2}".format(parm,data['long'],data['usage'],data['desc']))
+		print("-{0}, --{1} {2} {3}".format(parm,data['long'],data['usage'],data['desc']))
 	sys.exit(0)
 #def show_help
 
@@ -278,4 +289,6 @@ if 'e' in action.keys():
 #		updateRepos()
 if 'l' in action.keys():
 	listRepos()
+if 's' in action.keys():
+	listRepos(show=True)
 
