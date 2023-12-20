@@ -22,9 +22,11 @@ i18n={
 	"FORBIDDEN":_("This repo needs external configuration"),
 	"HLP_ADD":_("Add repository"),
 	"HLP_DISABLE":_("Disable repo"),
+	"HLP_EDIT":_("Edit repo"),
 	"HLP_ENABLE":_("Enable repo"),
+	"HLP_HLP":_("Show help"),
 	"HLP_LIST":_("List repositories"),
-	"HLP_LIST":_("List enabled repositories"),
+	"HLP_LISTE":_("List enabled repositories"),
 	"HLP_LISTD":_("List disabled repositories"),
 	"HLP_OPTIONS":_("(name|index)"),
 	"HLP_SHOW":_("Show detailed information"),
@@ -32,6 +34,7 @@ i18n={
 	"MSG_ADD":_("You're going to add the repo present at"),
 	"MSG_CONTINUE":_("Continue?"),
 	"MSG_DISABLE":_("disable"),
+	"MSG_EDIT":_("edit"),
 	"MSG_ENABLE":_("enable"),
 	"MSG_UPDATE":_("Repositories changed. Do you want to update info?"),
 	"MSG_YOU":_("You're going to"),
@@ -55,6 +58,7 @@ i18n={
 #ld -> list disabled repos
 parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'},
 			'd':{'args':1,'long':'disable','desc':i18n.get("HLP_DISABLE"),'usage':i18n.get("HLP_OPTIONS")},
+			'edit':{'args':1,'long':'edit','desc':i18n.get("HLP_EDIT"),'usage':i18n.get("HLP_OPTIONS")},
 			'e':{'args':1,'long':'enable','desc':i18n.get("HLP_ENABLE"),'usage':i18n.get("HLP_OPTIONS")},
 #			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
 #			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
@@ -66,7 +70,7 @@ parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'}
 #			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
 			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':i18n.get("HLP_YES")},
 #			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
-			'h':{'args':0,'long':'help','desc':_("Show help"),'usage':''}
+			'h':{'args':0,'long':'help','desc':i18n.get("HLP_HLP"),'usage':''}
 			}
 
 repo_index={}
@@ -126,6 +130,32 @@ def _getRepoName(targetrepo):
 				break
 	return(targetrepo,reponame)
 #def _getRepoName
+
+def editRepo():
+	targetrepo=action['edit']
+	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if len(reponame)<=0:
+		print("{}{} {}{}".format(color.DARKCYAN,targetrepo,i18n.get("UNAVAILABLE"),color.END))
+		sys.exit(1)
+	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
+		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
+		sys.exit(1)
+	resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_EDIT"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+	if resp.lower()==i18n.get("OPTIONS")[0].lower():
+		repomanRepos=repoman.getRepos()
+		output=_formatOutput(repomanRepos,True,False,True)
+		sw_print=False
+		file=""
+		for line in output:
+			if line.startswith(reponame):
+				sw_print=True
+			if sw_print:
+				if "** File: " in line:
+					file=line.split(" ")[2]
+		editor=os.environ.get("EDITOR","/usr/bin/nano")
+		if os.path.exists(file):
+			subprocess.run([editor,file])
+#def editRepo
 
 def disableRepo():
 	targetrepo=action['d']
@@ -248,7 +278,8 @@ for parm in parms:
 		parm=parm.lstrip('-')
 	if parm=='':
 		continue
-	parm_key=parm[0:2]
+	parm_key=parm.split(" ")[0]
+	#parm_key=parm[0:2]
 	val=False
 	if parm_key in parms_dict.keys():
 		val=True
@@ -275,20 +306,23 @@ if not action:
 if 'y' in action.keys():
 	unattended=True
 	show_help()
-if 'a' in action.keys():
+elif 'edit' in action.keys():
+	if editRepo()==0:
+		updateRepos()
+elif 'a' in action.keys():
 	if addRepo()==0:
 		updateRepos()
-if 'd' in action.keys():
+elif 'd' in action.keys():
 	if disableRepo()==0:
 		updateRepos()
-if 'e' in action.keys():
+elif 'e' in action.keys():
 	if enableRepo()==0:
 		updateRepos()
 #if 'r' in action.keys():
 #	if remove_repo()==0:
 #		updateRepos()
-if 'l' in action.keys():
+elif 'l' in action.keys():
 	listRepos()
-if 's' in action.keys():
+elif 's' in action.keys():
 	listRepos(show=True)
 
