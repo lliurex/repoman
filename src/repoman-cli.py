@@ -302,11 +302,12 @@ for parm in parms:
 if not action:
 	print(msg)
 	show_help()
+if 'h' in action.keys():
+	show_help()
 
 if 'y' in action.keys():
 	unattended=True
-	show_help()
-elif 'edit' in action.keys():
+if 'edit' in action.keys():
 	if editRepo()==0:
 		updateRepos()
 elif 'a' in action.keys():
