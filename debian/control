@@ -10,6 +10,5 @@ Homepage: http://lliurex.net
 Package: repoman
 Architecture: all
 Depends: python3-repoman, python3-appconfig(>=0.25), python3-pyside2.qtwidgets,scite
-Breaks: repoman(<3.0)
 Description: Lliurex Repository Manager
 
