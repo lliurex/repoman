@@ -1,8 +1,10 @@
 [
     {
-        "cmd": "/usr/bin/scite",
-        "prefix": "net.lliurex.scite",
-        "nameaction": "open-scite",
+        "cmd": "/usr/share/repoman/helper/repomanpk.py",
+        "prefix": "net.lliurex.repoman",
+        "nameaction": "manager",
+		"domain": "repoman",
+		"message": "Administration rights are required for this action",
         "icon": "scite",
         "auths": [
             {
@@ -13,7 +15,7 @@
                 ],
                 "any": "no",
                 "inactive": "no",
-                "active": "auth_self"
+                "active": "auth_self_keep"
             }
         ],
         "default_auth": {

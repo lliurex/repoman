@@ -1,4 +1,10 @@
-repoman (2.99) unpublished; urgency=medium
+repoman (3.0) jammy; urgency=medium
+
+  * Split package
+
+ -- Juanma1980 <juanma1980@gmail.com>  Tue, 12 Dec 2023 16:18:06 +0100
+
+repoman (2.9.1) jammy; urgency=medium
 
   * Jammy release
 
