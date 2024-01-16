@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 import sys
 import os
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QListWidgetItem,QCheckBox,QSizePolicy
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QListWidgetItem,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
 from PySide2 import QtGui
-from PySide2.QtCore import Qt,QThread
+from PySide2.QtCore import Qt,QThread,Signal
 from appconfig.appConfigStack import appConfigStack as confStack
 from appconfig.appconfigControls import *
 from repoman import repomanager
@@ -67,7 +67,7 @@ class QRepoItem(QWidget):
 		lay.addWidget(self.desc,1,0,2,1,Qt.AlignLeft)
 		lay.addWidget(self.btnEdit,0,1,1,1,Qt.AlignRight|Qt.AlignCenter)
 		lay.addWidget(self.chkState,0,2,1,1,Qt.AlignRight|Qt.AlignCenter)
-		lay.setColumnStretch(0,1)
+		lay.setColumnStretch(2,1)
 		self.changed=False
 		self.setLayout(lay)
 		parent=self.parent
