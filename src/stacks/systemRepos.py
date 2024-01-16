@@ -195,12 +195,13 @@ class systemRepos(confStack):
 	#def writeConfig
 
 	def _onError(self,err):
-		print("error")
+		self._debug("Error: {}".format(err))
 		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
 	#def _onError
 
 	def _endProcess(self,*args):
 		self.changes=False
+		self._updateRepos()
 		self.updateScreen()
 		self.setCursor(self.oldcursor)
 		self.setChanged(False)
@@ -208,4 +209,5 @@ class systemRepos(confStack):
 
 	def _updateRepos(self):
 		self._debug("Updating repos")
+		self.repoman.updateRepos()
 	#def _updateRepos
