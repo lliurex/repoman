@@ -140,7 +140,9 @@ class systemRepos(confStack):
 
 	def _load_screen(self):
 		box=QGridLayout()
-		self.lstRepositories=QTableWidget(1,1)
+		self.lstRepositories=QTableTouchWidget()
+		self.lstRepositories.setRowCount(0)
+		self.lstRepositories.setColumnCount(1)
 		Hheader=self.lstRepositories.horizontalHeader()
 		Vheader=self.lstRepositories.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
