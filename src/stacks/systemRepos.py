@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 import sys
 import os
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QListWidgetItem,QCheckBox,QSizePolicy
+from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QListWidgetItem,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
 from PySide2 import QtGui
-from PySide2.QtCore import Qt,QThread
+from PySide2.QtCore import Qt,QThread,Signal
 from appconfig.appConfigStack import appConfigStack as confStack
 from appconfig.appconfigControls import *
 from repoman import repomanager
@@ -67,7 +67,7 @@ class QRepoItem(QWidget):
 		lay.addWidget(self.desc,1,0,2,1,Qt.AlignLeft)
 		lay.addWidget(self.btnEdit,0,1,1,1,Qt.AlignRight|Qt.AlignCenter)
 		lay.addWidget(self.chkState,0,2,1,1,Qt.AlignRight|Qt.AlignCenter)
-		lay.setColumnStretch(0,1)
+		lay.setColumnStretch(2,1)
 		self.changed=False
 		self.setLayout(lay)
 		parent=self.parent
@@ -140,7 +140,9 @@ class systemRepos(confStack):
 
 	def _load_screen(self):
 		box=QGridLayout()
-		self.lstRepositories=QTableWidget(1,1)
+		self.lstRepositories=QTableTouchWidget()
+		self.lstRepositories.setRowCount(0)
+		self.lstRepositories.setColumnCount(1)
 		Hheader=self.lstRepositories.horizontalHeader()
 		Vheader=self.lstRepositories.verticalHeader()
 		Hheader.setSectionResizeMode(0,QHeaderView.Stretch)
@@ -195,12 +197,13 @@ class systemRepos(confStack):
 	#def writeConfig
 
 	def _onError(self,err):
-		print("error")
+		self._debug("Error: {}".format(err))
 		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
 	#def _onError
 
 	def _endProcess(self,*args):
 		self.changes=False
+		self._updateRepos()
 		self.updateScreen()
 		self.setCursor(self.oldcursor)
 		self.setChanged(False)
@@ -208,4 +211,5 @@ class systemRepos(confStack):
 
 	def _updateRepos(self):
 		self._debug("Updating repos")
+		self.repoman.updateRepos()
 	#def _updateRepos

@@ -4,7 +4,6 @@ from collections import OrderedDict
 import subprocess
 from repoman import repomanager 
 import gettext
-from rebost import store
 gettext.textdomain('repoman')
 _ = gettext.gettext
 
@@ -132,6 +131,7 @@ def _getRepoName(targetrepo):
 #def _getRepoName
 
 def editRepo():
+	ret=False
 	targetrepo=action['edit']
 	(targetrepo,reponame)=_getRepoName(targetrepo)
 	if len(reponame)<=0:
@@ -155,9 +155,12 @@ def editRepo():
 		editor=os.environ.get("EDITOR","/usr/bin/nano")
 		if os.path.exists(file):
 			subprocess.run([editor,file])
+			ret=True
+	return(ret)
 #def editRepo
 
 def disableRepo():
+	ret=False
 	targetrepo=action['d']
 	(targetrepo,reponame)=_getRepoName(targetrepo)
 	if len(reponame)<=0:
@@ -174,9 +177,13 @@ def disableRepo():
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
 		_runHelper(reponame,"False")
+		ret=True
+	print(ret)
+	return(ret)
 #def disableRepo
 
 def enableRepo():
+	ret=True
 	targetrepo=action['e']
 	(targetrepo,reponame)=_getRepoName(targetrepo)
 	if len(reponame)<=0:
@@ -193,6 +200,8 @@ def enableRepo():
 		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	if resp.lower()==options[0].lower():
 		_runHelper(reponame,"True")
+		ret=True
+	return(ret)
 #def enableRepo
 
 def updateRepos():
@@ -201,7 +210,7 @@ def updateRepos():
 	if not unattended:
 		resp=input("{0} {1} [{2}]: ".format(i18n.get("MSG_UPDATE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[0]))
 	if resp.lower()==options[0].lower():
-		store.client().update()
+		repoman.updateRepos()
 #def updateRepos():
 
 def _formatOutput(repomanRepos,enabled,disabled,show=False):
@@ -269,6 +278,7 @@ def show_help():
 #def show_help
 
 def quit(err=0):
+	updateRepos()
 	sys.exit(err)
 
 parms=' '.join(sys.argv[1:]).split(' -')
@@ -308,17 +318,14 @@ if 'h' in action.keys():
 if 'y' in action.keys():
 	unattended=True
 if 'edit' in action.keys():
-	if editRepo()==0:
+	if editRepo()==True:
 		updateRepos()
 elif 'a' in action.keys():
-	if addRepo()==0:
-		updateRepos()
+	addRepo()
 elif 'd' in action.keys():
-	if disableRepo()==0:
-		updateRepos()
+	disableRepo()
 elif 'e' in action.keys():
-	if enableRepo()==0:
-		updateRepos()
+	enableRepo()
 #if 'r' in action.keys():
 #	if remove_repo()==0:
 #		updateRepos()
