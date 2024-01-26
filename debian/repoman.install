@@ -1,4 +1,4 @@
-src/* /usr/share/repoman/bin
+src/* /usr/share/repoman
 rsrc/* /usr/share/repoman/rsrc
 sources.d/* /usr/share/repoman/sources.d
 helper/* /usr/share/repoman/helper
