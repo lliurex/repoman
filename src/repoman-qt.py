@@ -8,7 +8,10 @@ gettext.textdomain('repoman')
 _ = gettext.gettext
 app=QApplication(["RepoMan"])
 config=QStackedWindow()
-abspath=os.path.join(os.path.dirname(__file__),os.path.dirname(os.readlink(__file__)))
+if os.path.islink(__file__)==True:
+	abspath=os.path.join(os.path.dirname(__file__),os.path.dirname(os.readlink(__file__)))
+else:
+	abspath=os.path.dirname(__file__)
 config.addStacksFromFolder(os.path.join(abspath,"stacks"))
 config.setBanner("/usr/share/repoman/rsrc/repoman_banner.png")
 config.show()
