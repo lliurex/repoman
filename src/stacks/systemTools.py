@@ -2,10 +2,10 @@
 import sys
 import os
 import subprocess
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QVBoxLayout,QLineEdit,QGridLayout,QHBoxLayout,QComboBox,QCheckBox
+from PySide2.QtWidgets import  QPushButton,QGridLayout
 from PySide2 import QtGui
 from PySide2.QtCore import Qt,QSize
-from appconfig.appConfigStack import appConfigStack as confStack
+from QtExtraWidgets import QStackedWindowItem
 from repoman import repomanager
 import subprocess
 
@@ -19,22 +19,23 @@ i18n={"MENU":_("System tools"),
 	"MSG_UNPIN":_("Lliurex pinning DISABLED")
 	}
 
-class systemTools(confStack):
+class systemTools(QStackedWindowItem):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confApp Load")
-		self.description=(i18n.get("MENU"))
-		self.menu_description=(i18n.get("DESC"))
-		self.icon=('dialog-password')
-		self.tooltip=(i18n.get("TOOLTIP"))
-		self.index=3
+		self.setProps(shortDesc=i18n.get("DESC"),
+			longDesc=i18n.get("MENU"),
+			icon="dialog-password",
+			tooltip=i18n.get("TOOLTIP"),
+			index=3,
+			visible=True)
 		self.enabled=True
 		self.level='system'
 		self.hideControlButtons()
 		self.repoman=repomanager.manager()
 	#def __init__
 	
-	def _load_screen(self):
+	def __initScreen__(self):
 		box=QGridLayout()
 		btnUpdate=QPushButton(i18n.get("BTNUP"))
 		icn=QtGui.QIcon.fromTheme("view-refresh")
@@ -54,7 +55,6 @@ class systemTools(confStack):
 		btnInstall.setIconSize(QSize(48,48))
 		btnInstall.clicked.connect(self._launchStore)
 		box.addWidget(btnInstall,1,0,1,1)
-		self.setLayout(box)
 		self.btnPin=QPushButton(i18n.get("MSG_PIN"))
 		self.btnPin.setCheckable(True)
 		icn=QtGui.QIcon.fromTheme("security-high")

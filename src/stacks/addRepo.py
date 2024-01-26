@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 import sys
 import os
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QGridLayout,QLineEdit,QHBoxLayout,QComboBox,QCheckBox
+from PySide2.QtWidgets import QLabel, QGridLayout,QLineEdit
 from PySide2 import QtGui
 from PySide2.QtCore import Qt,Signal,QThread
-from appconfig.appConfigStack import appConfigStack as confStack
 import subprocess
+from QtExtraWidgets import QStackedWindowItem
 
 import gettext
 _ = gettext.gettext
@@ -23,13 +23,13 @@ i18n={
 
 class processRepos(QThread):
 	onError=Signal(list)
-	def __init__(self,url,name="",desc="",parent=None):
+	def __init__(self,*args,**kwargs):
 		QThread.__init__(self, parent)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
-		self.url=url
-		self.name=name
-		self.desc=desc
-		self.parent=parent
+		self.url=kwargs.get('url','')
+		self.name=kwargs.get('name','')
+		self.desc=kwargs.get('desc','')
+		self.parent=kwargs.get('parent','')
 
 	def run(self):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
@@ -43,22 +43,22 @@ class processRepos(QThread):
 		return(True)
 #class processRepos
 
-class addRepo(confStack):
+class addRepo(QStackedWindowItem):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confRepos Load")
-		self.menu_description=(_("Add custom  repositories"))
-		self.description=(_("Add repositories"))
-		self.icon=('document-new')
-		self.tooltip=(_("From here you can add custom repositories"))
-		self.index=2
-		self.visible=True
+		self.setProps(shortDesc=_("Add repositories"),
+			longDesc=_("Add custom repositories"),
+			icon="document-new",
+			tooltip=_("From here you can add custom repositories"),
+			index=2,
+			visible=True)
 		self.oldcursor=self.cursor()
 		self.enabled=True
 		self.level='user'
 	#def __init__
 	
-	def _load_screen(self):
+	def __initScreen__(self):
 		box=QGridLayout()
 		box.addWidget(QLabel(i18n.get("INSERTREPONAME")),0,0,1,1,Qt.AlignBottom)
 		self.name=QLineEdit()

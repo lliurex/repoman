@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 import sys
 import os
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QPushButton,QListWidgetItem,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
+import hashlib
+from PySide2.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
 from PySide2 import QtGui
 from PySide2.QtCore import Qt,QThread,Signal
-from appconfig.appConfigStack import appConfigStack as confStack
-from appconfig.appconfigControls import *
+from QtExtraWidgets import QTableTouchWidget, QStackedWindowItem
 from repoman import repomanager
 import subprocess
 import time
@@ -45,6 +45,16 @@ class processRepos(QThread):
 		return(True)
 #class processRepos
 
+class editRepo(QThread):
+	def __init__(self,fsource,parent=None):
+		QThread.__init__(self, parent)
+		self.fsource=fsource
+
+	def run(self):
+		subprocess.run(["kwrite",self.fsource])
+		return(True)
+#class editRepo
+
 class QRepoItem(QWidget):
 	stateChanged=Signal("bool")
 	def __init__(self,parent=None):
@@ -62,7 +72,7 @@ class QRepoItem(QWidget):
 		self.btnEdit.setIcon(QtGui.QIcon.fromTheme("document-edit"))
 		self.btnEdit.clicked.connect(self._editFile)
 		self.chkState=QCheckBox()
-		self.chkState.stateChanged.connect(self.emitState)
+		self.chkState.stateChanged.connect(self.setChanged)
 		lay.addWidget(self.lbltext,0,0,1,1,Qt.AlignLeft)
 		lay.addWidget(self.desc,1,0,2,1,Qt.AlignLeft)
 		lay.addWidget(self.btnEdit,0,1,1,1,Qt.AlignRight|Qt.AlignCenter)
@@ -70,8 +80,14 @@ class QRepoItem(QWidget):
 		lay.setColumnStretch(2,1)
 		self.changed=False
 		self.setLayout(lay)
+		self.md5=""
 		parent=self.parent
 	#def __init__
+
+	def setChanged(self,changed=True):
+		if isinstance(changed,bool)==False:
+			changed=True
+		self.changed=changed
 
 	def isChecked(self):
 		return(self.chkState.isChecked())
@@ -111,24 +127,32 @@ class QRepoItem(QWidget):
 	#def text
 
 	def _editFile(self):
-		subprocess.run(["kwrite",self.file])
+		with open(self.file,"r") as f:
+			self.md5=hashlib.md5(f.read().encode()).hexdigest()
+		self.process=editRepo(self.file)
+		self.process.finished.connect(self._endProcess)
+		self.process.start()
+		self.setEnabled(False)
 	#def _editFile
 
-	def emitState(self):
-		self.stateChanged.emit(self.chkState.isChecked())
-		self.changed=True
-	#def emitState
+	def _endProcess(self,*args):
+		with open(self.file,"r") as f:
+			if self.md5!=hashlib.md5(f.read().encode()).hexdigest():
+				self.stateChanged.emit(True)
+			self.md5=hashlib.md5(f.read().encode())
+		self.setEnabled(True)
 #class QRepoItem
 
-class systemRepos(confStack):
+class systemRepos(QStackedWindowItem):
 	def __init_stack__(self):
-		self.dbg=False
-		self._debug("systemRepos Load")
-		self.menu_description=(i18n.get("MENU"))
-		self.description=(i18n.get("DESC"))
-		self.icon=('go-home')
-		self.tooltip=(i18n.get("TOOLTIP"))
-		self.index=1
+		self.dbg=True
+#		self._debug("systemRepos Load")
+		self.setProps(shortDesc=i18n.get("DESC"),
+			longDesc=i18n.get("MENU"),
+			icon="go-home",
+			tooltip=i18n.get("TOOLTIP"),
+			index=1,
+			visible=True)
 		self.enabled=True
 		self.defaultRepos={}
 		self.changed=[]
@@ -136,9 +160,10 @@ class systemRepos(confStack):
 		self.height=0
 		self.oldcursor=self.cursor()
 		self.repoman=repomanager.manager()
+		self.btnAccept.clicked.connect(self.writeConfig)
 	#def __init__
 
-	def _load_screen(self):
+	def __initScreen__(self):
 		box=QGridLayout()
 		self.lstRepositories=QTableTouchWidget()
 		self.lstRepositories.setRowCount(0)
@@ -155,13 +180,14 @@ class systemRepos(confStack):
 		self.lstRepositories.verticalHeader().hide()
 		self.lstRepositories.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 		self.lstRepositories.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-		box.addWidget(self.lstRepositories,0,0,1,1)
+		box.addWidget(self.lstRepositories,1,0,1,1)
 		box.setColumnStretch(0,1)
 		self.setLayout(box)
 		self.lstRepositories.setStyleSheet( "QTableWidget::item {""border-bottom-style: solid;border-width:3px;border-color:silver;""}")
 	#def _load_screen
 
 	def updateScreen(self):
+		self.lstRepositories.clear()
 		self.lstRepositories.setRowCount(0)
 		self.lstRepositories.setColumnCount(1)
 		repos=self.repoman.getRepos()
@@ -186,7 +212,12 @@ class systemRepos(confStack):
 	#def _udpate_screen
 
 	def _stateChanged(self,*args):
-		self.setChanged(True)
+		self.setChanged(False)
+		if len(args)>0:
+			if (isinstance(args[0],bool)):
+				if(args[0]==True):
+					self.updateScreen()
+				self.setChanged(args[0])
 	#def _stateChanged
 
 	def writeConfig(self):
