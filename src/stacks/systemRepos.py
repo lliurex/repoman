@@ -130,16 +130,18 @@ class QRepoItem(QWidget):
 		with open(self.file,"r") as f:
 			self.md5=hashlib.md5(f.read().encode()).hexdigest()
 		self.process=editRepo(self.file)
-		self.process.finished.connect(self._endProcess)
+		self.process.finished.connect(self._endEditFile)
 		self.process.start()
 		self.setEnabled(False)
 	#def _editFile
 
-	def _endProcess(self,*args):
+	def _endEditFile(self,*args):
+		changed=False
 		with open(self.file,"r") as f:
 			if self.md5!=hashlib.md5(f.read().encode()).hexdigest():
-				self.stateChanged.emit(True)
-			self.md5=hashlib.md5(f.read().encode())
+				changed=True
+			self.md5=hashlib.md5(f.read().encode()).hexdigest()
+		self.stateChanged.emit(changed)
 		self.setEnabled(True)
 #class QRepoItem
 
@@ -223,7 +225,7 @@ class systemRepos(QStackedWindowItem):
 	def writeConfig(self):
 		self.process=processRepos(self.lstRepositories,self)
 		self.process.onError.connect(self._onError)
-		self.process.finished.connect(self._endProcess)
+		self.process.finished.connect(self._endEditFile)
 		self.process.start()
 	#def writeConfig
 
@@ -232,13 +234,13 @@ class systemRepos(QStackedWindowItem):
 		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
 	#def _onError
 
-	def _endProcess(self,*args):
+	def _endEditFile(self,*args):
 		self.changes=False
 		self._updateRepos()
 		self.updateScreen()
 		self.setCursor(self.oldcursor)
 		self.setChanged(False)
-	#def _endProcess
+	#def _endEditFile
 
 	def _updateRepos(self):
 		self._debug("Updating repos")
