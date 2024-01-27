@@ -25,7 +25,7 @@ class systemTools(QStackedWindowItem):
 		self._debug("confApp Load")
 		self.setProps(shortDesc=i18n.get("DESC"),
 			longDesc=i18n.get("MENU"),
-			icon="dialog-password",
+			icon="preferences-other",
 			tooltip=i18n.get("TOOLTIP"),
 			index=3,
 			visible=True)
