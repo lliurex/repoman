@@ -28,9 +28,6 @@ class processRepos(QThread):
 		self.parent=parent
 
 	def run(self):
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		if self.parent:
-			self.parent.setCursor(cursor)
 		err=[]
 		for i in range(0,self.widget.rowCount()):
 			w=self.widget.cellWidget(i,0)
@@ -223,6 +220,8 @@ class systemRepos(QStackedWindowItem):
 	#def _stateChanged
 
 	def writeConfig(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		self.setCursor(cursor)
 		self.process=processRepos(self.lstRepositories,self)
 		self.process.onError.connect(self._onError)
 		self.process.finished.connect(self._endEditFile)
@@ -230,6 +229,7 @@ class systemRepos(QStackedWindowItem):
 	#def writeConfig
 
 	def _onError(self,err):
+		self.setCursor(self.oldcursor)
 		self._debug("Error: {}".format(err))
 		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
 	#def _onError
