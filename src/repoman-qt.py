@@ -15,6 +15,7 @@ else:
 config.addStacksFromFolder(os.path.join(abspath,"stacks"))
 config.setBanner("/usr/share/repoman/rsrc/repoman_banner.png")
 config.setWiki("https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Repoman-en-Lliurex-21")
+config.setIcon("repoman")
 config.show()
 config.setMinimumWidth(config.sizeHint().width()*1.6)                                                                                                                                                        
 config.setMinimumHeight(config.sizeHint().width()*0.9)
