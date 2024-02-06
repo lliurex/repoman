@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-18 07:59+0100\n"
+"POT-Creation-Date: 2024-02-06 11:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,53 +17,96 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/repoman-cli.py:27
+#: ../src/repoman-cli.py:16
+msgid "Invalid argument"
+msgstr ""
+
+#: ../src/repoman-cli.py:17
+msgid "Invalid value for argument"
+msgstr ""
+
+#: ../src/repoman-cli.py:18
+msgid "Disabled"
+msgstr ""
+
+#: ../src/repoman-cli.py:19
+msgid "Enabled"
+msgstr ""
+
+#: ../src/repoman-cli.py:20
+msgid "Operation failed"
+msgstr ""
+
+#: ../src/repoman-cli.py:21
+msgid "This repo needs external configuration"
+msgstr ""
+
+#: ../src/repoman-cli.py:22
 msgid "Add repository"
 msgstr ""
 
-#: ../src/repoman-cli.py:28
+#: ../src/repoman-cli.py:23
 msgid "Disable repo"
 msgstr ""
 
-#: ../src/repoman-cli.py:29
+#: ../src/repoman-cli.py:24
+msgid "Edit repo"
+msgstr ""
+
+#: ../src/repoman-cli.py:25
 msgid "Enable repo"
 msgstr ""
 
-#: ../src/repoman-cli.py:30
+#: ../src/repoman-cli.py:26
+msgid "Show help"
+msgstr ""
+
+#: ../src/repoman-cli.py:27
 msgid "List repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:31
+#: ../src/repoman-cli.py:28
 msgid "List enabled repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:29
 msgid "List disabled repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:30
+msgid "(name|index)"
+msgstr ""
+
+#: ../src/repoman-cli.py:31
+msgid "Show detailed information"
+msgstr ""
+
+#: ../src/repoman-cli.py:32
 msgid "Assume \"yes\" to all questions"
 msgstr ""
 
-#: ../src/repoman-cli.py:34 ../src/repoman-cli.py:103 ../src/repoman-cli.py:133
-#: ../src/repoman-cli.py:159 ../src/repoman-cli.py:170
-msgid "Y/N"
-msgstr ""
-
-#: ../src/repoman-cli.py:35
+#: ../src/repoman-cli.py:33
 msgid "You're going to add the repo present at"
 msgstr ""
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:34
 msgid "Continue?"
 msgstr ""
 
+#: ../src/repoman-cli.py:35
+msgid "disable"
+msgstr ""
+
+#: ../src/repoman-cli.py:36
+msgid "edit"
+msgstr ""
+
 #: ../src/repoman-cli.py:37
-msgid "Name for the repository"
+msgid "enable"
 msgstr ""
 
 #: ../src/repoman-cli.py:38
-msgid "Description:"
+msgid "Repositories changed. Do you want to update info?"
 msgstr ""
 
 #: ../src/repoman-cli.py:39
@@ -71,149 +114,84 @@ msgid "You're going to"
 msgstr ""
 
 #: ../src/repoman-cli.py:40
-msgid "disable"
+msgid "Y/N"
 msgstr ""
 
 #: ../src/repoman-cli.py:41
-msgid "enable"
+msgid "Description:"
 msgstr ""
 
 #: ../src/repoman-cli.py:42
-msgid "repository"
+msgid "Name for the repository"
 msgstr ""
 
 #: ../src/repoman-cli.py:43
-msgid "Repositories changed. Do you want to update info?"
+msgid "repository"
 msgstr ""
 
-#: ../src/repoman-cli.py:67
-msgid "Show help"
+#: ../src/repoman-cli.py:44
+msgid "Ok"
 msgstr ""
 
-#: ../src/repoman-cli.py:73
-msgid "Invalid Url"
+#: ../src/repoman-cli.py:45
+msgid "Unavailable"
 msgstr ""
 
-#: ../src/repoman-cli.py:74
-msgid ""
-"Can't add repository information.\n"
-"Check your permissions"
-msgstr ""
-
-#: ../src/repoman-cli.py:75
-msgid ""
-"Can't write sources file.\n"
-"Check your permissions"
-msgstr ""
-
-#: ../src/repoman-cli.py:76
-msgid "Repository not found at given Url"
-msgstr ""
-
-#: ../src/repoman-cli.py:77
-msgid "Repositories failed to update"
-msgstr ""
-
-#: ../src/repoman-cli.py:78
-msgid "Mirror not availabe"
-msgstr ""
-
-#: ../src/repoman-cli.py:79
-msgid "This repository could'nt be overwrited"
-msgstr ""
-
-#: ../src/repoman-cli.py:80
-msgid "Failed to add repo"
-msgstr ""
-
-#: ../src/repoman-cli.py:81
-msgid "You must be root or supply a valid username/password"
-msgstr ""
-
-#: ../src/repoman-cli.py:82
-msgid "Incorrect username/password"
-msgstr ""
-
-#: ../src/repoman-cli.py:83
-msgid "Error retrieving data from server"
-msgstr ""
-
-#: ../src/repoman-cli.py:186
-msgid "Enabled"
-msgstr ""
-
-#: ../src/repoman-cli.py:190
-msgid "Disabled"
-msgstr ""
-
-#: ../src/repoman-cli.py:262
+#: ../src/repoman-cli.py:272
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:263
+#: ../src/repoman-cli.py:273
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:264
+#: ../src/repoman-cli.py:274
 msgid ""
 "\n"
 "Parameters:"
 msgstr ""
 
-#: ../src/repoman-cli.py:340
-#, python-format
-msgid "Invalid value for argument -%s"
-msgstr ""
-
-#: ../src/repoman-cli.py:344
-msgid "Invalid argument"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:13
-msgid "name of the repository"
-msgstr ""
-
 #: ../src/stacks/addRepo.py:14
-msgid "Insert repository name"
+msgid "An error ocurred"
 msgstr ""
 
 #: ../src/stacks/addRepo.py:15
-msgid "Repository's contents"
+msgid "Insert repository name"
 msgstr ""
 
 #: ../src/stacks/addRepo.py:16
-msgid "Descriptive description (optional)"
+msgid "Repository added"
 msgstr ""
 
 #: ../src/stacks/addRepo.py:17
-msgid "Repository's url"
+msgid "Repository's contents"
 msgstr ""
 
 #: ../src/stacks/addRepo.py:18
+msgid "Descriptive description (optional)"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:19
+msgid "name of the repository"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:20
+msgid "Repository's url"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:21
 msgid "Url for the repository"
 msgstr ""
 
-#: ../src/stacks/addRepo.py:38
-msgid "Add custom  repositories"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:39
+#: ../src/stacks/addRepo.py:50
 msgid "Add repositories"
 msgstr ""
 
-#: ../src/stacks/addRepo.py:41
-msgid "From here you can add custom repositories"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:94
-msgid "Added repository"
-msgstr ""
-
-#: ../src/stacks/systemRepos.py:15
-msgid "Manage system repositories"
+#: ../src/stacks/addRepo.py:52
+msgid "Add custom repositories"
 msgstr ""
 
 #: ../src/stacks/systemRepos.py:16
@@ -221,7 +199,15 @@ msgid "System repositories"
 msgstr ""
 
 #: ../src/stacks/systemRepos.py:17
-msgid "From here you can activate/deactivate the system repositories"
+msgid "Error in:"
+msgstr ""
+
+#: ../src/stacks/systemRepos.py:18
+msgid "Manage system repositories"
+msgstr ""
+
+#: ../src/stacks/systemRepos.py:19
+msgid "Activate/deactivate the system repositories"
 msgstr ""
 
 #: ../src/stacks/systemTools.py:14
@@ -229,23 +215,18 @@ msgid "System tools"
 msgstr ""
 
 #: ../src/stacks/systemTools.py:15
-msgid "Update repositories/System upgrade"
+msgid "Other software related tools"
 msgstr ""
 
 #: ../src/stacks/systemTools.py:16
-msgid ""
-"From here you can update the repositories info or launch lliurex-upgrade"
-msgstr ""
-
-#: ../src/stacks/systemTools.py:17
 msgid "Update repositories"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning ENABLED"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:19
+#: ../src/stacks/systemTools.py:18
 msgid "Lliurex pinning DISABLED"
 msgstr ""
 
