@@ -48,9 +48,8 @@ class addRepo(QStackedWindowItem):
 		self.dbg=False
 		self._debug("confRepos Load")
 		self.setProps(shortDesc=_("Add repositories"),
-			longDesc=_("Add custom repositories"),
 			icon="document-new",
-			tooltip=_("From here you can add custom repositories"),
+			tooltip=_("Add custom repositories"),
 			index=2,
 			visible=True)
 		self.oldcursor=self.cursor()

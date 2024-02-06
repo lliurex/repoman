@@ -12,8 +12,7 @@ import subprocess
 import gettext
 _ = gettext.gettext
 i18n={"MENU":_("System tools"),
-	"DESC":_("Update repositories/System upgrade"),
-	"TOOLTIP":_("From here you can update the repositories info or launch lliurex-upgrade"),
+	"TOOLTIP":_("Other software related tools"),
 	"BTNUP":_("Update repositories"),
 	"MSG_PIN":_("Lliurex pinning ENABLED"),
 	"MSG_UNPIN":_("Lliurex pinning DISABLED")
@@ -23,8 +22,7 @@ class systemTools(QStackedWindowItem):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confApp Load")
-		self.setProps(shortDesc=i18n.get("DESC"),
-			longDesc=i18n.get("MENU"),
+		self.setProps(shortDesc=i18n.get("MENU"),
 			icon="preferences-other",
 			tooltip=i18n.get("TOOLTIP"),
 			index=3,

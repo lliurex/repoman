@@ -13,10 +13,10 @@ import gettext
 _ = gettext.gettext
 
 i18n={
-	"DESC":_("System repositories"),
+	"MENU":_("System repositories"),
 	"ERROR":_("Error in:"),
-	"MENU":_("Manage system repositories"),
-	"TOOLTIP":_("From here you can activate/deactivate the system repositories")
+	"DESC":_("Manage system repositories"),
+	"TOOLTIP":_("Activate/deactivate the system repositories")
 	}
 
 class processRepos(QThread):
@@ -146,8 +146,7 @@ class systemRepos(QStackedWindowItem):
 	def __init_stack__(self):
 		self.dbg=True
 #		self._debug("systemRepos Load")
-		self.setProps(shortDesc=i18n.get("DESC"),
-			longDesc=i18n.get("MENU"),
+		self.setProps(shortDesc=i18n.get("MENU"),
 			icon="go-home",
 			tooltip=i18n.get("TOOLTIP"),
 			index=1,
