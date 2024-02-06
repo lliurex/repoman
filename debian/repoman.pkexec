@@ -1,0 +1,28 @@
+[
+    {
+        "cmd": "/usr/share/repoman/helper/repomanpk.py",
+        "prefix": "net.lliurex.repoman",
+        "nameaction": "manager",
+		"domain": "repoman",
+		"message": "Administration rights are required for this action",
+        "icon": "scite",
+        "auths": [
+            {
+                "type": "group",
+                "members": [
+                    "admin",
+                    "sudo"
+                ],
+                "any": "no",
+                "inactive": "no",
+                "active": "auth_self_keep"
+            }
+        ],
+        "default_auth": {
+            "any": "no",
+            "inactive": "no",
+            "active": "no"
+        },
+        "requiredx": "true"
+    }
+]
