@@ -50,6 +50,7 @@ class systemTools(QStackedWindowItem):
 		btnInstall=QPushButton("Lliurex-Store")
 		icn=QtGui.QIcon.fromTheme("lliurex-store")
 		btnInstall.setIcon(icn)
+		btnInstall.setEnabled(os.path.exists("/usr/bin/rebost-gui"))
 		btnInstall.setIconSize(QSize(48,48))
 		btnInstall.clicked.connect(self._launchStore)
 		box.addWidget(btnInstall,1,0,1,1)
