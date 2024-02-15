@@ -24,7 +24,7 @@ i18n={
 class processRepos(QThread):
 	onError=Signal(list)
 	def __init__(self,*args,**kwargs):
-		QThread.__init__(self, parent)
+		QThread.__init__(self, parent=None)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
 		self.url=kwargs.get('url','')
 		self.name=kwargs.get('name','')
@@ -72,6 +72,7 @@ class addRepo(QStackedWindowItem):
 		self.url.setPlaceholderText(i18n.get("REPOURLDESC"))
 		box.addWidget(self.url,5,0,1,1,Qt.AlignTop)
 		self.setLayout(box)
+		self.btnAccept.clicked.connect(self.writeConfig)
 		return(self)
 	#def _load_screen
 
@@ -102,7 +103,7 @@ class addRepo(QStackedWindowItem):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		oldcursor=self.cursor()
 		self.setCursor(cursor)
-		self.process=processRepos(url,name,desc,self)
+		self.process=processRepos(url=url,name=name,desc=desc,parent=self)
 		self.process.onError.connect(self._onError)
 		self.process.finished.connect(self._endProcess)
 		self.process.start()
@@ -110,4 +111,4 @@ class addRepo(QStackedWindowItem):
 	
 	def _endProcess(self):
 		self.setCursor(self.oldcursor)
-		self.stack.gotoStack(idx=1,parms="")
+		self.parent.setCurrentStack(1)
