@@ -1,0 +1,26 @@
++++ ./opt/python3.10/lib/python3.10/site-packages/repoman/repomanager.py	2023-07-26 11:46:25.868183171 +0200
+@@ -6,8 +6,6 @@
+ import subprocess
+ from requests.adapters import HTTPAdapter
+ from requests.packages.urllib3.util.retry import Retry
+-from rebost import store
+-
+ 
+ class manager():
+ 	def __init__(self):
+@@ -776,13 +774,8 @@
+ 	#def isMirrorEnabled
+ 	
+ 	def updateRepos(self):
+-		#cmd=["apt","update"]
+-		#subprocess.run(cmd)
+-		rebost=store.client()
+-		try:
+-			rebost.update()
+-		except:
+-			pass
++		cmd=["apt","update"]
++		subprocess.run(cmd)
+ #def class manager
+ 
+ class RepoManager():
