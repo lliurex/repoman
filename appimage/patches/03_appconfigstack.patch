@@ -1,0 +1,35 @@
++++ ./opt/python3.10/lib/python3.10/site-packages/appconfig/appConfigStack.py	2023-07-26 11:46:25.868183171 +0200
+@@ -81,7 +81,7 @@
+ 		oldcursor=self.cursor()
+ 		cursor=QtGui.QCursor(Qt.WaitCursor)
+ 		self.setCursor(cursor)
+-		data={'system':{},'user':{},'n4d':{}}
++		data={'system':{},'user':{}}
+ 		self._debug("Refresh: {}".format(self.refresh))
+ 		self._debug("Changes: {}".format(self.changes))
+ 		if self.refresh or self.changes:
+@@ -342,24 +342,4 @@
+ 		return
+ 	#def showMsg
+ 
+-	def n4dGetVar(self,client=None,var=''):
+-		ret=self.appConfig.n4dGetVar(client,var)
+-		return(ret)
+-	#def n4dQuery
+-	
+-	def n4dSetVar(self,client=None,var='',val={}):
+-		ret=self.appConfig.n4dSetVar(client,var,val)
+-		return(ret)
+-	#def n4dQuery
+-
+-	def n4dDelVar(self,client=None,var=''):
+-		ret=self.appConfig.n4dDelVar(client,var)
+-		return(ret)
+-	#def n4dQuery
+-
+-	def n4dQuery(self,n4dclass,n4dmethod,*args,**kwargs):
+-		ret=self.appConfig.n4dQuery(n4dclass,n4dmethod,*args,**kwargs)
+-		return(ret)
+-	#def n4dQuery
+-
+ #class appConfigStack

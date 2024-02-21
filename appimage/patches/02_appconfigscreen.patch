@@ -1,0 +1,10 @@
++++ ./opt/python3.10/lib/python3.10/site-packages/appconfig/appConfigScreen.py	2023-07-26 11:46:25.868183171 +0200
+@@ -280,7 +280,7 @@
+ 		self.level=data.get('system',{}).get('config','user')
+ 		if self.level!='system':
+ 			data=self.appConfig.getConfig(self.level)
+-			level=data[self.level].get('config','n4d')
++			level=data[self.level].get('config','user')
+ 			if level!=self.level:
+ 				self.level=level
+ 				data=self.appConfig.getConfig(level)
