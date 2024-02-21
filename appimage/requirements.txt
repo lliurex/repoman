@@ -1,5 +1,6 @@
 local+appconfig
-local+repomanager
+local+repoman
+local+QtExtraWidgets
 PySide2
 requests
 notify2
