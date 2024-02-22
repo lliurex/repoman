@@ -1,32 +1,49 @@
 #!/usr/bin/python3
-import os,sys,socket
-import xmlrpc.client as n4d
-import ssl
+import os,sys
 from collections import OrderedDict
-
-import repomanager.RepoManager as RepoManager
+import subprocess
+from repoman import repomanager 
 import gettext
 gettext.textdomain('repoman')
 _ = gettext.gettext
 
-n4dserver=None
-server='localhost'
-#Validate if 'server' is a known machine
-try:
-	socket.gethostbyname(server)
-except:
-	server='localhost'
-
-credentials=[]
-repoman=RepoManager.manager()
-repoman.dbg=False
-key=''
-error_dict={}
+repoman=repomanager.manager()
 action={}
-reponame=''
-repoinfo=''
 unattended=False
+REPOHELPER="/usr/share/repoman/helper/repomanpk.py"
 
+i18n={
+	"BADARG":_("Invalid argument"),
+	"BADARGVALUE":_("Invalid value for argument"),
+	"DISABLED":_('Disabled'),
+	"ENABLED":_('Enabled'),
+	"ERROR":_('Operation failed'),
+	"FORBIDDEN":_("This repo needs external configuration"),
+	"HLP_ADD":_("Add repository"),
+	"HLP_DISABLE":_("Disable repo"),
+	"HLP_EDIT":_("Edit repo"),
+	"HLP_ENABLE":_("Enable repo"),
+	"HLP_HLP":_("Show help"),
+	"HLP_LIST":_("List repositories"),
+	"HLP_LISTE":_("List enabled repositories"),
+	"HLP_LISTD":_("List disabled repositories"),
+	"HLP_OPTIONS":_("(name|index)"),
+	"HLP_SHOW":_("Show detailed information"),
+	"HLP_YES":_("Assume \"yes\" to all questions"),
+	"MSG_ADD":_("You're going to add the repo present at"),
+	"MSG_CONTINUE":_("Continue?"),
+	"MSG_DISABLE":_("disable"),
+	"MSG_EDIT":_("edit"),
+	"MSG_ENABLE":_("enable"),
+	"MSG_UPDATE":_("Repositories changed. Do you want to update info?"),
+	"MSG_YOU":_("You're going to"),
+	"OPTIONS":_("Y/N"),
+	"REPODESC":_("Description:"),
+	"REPONAME":_("Name for the repository"),
+	"REPOSITORY":_("repository"),
+	"SUCESS":_("Ok"),
+	"UNAVAILABLE":_("Unavailable")
+	}
 #a->append url
 #p->password
 #u->user
@@ -38,36 +55,24 @@ unattended=False
 #l-> list repos
 #le -> list enabled repos
 #ld -> list disabled repos
-parms_dict={'a':{'args':1,'long':'add','desc':_("Add repository"),'usage':'=URL'},
-			'd':{'args':1,'long':'disable','desc':_("Disable repo"),'usage':'=(repository_name|repository_index)'},
-			'e':{'args':1,'long':'enable','desc':_("Enable repo"),'usage':'=(repository_name|repository_index)'},
-			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
-			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
-			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
-			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
-			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
-			'l':{'args':0,'long':'list','desc':_("List repositories"),'usage':''},
-			'le':{'args':0,'long':'list_enabled','desc':_("List enabled repositories"),'usage':''},
-			'y':{'args':0,'long':'yes','desc':_("Yes to all questions (unattended)"),'usage':''},
-			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
-			'h':{'args':0,'long':'help','desc':_("Show help"),'usage':''}
+parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'},
+			'd':{'args':1,'long':'disable','desc':i18n.get("HLP_DISABLE"),'usage':i18n.get("HLP_OPTIONS")},
+			'edit':{'args':1,'long':'edit','desc':i18n.get("HLP_EDIT"),'usage':i18n.get("HLP_OPTIONS")},
+			'e':{'args':1,'long':'enable','desc':i18n.get("HLP_ENABLE"),'usage':i18n.get("HLP_OPTIONS")},
+#			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
+#			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
+#			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
+#			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
+#			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
+			'l':{'args':0,'long':'list','desc':i18n.get("HLP_LIST"),'usage':''},
+			's':{'args':0,'long':'show','desc':i18n.get("HLP_SHOW"),'usage':''},
+#			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
+			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':i18n.get("HLP_YES")},
+#			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
+			'h':{'args':0,'long':'help','desc':i18n.get("HLP_HLP"),'usage':''}
 			}
 
 repo_index={}
-
-class error:
-	URL=_("Invalid Url")
-	INFO=_("Can't add repository information.\nCheck your permissions")
-	SOURCES=_("Can't write sources file.\nCheck your permissions")
-	REPO=_("Repository not found at given Url")
-	UPDATE=_("Repositories failed to update")
-	MIRROR=_("Mirror not availabe")
-	OVERWRITE=_("This repository could'nt be overwrited")
-	ADD=_("Failed to add repo")
-	N4D=_("Unknown host")
-	USER=_("You must be root or supply a valid username/password")
-	CREDENTIALS=_("Incorrect username/password")
-	DATA=_("Error retrieving data from server")
 
 class color:
    PURPLE = '\033[95m'
@@ -80,328 +85,211 @@ class color:
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
+#class color
 
-def add_repo():
+def _runHelper(*args):
+	cmd=["pkexec",REPOHELPER]
+	cmd.extend(args)
+	proc=subprocess.run(cmd)
+	if proc.returncode!=0:
+		print(i18n.get("ERROR"))
+	quit(proc.returncode)
+#def _runHelper
+
+def addRepo():
 	url=action['a']
-	global key
-	global reponame
-	global repoinfo
-	global unattended
-	options=_("Y/N")
+	options=i18n.get("OPTIONS")
+	name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
+	desc=url
 	if not unattended:
-			resp=input(_("You're going to add the repo present at %(color1)s%(url)s%(color2)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.UNDERLINE,'url':url,'color2':color.END,'options':options,'default':options[-1]}))
+		resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+		if resp.lower()==options[0].lower():
+			name=input("{0} [{1}]: ".format(i18n.get("REPONAME"),name))
+			desc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),url))
+		else:
+			return()
+	_runHelper(action["a"],"Add",name,desc)
+	#repoman.addRepo(action["a"],name=name,desc=desc)
+#def addRepo
+
+def _getRepoName(targetrepo):
+	repomanRepos=repoman.getRepos()
+	output=_formatOutput(repomanRepos,False,False)
+	reponame=""
+	if targetrepo.isdigit():
+		if len(output)>int(targetrepo):
+			line=output[int(targetrepo)]
+			reponame=line.split(":")[0]
+			targetrepo=line
+	else:
+		for line in output:
+			if targetrepo.replace(" ","").strip().lower() in line.replace(" ","").strip().lower():
+				reponame=line.split(":")[0]
+				targetrepo=line
+				break
+	return(targetrepo,reponame)
+#def _getRepoName
+
+def editRepo():
+	ret=False
+	targetrepo=action['edit']
+	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if len(reponame)<=0:
+		print("{}{} {}{}".format(color.DARKCYAN,targetrepo,i18n.get("UNAVAILABLE"),color.END))
+		sys.exit(1)
+	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
+		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
+		sys.exit(1)
+	resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_EDIT"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+	if resp.lower()==i18n.get("OPTIONS")[0].lower():
+		repomanRepos=repoman.getRepos()
+		output=_formatOutput(repomanRepos,True,False,True)
+		sw_print=False
+		file=""
+		for line in output:
+			if line.startswith(reponame):
+				sw_print=True
+			if sw_print:
+				if "** File: " in line:
+					file=line.split(" ")[2]
+		editor=os.environ.get("EDITOR","/usr/bin/nano")
+		if os.path.exists(file):
+			subprocess.run([editor,file])
+			ret=True
+	return(ret)
+#def editRepo
+
+def disableRepo():
+	ret=False
+	targetrepo=action['d']
+	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if len(reponame)<=0:
+		print("{}{} {}{}".format(color.DARKCYAN,targetrepo,i18n.get("UNAVAILABLE"),color.END))
+		sys.exit(1)
+	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
+		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
+		sys.exit(1)
+
+	options=i18n.get("OPTIONS")
+	if not unattended:
+		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_DISABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
-		try:
-			proposed_name=url
-			if url.startswith('ppa'):
-				proposed_name=url.replace('ppa:','')
-			if ('//') in proposed_name:
-				name=proposed_name.split('/')[2:]
-			elif (':') in proposed_name:
-				name=proposed_name.split(':')[1:]
-			else:
-				name=proposed_name.split('/')
-		except:
-			name=url
-		try:
-			name[0]=name[0].split('.')[-2]
-		except:
-			name=name
-		if isinstance(name,list):
-			defname='_'.join(name)
-			name=defname
-		else:
-			defname=name
-		if reponame!='':
-			name=reponame
-		else:
-			if not unattended:
-				name=input(_("Name for the repository [%s]: ")%defname)
-			if name.strip()=='':
-				name=defname
-		if repoinfo!='':
-			desc=repoinfo
-		else:
-			desc=''
-			if not unattended:
-				desc=input(_("Description for the repository (optional): "))
-		try:
-			if key:
-				n4dcredentials=key
-			else:
-				n4dcredentials=credentials
-			err=n4dserver.add_repo(n4dcredentials,"RepoManager",",".join([name,desc,url]))
-			err=err.get('status',0)
-			if err:
-				print("\n%s"%error.ADD)
-				errorDict={"1":error.URL,"2":error.INFO,"3":error.SOURCES,"4":error.REPO}
-				errorMsg=errorDict.get(str(err),error.REPO)
-				print(errorMsg)
-			else:
-					print(_("Repository %(url)s %(color1)sadded successfully%(color2)s")%({'url':url,'color1':color.BLUE,'color2':color.END}))
-		except Exception as e:
-			print(e)
-			print("add_repo %s"%error.DATA)
-		return(err)
+		_runHelper(reponame,"False")
+		ret=True
+	print(ret)
+	return(ret)
+#def disableRepo
+
+def enableRepo():
+	ret=True
+	targetrepo=action['e']
+	(targetrepo,reponame)=_getRepoName(targetrepo)
+	if len(reponame)<=0:
+		print("{}{} {}{}".format(color.DARKCYAN,targetrepo,i18n.get("UNAVAILABLE"),color.END))
+		sys.exit(1)
 		
-#def add_repo
+	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
+		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
+		sys.exit(1)
 
-def disable_repo():
-	err=0
-	repos=_get_repos()
-	global unattended
-	if action['d'].strip().isdigit():
-		reponame=repo_index[int(action['d'])]
-	else:
-		reponame=action['d']
-	options=_("Y/N")
+	options=i18n.get("OPTIONS")
+	resp=options[0].lower()
 	if not unattended:
-		resp=input(_("You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'color1':color.RED,'color2':color.END,'repo':reponame,'options':options,'default':options[-1]}))
-	else:
-		resp=options[0].lower()
+		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	if resp.lower()==options[0].lower():
-		repos[reponame]['enabled']='false'
-		if key:
-			n4dcredentials=key
-		else:
-			n4dcredentials=credentials
-		repo={reponame:repos[reponame]}
-		try:
-			writejsonResult=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
-		except:
-			print("disable_repo %s"%error.DATA)
-			err=1
-		result=1
-		if isinstance(writejsonResult,dict):
-			result=writejsonResult.get('status')
-		elif isinstance(writejsonResult,bool):
-			if writejsonResult:
-				result=0
-		if result==0:
-			try:
-				writeResult=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
-			except:
-				print("disable_repo %s"%error.DATA)
-				err=1
-			result=1
-			if isinstance(writeResult,dict):
-				result=writeResult.get('status')
-			elif isinstance(writejsonResult,bool):
-				if writejsonResult:
-					result=0
-			if result!=0:
-				err=1
-				print (error.SOURCES)
-		else:
-			err=1
-			print (error.INFO)
-		return(err)
-#def disable_repo
+		_runHelper(reponame,"True")
+		ret=True
+	return(ret)
+#def enableRepo
 
-def enable_repo():
-	global key
-	global unattended
-	repos=_get_repos()
-	if action['e'].strip().isdigit():
-		reponame=repo_index[int(action['e'])]
-	else:
-		reponame=action['e']
-	options=_("Y/N")
+def updateRepos():
+	options=i18n.get("OPTIONS")
+	resp=options[0].lower()
 	if not unattended:
-		resp=input(_("You're going to enable repository %(repo)s. Continue? %(options)s [%(default)s]: ")%({'repo':reponame,'options':options,'default':options[-1]}))
-	else:
-		resp=options[0].lower()
+		resp=input("{0} {1} [{2}]: ".format(i18n.get("MSG_UPDATE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[0]))
 	if resp.lower()==options[0].lower():
-		repos[reponame]['enabled']='true'
-		if key:
-			n4dcredentials=key
-		else:
-			n4dcredentials=credentials
-		repo={reponame:repos[reponame]}
-		err=0
-		if reponame.lower()=="lliurex mirror":
-			#Mirror must be checked against server
-			try:
-				server='server'
-				context=ssl._create_unverified_context()
-				n4d_server=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-				ret=n4d_server.is_mirror_available("","MirrorManager")
-				if isinstance(ret,dict):
-					if ret.get('status',-1)!=0:
-						err=6
-				else:
-					err=6
-			except:
-				err=6
-		if err:
-			print (error.MIRROR)
-		else:
-			writejson=n4dserver.write_repo_json(n4dcredentials,"RepoManager",repo)
-			status=1
-			if isinstance(writejson,bool):
-				if writejson:
-					status=0
-			elif isinstance(writejson,dict):
-				status=writejson.get('status',-1)
+		repoman.updateRepos()
+#def updateRepos():
 
-			if status==0: 
-				writerepo=n4dserver.write_repo(n4dcredentials,"RepoManager",repo)
-				if isinstance(writerepo,bool):
-					status=1
-					if writerepo:
-						status=0
-				elif isinstance(writerepo,dict):
-					status=writerepo.get('status',-1)
-				if status!=0: 
-					err=1
-					print (error.SOURCES)
-			else:
-				err=1
-				print (error.INFO)
-		return(err)
-#def enable_repo
-
-def update_repos():
-	options=_("Y/N")
-	resp=''
-	if not unattended:
-		resp=input(_("Repositories changed. Do you want to update info? %(options)s [%(default)s]: ")%({'options':options,'default':options[0]}))
-	if resp.lower()==options[0].lower() or resp=='':
-		os.execv("/usr/bin/apt-get",["update","update"])
-
-def list_repos():
-	repos=_get_repos()
-	if repos:
-		index=0
-		for repo,data in repos.items():
-			enabled=_("Enabled")
+def _formatOutput(repomanRepos,enabled,disabled,show=False):
+	output=[]
+	if len(repomanRepos)>0:
+		output=[]
+		sortKeys=list(repomanRepos.keys())
+		for sourcesUrl in sortKeys:
+			repos=[]
+			sw_omit=False
 			printcolor=color.GREEN
-			if data['enabled'].lower()=='false':
-				printcolor=color.RED
-				enabled=_('Disabled')
-			print("%s) %s: %s %s%s%s"%(index,repo,data['desc'],printcolor,enabled,color.END))
-			index+=1
+			msgEnabled=i18n.get("ENABLED")
+			for release,releasedata in repomanRepos[sourcesUrl].items():
+				if releasedata.get('enabled',False)==False:
+					printcolor=color.RED
+					msgEnabled=i18n.get("DISABLED")
+					if enabled==True:
+						sw_omit=True
+				elif disabled==True:
+					sw_omit=True
+				if releasedata.get("available",True)==False:
+					printcolor=color.DARKCYAN
+					msgEnabled=i18n.get("UNAVAILABLE")
+				name=releasedata.get("name",sourcesUrl)
+				desc=releasedata.get("desc","")
+				repos.append(releasedata.get("raw",[]))
+				file=releasedata.get("file","")
+			if sw_omit==False:
+				if desc!="":
+					desc=_(desc)
+				output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0].split(".sources")[0],desc,printcolor,msgEnabled,color.END))
+				if show==True:
+					output.append("\t** File: {} **".format(file))
+					output.append("\t{}".format("\n\t".join(repos)))
+	return(output)
+#def _formatOutput
 
-def list_enabled_repos():
-	repos=_get_repos()
-	if repos:
-		for repo,data in repos.items():
-			if data['enabled'].lower()=='true':
-				print("%s: %s"%(repo,data['desc']))
-#def list_enabled_repos
-
-def list_disabled_repos():
-	repos=_get_repos()
-	if repos:
-		for repo,data in repos.items():
-			if data['enabled'].lower()=='false':
-				print("%s: %s"%(repo,data['desc']))
-#def list_disabled_repos
-
-def _get_repos():
-	repos={}
-	global key
-	if key:
-		n4dcredentials=key
-	else:
-		n4dcredentials=credentials
-	try:
-		data=n4dserver.list_default_repos(n4dcredentials,"RepoManager")
-	except Exception as e:
-		print(error.DATA)
-		quit(1)
-	if type(data)==type(''):
-		print (error.DATA)
-		quit(1)
-	else:
-		repos=data.get('return',data)
-	sort_repos=OrderedDict()
+def listRepos(enabled=False,disabled=False,show=False):
 	index=0
-	for repo in sorted(repos.keys()):
-		sort_repos.update({repo:repos[repo]})
-		repo_index[index]=repo
+	repomanRepos=repoman.getRepos()
+	output=_formatOutput(repomanRepos,enabled,disabled,show)
+	for line in output:
+		if line.startswith("\t"):
+			print("{1}".format(index,line))
+			continue
+		print("{0}) {1}".format(index,line))
 		index+=1
-	data=n4dserver.list_sources(n4dcredentials,"RepoManager")
-	if type(data)==type(''):
-		print (error.DATA)
-		quit(1)
-	else:
-		sources=data.get('return',data)
-	for repo in sorted(sources.keys()):
-		sort_repos.update({repo:sources[repo]})
-		repo_index[index]=repo
-		index+=1
-	repos=sort_repos.copy()
-	return(repos)
-#def _get_repos
+#def listRepos
+
+def listEnabledRepos():
+	listRepos(enabled=True)
+#def listEnabledRepos
+
+def listDisabledRepos():
+	listRepos(disabled=True)
+#def listDisabledRepos
 
 def show_help():
 	print(_("Usage: %s ACTION")%(sys.argv[0]))
 	print(_("\nRepoMan"))
 	print(_("\nParameters:"))
 	for parm,data in sorted(parms_dict.items()):
-		print("-%s, --%s%s\t\t%s"%(parm,data['long'],data['usage'],data['desc']))
-
-	quit(0)
-
-def set_credentials(user='',pwd=''):
-	if user:
-		credentials[0]=user
-	if pwd:
-		credentials[1]=pwd
-#def set_credentials
-
-def set_server(ip):
-	server=ip
-#def set_server
-
-def _n4d_connect():
-	ret=True
-	context=ssl._create_unverified_context()
-	n4dserver=n4d.ServerProxy("https://%s:9779"%server,context=context,allow_none=True)
-	#Test if proxy is well stablished
-	sw=True
-	try:
-		n4dserver.__ServerProxy__request("fakeCall",("",""))
-	except ConnectionRefusedError as e:
-	#Use local lib
-		print("Using LTSP compat mode")
-		n4dserver=repoman
-		sw=False
-	
-	if sw:
-		if credentials:
-			try:
-				ret=n4dserver.validate_user(credentials[0],credentials[1])
-				if not ret['return'][0]:
-					print(error.CREDENTIALS)
-					quit(1)
-			except:
-				print(error.CREDENTIALS)
-				quit(1)
-		else:
-			try:
-				global key
-				with open('/etc/n4d/key','r') as fkey:
-					key=fkey.readlines()[0].strip()
-			except:
-				print(error.USER)
-				quit(1)
-	return(n4dserver)
-#def _n4d_connect
+		print("-{0}, --{1} {2} {3}".format(parm,data['long'],data['usage'],data['desc']))
+	sys.exit(0)
+#def show_help
 
 def quit(err=0):
+	updateRepos()
 	sys.exit(err)
 
 parms=' '.join(sys.argv[1:]).split(' -')
+msg=""
 for parm in parms:
 	if parm.startswith('-'):
 		parm=parm.lstrip('-')
 	if parm=='':
 		continue
-	parm_key=parm[0:2]
+	parm_key=parm.split(" ")[0]
+	#parm_key=parm[0:2]
 	val=False
 	if parm_key in parms_dict.keys():
 		val=True
@@ -415,61 +303,34 @@ for parm in parms:
 		if parms_dict[parm_key]['args'] and parm.strip():
 			action.update({parm_key:parm.strip()})
 		elif parms_dict[parm_key]['args']:
-			error_dict[parm_key]=_("Invalid value for argument -%s"%(parm_array[0]))
+			msg="{} {}".format(i18n.get("BARDARGVALUE"),parm_array[0])
 		else:
 			action.update({parm_key:parm.strip()})
 	else:
-		error_dict[parm_key]=_("Invalid argument")
+		msg=i18n.get("BADARG")
 
-if error_dict:
-	print()
-	for err,msg in error_dict.items():
-		print("%s: %s"%(err,msg))
-	show_help()
 if not action:
+	print(msg)
 	show_help()
-
-if 'n' in action.keys():
-	reponame=action['n']
-if 'i' in action.keys():
-	repoinfo=action['i']
-if 'y' in action.keys():
-	unattended=True
-
 if 'h' in action.keys():
 	show_help()
-if 'p' in action.keys():
-	if len(credentials)<2:
-		credentials=['','']
-	credentials[1]=action['p']
-if 'u' in action.keys():
-	if len(credentials)<2:
-		credentials=['','']
-	credentials[0]=action['u']
-if 's' in action.keys():
-	server=action['s']
-n4dserver=_n4d_connect()
-if not n4dserver:
-	print(error.N4D)
-	quit(1)
 
-#process_actions
-if 'a' in action.keys():
-	if add_repo()==0:
-		update_repos()
-if 'd' in action.keys():
-	if disable_repo()==0:
-		update_repos()
-if 'e' in action.keys():
-	if enable_repo()==0:
-		update_repos()
+if 'y' in action.keys():
+	unattended=True
+if 'edit' in action.keys():
+	if editRepo()==True:
+		updateRepos()
+elif 'a' in action.keys():
+	addRepo()
+elif 'd' in action.keys():
+	disableRepo()
+elif 'e' in action.keys():
+	enableRepo()
 #if 'r' in action.keys():
 #	if remove_repo()==0:
-#		update_repos()
-if 'l' in action.keys():
-	list_repos()
-if 'ld' in action.keys():
-	list_disabled_repos()
-if 'le' in action.keys():
-	list_enabled_repos()
+#		updateRepos()
+elif 'l' in action.keys():
+	listRepos()
+elif 's' in action.keys():
+	listRepos(show=True)
 
