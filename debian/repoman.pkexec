@@ -5,7 +5,7 @@
         "nameaction": "manager",
 		"domain": "repoman",
 		"message": "Administration rights are required for this action",
-        "icon": "scite",
+        "icon": "repoman",
         "auths": [
             {
                 "type": "group",
