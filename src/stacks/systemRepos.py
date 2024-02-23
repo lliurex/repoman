@@ -235,9 +235,10 @@ class systemRepos(QStackedWindowItem):
 
 	def _endEditFile(self,*args):
 		self.changes=False
-		self._updateRepos()
+		if self.cursor()!=self.oldcursor:
+			self._updateRepos()
+			self.setCursor(self.oldcursor)
 		self.updateScreen()
-		self.setCursor(self.oldcursor)
 		self.setChanged(False)
 	#def _endEditFile
 
