@@ -42,4 +42,8 @@ if len(sys.argv)>=3:
 				ret=repo.addRepo(name,reponame,repodesc)
 	elif state=="Pin":
 		ret=repo.reversePinning()
+	elif state=="disableAll":
+		ret=repo.disableAll()
+	elif state=="enableDefault":
+		ret=repo.enableDefault()
 sys.exit(ret)

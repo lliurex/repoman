@@ -31,6 +31,7 @@ class systemTools(QStackedWindowItem):
 		self.enabled=True
 		self.level='system'
 		self.hideControlButtons()
+		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
 		self.repoman=repomanager.manager()
 	#def __init__
 	
@@ -65,7 +66,7 @@ class systemTools(QStackedWindowItem):
 	#def _load_screen
 
 	def _reversePinning(self):
-		subprocess.run(["pkexec","/usr/share/repoman/helper/repomanpk.py","lliurex","Pin"])
+		subprocess.run(["pkexec","/usr/share/repoman/helper/repomanpk.py","","Pin"])
 		self.updateScreen()
 	#def _reversePinning
 
@@ -100,7 +101,8 @@ class systemTools(QStackedWindowItem):
 		dlg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
 		dlg.setIcon
 		if dlg.exec_()==QMessageBox.Ok:
-			#REM CALL LIBRARY
-			print("OK")
-
-	#def _launchStore
+			proc=subprocess.run(["pkexec",self.repohelper,"","disableAll"])
+			proc=subprocess.run(["pkexec",self.repohelper,"","enableDefault"])
+			if self.repoman.chkPinning()==False:
+				self._reversePinning()
+	#def _launchReset
