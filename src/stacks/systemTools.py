@@ -2,7 +2,7 @@
 import sys
 import os
 import subprocess
-from PySide2.QtWidgets import  QPushButton,QGridLayout
+from PySide2.QtWidgets import  QPushButton,QGridLayout,QMessageBox
 from PySide2 import QtGui
 from PySide2.QtCore import Qt,QSize
 from QtExtraWidgets import QStackedWindowItem
@@ -11,11 +11,12 @@ import subprocess
 
 import gettext
 _ = gettext.gettext
-i18n={"MENU":_("System tools"),
-	"TOOLTIP":_("Other software related tools"),
-	"BTNUP":_("Update repositories"),
+i18n={"BTNUP":_("Update repositories"),
+	"MENU":_("System tools"),
 	"MSG_PIN":_("Lliurex pinning ENABLED"),
-	"MSG_UNPIN":_("Lliurex pinning DISABLED")
+	"MSG_UNPIN":_("Lliurex pinning DISABLED"),
+	"TOOLTIP":_("Other software related tools"),
+	"RESET":_("Restore default repositories")
 	}
 
 class systemTools(QStackedWindowItem):
@@ -47,13 +48,12 @@ class systemTools(QStackedWindowItem):
 		btnUpgrade.setIconSize(QSize(48,48))
 		btnUpgrade.clicked.connect(self._launchUpgrade)
 		box.addWidget(btnUpgrade,0,1,1,1)
-		btnInstall=QPushButton("Lliurex-Store")
-		icn=QtGui.QIcon.fromTheme("lliurex-store")
-		btnInstall.setIcon(icn)
-		btnInstall.setEnabled(os.path.exists("/usr/bin/rebost-gui"))
-		btnInstall.setIconSize(QSize(48,48))
-		btnInstall.clicked.connect(self._launchStore)
-		box.addWidget(btnInstall,1,0,1,1)
+		btnReset=QPushButton(i18n.get("RESET"))
+		icn=QtGui.QIcon.fromTheme("edit-undo")
+		btnReset.setIcon(icn)
+		btnReset.setIconSize(QSize(48,48))
+		btnReset.clicked.connect(self._launchReset)
+		box.addWidget(btnReset,1,0,1,1)
 		self.btnPin=QPushButton(i18n.get("MSG_PIN"))
 		self.btnPin.setCheckable(True)
 		icn=QtGui.QIcon.fromTheme("security-high")
@@ -92,13 +92,15 @@ class systemTools(QStackedWindowItem):
 		subprocess.call(["pkexec","/usr/sbin/lliurex-up"])
 	#def _launchUpgrade
 	
-	def _launchStore(self):
-			#		subprocess.Popen("/usr/bin/lliurex-store",stdin=None,stdout=None,stderr=None,shell=False)
-		try:
-			subprocess.call(["/usr/bin/lliurex-store"])
-		except:
-			try:
-				subprocess.call(["/usr/bin/rebost-gui"])
-			except Exception as e:
-				print(e)
+	def _launchReset(self):
+		dlg=QMessageBox()
+		dlg.setText("All repositories will be disabled.\nLliurex repositories will be enabled\nPinning will be restablished.")
+		dlg.setInformativeText("This action can't be undone")
+		dlg.setIcon(QMessageBox.Warning)
+		dlg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
+		dlg.setIcon
+		if dlg.exec_()==QMessageBox.Ok:
+			#REM CALL LIBRARY
+			print("OK")
+
 	#def _launchStore
