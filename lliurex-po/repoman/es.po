@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-06 11:41+0100\n"
-"PO-Revision-Date: 2024-02-06 11:45+0100\n"
+"POT-Creation-Date: 2024-03-06 15:31+0100\n"
+"PO-Revision-Date: 2024-03-06 15:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -216,24 +216,28 @@ msgid "Activate/deactivate the system repositories"
 msgstr "Activar/desactivar los repositorios del sistema"
 
 #: ../src/stacks/systemTools.py:14
-msgid "System tools"
-msgstr "Herramientas del sistema"
-
-#: ../src/stacks/systemTools.py:15
-msgid "Other software related tools"
-msgstr "Otras herramientas relacionadas"
-
-#: ../src/stacks/systemTools.py:16
 msgid "Update repositories"
 msgstr "Actualizar repositorios"
 
-#: ../src/stacks/systemTools.py:17
+#: ../src/stacks/systemTools.py:15
+msgid "System tools"
+msgstr "Herramientas del sistema"
+
+#: ../src/stacks/systemTools.py:16
 msgid "Lliurex pinning ENABLED"
 msgstr "Preferir paquetes LliureX ACTIVADO"
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning DISABLED"
 msgstr "Preferir paquetes LliureX DESACTIVADO"
+
+#: ../src/stacks/systemTools.py:18
+msgid "Other software related tools"
+msgstr "Otras herramientas relacionadas"
+
+#: ../src/stacks/systemTools.py:19
+msgid "Restore default repositories"
+msgstr "Restaurar repositorios"
 
 #: json ../sources.d/default/lliurex_23.json
 msgid "Lliurex default repositories"
