@@ -1,3 +1,10 @@
+repoman (3.2.1) jammy; urgency=medium
+
+  * Update strings
+  * Minor GUI changes
+
+ -- Juanma1980 <juanma1980@gmail.com>  Thu, 16 May 2024 17:55:42 +0200
+
 repoman (3.2) jammy; urgency=medium
 
   * Add reset default repositories
