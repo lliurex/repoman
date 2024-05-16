@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-06 11:41+0100\n"
+"POT-Creation-Date: 2024-03-06 15:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -211,23 +211,27 @@ msgid "Activate/deactivate the system repositories"
 msgstr ""
 
 #: ../src/stacks/systemTools.py:14
-msgid "System tools"
-msgstr ""
-
-#: ../src/stacks/systemTools.py:15
-msgid "Other software related tools"
-msgstr ""
-
-#: ../src/stacks/systemTools.py:16
 msgid "Update repositories"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:17
+#: ../src/stacks/systemTools.py:15
+msgid "System tools"
+msgstr ""
+
+#: ../src/stacks/systemTools.py:16
 msgid "Lliurex pinning ENABLED"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning DISABLED"
+msgstr ""
+
+#: ../src/stacks/systemTools.py:18
+msgid "Other software related tools"
+msgstr ""
+
+#: ../src/stacks/systemTools.py:19
+msgid "Restore default repositories"
 msgstr ""
 
 #: json ../sources.d/default/lliurex_23.json

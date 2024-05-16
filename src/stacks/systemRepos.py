@@ -147,6 +147,7 @@ class systemRepos(QStackedWindowItem):
 		self.dbg=True
 #		self._debug("systemRepos Load")
 		self.setProps(shortDesc=i18n.get("MENU"),
+			longDesc=i18n.get("DESC"),
 			icon="go-home",
 			tooltip=i18n.get("TOOLTIP"),
 			index=1,
