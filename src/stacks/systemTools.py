@@ -13,6 +13,7 @@ import gettext
 _ = gettext.gettext
 i18n={"BTNUP":_("Update repositories"),
 	"MENU":_("System tools"),
+	"DESC":_("System tools"),
 	"MSG_PIN":_("Lliurex pinning ENABLED"),
 	"MSG_UNPIN":_("Lliurex pinning DISABLED"),
 	"TOOLTIP":_("Other software related tools"),
@@ -24,6 +25,7 @@ class systemTools(QStackedWindowItem):
 		self.dbg=False
 		self._debug("confApp Load")
 		self.setProps(shortDesc=i18n.get("MENU"),
+			longDesc=i18n.get("DESC"),
 			icon="preferences-other",
 			tooltip=i18n.get("TOOLTIP"),
 			index=3,

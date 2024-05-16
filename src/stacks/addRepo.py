@@ -11,6 +11,8 @@ import gettext
 _ = gettext.gettext
 
 i18n={
+	"MENU":_("Add repositories"),
+	"DESC":_("Add repositories"),
 	"ERROR":_("An error ocurred"),
 	"INSERTREPONAME":_("Insert repository name"),
 	"MSG_ADD":_("Repository added"),
@@ -47,7 +49,8 @@ class addRepo(QStackedWindowItem):
 	def __init_stack__(self):
 		self.dbg=False
 		self._debug("confRepos Load")
-		self.setProps(shortDesc=_("Add repositories"),
+		self.setProps(shortDesc=i18n["MENU"],
+			longDesc=i18n["DESC"],
 			icon="document-new",
 			tooltip=_("Add custom repositories"),
 			index=2,
