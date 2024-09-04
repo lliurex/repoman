@@ -1,0 +1,13 @@
+{
+    "Ubuntu noble": {
+        "changed": false,
+        "desc": "Ubuntu noble official repositories",
+        "disabled_repos": [],
+        "enabled": "False",
+        "repos": [
+            "http://archive.ubuntu.com/ubuntu/ noble main multiverse restricted universe",
+            "http://archive.ubuntu.com/ubuntu/ noble-security main multiverse restricted universe",
+            "http://archive.ubuntu.com/ubuntu/ noble-updates main multiverse restricted universe"
+        ]
+    }
+}
