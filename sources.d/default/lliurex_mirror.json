@@ -4,9 +4,9 @@
         "desc": "Local repositories",
         "enabled": "False",
         "repos": [
-            "http://mirror/llx23 jammy main restricted universe multiverse preschool",
-            "http://mirror/llx23 jammy-updates main restricted universe multiverse",
-            "http://mirror/llx23 jammy-security main restricted universe multiverse"
+            "http://mirror/llx25 noble main restricted universe multiverse preschool",
+            "http://mirror/llx25 noble-updates main restricted universe multiverse",
+            "http://mirror/llx25 noble-security main restricted universe multiverse"
         ]
     }
 }
