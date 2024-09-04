@@ -98,7 +98,7 @@ class QRepoItem(QWidget):
 		self.name=txt
 		dsptxt=txt
 		if ".list" in txt:
-			dsptxt=txt.split(".list")[0]
+			dsptxt=txt.replace(".list","")
 		self.lbltext.setText("{}".format(dsptxt))
 		restricted=["lliurex 25","lliurex mirror","ubuntu noble"]
 		if txt.lower() in restricted:
