@@ -100,7 +100,7 @@ class QRepoItem(QWidget):
 		if ".list" in txt:
 			dsptxt=txt.split(".list")[0]
 		self.lbltext.setText("{}".format(dsptxt))
-		restricted=["lliurex 23","lliurex mirror","ubuntu jammy"]
+		restricted=["lliurex 25","lliurex mirror","ubuntu noble"]
 		if txt.lower() in restricted:
 			self.btnEdit.setVisible(False)
 		self.lbltext.adjustSize()
