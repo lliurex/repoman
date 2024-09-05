@@ -231,8 +231,7 @@ class systemRepos(QStackedWindowItem):
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
 		self._debug("Error: {}".format(err))
-		msg="{0}\n{1}".format(i18n.get("ERROR"),"\n".join(err))
-		self.showMsg(msg)
+		self.showMsg(summary=i18n.get("ERROR"),text="\n".join(err),icon="repoman")
 	#def _onError
 
 	def _endEditFile(self,*args):
