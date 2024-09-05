@@ -90,7 +90,8 @@ class addRepo(QStackedWindowItem):
 	#def _reset_screen
 
 	def _onError(self,err):
-		self.showMsg("{}:\n".format(i18n.get("ERROR"),"\n".join(err)))
+		msg="{0}\n{1}".format(i18n.get("ERROR"),"\n".join(err))
+		self.showMsg(msg)
 	#def _onError
 
 	def writeConfig(self):
