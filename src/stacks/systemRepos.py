@@ -26,9 +26,10 @@ class processRepos(QThread):
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
 		self.widget=widget
 		self.parent=parent
+		self.err=[]
 
 	def run(self):
-		err=[]
+		self.err=[]
 		for i in range(0,self.widget.rowCount()):
 			w=self.widget.cellWidget(i,0)
 			if w.changed==False:
@@ -36,9 +37,9 @@ class processRepos(QThread):
 			state=w.isChecked()
 			proc=subprocess.run(["pkexec",self.repohelper,w.text(),str(state)])
 			if proc.returncode!=0:
-				err.append(w.text())
-		if len(err)>0:
-			self.onError.emit(err)
+				self.err.append(w.text())
+		if len(self.err)>0:
+			self.onError.emit(self.err)
 		return(True)
 #class processRepos
 
@@ -235,12 +236,13 @@ class systemRepos(QStackedWindowItem):
 	#def _onError
 
 	def _endEditFile(self,*args):
-		self.changes=False
-		if self.cursor()!=self.oldcursor:
-			self._updateRepos()
-			self.setCursor(self.oldcursor)
-		self.updateScreen()
-		self.setChanged(False)
+		if len(self.process.err)==0:
+			if self.cursor()!=self.oldcursor:
+				self._updateRepos()
+			self.updateScreen()
+			self.btnAccept.setEnabled(False)
+			self.btnCancel.setEnabled(False)
+		self.setCursor(self.oldcursor)
 	#def _endEditFile
 
 	def _updateRepos(self):

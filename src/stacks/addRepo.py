@@ -32,16 +32,17 @@ class processRepos(QThread):
 		self.name=kwargs.get('name','')
 		self.desc=kwargs.get('desc','')
 		self.parent=kwargs.get('parent','')
+		self.err=[]
 
 	def run(self):
+		self.err=[]
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		if self.parent:
 			self.parent.setCursor(cursor)
-		err=[]
 		proc=subprocess.run(["pkexec",self.repohelper,self.url,"Add",self.name,self.desc])
 		if proc.returncode!=0:
-			err.append(self.url)
-			self.onError.emit(err)
+			self.err.append(self.url)
+			self.onError.emit(self.err)
 		return(True)
 #class processRepos
 
@@ -114,4 +115,7 @@ class addRepo(QStackedWindowItem):
 	
 	def _endProcess(self):
 		self.setCursor(self.oldcursor)
-		self.parent.setCurrentStack(1)
+		if len(self.process.err)==0:
+			self.btnAccept.setEnabled(False)
+			self.btnCancel.setEnabled(False)
+			self.parent.setCurrentStack(1)
