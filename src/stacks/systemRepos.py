@@ -232,7 +232,7 @@ class systemRepos(QStackedWindowItem):
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
 		self._debug("Error: {}".format(err))
-		self.showMsg(summary=i18n.get("ERROR"),text="\n".join(err),icon="repoman")
+		self.showMsg(text="{0}\n{1}".format(i18n.get("ERROR"),"\n".join(err)),icon="repoman",timeout=10)
 	#def _onError
 
 	def _endEditFile(self,*args):
