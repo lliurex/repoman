@@ -13,7 +13,7 @@ _ = gettext.gettext
 i18n={
 	"MENU":_("Add repositories"),
 	"DESC":_("Add repositories"),
-	"ERROR":_("An error ocurred"),
+	"ERROR":_("Error"),
 	"ERROR_REPO":_("Repository not found at"),
 	"INSERTREPONAME":_("Insert repository name"),
 	"MSG_ADD":_("Repository added"),
@@ -93,7 +93,7 @@ class addRepo(QStackedWindowItem):
 
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
-		self.showMsg(text="{0}\n{1}\n{2}".format(i18n.get("ERROR"),i18n.get("ERROR_REPO"),"\n".join(err)),icon="repoman",timeout=10)
+		self.showMsg(summary=i18n.get("ERROR"),text="{0}\n{1}".format(i18n.get("ERROR_REPO"),"\n".join(err)),icon="repoman",timeout=10)
 	#def _onError
 
 	def writeConfig(self):

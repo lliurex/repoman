@@ -14,7 +14,7 @@ _ = gettext.gettext
 
 i18n={
 	"MENU":_("System repositories"),
-	"ERROR":_("Error in:"),
+	"ERROR":_("Error"),
 	"DESC":_("Manage system repositories"),
 	"TOOLTIP":_("Activate/deactivate the system repositories")
 	}
@@ -232,7 +232,7 @@ class systemRepos(QStackedWindowItem):
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
 		self._debug("Error: {}".format(err))
-		self.showMsg(text="{0}\n{1}".format(i18n.get("ERROR"),"\n".join(err)),icon="repoman",timeout=10)
+		self.showMsg(summary=i18n.get("ERROR"),text="{0}".format("\n".join(err)),icon="repoman",timeout=10)
 	#def _onError
 
 	def _endEditFile(self,*args):
