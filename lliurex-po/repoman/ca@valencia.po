@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 15:31+0100\n"
-"PO-Revision-Date: 2024-03-06 15:34+0100\n"
+"POT-Creation-Date: 2024-09-09 07:19+0200\n"
+"PO-Revision-Date: 2024-09-09 07:19+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -158,53 +158,53 @@ msgstr ""
 "\n"
 "Paràmetres:"
 
-#: ../src/stacks/addRepo.py:14
-msgid "An error ocurred"
-msgstr "Error"
-
-#: ../src/stacks/addRepo.py:15
-msgid "Insert repository name"
-msgstr "Inseriu el nom del repositori"
-
-#: ../src/stacks/addRepo.py:16
-msgid "Repository added"
-msgstr "Repositori agregat"
-
-#: ../src/stacks/addRepo.py:17
-msgid "Repository's contents"
-msgstr "Contingut del repositori"
-
-#: ../src/stacks/addRepo.py:18
-msgid "Descriptive description (optional)"
-msgstr "Descripció del repositori (opcional):"
-
-#: ../src/stacks/addRepo.py:19
-msgid "name of the repository"
-msgstr "nom del repositori"
-
-#: ../src/stacks/addRepo.py:20
-msgid "Repository's url"
-msgstr "URL del repositori"
-
-#: ../src/stacks/addRepo.py:21
-msgid "Url for the repository"
-msgstr "URL per al repositori"
-
-#: ../src/stacks/addRepo.py:50
+#: ../src/stacks/addRepo.py:14 ../src/stacks/addRepo.py:15
 msgid "Add repositories"
 msgstr "Afig repositoris"
 
-#: ../src/stacks/addRepo.py:52
+#: ../src/stacks/addRepo.py:16 ../src/stacks/systemRepos.py:17
+msgid "Error"
+msgstr "Error"
+
+#: ../src/stacks/addRepo.py:17
+msgid "Repository not found at"
+msgstr "No es troba el repositori a l'Url"
+
+#: ../src/stacks/addRepo.py:18
+msgid "Insert repository name"
+msgstr "Inseriu el nom del repositori"
+
+#: ../src/stacks/addRepo.py:19
+msgid "Repository added"
+msgstr "Repositori agregat"
+
+#: ../src/stacks/addRepo.py:20
+msgid "Repository's contents"
+msgstr "Contingut del repositori"
+
+#: ../src/stacks/addRepo.py:21
+msgid "Descriptive description (optional)"
+msgstr "Descripció del repositori (opcional):"
+
+#: ../src/stacks/addRepo.py:22
+msgid "name of the repository"
+msgstr "nom del repositori"
+
+#: ../src/stacks/addRepo.py:23
+msgid "Repository's url"
+msgstr "URL del repositori"
+
+#: ../src/stacks/addRepo.py:24
+msgid "Url for the repository"
+msgstr "URL per al repositori"
+
+#: ../src/stacks/addRepo.py:57
 msgid "Add custom repositories"
 msgstr "Afig repositoris personalitzats"
 
 #: ../src/stacks/systemRepos.py:16
 msgid "System repositories"
 msgstr "Repositoris del sistema"
-
-#: ../src/stacks/systemRepos.py:17
-msgid "Error in:"
-msgstr "Error:"
 
 #: ../src/stacks/systemRepos.py:18
 msgid "Manage system repositories"
@@ -218,27 +218,27 @@ msgstr "Activar/desactivar els repositoris"
 msgid "Update repositories"
 msgstr "Actualitza els repositoris"
 
-#: ../src/stacks/systemTools.py:15
+#: ../src/stacks/systemTools.py:15 ../src/stacks/systemTools.py:16
 msgid "System tools"
 msgstr "Eines del sistema"
 
-#: ../src/stacks/systemTools.py:16
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning ENABLED"
 msgstr "Prioritza els repositoris de Lliurex"
 
-#: ../src/stacks/systemTools.py:17
+#: ../src/stacks/systemTools.py:18
 msgid "Lliurex pinning DISABLED"
 msgstr "Prioritza els repositoris de Lliurex"
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/systemTools.py:19
 msgid "Other software related tools"
 msgstr "Altres eines relacionades"
 
-#: ../src/stacks/systemTools.py:19
+#: ../src/stacks/systemTools.py:20
 msgid "Restore default repositories"
 msgstr "Restaurar repostoris"
 
-#: json ../sources.d/default/lliurex_23.json
+#: json ../sources.d/default/lliurex_25.json
 msgid "Lliurex default repositories"
 msgstr "Repositoris predeterminats de Lliurex"
 
@@ -246,13 +246,16 @@ msgstr "Repositoris predeterminats de Lliurex"
 msgid "Local repositories"
 msgstr "Repositoris locals"
 
-#: json ../sources.d/default/ubuntu_jammy.json
-msgid "Ubuntu jammy official repositories"
-msgstr "Repositoris oficials d'Ubuntu Jammy"
+#: json ../sources.d/default/ubuntu_noble.json
+msgid "Ubuntu noble official repositories"
+msgstr "Repositoris oficials d'Ubuntu Noble"
 
 #: polkit
 msgid "This action requieres administrator rights"
 msgstr "Aquesta acció requereix drets d'administrador"
+
+#~ msgid "An error ocurred"
+#~ msgstr "Error"
 
 #~ msgid "Invalid Url"
 #~ msgstr "L'Url no és vàlid"
@@ -270,9 +273,6 @@ msgstr "Aquesta acció requereix drets d'administrador"
 #~ msgstr ""
 #~ "No es pot escriure el fitxer de fonts.\n"
 #~ "Comproveu els vostres permisos"
-
-#~ msgid "Repository not found at given Url"
-#~ msgstr "No es troba el repositori a l'Url donat"
 
 #~ msgid "Repositories failed to update"
 #~ msgstr "Ha fallat l'actualització dels repositoris"
