@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 15:31+0100\n"
+"POT-Creation-Date: 2024-09-09 07:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,52 +154,52 @@ msgid ""
 "Parameters:"
 msgstr ""
 
-#: ../src/stacks/addRepo.py:14
-msgid "An error ocurred"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:15
-msgid "Insert repository name"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:16
-msgid "Repository added"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:17
-msgid "Repository's contents"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:18
-msgid "Descriptive description (optional)"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:19
-msgid "name of the repository"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:20
-msgid "Repository's url"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:21
-msgid "Url for the repository"
-msgstr ""
-
-#: ../src/stacks/addRepo.py:50
+#: ../src/stacks/addRepo.py:14 ../src/stacks/addRepo.py:15
 msgid "Add repositories"
 msgstr ""
 
-#: ../src/stacks/addRepo.py:52
+#: ../src/stacks/addRepo.py:16 ../src/stacks/systemRepos.py:17
+msgid "Error"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:17
+msgid "Repository not found at"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:18
+msgid "Insert repository name"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:19
+msgid "Repository added"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:20
+msgid "Repository's contents"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:21
+msgid "Descriptive description (optional)"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:22
+msgid "name of the repository"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:23
+msgid "Repository's url"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:24
+msgid "Url for the repository"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:57
 msgid "Add custom repositories"
 msgstr ""
 
 #: ../src/stacks/systemRepos.py:16
 msgid "System repositories"
-msgstr ""
-
-#: ../src/stacks/systemRepos.py:17
-msgid "Error in:"
 msgstr ""
 
 #: ../src/stacks/systemRepos.py:18
@@ -214,27 +214,27 @@ msgstr ""
 msgid "Update repositories"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:15
+#: ../src/stacks/systemTools.py:15 ../src/stacks/systemTools.py:16
 msgid "System tools"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:16
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning ENABLED"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:17
+#: ../src/stacks/systemTools.py:18
 msgid "Lliurex pinning DISABLED"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/systemTools.py:19
 msgid "Other software related tools"
 msgstr ""
 
-#: ../src/stacks/systemTools.py:19
+#: ../src/stacks/systemTools.py:20
 msgid "Restore default repositories"
 msgstr ""
 
-#: json ../sources.d/default/lliurex_23.json
+#: json ../sources.d/default/lliurex_25.json
 msgid "Lliurex default repositories"
 msgstr ""
 
@@ -242,8 +242,8 @@ msgstr ""
 msgid "Local repositories"
 msgstr ""
 
-#: json ../sources.d/default/ubuntu_jammy.json
-msgid "Ubuntu jammy official repositories"
+#: json ../sources.d/default/ubuntu_noble.json
+msgid "Ubuntu noble official repositories"
 msgstr ""
 
 #: polkit

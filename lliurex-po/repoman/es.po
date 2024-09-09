@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 15:31+0100\n"
-"PO-Revision-Date: 2024-03-06 15:33+0100\n"
+"POT-Creation-Date: 2024-09-09 07:19+0200\n"
+"PO-Revision-Date: 2024-09-09 07:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -159,53 +159,53 @@ msgstr ""
 "\n"
 "Parámetros:"
 
-#: ../src/stacks/addRepo.py:14
-msgid "An error ocurred"
-msgstr "Ocurrió un error"
-
-#: ../src/stacks/addRepo.py:15
-msgid "Insert repository name"
-msgstr "Introduce el nombre del repositorio"
-
-#: ../src/stacks/addRepo.py:16
-msgid "Repository added"
-msgstr "Repositorios agregado"
-
-#: ../src/stacks/addRepo.py:17
-msgid "Repository's contents"
-msgstr "Contenido del repositorio"
-
-#: ../src/stacks/addRepo.py:18
-msgid "Descriptive description (optional)"
-msgstr "Descripción del repositorio (opcional):"
-
-#: ../src/stacks/addRepo.py:19
-msgid "name of the repository"
-msgstr "nombre del repositorio"
-
-#: ../src/stacks/addRepo.py:20
-msgid "Repository's url"
-msgstr "URL del repositorio"
-
-#: ../src/stacks/addRepo.py:21
-msgid "Url for the repository"
-msgstr "URL del repositorio"
-
-#: ../src/stacks/addRepo.py:50
+#: ../src/stacks/addRepo.py:14 ../src/stacks/addRepo.py:15
 msgid "Add repositories"
 msgstr "Añadir repositorio"
 
-#: ../src/stacks/addRepo.py:52
+#: ../src/stacks/addRepo.py:16 ../src/stacks/systemRepos.py:17
+msgid "Error"
+msgstr "Error"
+
+#: ../src/stacks/addRepo.py:17
+msgid "Repository not found at"
+msgstr "No se encuentra un repositorio en la url"
+
+#: ../src/stacks/addRepo.py:18
+msgid "Insert repository name"
+msgstr "Introduce el nombre del repositorio"
+
+#: ../src/stacks/addRepo.py:19
+msgid "Repository added"
+msgstr "Repositorios agregado"
+
+#: ../src/stacks/addRepo.py:20
+msgid "Repository's contents"
+msgstr "Contenido del repositorio"
+
+#: ../src/stacks/addRepo.py:21
+msgid "Descriptive description (optional)"
+msgstr "Descripción del repositorio (opcional):"
+
+#: ../src/stacks/addRepo.py:22
+msgid "name of the repository"
+msgstr "nombre del repositorio"
+
+#: ../src/stacks/addRepo.py:23
+msgid "Repository's url"
+msgstr "URL del repositorio"
+
+#: ../src/stacks/addRepo.py:24
+msgid "Url for the repository"
+msgstr "URL del repositorio"
+
+#: ../src/stacks/addRepo.py:57
 msgid "Add custom repositories"
 msgstr "Añadir repositorio personal"
 
 #: ../src/stacks/systemRepos.py:16
 msgid "System repositories"
 msgstr "Repositorios del sistema"
-
-#: ../src/stacks/systemRepos.py:17
-msgid "Error in:"
-msgstr "Error:"
 
 #: ../src/stacks/systemRepos.py:18
 msgid "Manage system repositories"
@@ -219,27 +219,27 @@ msgstr "Activar/desactivar los repositorios del sistema"
 msgid "Update repositories"
 msgstr "Actualizar repositorios"
 
-#: ../src/stacks/systemTools.py:15
+#: ../src/stacks/systemTools.py:15 ../src/stacks/systemTools.py:16
 msgid "System tools"
 msgstr "Herramientas del sistema"
 
-#: ../src/stacks/systemTools.py:16
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning ENABLED"
 msgstr "Preferir paquetes LliureX ACTIVADO"
 
-#: ../src/stacks/systemTools.py:17
+#: ../src/stacks/systemTools.py:18
 msgid "Lliurex pinning DISABLED"
 msgstr "Preferir paquetes LliureX DESACTIVADO"
 
-#: ../src/stacks/systemTools.py:18
+#: ../src/stacks/systemTools.py:19
 msgid "Other software related tools"
 msgstr "Otras herramientas relacionadas"
 
-#: ../src/stacks/systemTools.py:19
+#: ../src/stacks/systemTools.py:20
 msgid "Restore default repositories"
 msgstr "Restaurar repositorios"
 
-#: json ../sources.d/default/lliurex_23.json
+#: json ../sources.d/default/lliurex_25.json
 msgid "Lliurex default repositories"
 msgstr "Repositorios de LliureX"
 
@@ -247,13 +247,16 @@ msgstr "Repositorios de LliureX"
 msgid "Local repositories"
 msgstr "Repositorios locales"
 
-#: json ../sources.d/default/ubuntu_jammy.json
-msgid "Ubuntu jammy official repositories"
-msgstr "Repositorios oficiales de Ubuntu Jammy"
+#: json ../sources.d/default/ubuntu_noble.json
+msgid "Ubuntu noble official repositories"
+msgstr "Repositorios oficiales de Ubuntu Noble"
 
 #: polkit
 msgid "This action requieres administrator rights"
 msgstr "Se necesitan permisos de administración"
+
+#~ msgid "An error ocurred"
+#~ msgstr "Ocurrió un error"
 
 #~ msgid "Manage repositories requires admin authentification"
 #~ msgstr "Gestionar repositorios requiere permisos de administrador"
@@ -274,9 +277,6 @@ msgstr "Se necesitan permisos de administración"
 #~ msgstr ""
 #~ "No se puede escribir el fichero de fuentes\n"
 #~ "Comprueba los repositorios"
-
-#~ msgid "Repository not found at given Url"
-#~ msgstr "No se encuentra un repositorio en la url indicada"
 
 #~ msgid "Repositories failed to update"
 #~ msgstr "Fallo al actualizar los repositorios"
