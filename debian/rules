@@ -12,7 +12,7 @@
 %:
 	#dh $@ --with llxsrc,i18n,zero,python3 --buildsystem pybuild
 #	dh $@ --with llxsrc,i18n,python3,zero
-	dh $@ --with llxsrc,python3
+	dh $@ --with llxsrc,python3,i18n,zero
 
 #override_dh_install:
 #	marked-man docs/repoman.md > docs/repoman.1
