@@ -2,9 +2,9 @@
 import sys
 import os
 import subprocess
-from PySide2.QtWidgets import  QPushButton,QGridLayout,QMessageBox
-from PySide2 import QtGui
-from PySide2.QtCore import Qt,QSize
+from PySide6.QtWidgets import  QPushButton,QGridLayout,QMessageBox
+from PySide6 import QtGui
+from PySide6.QtCore import Qt,QSize
 from QtExtraWidgets import QStackedWindowItem
 from repoman import repomanager
 import subprocess

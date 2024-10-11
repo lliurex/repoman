@@ -2,9 +2,9 @@
 import sys
 import os
 import hashlib
-from PySide2.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
-from PySide2 import QtGui
-from PySide2.QtCore import Qt,QThread,Signal
+from PySide6.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
+from PySide6 import QtGui
+from PySide6.QtCore import Qt,QThread,Signal
 from QtExtraWidgets import QTableTouchWidget, QStackedWindowItem
 from repoman import repomanager
 import subprocess

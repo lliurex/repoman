@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
-from PySide2.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 from QtExtraWidgets import QStackedWindow
 import gettext
 gettext.textdomain('repoman')
@@ -19,4 +19,4 @@ config.setIcon("repoman")
 config.show()
 config.setMinimumWidth(config.sizeHint().width()*1.6)
 config.setMinimumHeight(config.sizeHint().width()*0.9)
-app.exec_()
+app.exec()
