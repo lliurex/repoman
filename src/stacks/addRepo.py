@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 import sys
 import os
-from PySide2.QtWidgets import QLabel, QGridLayout,QLineEdit
-from PySide2 import QtGui
-from PySide2.QtCore import Qt,Signal,QThread
+from PySide6.QtWidgets import QLabel, QGridLayout,QLineEdit
+from PySide6 import QtGui
+from PySide6.QtCore import Qt,Signal,QThread
 import subprocess
 from QtExtraWidgets import QStackedWindowItem
 
