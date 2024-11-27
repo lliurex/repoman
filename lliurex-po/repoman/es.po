@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-09 07:19+0200\n"
-"PO-Revision-Date: 2024-09-09 07:19+0200\n"
+"PO-Revision-Date: 2024-11-27 13:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../src/repoman-cli.py:16
 msgid "Invalid argument"
@@ -253,7 +253,7 @@ msgstr "Repositorios oficiales de Ubuntu Noble"
 
 #: polkit
 msgid "This action requieres administrator rights"
-msgstr "Se necesitan permisos de administración"
+msgstr "Introducir la contraseña del usuario para aplicar cambios"
 
 #~ msgid "An error ocurred"
 #~ msgstr "Ocurrió un error"
