@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-29 10:21+0100\n"
-"PO-Revision-Date: 2024-11-29 10:27+0100\n"
+"PO-Revision-Date: 2024-11-29 10:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -253,7 +253,7 @@ msgstr "Repositorios oficiales de Ubuntu Noble"
 
 #: polkit
 msgid "Insert your password for update repositories"
-msgstr "Para actualizar es necesario introducir su contraseña"
+msgstr "Introduzca su contraseña para actualizar los repositorios"
 
 #~ msgid "Administration rights are required for this action"
 #~ msgstr "Introduzca su contraseña para actualizar los repositorios"
