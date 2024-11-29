@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 10:51+0100\n"
+"POT-Creation-Date: 2024-11-29 11:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,18 +137,18 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
-#: ../src/repoman-cli.py:272
+#: ../src/repoman-cli.py:274
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:273
+#: ../src/repoman-cli.py:275
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:274
+#: ../src/repoman-cli.py:276
 msgid ""
 "\n"
 "Parameters:"
@@ -247,6 +247,8 @@ msgid "Ubuntu noble official repositories"
 msgstr ""
 
 #: polkit
-msgid "Insert your password for update repositories"
+msgid "Insert your password"
+msgstr ""
+msgid "Repoman wants to change system settings"
 msgstr ""
 

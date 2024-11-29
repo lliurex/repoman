@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 10:51+0100\n"
-"PO-Revision-Date: 2024-11-29 10:53+0100\n"
+"POT-Creation-Date: 2024-11-29 11:27+0100\n"
+"PO-Revision-Date: 2024-11-29 11:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -138,12 +138,12 @@ msgstr "Vale"
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:272
+#: ../src/repoman-cli.py:274
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:273
+#: ../src/repoman-cli.py:275
 msgid ""
 "\n"
 "RepoMan"
@@ -151,7 +151,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:274
+#: ../src/repoman-cli.py:276
 msgid ""
 "\n"
 "Parameters:"
@@ -252,8 +252,14 @@ msgid "Ubuntu noble official repositories"
 msgstr "Repositorios oficiales de Ubuntu Noble"
 
 #: polkit
-msgid "Insert your password for update repositories"
-msgstr "Introduzca su contraseña para actualizar los repositorios"
+msgid "Insert your password"
+msgstr "Introducir contraseña"
+
+msgid "Repoman wants to change system settings"
+msgstr "Repoman quiere realizar cambios en el sistema"
+
+#~ msgid "Insert your password for update repositories"
+#~ msgstr "Introduzca su contraseña para actualizar los repositorios"
 
 #~ msgid "Administration rights are required for this action"
 #~ msgstr "Introduzca su contraseña para actualizar los repositorios"
@@ -316,9 +322,6 @@ msgstr "Introduzca su contraseña para actualizar los repositorios"
 
 #~ msgid "From here you can update the repositories info or launch lliurex-upgrade"
 #~ msgstr "Desde aquí se pueden actualizar los repositorios o el sistema"
-
-#~ msgid "User's password"
-#~ msgstr "Contraseña"
 
 #~ msgid "Username"
 #~ msgstr "Usuario"
