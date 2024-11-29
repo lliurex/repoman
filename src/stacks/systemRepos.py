@@ -20,38 +20,68 @@ i18n={
 	}
 
 class processRepos(QThread):
-	onError=Signal(list)
-	def __init__(self,widget,parent=None):
-		QThread.__init__(self, parent)
+	writeCompleted=Signal(str)
+	updateCompleted=Signal(str)
+	editCompleted=Signal(str)
+	def __init__(self,*args,**kwargs):
+		QThread.__init__(self, None)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
-		self.widget=widget
-		self.parent=parent
-		self.err=[]
+		self.mode="update"
+		self.args=[]
+		self.kwargs={}
+	#def __init__(self)
 
-	def run(self):
-		self.err=[]
-		for i in range(0,self.widget.rowCount()):
-			w=self.widget.cellWidget(i,0)
-			if w.changed==False:
-				continue
-			state=w.isChecked()
-			proc=subprocess.run(["pkexec",self.repohelper,w.text(),str(state)])
+	def run(self,mode=""):
+		if mode=="":
+			mode=self.mode
+		if mode=="write":
+			self._writeFiles()
+		elif mode=="update":
+			self._updateSystem()
+		elif mode=="edit":
+			self._editRepo()
+		return(True)
+	#def run
+
+	def _writeFiles(self):
+		err=""
+		repos=self.kwargs.get("repositories")
+		if repos==None:
+			if isinstance(self.args[0],dict):
+				repos=self.args[0]
+		for repo,state in repos.items():
+			proc=subprocess.run(["pkexec",self.repohelper,repo,state])
 			if proc.returncode!=0:
-				self.err.append(w.text())
-		if len(self.err)>0:
-			self.onError.emit(self.err)
-		return(True)
+				if proc.stderr!=None:
+					err+=str(proc.stderr)
+		self.writeCompleted.emit(err)
+	#def _writeFiles
+	
+	def _updateSystem(self):
+		err=""
+		proc=subprocess.run(["pkexec",self.repohelper,"update"])
+		self.updateCompleted.emit(err)
+	#def _updateSystem
+
+	def _editRepo(self,fsource=""):
+		err=""
+		fsource=self.kwargs.get("fsource")
+		if fsource==None:
+			if isinstance(self.args[0],str):
+				fsource=self.args[0]
+		proc=subprocess.run(["kwrite",fsource])
+		if proc.returncode!=0:
+			if proc.stderr!=None:
+				err+=str(proc.stderr)
+		self.editCompleted.emit(err)
+	#def _editRepo
+
+	def setMode(self,mode,*args,**kwargs):
+		self.mode=mode
+		self.args=args
+		self.kwargs=kwargs.copy()
+	#def setMode
 #class processRepos
-
-class editRepo(QThread):
-	def __init__(self,fsource,parent=None):
-		QThread.__init__(self, parent)
-		self.fsource=fsource
-
-	def run(self):
-		subprocess.run(["kwrite",self.fsource])
-		return(True)
-#class editRepo
 
 class QRepoItem(QWidget):
 	stateChanged=Signal("bool")
@@ -80,6 +110,8 @@ class QRepoItem(QWidget):
 		self.setLayout(lay)
 		self.md5=""
 		parent=self.parent
+		self.editRepo=processRepos(self.file)
+		self.editRepo.editCompleted.connect(self._endEdit)
 	#def __init__
 
 	def setChanged(self,changed=True):
@@ -108,7 +140,7 @@ class QRepoItem(QWidget):
 	#def setText
 
 	def setDesc(self,txt):
-		self.desc.setText("<i>{}</i>".format(txt))
+		self.desc.setText("<i>{}</i>".format(_(txt)))
 		self.desc.adjustSize()
 	#def setDesc
 
@@ -127,13 +159,12 @@ class QRepoItem(QWidget):
 	def _editFile(self):
 		with open(self.file,"r") as f:
 			self.md5=hashlib.md5(f.read().encode()).hexdigest()
-		self.process=editRepo(self.file)
-		self.process.finished.connect(self._endEditFile)
-		self.process.start()
+		self.editRepo.setMode("edit",self.file)
+		self.editRepo.start()
 		self.setEnabled(False)
 	#def _editFile
 
-	def _endEditFile(self,*args):
+	def _endEdit(self,*args):
 		changed=False
 		with open(self.file,"r") as f:
 			if self.md5!=hashlib.md5(f.read().encode()).hexdigest():
@@ -158,8 +189,12 @@ class systemRepos(QStackedWindowItem):
 		self.changed=[]
 		self.width=0
 		self.height=0
-		self.oldcursor=self.cursor()
+		self.oldCursor=self.cursor()
 		self.repoman=repomanager.manager()
+		self.processRepos=processRepos(self)
+		self.processRepos.writeCompleted.connect(self._endWrite)
+		self.processRepos.updateCompleted.connect(self._endUpdate)
+		#self.process.finished.connect(self._endEditFile)
 		self.btnAccept.clicked.connect(self.writeConfig)
 	#def __init__
 
@@ -216,36 +251,57 @@ class systemRepos(QStackedWindowItem):
 		if len(args)>0:
 			if (isinstance(args[0],bool)):
 				if(args[0]==True):
-					self.updateScreen()
+					self._updateRepos()
 				self.setChanged(args[0])
 	#def _stateChanged
 
 	def writeConfig(self):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
-		self.setCursor(cursor)
-		self.process=processRepos(self.lstRepositories,self)
-		self.process.onError.connect(self._onError)
-		self.process.finished.connect(self._endEditFile)
-		self.process.start()
+		self.parent.setCursor(cursor)
+		self.parent.setEnabled(False)
+		repos={}
+		for i in range(0,self.lstRepositories.rowCount()):
+			w=self.lstRepositories.cellWidget(i,0)
+			if w.changed==False:
+				continue
+			state=w.isChecked()
+			repos.update({w.text():str(state)})
+		self.processRepos.setMode("write",repos)
+		self.processRepos.start()
 	#def writeConfig
 
+	def _updateRepos(self):
+		self._debug("Updating repos")
+		self.processRepos.setMode("update")
+		self.processRepos.start()
+	#def _updateRepos
+
 	def _onError(self,err):
-		self.setCursor(self.oldcursor)
+		self.setCursor(self.oldCursor)
 		self._debug("Error: {}".format(err))
 		self.showMsg(summary=i18n.get("ERROR"),text="{0}".format("\n".join(err)),icon="repoman",timeout=10)
 	#def _onError
 
+	def _endWrite(self,*args):
+		self._updateRepos()
+	#def _endWrite
+
+	def _endUpdate(self,*args):
+		self._endThread()
+	#def _endUpdate(self,*args):
+
 	def _endEditFile(self,*args):
 		if len(self.process.err)==0:
-			if self.cursor()!=self.oldcursor:
+			if self.cursor()!=self.oldCursor:
 				self._updateRepos()
 			self.updateScreen()
-			self.btnAccept.setEnabled(False)
-			self.btnCancel.setEnabled(False)
-		self.setCursor(self.oldcursor)
+		self._endThread()
 	#def _endEditFile
 
-	def _updateRepos(self):
-		self._debug("Updating repos")
-		self.repoman.updateRepos()
-	#def _updateRepos
+	def _endThread(self):
+		self.parent.setEnabled(True)
+		self.btnAccept.setEnabled(False)
+		self.btnCancel.setEnabled(False)
+		self.setCursor(self.oldCursor)
+	#def _endSucces
+
