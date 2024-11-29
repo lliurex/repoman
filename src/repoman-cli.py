@@ -152,7 +152,6 @@ def editRepo():
 				sw_print=True
 			if sw_print:
 				if "** File: " in line:
-					print(line)
 					file=line.split(" ")[2]
 		editor=os.environ.get("EDITOR","/usr/bin/nano")
 		if os.path.exists(file):
