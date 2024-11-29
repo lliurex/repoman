@@ -1,6 +1,8 @@
-repoman (3.2.9-0lliurex25) noble; urgency=medium
+repoman (3.3.0) noble; urgency=medium
 
   * PySide6
+  * Improved messages
+  * Better thread management
 
  -- Juanma1980 <juanma1980@gmail.com>  Tue, 26 Nov 2024 14:56:10 +0100
 
