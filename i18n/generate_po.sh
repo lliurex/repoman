@@ -18,7 +18,10 @@ do
 done
 
 echo "#: polkit" >> repoman/repoman.pot
-a="Insert your password for update repositories"
-echo 'msgid "'${a}'"' >> repoman/repoman.pot
+message="Insert your password"
+description="Repoman wants to change system settings"
+echo 'msgid "'${message}'"' >> repoman/repoman.pot
+echo 'msgstr ""'>> repoman/repoman.pot
+echo 'msgid "'${description}'"' >> repoman/repoman.pot
 echo 'msgstr ""'>> repoman/repoman.pot
 echo '' >> repoman/repoman.pot

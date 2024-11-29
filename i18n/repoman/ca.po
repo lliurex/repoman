@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 10:51+0100\n"
-"PO-Revision-Date: 2024-11-29 10:54+0100\n"
+"POT-Creation-Date: 2024-11-29 11:27+0100\n"
+"PO-Revision-Date: 2024-11-29 11:30+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -137,12 +137,12 @@ msgstr "Val"
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:272
+#: ../src/repoman-cli.py:274
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:273
+#: ../src/repoman-cli.py:275
 msgid ""
 "\n"
 "RepoMan"
@@ -150,7 +150,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:274
+#: ../src/repoman-cli.py:276
 msgid ""
 "\n"
 "Parameters:"
@@ -255,8 +255,14 @@ msgid "Ubuntu noble official repositories"
 msgstr "Repositoris oficials d'Ubuntu Noble"
 
 #: polkit
-msgid "Insert your password for update repositories"
-msgstr "Introduïu la vostra contrasenya per a actualitzar els repositoris"
+msgid "Insert your password"
+msgstr "Introduïu contrasenya"
+
+msgid "Repoman wants to change system settings"
+msgstr "Repoman vol modificar el sistema"
+
+#~ msgid "Insert your password for update repositories"
+#~ msgstr "Introduïu la vostra contrasenya per a actualitzar els repositoris"
 
 #~ msgid "Administration rights are required for this action"
 #~ msgstr "Introduïr contrasenya d'usuari per a aplicar els canvis"
@@ -329,9 +335,6 @@ msgstr "Introduïu la vostra contrasenya per a actualitzar els repositoris"
 
 #~ msgid "Manage repositories requires admin authentification"
 #~ msgstr "Gestionar repositoris requereix permissos d'administrador"
-
-#~ msgid "User's password"
-#~ msgstr "Contrasenya"
 
 #~ msgid "Username"
 #~ msgstr "Usuari"
