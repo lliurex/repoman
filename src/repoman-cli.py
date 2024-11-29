@@ -33,7 +33,7 @@ i18n={
 	"MSG_ADD":_("You're going to add the repo present at"),
 	"MSG_CONTINUE":_("Continue?"),
 	"MSG_DISABLE":_("disable the"),
-	"MSG_EDIT":_("edit"),
+	"MSG_EDIT":_("edit the"),
 	"MSG_ENABLE":_("enable the"),
 	"MSG_UPDATE":_("Repositories changed. Do you want to update info?"),
 	"MSG_YOU":_("You're going to"),
@@ -140,7 +140,7 @@ def editRepo():
 	if targetrepo.replace(color.END,"").endswith(i18n.get("UNAVAILABLE")):
 		print("{}{}{}".format(color.DARKCYAN,i18n.get("FORBIDDEN"),color.END))
 		sys.exit(1)
-	resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_EDIT"),color.END,i18n.get("REPOSITORY"),reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+	resp=input("{0} {1}{2} {3}{4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_EDIT"),i18n.get("REPOSITORY"),color.END,reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	if resp.lower()==i18n.get("OPTIONS")[0].lower():
 		repomanRepos=repoman.getRepos()
 		output=_formatOutput(repomanRepos,True,False,True)
@@ -172,7 +172,7 @@ def disableRepo():
 
 	options=i18n.get("OPTIONS")
 	if not unattended:
-		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_DISABLE"),i18n.get("REPOSITORY"),color.END,reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+		resp=input("{0} {1}{2} {3}{4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_DISABLE"),i18n.get("REPOSITORY"),color.END,reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	else:
 		resp=options[0].lower()
 	if resp.lower()==options[0].lower():
@@ -197,7 +197,7 @@ def enableRepo():
 	options=i18n.get("OPTIONS")
 	resp=options[0].lower()
 	if not unattended:
-		resp=input("{0} {1}{2}{3} {4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),i18n.get("REPOSITORY"),color.END,reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
+		resp=input("{0} {1}{2} {3}{4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_ENABLE"),i18n.get("REPOSITORY"),color.END,reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	if resp.lower()==options[0].lower():
 		_runHelper(reponame,"True")
 		ret=True
