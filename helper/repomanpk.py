@@ -7,7 +7,17 @@ class err:
 	SIGNED=10
 
 repo=repomanager.manager()
-if len(sys.argv)>=3:
+if len(sys.argv)==2:
+	action=sys.argv[1]
+	if action=="update":
+		ret=repo.updateRepos()
+	elif action=="pin":
+		ret=repo.reversePinning()
+	elif action=="disableAll":
+		ret=repo.disableAll()
+	elif action=="enableDefault":
+		ret=repo.enableDefault()
+elif len(sys.argv)>=3:
 	name=sys.argv[1]
 	state=sys.argv[2]
 	if state=="True":
@@ -40,10 +50,4 @@ if len(sys.argv)>=3:
 				ret=err.SIGNED
 			else:
 				ret=repo.addRepo(name,reponame,repodesc)
-	elif state=="Pin":
-		ret=repo.reversePinning()
-	elif state=="disableAll":
-		ret=repo.disableAll()
-	elif state=="enableDefault":
-		ret=repo.enableDefault()
 sys.exit(ret)
