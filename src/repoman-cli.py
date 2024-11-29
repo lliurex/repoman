@@ -67,7 +67,7 @@ parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'}
 			'l':{'args':0,'long':'list','desc':i18n.get("HLP_LIST"),'usage':''},
 			's':{'args':0,'long':'show','desc':i18n.get("HLP_SHOW"),'usage':''},
 #			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
-			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':i18n.get("HLP_YES")},
+			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':''},
 #			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
 			'h':{'args':0,'long':'help','desc':i18n.get("HLP_HLP"),'usage':''}
 			}
