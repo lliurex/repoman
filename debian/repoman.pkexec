@@ -4,7 +4,8 @@
         "prefix": "net.lliurex.repoman",
         "nameaction": "manager",
 		"domain": "repoman",
-		"message": "Insert your password for update repositories",
+		"message": "Insert your password",
+		"description": "Repoman wants to change system settings",
         "icon": "repoman",
         "auths": [
             {
