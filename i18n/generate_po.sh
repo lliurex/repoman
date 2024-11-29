@@ -18,7 +18,7 @@ do
 done
 
 echo "#: polkit" >> repoman/repoman.pot
-a="Administration rights are required for this action"
+a="Insert your password for update repositories"
 echo 'msgid "'${a}'"' >> repoman/repoman.pot
 echo 'msgstr ""'>> repoman/repoman.pot
 echo '' >> repoman/repoman.pot

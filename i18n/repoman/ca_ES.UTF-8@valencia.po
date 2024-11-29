@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 13:34+0200\n"
-"PO-Revision-Date: 2024-11-28 08:11+0100\n"
+"POT-Creation-Date: 2024-11-29 10:21+0100\n"
+"PO-Revision-Date: 2024-11-29 10:27+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -255,8 +255,11 @@ msgid "Ubuntu noble official repositories"
 msgstr "Repositoris oficials d'Ubuntu Noble"
 
 #: polkit
-msgid "Administration rights are required for this action"
-msgstr "Introduïr contrasenya d'usuari per a aplicar els canvis"
+msgid "Insert your password for update repositories"
+msgstr "Per actualitzar cal introduïr la seua contrasenya"
+
+#~ msgid "Administration rights are required for this action"
+#~ msgstr "Introduïr contrasenya d'usuari per a aplicar els canvis"
 
 #~ msgid "This action requieres administrator rights"
 #~ msgstr "Aquesta acció requereix drets d'administrador"
@@ -461,14 +464,6 @@ msgstr "Introduïr contrasenya d'usuari per a aplicar els canvis"
 
 #~ msgid "Launch Lliurex-Store"
 #~ msgstr "Llança Lliurex-Store"
-
-#, python-format
-#~ msgid ""
-#~ "Failed to update repositories\n"
-#~ "%s"
-#~ msgstr ""
-#~ "No s'han pogut actualitzar els repositoris\n"
-#~ "%s"
 
 #~ msgid "Lliurex educational resources"
 #~ msgstr "Recursos educatius de Lliurex"
