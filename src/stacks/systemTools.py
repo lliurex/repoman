@@ -68,7 +68,7 @@ class systemTools(QStackedWindowItem):
 	#def _load_screen
 
 	def _reversePinning(self):
-		subprocess.run(["pkexec","/usr/share/repoman/helper/repomanpk.py","","Pin"])
+		subprocess.run(["pkexec",self.repohelper,"pin"])
 		self.updateScreen()
 	#def _reversePinning
 
@@ -103,8 +103,8 @@ class systemTools(QStackedWindowItem):
 		dlg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
 		dlg.setIcon
 		if dlg.exec_()==QMessageBox.Ok:
-			proc=subprocess.run(["pkexec",self.repohelper,"","disableAll"])
-			proc=subprocess.run(["pkexec",self.repohelper,"","enableDefault"])
+			proc=subprocess.run(["pkexec",self.repohelper,"disableAll"])
+			proc=subprocess.run(["pkexec",self.repohelper,"enableDefault"])
 			if self.repoman.chkPinning()==False:
 				self._reversePinning()
 	#def _launchReset
