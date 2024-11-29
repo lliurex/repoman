@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 10:21+0100\n"
-"PO-Revision-Date: 2024-11-29 10:40+0100\n"
+"POT-Creation-Date: 2024-11-29 10:43+0100\n"
+"PO-Revision-Date: 2024-11-29 10:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -95,16 +95,16 @@ msgid "Continue?"
 msgstr "¿Continuar?"
 
 #: ../src/repoman-cli.py:35
-msgid "disable"
-msgstr "desactivar"
+msgid "disable the"
+msgstr "desactivar el"
 
 #: ../src/repoman-cli.py:36
 msgid "edit"
 msgstr "editar"
 
 #: ../src/repoman-cli.py:37
-msgid "enable"
-msgstr "activar"
+msgid "enable the"
+msgstr "activar el"
 
 #: ../src/repoman-cli.py:38
 msgid "Repositories changed. Do you want to update info?"
