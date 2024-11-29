@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 11:27+0100\n"
+"POT-Creation-Date: 2024-11-29 11:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,101 +54,105 @@ msgid "Edit repo"
 msgstr ""
 
 #: ../src/repoman-cli.py:25
-msgid "Enable repo"
-msgstr ""
-
-#: ../src/repoman-cli.py:26
 msgid "Show help"
 msgstr ""
 
-#: ../src/repoman-cli.py:27
+#: ../src/repoman-cli.py:26
 msgid "List repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:28
+#: ../src/repoman-cli.py:27
 msgid "List enabled repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:29
+#: ../src/repoman-cli.py:28
 msgid "List disabled repositories"
 msgstr ""
 
-#: ../src/repoman-cli.py:30
+#: ../src/repoman-cli.py:29
 msgid "(name|index)"
 msgstr ""
 
-#: ../src/repoman-cli.py:31
+#: ../src/repoman-cli.py:30
 msgid "Show detailed information"
 msgstr ""
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:31
 msgid "Assume \"yes\" to all questions"
 msgstr ""
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:32
 msgid "You're going to add the repo present at"
 msgstr ""
 
-#: ../src/repoman-cli.py:34
+#: ../src/repoman-cli.py:33
 msgid "Continue?"
 msgstr ""
 
-#: ../src/repoman-cli.py:35
+#: ../src/repoman-cli.py:34
 msgid "disable the"
 msgstr ""
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:35
 msgid "edit the"
 msgstr ""
 
-#: ../src/repoman-cli.py:37
+#: ../src/repoman-cli.py:36
 msgid "enable the"
 msgstr ""
 
+#: ../src/repoman-cli.py:37
+msgid "Can't open. Ensure repo"
+msgstr ""
+
 #: ../src/repoman-cli.py:38
-msgid "Repositories changed. Do you want to update info?"
+msgid "is enabled"
 msgstr ""
 
 #: ../src/repoman-cli.py:39
-msgid "You're going to"
+msgid "Repositories changed. Do you want to update info?"
 msgstr ""
 
 #: ../src/repoman-cli.py:40
-msgid "Y/N"
+msgid "You're going to"
 msgstr ""
 
 #: ../src/repoman-cli.py:41
-msgid "Description:"
+msgid "Y/N"
 msgstr ""
 
 #: ../src/repoman-cli.py:42
-msgid "Name for the repository"
+msgid "Description:"
 msgstr ""
 
 #: ../src/repoman-cli.py:43
-msgid "repository"
+msgid "Name for the repository"
 msgstr ""
 
 #: ../src/repoman-cli.py:44
-msgid "Ok"
+msgid "repository"
 msgstr ""
 
 #: ../src/repoman-cli.py:45
+msgid "Ok"
+msgstr ""
+
+#: ../src/repoman-cli.py:46
 msgid "Unavailable"
 msgstr ""
 
-#: ../src/repoman-cli.py:274
+#: ../src/repoman-cli.py:278
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:275
+#: ../src/repoman-cli.py:279
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:276
+#: ../src/repoman-cli.py:280
 msgid ""
 "\n"
 "Parameters:"

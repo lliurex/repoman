@@ -22,7 +22,6 @@ i18n={
 	"HLP_ADD":_("Add repository"),
 	"HLP_DISABLE":_("Disable repo"),
 	"HLP_EDIT":_("Edit repo"),
-	"HLP_ENABLE":_("Enable repo"),
 	"HLP_HLP":_("Show help"),
 	"HLP_LIST":_("List repositories"),
 	"HLP_LISTE":_("List enabled repositories"),
@@ -35,6 +34,8 @@ i18n={
 	"MSG_DISABLE":_("disable the"),
 	"MSG_EDIT":_("edit the"),
 	"MSG_ENABLE":_("enable the"),
+	"MSG_ENSURE":_("Can't open. Ensure repo"),
+	"MSG_ISENABLED":_("is enabled"),
 	"MSG_UPDATE":_("Repositories changed. Do you want to update info?"),
 	"MSG_YOU":_("You're going to"),
 	"OPTIONS":_("Y/N"),
@@ -151,11 +152,14 @@ def editRepo():
 				sw_print=True
 			if sw_print:
 				if "** File: " in line:
+					print(line)
 					file=line.split(" ")[2]
 		editor=os.environ.get("EDITOR","/usr/bin/nano")
 		if os.path.exists(file):
 			subprocess.run([editor,file])
 			ret=True
+		elif file=="":
+			print("{0} {1} {2}".format(i18n.get("MSG_ENSURE"),reponame,i18n.get("MSG_ISENABLED")))
 	return(ret)
 #def editRepo
 
