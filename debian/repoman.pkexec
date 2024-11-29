@@ -4,7 +4,7 @@
         "prefix": "net.lliurex.repoman",
         "nameaction": "manager",
 		"domain": "repoman",
-		"message": "Administration rights are required for this action",
+		"message": "Insert your password for update repositories",
         "icon": "repoman",
         "auths": [
             {
