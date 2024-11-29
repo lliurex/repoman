@@ -210,7 +210,9 @@ def updateRepos():
 	if not unattended:
 		resp=input("{0} {1} [{2}]: ".format(i18n.get("MSG_UPDATE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[0]))
 	if resp.lower()==options[0].lower():
-		repoman.updateRepos()
+		repohelper="/usr/share/repoman/helper/repomanpk.py"
+		proc=subprocess.run(["pkexec",repohelper,"update"])
+	exit(0)
 #def updateRepos():
 
 def _formatOutput(repomanRepos,enabled,disabled,show=False):
