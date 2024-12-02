@@ -2,7 +2,7 @@
 import sys
 import os
 import hashlib
-from PySide6.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget
+from PySide6.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy,QGridLayout,QHeaderView,QTableWidget,QProgressBar,QMessageBox
 from PySide6 import QtGui
 from PySide6.QtCore import Qt,QThread,Signal
 from QtExtraWidgets import QTableTouchWidget, QStackedWindowItem
@@ -13,9 +13,10 @@ import gettext
 _ = gettext.gettext
 
 i18n={
-	"MENU":_("System repositories"),
-	"ERROR":_("Error"),
 	"DESC":_("Manage system repositories"),
+	"ERROR":_("Error"),
+	"MENU":_("System repositories"),
+	"MSG_UPDATE":_("Repositories changed. Do you want to update info?"),
 	"TOOLTIP":_("Activate/deactivate the system repositories")
 	}
 
@@ -194,7 +195,6 @@ class systemRepos(QStackedWindowItem):
 		self.processRepos=processRepos(self)
 		self.processRepos.writeCompleted.connect(self._endWrite)
 		self.processRepos.updateCompleted.connect(self._endUpdate)
-		#self.process.finished.connect(self._endEditFile)
 		self.btnAccept.clicked.connect(self.writeConfig)
 	#def __init__
 
@@ -251,14 +251,18 @@ class systemRepos(QStackedWindowItem):
 		if len(args)>0:
 			if (isinstance(args[0],bool)):
 				if(args[0]==True):
-					self._updateRepos()
+					dlg=QMessageBox()
+					dlg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
+					msg=i18n["MSG_UPDATE"].split(".")
+					dlg.setText(msg[0])
+					dlg.setInformativeText(msg[1])
+					if dlg.exec()==QMessageBox.Ok:
+						self._updateRepos()
 				self.setChanged(args[0])
 	#def _stateChanged
 
 	def writeConfig(self):
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		self.parent.setCursor(cursor)
-		self.parent.setEnabled(False)
+		self._prepareForThread()
 		repos={}
 		for i in range(0,self.lstRepositories.rowCount()):
 			w=self.lstRepositories.cellWidget(i,0)
@@ -271,6 +275,7 @@ class systemRepos(QStackedWindowItem):
 	#def writeConfig
 
 	def _updateRepos(self):
+		self._prepareForThread()
 		self._debug("Updating repos")
 		self.processRepos.setMode("update")
 		self.processRepos.start()
@@ -290,18 +295,18 @@ class systemRepos(QStackedWindowItem):
 		self._endThread()
 	#def _endUpdate(self,*args):
 
-	def _endEditFile(self,*args):
-		if len(self.process.err)==0:
-			if self.cursor()!=self.oldCursor:
-				self._updateRepos()
-			self.updateScreen()
-		self._endThread()
-	#def _endEditFile
+	def _prepareForThread(self):
+		self.parent.setEnabled(False)
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		self.parent.setCursor(cursor)
+		self.setCursor(cursor)
+	#def _endSucces
 
 	def _endThread(self):
-		self.parent.setEnabled(True)
 		self.btnAccept.setEnabled(False)
 		self.btnCancel.setEnabled(False)
 		self.setCursor(self.oldCursor)
+		self.parent.setCursor(self.oldCursor)
+		self.parent.setEnabled(True)
 	#def _endSucces
 
