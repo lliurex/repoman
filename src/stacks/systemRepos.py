@@ -254,6 +254,8 @@ class systemRepos(QStackedWindowItem):
 					dlg=QMessageBox()
 					dlg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
 					msg=i18n["MSG_UPDATE"].split(".")
+					if len(msg)<2:
+						msg.extend(["","",""])
 					dlg.setText(msg[0])
 					dlg.setInformativeText(msg[1])
 					if dlg.exec()==QMessageBox.Ok:
