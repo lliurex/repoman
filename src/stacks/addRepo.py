@@ -128,3 +128,4 @@ class addRepo(QStackedWindowItem):
 		self.updateScreen()
 		self.parent.setCurrentStack(1,parms="{} {}".format(i18n["MSG_ADD"],name))
 	#def _endProcess
+#class addRepo
