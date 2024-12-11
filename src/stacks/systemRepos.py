@@ -13,22 +13,35 @@ import gettext
 _ = gettext.gettext
 
 i18n={
+	"DUPLICATED":_("Duplicated repositories"),
 	"MENU":_("System repositories"),
 	"ERROR":_("Error in:"),
 	"DESC":_("Manage system repositories"),
 	"TOOLTIP":_("Activate/deactivate the system repositories")
 	}
 
-class processRepos(QThread):
+class QProcessRepos(QThread):
 	onError=Signal(list)
-	def __init__(self,widget,parent=None):
+	def __init__(self,parent=None):
 		QThread.__init__(self, parent)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
-		self.widget=widget
-		self.parent=parent
+		self.repositories={}
+	#def __init__
+
+	def setRepositories(self,repositories):
+		self.repositories=repositories.copy()
+	#def setRepositories(self,repositories):
 
 	def run(self):
 		err=[]
+		for repo,state in self.repositories.items():
+			proc=subprocess.run(["pkexec",self.repohelper,repo,str(state)])
+			if proc.returncode!=0:
+				err.append(repo)
+		if len(err)>0:
+			self.onError.emit(err)
+		return(True)
+
 		for i in range(0,self.widget.rowCount()):
 			w=self.widget.cellWidget(i,0)
 			if w.changed==False:
@@ -40,20 +53,44 @@ class processRepos(QThread):
 		if len(err)>0:
 			self.onError.emit(err)
 		return(True)
-#class processRepos
+#class QProcessRepos
 
-class editRepo(QThread):
-	def __init__(self,fsource,parent=None):
+class updateRepos(QThread):
+	onError=Signal(list)
+	def __init__(self,parent=None):
 		QThread.__init__(self, parent)
-		self.fsource=fsource
+		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
+
+	def run(self):
+		err=[]
+		proc=subprocess.run(["pkexec",self.repohelper,"","update"])
+		if proc.returncode!=0:
+			err.append(w.text())
+		if len(err)>0:
+			self.onError.emit(err)
+		return(True)
+#class updateRepos
+
+class QRepoEdit(QThread):
+	def __init__(self,parent=None):
+		QThread.__init__(self, parent)
+		self.fsource=""
+	#def __init__
+
+	def setFile(self,file):
+		self.fsource=file
+	#def setFile
 
 	def run(self):
 		subprocess.run(["kwrite",self.fsource])
 		return(True)
-#class editRepo
+	#def run
+#class QRepoEdit
 
 class QRepoItem(QWidget):
 	stateChanged=Signal("bool")
+	fileChanged=Signal()
+	fileEdit=Signal()
 	def __init__(self,parent=None):
 		QWidget.__init__(self, parent)
 		self.file=""
@@ -67,7 +104,7 @@ class QRepoItem(QWidget):
 		self.desc=QLabel()
 		self.btnEdit=QPushButton()
 		self.btnEdit.setIcon(QtGui.QIcon.fromTheme("document-edit"))
-		self.btnEdit.clicked.connect(self._editFile)
+		self.btnEdit.clicked.connect(self._editRepoFile)
 		self.chkState=QCheckBox()
 		self.chkState.stateChanged.connect(self.setChanged)
 		lay.addWidget(self.lbltext,0,0,1,1,Qt.AlignLeft)
@@ -78,6 +115,8 @@ class QRepoItem(QWidget):
 		self.changed=False
 		self.setLayout(lay)
 		self.md5=""
+		self.edit=QRepoEdit()
+		self.edit.finished.connect(self._endEditRepoFile)
 		parent=self.parent
 	#def __init__
 
@@ -85,6 +124,7 @@ class QRepoItem(QWidget):
 		if isinstance(changed,bool)==False:
 			changed=True
 		self.changed=changed
+	#def setChanged
 
 	def isChecked(self):
 		return(self.chkState.isChecked())
@@ -123,20 +163,21 @@ class QRepoItem(QWidget):
 		return(self.name)
 	#def text
 
-	def _editFile(self):
+	def _editRepoFile(self):
 		with open(self.file,"r") as f:
 			self.md5=hashlib.md5(f.read().encode()).hexdigest()
-		self.process=editRepo(self.file)
-		self.process.finished.connect(self._endEditFile)
-		self.process.start()
+		self.edit.setFile(self.file)
+		self.fileEdit.emit()
+		self.edit.start()
 		self.setEnabled(False)
 	#def _editFile
 
-	def _endEditFile(self,*args):
+	def _endEditRepoFile(self,*args):
 		changed=False
 		with open(self.file,"r") as f:
 			if self.md5!=hashlib.md5(f.read().encode()).hexdigest():
 				changed=True
+				self.fileChanged.emit()
 			self.md5=hashlib.md5(f.read().encode()).hexdigest()
 		self.stateChanged.emit(changed)
 		self.setEnabled(True)
@@ -159,7 +200,14 @@ class systemRepos(QStackedWindowItem):
 		self.height=0
 		self.oldcursor=self.cursor()
 		self.repoman=repomanager.manager()
+		self.update=updateRepos()
+		self.update.finished.connect(self._unlockGui)
+		self.process=QProcessRepos(self)
+		self.process.onError.connect(self._onError)
+		self.process.finished.connect(self._updateRepos)
 		self.btnAccept.clicked.connect(self.writeConfig)
+		self.items=0
+		self.msg=""
 	#def __init__
 
 	def __initScreen__(self):
@@ -196,6 +244,8 @@ class systemRepos(QStackedWindowItem):
 				continue
 			w=QRepoItem(self.lstRepositories)
 			w.stateChanged.connect(self._stateChanged)
+			w.fileChanged.connect(self._endEditFile)
+			w.fileEdit.connect(self._beginEditFile)
 			w.setText(reponame)
 			desc=repodata.get("desc","")
 			if len(desc)==0:
@@ -208,10 +258,18 @@ class systemRepos(QStackedWindowItem):
 			w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
 			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)
+		if self.items>0:
+			if self.items==self.lstRepositories.rowCount():
+				self.msg="{} {}".format(i18n.get("DUPLICATED"),self.msg.split(" ")[-1])
+			if self.msg!="":
+				self.showMsg(self.msg,5)
+			self.items=0
+			self.msg=""
 	#def _udpate_screen
 
 	def _stateChanged(self,*args):
 		self.setChanged(False)
+		self._unlockGui()
 		if len(args)>0:
 			if (isinstance(args[0],bool)):
 				if(args[0]==True):
@@ -220,12 +278,17 @@ class systemRepos(QStackedWindowItem):
 	#def _stateChanged
 
 	def writeConfig(self):
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		self.setCursor(cursor)
-		self.process=processRepos(self.lstRepositories,self)
-		self.process.onError.connect(self._onError)
-		self.process.finished.connect(self._endEditFile)
-		self.process.start()
+		repositories={}
+		for i in range(0,self.lstRepositories.rowCount()):
+			w=self.lstRepositories.cellWidget(i,0)
+			if w.changed==False:
+				continue
+			state=w.isChecked()
+			repositories.update({w.text():str(state)})
+		self._lockGui()
+		if len(repositories)>0:
+			self.process.setRepositories(repositories)
+			self.process.start()
 	#def writeConfig
 
 	def _onError(self,err):
@@ -234,16 +297,41 @@ class systemRepos(QStackedWindowItem):
 		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
 	#def _onError
 
+	def _beginEditFile(self,*args):
+		self._lockGui()
+	#def _beginEditFile
+
 	def _endEditFile(self,*args):
 		self.changes=False
-		if self.cursor()!=self.oldcursor:
-			self._updateRepos()
-			self.setCursor(self.oldcursor)
-		self.updateScreen()
-		self.setChanged(False)
+		self._unlockGui()
 	#def _endEditFile
 
 	def _updateRepos(self):
 		self._debug("Updating repos")
-		self.repoman.updateRepos()
+		self.update.start()
 	#def _updateRepos
+
+	def _lockGui(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		self.parent.setCursor(cursor)
+		self.setCursor(cursor)
+		self.setEnabled(False)
+		return
+	#def _lockGui
+
+	def _unlockGui(self):	
+		self.parent.setCursor(self.oldcursor)
+		self.setCursor(self.oldcursor)
+		self.setEnabled(True)
+		self.updateScreen()
+		self.setChanged(False)
+		return
+	#def _unlockGui
+
+	def setParms(self,*args):
+		if len(args)>0:
+			if isinstance(args[0],str):
+				self.items=self.lstRepositories.rowCount()
+				self.msg=args[0]
+				self._lockGui()
+				self._updateRepos()
