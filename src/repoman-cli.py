@@ -93,7 +93,8 @@ def _runHelper(*args):
 	proc=subprocess.run(cmd)
 	if proc.returncode!=0:
 		print(i18n.get("ERROR"))
-	quit(proc.returncode)
+	if "update" not in cmd:
+		quit(proc.returncode)
 #def _runHelper
 
 def addRepo():
@@ -152,9 +153,8 @@ def editRepo():
 			if sw_print:
 				if "** File: " in line:
 					file=line.split(" ")[2]
-		editor=os.environ.get("EDITOR","/usr/bin/nano")
 		if os.path.exists(file):
-			subprocess.run([editor,file])
+			_runHelper(file,"edit")
 			ret=True
 	return(ret)
 #def editRepo
@@ -210,7 +210,8 @@ def updateRepos():
 	if not unattended:
 		resp=input("{0} {1} [{2}]: ".format(i18n.get("MSG_UPDATE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[0]))
 	if resp.lower()==options[0].lower():
-		repoman.updateRepos()
+		_runHelper("","update","","")
+	return(resp)
 #def updateRepos():
 
 def _formatOutput(repomanRepos,enabled,disabled,show=False):
