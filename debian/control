@@ -1,0 +1,15 @@
+Source: repoman
+Section: admin
+Priority: optional
+Maintainer: Equipo LliureX <lliurex@gva.es>
+Uploaders: M.Angel Juan <m.angel.juan@gmail.com>, Raul Rodrigo Segura <lliurex_devel3@edu.gva.es>, Hector Garcia Huerta <lliurex_devel1@edu.gva.es>, Daniel Duran Vecino <daduve@gmail.com>, Juanma Navarro <juanma1980@gmail.com>, Juan Ramon Pelegrina <juapesai@hotmail.com>
+Build-Depends: llxsrchelper,debhelper (>= 9.0),dh-python,python3-all,python3-setuptools,zero-dev,python3-poinstaller
+Standards-Version: 3.9.5
+Homepage: http://lliurex.net
+
+Package: repoman
+Architecture: all
+Depends: python3-repoman(>=3,2), python3-appconfig(>=0.51), python3-qtextrawidgets,python3-rebost
+Breaks: repoman(<<3.0)
+Description: Lliurex Repository Manager
+
