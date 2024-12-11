@@ -23,27 +23,31 @@ i18n={
 	"REPOURLDESC":_("Url for the repository")
 	}
 
-class processRepos(QThread):
+class QProcessRepos(QThread):
 	onError=Signal(list)
+	repoAdded=Signal()
 	def __init__(self,*args,**kwargs):
 		QThread.__init__(self, parent=None)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
+	#def __init__
+
+	def setParms(self,*args,**kwargs):
 		self.url=kwargs.get('url','')
 		self.name=kwargs.get('name','')
 		self.desc=kwargs.get('desc','')
 		self.parent=kwargs.get('parent','')
+	#def setParms
 
 	def run(self):
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		if self.parent:
-			self.parent.setCursor(cursor)
 		err=[]
 		proc=subprocess.run(["pkexec",self.repohelper,self.url,"Add",self.name,self.desc])
 		if proc.returncode!=0:
 			err.append(self.url)
 			self.onError.emit(err)
-		return(True)
-#class processRepos
+		else:
+			self.repoAdded.emit()
+	#def run
+#class QProcessRepos
 
 class addRepo(QStackedWindowItem):
 	def __init_stack__(self):
@@ -58,6 +62,9 @@ class addRepo(QStackedWindowItem):
 		self.oldcursor=self.cursor()
 		self.enabled=True
 		self.level='user'
+		self.process=QProcessRepos(parent=self)
+		self.process.onError.connect(self._onError)
+		self.process.repoAdded.connect(self._endProcess)
 	#def __init__
 	
 	def __initScreen__(self):
@@ -80,17 +87,14 @@ class addRepo(QStackedWindowItem):
 	#def _load_screen
 
 	def updateScreen(self):
-		pass
-	#def _udpate_screen
-	
-	def _reset_screen(self,*args):
 		self.name.setText("")
 		self.desc.setText("")
 		self.url.setText("")
-	#def _reset_screen
+	#def updateScreen
 
 	def _onError(self,err):
-		self.showMsg("{}:\n".format(i18n.get("ERROR"),"\n".join(err)))
+		self.showMsg("{}:\n{}".format(i18n.get("ERROR"),i18n.get("REPOURL")),5)
+		self._unlockGui()
 	#def _onError
 
 	def writeConfig(self):
@@ -101,17 +105,26 @@ class addRepo(QStackedWindowItem):
 		if len(name)<=0:
 			name="Custom"
 		desc=self.desc.text()
-		if len(desc)<=0:
-			desc=name
-		cursor=QtGui.QCursor(Qt.WaitCursor)
-		oldcursor=self.cursor()
-		self.setCursor(cursor)
-		self.process=processRepos(url=url,name=name,desc=desc,parent=self)
-		self.process.onError.connect(self._onError)
-		self.process.finished.connect(self._endProcess)
+		self._lockGui()
+		self.process.setParms(url=url,name=name,desc=desc)
 		self.process.start()
 	#def writeConfig
+
+	def _lockGui(self):
+		cursor=QtGui.QCursor(Qt.WaitCursor)
+		oldcursor=self.parent.cursor()
+		self.parent.setCursor(cursor)
+		self.setEnabled(False)
+	#def _lockGui
+
+	def _unlockGui(self):
+		self.parent.setCursor(self.oldcursor)
+		self.setEnabled(True)
+	#def _unlockGui
 	
 	def _endProcess(self):
-		self.setCursor(self.oldcursor)
-		self.parent.setCurrentStack(1)
+		self._unlockGui()
+		name=self.name.text()
+		self.updateScreen()
+		self.parent.setCurrentStack(1,parms="{} {}".format(i18n["MSG_ADD"],name))
+	#def _endProcess
