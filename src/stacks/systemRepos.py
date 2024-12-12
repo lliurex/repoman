@@ -131,7 +131,10 @@ class QRepoItem(QWidget):
 	#def isChecked
 
 	def setFile(self,file):
-		self.file=file
+		self.file=file.replace(" ","_")
+		if os.path.exists(self.file)==False:
+			if os.path.exists(self.file.lower())==True:
+				self.file=self.file.lower()
 	#def setFile
 
 	def setText(self,txt):
