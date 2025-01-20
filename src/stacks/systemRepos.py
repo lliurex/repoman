@@ -28,6 +28,10 @@ class QProcessRepos(QThread):
 		self.repositories={}
 	#def __init__
 
+	def _debug(self,msg):
+		print("ProcessRepos: {}".format(msg))
+	#def _debug(self,msg):
+
 	def setRepositories(self,repositories):
 		self.repositories=repositories.copy()
 	#def setRepositories(self,repositories):
@@ -47,28 +51,38 @@ class QProcessRepos(QThread):
 			if w.changed==False:
 				continue
 			state=w.isChecked()
-			proc=subprocess.run(["pkexec",self.repohelper,w.text(),str(state)])
+			proc=subprocess.run(["pkexec",self.repohelper,w.text(),str(state)],stderr=subprocess.PIPE,universal_newlines=True)
 			if proc.returncode!=0:
-				err.append(w.text())
+				err.append(proc.stderr)
+				self._debug("ERR: {}".format(err))
 		if len(err)>0:
 			self.onError.emit(err)
 		return(True)
+	#def run
 #class QProcessRepos
 
 class updateRepos(QThread):
+	#list as parameter. qprocessrepo needs a list so onError here returns a list also
 	onError=Signal(list)
 	def __init__(self,parent=None):
 		QThread.__init__(self, parent)
 		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
+	#def __init__
+
+	def _debug(self,msg):
+		print("UpdateRepos: {}".format(msg))
+	#def _debug(self,msg):
 
 	def run(self):
 		err=[]
-		proc=subprocess.run(["pkexec",self.repohelper,"","update"])
+		proc=subprocess.run(["pkexec",self.repohelper,"","update"],stderr=subprocess.PIPE,universal_newlines=True)
 		if proc.returncode!=0:
-			err.append(w.text())
+			err.append(proc.stderr)
+			self._debug("ERR: {}".format(err))
 		if len(err)>0:
 			self.onError.emit(err)
 		return(True)
+	#def run
 #class updateRepos
 
 class QRepoEdit(QThread):
@@ -297,7 +311,7 @@ class systemRepos(QStackedWindowItem):
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
 		self._debug("Error: {}".format(err))
-		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)))
+		self.showMsg("{}\n{}".format(i18n.get("ERROR"),"\n".join(err)),6)
 	#def _onError
 
 	def _beginEditFile(self,*args):
