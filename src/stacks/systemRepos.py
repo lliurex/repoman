@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy
 from PySide6 import QtGui
 from PySide6.QtCore import Qt,QThread,Signal
 from QtExtraWidgets import QTableTouchWidget, QStackedWindowItem
-from repoman import repomanager
+from repoman import manager
 import subprocess
 import time
 import gettext
@@ -191,7 +191,7 @@ class systemRepos(QStackedWindowItem):
 		self.width=0
 		self.height=0
 		self.oldCursor=self.cursor()
-		self.repoman=repomanager.manager()
+		self.repoman=manager.manager()
 		self.processRepos=processRepos(self)
 		self.processRepos.writeCompleted.connect(self._endWrite)
 		self.processRepos.updateCompleted.connect(self._endUpdate)
@@ -226,22 +226,23 @@ class systemRepos(QStackedWindowItem):
 		self.lstRepositories.setRowCount(0)
 		self.lstRepositories.setColumnCount(1)
 		repos=self.repoman.getRepos()
-		sortrepos=self.repoman.sortJsonRepos(repos)
-		for reponame,repodata in sortrepos.items():
-			if len(reponame)<=0:
+		#sortrepos=self.repoman.sortJsonRepos(repos)
+		#for reponame,repodata in sortrepos.items():
+		for repouri,repodata in repos.items():
+			if len(repodata.get("Name",""))<=0:
 				continue
 			w=QRepoItem(self.lstRepositories)
 			w.stateChanged.connect(self._stateChanged)
-			w.setText(reponame)
+			w.setText(repodata.get("Name"))
 			desc=repodata.get("desc","")
 			if len(desc)==0:
 				desc=os.path.basename(repodata.get("file",""))
 			w.setDesc(desc)
 			w.setFile(repodata.get("file",""))
-			w.setState(repodata.get("enabled",False))
+			w.setState(repodata.get("Enabled",True))
 			w.changed=False
-			available=repodata.get("available",False)
-			w.setEnabled(available)
+			#available=repodata.get("available",False)
+			#w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
 			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)
 	#def _udpate_screen
