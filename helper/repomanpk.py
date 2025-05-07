@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import sys
-from repoman import repomanager
+from repoman import repomanager as manager
 import subprocess
 
 class err:
 	SIGNED=10
 
-repo=repomanager.manager()
+repo=manager.manager()
 if len(sys.argv)==2:
 	action=sys.argv[1]
 	if action=="update":
