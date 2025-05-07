@@ -225,7 +225,7 @@ class systemRepos(QStackedWindowItem):
 		self.lstRepositories.clear()
 		self.lstRepositories.setRowCount(0)
 		self.lstRepositories.setColumnCount(1)
-		repos=self.repoman.getRepos()
+		repos=self.repoman.getRepos(sorted=True)
 		#sortrepos=self.repoman.sortJsonRepos(repos)
 		#for reponame,repodata in sortrepos.items():
 		for repouri,repodata in repos.items():
@@ -241,8 +241,8 @@ class systemRepos(QStackedWindowItem):
 			w.setFile(repodata.get("file",""))
 			w.setState(repodata.get("Enabled",True))
 			w.changed=False
-			#available=repodata.get("available",False)
-			#w.setEnabled(available)
+			available=repodata.get("available",True)
+			w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
 			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)
 	#def _udpate_screen
