@@ -231,6 +231,9 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 			else:
 				printcolor=color.GREEN
 				msgEnabled=i18n.get("ENABLED")
+			if urlData.get("available",True)==False:
+				printcolor=color.DARKCYAN
+				msgEnabled=i18n.get("UNAVAILABLE")
 			name=urlData.get("Name")
 			file=urlData.get("file")
 			desc=urlData.get("desc","")
@@ -270,7 +273,7 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 
 def listRepos(enabled=False,disabled=False,show=False):
 	index=0
-	repomanRepos=repoman.getRepos()
+	repomanRepos=repoman.getRepos(sorted=True)
 	output=_formatOutput(repomanRepos,enabled,disabled,show)
 	for line in output:
 		if line.startswith("\t"):
