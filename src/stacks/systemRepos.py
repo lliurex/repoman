@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QLabel, QWidget, QPushButton,QCheckBox,QSizePolicy
 from PySide6 import QtGui
 from PySide6.QtCore import Qt,QThread,Signal
 from QtExtraWidgets import QTableTouchWidget, QStackedWindowItem
-from repoman import manager
+from repoman import repomanager
 import subprocess
 import time
 import gettext
@@ -191,7 +191,7 @@ class systemRepos(QStackedWindowItem):
 		self.width=0
 		self.height=0
 		self.oldCursor=self.cursor()
-		self.repoman=manager.manager()
+		self.repoman=repomanager.manager()
 		self.processRepos=processRepos(self)
 		self.processRepos.writeCompleted.connect(self._endWrite)
 		self.processRepos.updateCompleted.connect(self._endUpdate)
@@ -225,7 +225,7 @@ class systemRepos(QStackedWindowItem):
 		self.lstRepositories.clear()
 		self.lstRepositories.setRowCount(0)
 		self.lstRepositories.setColumnCount(1)
-		repos=self.repoman.getRepos(sorted=True)
+		repos=self.repoman.getRepos(includeAll=True)
 		#sortrepos=self.repoman.sortJsonRepos(repos)
 		#for reponame,repodata in sortrepos.items():
 		for repouri,repodata in repos.items():
@@ -234,7 +234,7 @@ class systemRepos(QStackedWindowItem):
 			w=QRepoItem(self.lstRepositories)
 			w.stateChanged.connect(self._stateChanged)
 			w.setText(repodata.get("Name"))
-			desc=repodata.get("desc","")
+			desc=repodata.get("Description",repodata.get("desc",""))
 			if len(desc)==0:
 				desc=os.path.basename(repodata.get("file",""))
 			w.setDesc(desc)

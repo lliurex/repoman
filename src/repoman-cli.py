@@ -2,12 +2,12 @@
 import os,sys
 from collections import OrderedDict
 import subprocess
-from repoman import manager 
+from repoman import repomanager
 import gettext
 gettext.textdomain('repoman')
 _ = gettext.gettext
 
-repoman=manager.manager()
+repoman=repomanager.manager()
 action={}
 unattended=False
 REPOHELPER="/usr/share/repoman/helper/repomanpk.py"
@@ -100,23 +100,36 @@ def _runHelper(*args):
 #def _runHelper
 
 def addRepo():
-	url=action['a']
+	url=action['a'].split(" ")[0]
+	name=""
+	desc=""
+	if len(action['a'].split(" "))>1:
+		namePlusDesc=action['a'].split(" ")[1:]
+		name=namePlusDesc[0]
+		if len(namePlusDesc)>1:
+			desc="".join(namePlusDesc[1:])
 	options=i18n.get("OPTIONS")
-	name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
-	desc=url
+	if name=="":
+		name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
+	if desc=="":
+		desc=url
 	if not unattended:
 		resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 		if resp.lower()==options[0].lower():
-			name=input("{0} [{1}]: ".format(i18n.get("REPONAME"),name))
-			desc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),url))
+			iname=input("{0} [{1}]: ".format(i18n.get("REPONAME"),name))
+			idesc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),desc))
+			if iname!="":
+				name=iname
+			if idesc!="":
+				desc=idesc
 		else:
 			return()
-	_runHelper(action["a"],"Add",name,desc)
+	_runHelper(url,"Add",name,desc)
 	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
 def _getRepoName(targetrepo):
-	repomanRepos=repoman.getRepos()
+	repomanRepos=repoman.getRepos(includeAll=True)
 	output=_formatOutput(repomanRepos,False,False)
 	reponame=""
 	if targetrepo.isdigit():
@@ -225,7 +238,13 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 	if len(repomanRepos)>0:
 		output=[]
 		for url,urlData in repomanRepos.items():
-			if urlData.get("Enabled",True)==False:
+			enabled=urlData.get("enabled",urlData.get("Enabled",True))
+			if isinstance(enabled,str):
+				if enabled.lower()=="false":
+					enabled=False
+				else:
+					enabled=True
+			if enabled==False:
 				printcolor=color.RED
 				msgEnabled=i18n.get("DISABLED")
 			else:
@@ -273,7 +292,7 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 
 def listRepos(enabled=False,disabled=False,show=False):
 	index=0
-	repomanRepos=repoman.getRepos(sorted=True)
+	repomanRepos=repoman.getRepos(includeAll=True)
 	output=_formatOutput(repomanRepos,enabled,disabled,show)
 	for line in output:
 		if line.startswith("\t"):
