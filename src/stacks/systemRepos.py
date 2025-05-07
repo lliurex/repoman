@@ -225,22 +225,29 @@ class systemRepos(QStackedWindowItem):
 		self.lstRepositories.clear()
 		self.lstRepositories.setRowCount(0)
 		self.lstRepositories.setColumnCount(1)
-		repos=self.repoman.getRepos()
-		sortrepos=self.repoman.sortJsonRepos(repos)
-		for reponame,repodata in sortrepos.items():
-			if len(reponame)<=0:
+		repos=self.repoman.getRepos(includeAll=True)
+		#sortrepos=self.repoman.sortJsonRepos(repos)
+		#for reponame,repodata in sortrepos.items():
+		for repouri,repodata in repos.items():
+			if len(repodata.get("Name",""))<=0:
 				continue
 			w=QRepoItem(self.lstRepositories)
 			w.stateChanged.connect(self._stateChanged)
-			w.setText(reponame)
-			desc=repodata.get("desc","")
+			w.setText(repodata.get("Name"))
+			desc=repodata.get("Description",repodata.get("desc",""))
 			if len(desc)==0:
 				desc=os.path.basename(repodata.get("file",""))
 			w.setDesc(desc)
 			w.setFile(repodata.get("file",""))
-			w.setState(repodata.get("enabled",False))
+			state=repodata.get("Enabled",repodata.get("enabled"))
+			if isinstance(state,str):
+				if state.lower()=="false":
+					state=False
+				else:
+					state=True
+			w.setState(state)
 			w.changed=False
-			available=repodata.get("available",False)
+			available=repodata.get("available",True)
 			w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
 			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)

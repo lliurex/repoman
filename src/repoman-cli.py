@@ -2,7 +2,7 @@
 import os,sys
 from collections import OrderedDict
 import subprocess
-from repoman import repomanager 
+from repoman import repomanager
 import gettext
 gettext.textdomain('repoman')
 _ = gettext.gettext
@@ -93,28 +93,43 @@ def _runHelper(*args):
 	cmd.extend(args)
 	proc=subprocess.run(cmd)
 	if proc.returncode!=0:
+		print("****")
+		print("R: {}".format(proc.returncode))
 		print(i18n.get("ERROR"))
 	quit(proc.returncode)
 #def _runHelper
 
 def addRepo():
-	url=action['a']
+	url=action['a'].split(" ")[0]
+	name=""
+	desc=""
+	if len(action['a'].split(" "))>1:
+		namePlusDesc=action['a'].split(" ")[1:]
+		name=namePlusDesc[0]
+		if len(namePlusDesc)>1:
+			desc="".join(namePlusDesc[1:])
 	options=i18n.get("OPTIONS")
-	name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
-	desc=url
+	if name=="":
+		name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
+	if desc=="":
+		desc=url
 	if not unattended:
 		resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 		if resp.lower()==options[0].lower():
-			name=input("{0} [{1}]: ".format(i18n.get("REPONAME"),name))
-			desc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),url))
+			iname=input("{0} [{1}]: ".format(i18n.get("REPONAME"),name))
+			idesc=input("{0} [{1}]: ".format(i18n.get("REPODESC"),desc))
+			if iname!="":
+				name=iname
+			if idesc!="":
+				desc=idesc
 		else:
 			return()
-	_runHelper(action["a"],"Add",name,desc)
+	_runHelper(url,"Add",name,desc)
 	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
 def _getRepoName(targetrepo):
-	repomanRepos=repoman.getRepos()
+	repomanRepos=repoman.getRepos(includeAll=True)
 	output=_formatOutput(repomanRepos,False,False)
 	reponame=""
 	if targetrepo.isdigit():
@@ -222,40 +237,62 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 	output=[]
 	if len(repomanRepos)>0:
 		output=[]
-		sortKeys=list(repomanRepos.keys())
-		for sourcesUrl in sortKeys:
-			repos=[]
-			sw_omit=False
-			printcolor=color.GREEN
-			msgEnabled=i18n.get("ENABLED")
-			for release,releasedata in repomanRepos[sourcesUrl].items():
-				if releasedata.get('enabled',False)==False:
-					printcolor=color.RED
-					msgEnabled=i18n.get("DISABLED")
-					if enabled==True:
-						sw_omit=True
-				elif disabled==True:
-					sw_omit=True
-				if releasedata.get("available",True)==False:
-					printcolor=color.DARKCYAN
-					msgEnabled=i18n.get("UNAVAILABLE")
-				name=releasedata.get("name",sourcesUrl)
-				desc=releasedata.get("desc","")
-				repos.append(releasedata.get("raw",[]))
-				file=releasedata.get("file","")
-			if sw_omit==False:
-				if desc!="":
-					desc=_(desc)
-				output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0].split(".sources")[0],desc,printcolor,msgEnabled,color.END))
-				if show==True:
-					output.append("\t** File: {} **".format(file))
-					output.append("\t{}".format("\n\t".join(repos)))
+		for url,urlData in repomanRepos.items():
+			enabled=urlData.get("enabled",urlData.get("Enabled",True))
+			if isinstance(enabled,str):
+				if enabled.lower()=="false":
+					enabled=False
+				else:
+					enabled=True
+			if enabled==False:
+				printcolor=color.RED
+				msgEnabled=i18n.get("DISABLED")
+			else:
+				printcolor=color.GREEN
+				msgEnabled=i18n.get("ENABLED")
+			if urlData.get("available",True)==False:
+				printcolor=color.DARKCYAN
+				msgEnabled=i18n.get("UNAVAILABLE")
+			name=urlData.get("Name")
+			file=urlData.get("file")
+			desc=urlData.get("desc","")
+			output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0].split(".sources")[0],desc,printcolor,msgEnabled,color.END))
+
+		#sortKeys=list(repomanRepos.keys())
+		#for sourcesUrl in sortKeys:
+		#	repos=[]
+		#	sw_omit=False
+		#	printcolor=color.GREEN
+		#	msgEnabled=i18n.get("ENABLED")
+		#	for release,releasedata in repomanRepos[sourcesUrl].items():
+		#		print(releasedata)
+		#		if releasedata.get('enabled',False)==False:
+		#			printcolor=color.RED
+		#			msgEnabled=i18n.get("DISABLED")
+		#			if enabled==True:
+		#				sw_omit=True
+		#		elif disabled==True:
+		#			sw_omit=True
+		#		if releasedata.get("available",True)==False:
+		#			printcolor=color.DARKCYAN
+		#			msgEnabled=i18n.get("UNAVAILABLE")
+		#		name=releasedata.get("name",sourcesUrl)
+		#		desc=releasedata.get("desc","")
+		#		repos.append(releasedata.get("raw",[]))
+		#		file=releasedata.get("file","")
+		#	if sw_omit==False:
+		#		if desc!="":
+		#			desc=_(desc)
+		#		output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0].split(".sources")[0],desc,printcolor,msgEnabled,color.END))
+		#		if show==True:
+		#			output.append("\t** File: {} **".format(file))
+		#			output.append("\t{}".format("\n\t".join(repos)))
 	return(output)
 #def _formatOutput
 
 def listRepos(enabled=False,disabled=False,show=False):
 	index=0
-	repomanRepos=repoman.getRepos()
+	repomanRepos=repoman.getRepos(includeAll=True)
 	output=_formatOutput(repomanRepos,enabled,disabled,show)
 	for line in output:
 		if line.startswith("\t"):
