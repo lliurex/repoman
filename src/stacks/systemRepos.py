@@ -239,7 +239,13 @@ class systemRepos(QStackedWindowItem):
 				desc=os.path.basename(repodata.get("file",""))
 			w.setDesc(desc)
 			w.setFile(repodata.get("file",""))
-			w.setState(repodata.get("Enabled",True))
+			state=repodata.get("Enabled",repodata.get("enabled"))
+			if isinstance(state,str):
+				if state.lower()=="false":
+					state=False
+				else:
+					state=True
+			w.setState(state)
 			w.changed=False
 			available=repodata.get("available",True)
 			w.setEnabled(available)
