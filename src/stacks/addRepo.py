@@ -21,7 +21,9 @@ i18n={
 	"REPODESC":_("Descriptive description (optional)"),
 	"REPONAME":_("name of the repository"),
 	"REPOURL":_("Repository's url"),
-	"REPOURLDESC":_("Url for the repository")
+	"REPOURLDESC":_("Starting with 'ppa:' 'http:' 'ftp:'..."),
+	"SIGNEDBY":_("Signed by"),
+	"SIGNEDBYDESC":_("Path or url to sign file (.asc or .gpg) or pgp raw sign (optional)"),
 	}
 
 class processRepos(QThread):
@@ -32,6 +34,7 @@ class processRepos(QThread):
 		self.url=kwargs.get('url','')
 		self.name=kwargs.get('name','')
 		self.desc=kwargs.get('desc','')
+		self.sign=kwargs.get('sign','')
 		self.parent=kwargs.get('parent','')
 		self.err=[]
 
@@ -40,7 +43,7 @@ class processRepos(QThread):
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		if self.parent:
 			self.parent.setCursor(cursor)
-		proc=subprocess.run(["pkexec",self.repohelper,self.url,"Add",self.name,self.desc])
+		proc=subprocess.run(["pkexec",self.repohelper,self.url,"Add",self.name,self.desc,self.sign])
 		if proc.returncode!=0:
 			self.err.append(self.url)
 			self.onError.emit(self.err)
@@ -76,6 +79,10 @@ class addRepo(QStackedWindowItem):
 		box.addWidget(QLabel(i18n.get("REPOURL")),4,0,1,1,Qt.AlignBottom)
 		self.url.setPlaceholderText(i18n.get("REPOURLDESC"))
 		box.addWidget(self.url,5,0,1,1,Qt.AlignTop)
+		self.sign=QLineEdit()
+		box.addWidget(QLabel(i18n.get("SIGNEDBY")),6,0,1,1,Qt.AlignBottom)
+		self.sign.setPlaceholderText(i18n.get("SIGNEDBYDESC"))
+		box.addWidget(self.sign,7,0,1,1,Qt.AlignTop)
 		self.setLayout(box)
 		self.btnAccept.clicked.connect(self.writeConfig)
 		return(self)
@@ -102,14 +109,17 @@ class addRepo(QStackedWindowItem):
 			return
 		name=self.name.text()
 		if len(name)<=0:
-			name="Custom"
+			name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
 		desc=self.desc.text()
 		if len(desc)<=0:
-			desc=name
+			desc=url
+		sign=self.sign.text()
+		if len(sign)>0:
+			sign="signedby={}".format(sign)
 		cursor=QtGui.QCursor(Qt.WaitCursor)
 		oldcursor=self.cursor()
 		self.setCursor(cursor)
-		self.process=processRepos(url=url,name=name,desc=desc,parent=self)
+		self.process=processRepos(url=url,name=name,desc=desc,sign=sign,parent=self)
 		self.process.onError.connect(self._onError)
 		self.process.finished.connect(self._endProcess)
 		self.process.start()
