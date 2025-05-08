@@ -109,10 +109,10 @@ class addRepo(QStackedWindowItem):
 			return
 		name=self.name.text()
 		if len(name)<=0:
-			name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
+			name="auto"
 		desc=self.desc.text()
 		if len(desc)<=0:
-			desc=url
+			desc="auto"
 		sign=self.sign.text()
 		if len(sign)>0:
 			sign="signedby={}".format(sign)
