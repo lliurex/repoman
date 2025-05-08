@@ -27,10 +27,15 @@ elif len(sys.argv)>=3:
 	elif state=="Add":
 		reponame=""
 		repodesc=""
+		reposign=""
 		if len(sys.argv)>3:
-			reponame=sys.argv[3]
-		if len(sys.argv)>4:
-			repodesc=sys.argv[4]
+			for arg in sys.argv[3:]:
+				if arg.lower().startswith("signedby"):
+					reposign=arg.split("=")[-1].strip()
+				elif reponame=="":
+					reponame=arg
+				elif repodesc=="":
+					repodesc=arg
 		if name.startswith("ppa:"):
 			proc=subprocess.run(["add-apt-repository","-y",name])
 			ret=proc.returncode
@@ -38,5 +43,5 @@ elif len(sys.argv)>=3:
 			if "signed-by" in name.lower():
 				ret=err.SIGNED
 			else:
-				ret=repo.addRepo(name,reponame,repodesc)
+				ret=repo.addRepo(name,reponame,repodesc,reposign)
 sys.exit(ret)
