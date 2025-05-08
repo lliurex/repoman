@@ -42,6 +42,8 @@ i18n={
 	"REPODESC":_("Description:"),
 	"REPONAME":_("Name for the repository"),
 	"REPOSITORY":_("repository"),
+	"SIGNEDBY":_("Signed by"),
+	"SIGNEDBYDESC":_("Path or url to sign file (.asc or .gpg) or pgp raw sign"),
 	"SUCESS":_("Ok"),
 	"UNAVAILABLE":_("Unavailable")
 	}
@@ -56,7 +58,7 @@ i18n={
 #l-> list repos
 #le -> list enabled repos
 #ld -> list disabled repos
-parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'},
+parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL [name] [desc] [signedby=(file|url|pgp sign)]'},
 			'd':{'args':1,'long':'disable','desc':i18n.get("HLP_DISABLE"),'usage':i18n.get("HLP_OPTIONS")},
 			'edit':{'args':1,'long':'edit','desc':i18n.get("HLP_EDIT"),'usage':i18n.get("HLP_OPTIONS")},
 			'e':{'args':1,'long':'enable','desc':i18n.get("HLP_ENABLE"),'usage':i18n.get("HLP_OPTIONS")},
@@ -93,8 +95,6 @@ def _runHelper(*args):
 	cmd.extend(args)
 	proc=subprocess.run(cmd)
 	if proc.returncode!=0:
-		print("****")
-		print("R: {}".format(proc.returncode))
 		print(i18n.get("ERROR"))
 	quit(proc.returncode)
 #def _runHelper
@@ -103,16 +103,22 @@ def addRepo():
 	url=action['a'].split(" ")[0]
 	name=""
 	desc=""
+	signedby=""
 	if len(action['a'].split(" "))>1:
-		namePlusDesc=action['a'].split(" ")[1:]
-		name=namePlusDesc[0]
-		if len(namePlusDesc)>1:
-			desc="".join(namePlusDesc[1:])
+		parms=action['a'].split(" ")[1:]
+		for parm in parms:
+			if "signedby=" in parm.lower():
+				signedby=parm
+			elif name=="":
+				name=parm
+			else:
+				desc+=" {}".format(parm)
+		desc=desc.lstrip()
 	options=i18n.get("OPTIONS")
 	if name=="":
-		name=url.replace("http","").replace(":/","").replace("/","_").replace(":",".")
+		name="auto"
 	if desc=="":
-		desc=url
+		desc="auto"
 	if not unattended:
 		resp=input("{0} {1}{2}{3}. {4} {5} [{6}]: ".format(i18n.get("MSG_ADD"),color.UNDERLINE,url,color.END,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 		if resp.lower()==options[0].lower():
@@ -124,7 +130,7 @@ def addRepo():
 				desc=idesc
 		else:
 			return()
-	_runHelper(url,"Add",name,desc)
+	_runHelper(url,"Add",name.strip(),desc.strip(),signedby)
 	#repoman.addRepo(action["a"],name=name,desc=desc)
 #def addRepo
 
