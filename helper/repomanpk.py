@@ -33,17 +33,6 @@ elif len(sys.argv)>=3:
 			repodesc=sys.argv[4]
 		if name.startswith("ppa:"):
 			proc=subprocess.run(["add-apt-repository","-y",name])
-			file=repo.getSourcesPathFromPpa(name)
-			data=repo.readSourcesFile(file)
-			for url,urldata in data.items():
-				for release,releasedata in urldata.items():
-					if len(reponame)>0:
-						releasedata["name"]=reponame
-					if len(repodesc)>0:
-						releasedata["desc"]=repodesc
-					releasedata["repos"]=releasedata.get("raw","").strip("\n")
-			jfile=repo.getJsonPathFromSources(file,data)
-			repo.writeJsonFile(jfile,data)
 			ret=proc.returncode
 		else:
 			if "signed-by" in name.lower():
