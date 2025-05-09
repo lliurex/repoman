@@ -100,7 +100,6 @@ class addRepo(QStackedWindowItem):
 
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
-		print(err)
 		self.showMsg(summary=i18n.get("ERROR"),text="{0}\n{1}".format(i18n.get("ERROR_REPO"),"\n".join(err)),icon="repoman",timeout=10)
 	#def _onError
 
