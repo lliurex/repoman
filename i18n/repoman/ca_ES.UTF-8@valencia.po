@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 11:40+0100\n"
-"PO-Revision-Date: 2024-11-29 11:41+0100\n"
+"POT-Creation-Date: 2025-05-09 06:39+0200\n"
+"PO-Revision-Date: 2025-05-09 11:37+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -109,7 +109,7 @@ msgstr "Error al obrir. Comproveu que el repo"
 msgid "is enabled"
 msgstr "està activat"
 
-#: ../src/repoman-cli.py:39
+#: ../src/repoman-cli.py:39 ../src/stacks/systemRepos.py:19
 msgid "Repositories changed. Do you want to update info?"
 msgstr "Actualitzar els repositoris?"
 
@@ -133,20 +133,28 @@ msgstr "Nom del repositori"
 msgid "repository"
 msgstr "repositori"
 
-#: ../src/repoman-cli.py:45
+#: ../src/repoman-cli.py:45 ../src/stacks/addRepo.py:25
+msgid "Signed by"
+msgstr "Signat per"
+
+#: ../src/repoman-cli.py:46
+msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign"
+msgstr "Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura"
+
+#: ../src/repoman-cli.py:47
 msgid "Ok"
 msgstr "Val"
 
-#: ../src/repoman-cli.py:46
+#: ../src/repoman-cli.py:48
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:278
+#: ../src/repoman-cli.py:320
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:279
+#: ../src/repoman-cli.py:321
 msgid ""
 "\n"
 "RepoMan"
@@ -154,7 +162,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:280
+#: ../src/repoman-cli.py:322
 msgid ""
 "\n"
 "Parameters:"
@@ -199,22 +207,26 @@ msgid "Repository's url"
 msgstr "URL del repositori"
 
 #: ../src/stacks/addRepo.py:24
-msgid "Url for the repository"
-msgstr "URL per al repositori"
+msgid "Starting with 'ppa:' 'http:' 'ftp:'..."
+msgstr "Escomençant amb 'ppa:', 'http:', 'ftp:'..."
 
-#: ../src/stacks/addRepo.py:57
+#: ../src/stacks/addRepo.py:26
+msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign (optional)"
+msgstr "Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura (opcional)"
+
+#: ../src/stacks/addRepo.py:60
 msgid "Add custom repositories"
 msgstr "Afig repositoris personalitzats"
 
 #: ../src/stacks/systemRepos.py:16
-msgid "System repositories"
-msgstr "Repositoris del sistema"
-
-#: ../src/stacks/systemRepos.py:18
 msgid "Manage system repositories"
 msgstr "Gestiona els repositoris"
 
-#: ../src/stacks/systemRepos.py:19
+#: ../src/stacks/systemRepos.py:18
+msgid "System repositories"
+msgstr "Repositoris del sistema"
+
+#: ../src/stacks/systemRepos.py:20
 msgid "Activate/deactivate the system repositories"
 msgstr "Activar/desactivar els repositoris"
 
@@ -264,6 +276,9 @@ msgstr "Introduïu contrasenya"
 
 msgid "Repoman wants to change system settings"
 msgstr "Repoman vol modificar el sistema"
+
+#~ msgid "Url for the repository"
+#~ msgstr "URL per al repositori"
 
 #~ msgid "Enable repo"
 #~ msgstr "Activa el repositori"

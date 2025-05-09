@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 11:40+0100\n"
-"PO-Revision-Date: 2024-11-29 12:44+0100\n"
+"POT-Creation-Date: 2025-05-09 06:39+0200\n"
+"PO-Revision-Date: 2025-05-09 11:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -110,7 +110,7 @@ msgstr "Error al abrir. Comprobar que el repo"
 msgid "is enabled"
 msgstr "está activado"
 
-#: ../src/repoman-cli.py:39
+#: ../src/repoman-cli.py:39 ../src/stacks/systemRepos.py:19
 msgid "Repositories changed. Do you want to update info?"
 msgstr "Se han modificado los repositorios. ¿Actualizarlos?"
 
@@ -134,20 +134,28 @@ msgstr "Nombre del repositorio"
 msgid "repository"
 msgstr "repositorio"
 
-#: ../src/repoman-cli.py:45
+#: ../src/repoman-cli.py:45 ../src/stacks/addRepo.py:25
+msgid "Signed by"
+msgstr "Firmado por"
+
+#: ../src/repoman-cli.py:46
+msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign"
+msgstr "Ruta o url al fichero de firma (.asc o .gpg) o cadena de la firma pgp"
+
+#: ../src/repoman-cli.py:47
 msgid "Ok"
 msgstr "Vale"
 
-#: ../src/repoman-cli.py:46
+#: ../src/repoman-cli.py:48
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:278
+#: ../src/repoman-cli.py:320
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:279
+#: ../src/repoman-cli.py:321
 msgid ""
 "\n"
 "RepoMan"
@@ -155,7 +163,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:280
+#: ../src/repoman-cli.py:322
 msgid ""
 "\n"
 "Parameters:"
@@ -200,22 +208,26 @@ msgid "Repository's url"
 msgstr "URL del repositorio"
 
 #: ../src/stacks/addRepo.py:24
-msgid "Url for the repository"
-msgstr "URL del repositorio"
+msgid "Starting with 'ppa:' 'http:' 'ftp:'..."
+msgstr "Empezando por 'ppa:', 'http:', 'ftp:'..."
 
-#: ../src/stacks/addRepo.py:57
+#: ../src/stacks/addRepo.py:26
+msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign (optional)"
+msgstr "Ruta o url al fichero de firma (.asc o .gpg) o cadena con la firma (opcional)"
+
+#: ../src/stacks/addRepo.py:60
 msgid "Add custom repositories"
 msgstr "Añadir repositorio personal"
 
 #: ../src/stacks/systemRepos.py:16
-msgid "System repositories"
-msgstr "Repositorios del sistema"
-
-#: ../src/stacks/systemRepos.py:18
 msgid "Manage system repositories"
 msgstr "Gestiona repositorios"
 
-#: ../src/stacks/systemRepos.py:19
+#: ../src/stacks/systemRepos.py:18
+msgid "System repositories"
+msgstr "Repositorios del sistema"
+
+#: ../src/stacks/systemRepos.py:20
 msgid "Activate/deactivate the system repositories"
 msgstr "Activar/desactivar los repositorios del sistema"
 
@@ -261,6 +273,9 @@ msgstr "Introducir contraseña"
 
 msgid "Repoman wants to change system settings"
 msgstr "Repoman quiere realizar cambios en el sistema"
+
+#~ msgid "Url for the repository"
+#~ msgstr "URL del repositorio"
 
 #~ msgid "Ensure repo"
 #~ msgstr "Comprobar que el repo"
