@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 11:40+0100\n"
+"POT-Creation-Date: 2025-05-09 06:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr ""
 msgid "is enabled"
 msgstr ""
 
-#: ../src/repoman-cli.py:39
+#: ../src/repoman-cli.py:39 ../src/stacks/systemRepos.py:19
 msgid "Repositories changed. Do you want to update info?"
 msgstr ""
 
@@ -133,26 +133,34 @@ msgstr ""
 msgid "repository"
 msgstr ""
 
-#: ../src/repoman-cli.py:45
-msgid "Ok"
+#: ../src/repoman-cli.py:45 ../src/stacks/addRepo.py:25
+msgid "Signed by"
 msgstr ""
 
 #: ../src/repoman-cli.py:46
+msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign"
+msgstr ""
+
+#: ../src/repoman-cli.py:47
+msgid "Ok"
+msgstr ""
+
+#: ../src/repoman-cli.py:48
 msgid "Unavailable"
 msgstr ""
 
-#: ../src/repoman-cli.py:278
+#: ../src/repoman-cli.py:320
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:279
+#: ../src/repoman-cli.py:321
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:280
+#: ../src/repoman-cli.py:322
 msgid ""
 "\n"
 "Parameters:"
@@ -195,22 +203,26 @@ msgid "Repository's url"
 msgstr ""
 
 #: ../src/stacks/addRepo.py:24
-msgid "Url for the repository"
+msgid "Starting with 'ppa:' 'http:' 'ftp:'..."
 msgstr ""
 
-#: ../src/stacks/addRepo.py:57
+#: ../src/stacks/addRepo.py:26
+msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign (optional)"
+msgstr ""
+
+#: ../src/stacks/addRepo.py:60
 msgid "Add custom repositories"
 msgstr ""
 
 #: ../src/stacks/systemRepos.py:16
-msgid "System repositories"
-msgstr ""
-
-#: ../src/stacks/systemRepos.py:18
 msgid "Manage system repositories"
 msgstr ""
 
-#: ../src/stacks/systemRepos.py:19
+#: ../src/stacks/systemRepos.py:18
+msgid "System repositories"
+msgstr ""
+
+#: ../src/stacks/systemRepos.py:20
 msgid "Activate/deactivate the system repositories"
 msgstr ""
 
