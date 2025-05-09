@@ -26,7 +26,7 @@ class processRepos(QThread):
 	editCompleted=Signal(str)
 	def __init__(self,*args,**kwargs):
 		QThread.__init__(self, None)
-		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
+		self.repohelper="/usr/share/repoman/helper/repomanager"
 		self.mode="update"
 		self.args=[]
 		self.kwargs={}

@@ -30,7 +30,7 @@ class processRepos(QThread):
 	onError=Signal(list)
 	def __init__(self,*args,**kwargs):
 		QThread.__init__(self, parent=None)
-		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
+		self.repohelper="/usr/share/repoman/helper/repomanager"
 		self.url=kwargs.get('url','')
 		self.name=kwargs.get('name','')
 		self.desc=kwargs.get('desc','')
@@ -100,6 +100,7 @@ class addRepo(QStackedWindowItem):
 
 	def _onError(self,err):
 		self.setCursor(self.oldcursor)
+		print(err)
 		self.showMsg(summary=i18n.get("ERROR"),text="{0}\n{1}".format(i18n.get("ERROR_REPO"),"\n".join(err)),icon="repoman",timeout=10)
 	#def _onError
 

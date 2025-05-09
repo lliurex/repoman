@@ -10,7 +10,7 @@ _ = gettext.gettext
 repoman=repomanager.manager()
 action={}
 unattended=False
-REPOHELPER="/usr/share/repoman/helper/repomanpk.py"
+REPOHELPER="/usr/share/repoman/helper/repomanager"
 
 i18n={
 	"BADARG":_("Invalid argument"),
