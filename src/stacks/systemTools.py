@@ -33,7 +33,7 @@ class systemTools(QStackedWindowItem):
 		self.enabled=True
 		self.level='system'
 		self.hideControlButtons()
-		self.repohelper="/usr/share/repoman/helper/repomanpk.py"
+		self.repohelper="/usr/share/repoman/helper/repomanager"
 		self.repoman=repomanager.manager()
 	#def __init__
 	

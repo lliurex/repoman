@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+import sys
+from repoman import repomanager as manager
+import subprocess
+
+repo=manager.manager()
+error=manager.errorEnum.NO_ERROR
+if len(sys.argv)==2:
+	action=sys.argv[1]
+	if action=="update":
+		error=repo.updateRepos()
+	elif action=="pin":
+		error=repo.reversePinning()
+	elif action=="disableAll":
+		error=repo.disableAll()
+	elif action=="enableDefault":
+		error=repo.enableDefault()
+elif len(sys.argv)>=3:
+	name=sys.argv[1]
+	state=sys.argv[2]
+	if state=="True":
+		error=repo.enableRepoByName(name)
+	elif state=="False":
+		error=repo.disableRepoByName(name)
+	elif state=="Add":
+		reponame=""
+		repodesc=""
+		reposign=""
+		if len(sys.argv)>3:
+			for arg in sys.argv[3:]:
+				if arg.lower().startswith("signedby"):
+					reposign=arg.split("=")[-1].strip()
+				elif reponame=="":
+					reponame=arg
+				elif repodesc=="":
+					repodesc=arg
+		if name.startswith("ppa:"):
+			proc=subprocess.run(["add-apt-repository","-y",name])
+			if proc.returncode!=0:
+				error=manager.errorEnum.ADD_FAILED
+		else:
+		#	if "signed-by" in name.lower():
+		#		ret=err.SIGNED
+		#	else:
+				error=repo.addRepo(name,reponame,repodesc,reposign)
+sys.exit(error.value)
