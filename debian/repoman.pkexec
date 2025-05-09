@@ -1,6 +1,6 @@
 [
     {
-        "cmd": "/usr/share/repoman/helper/repomanpk.py",
+        "cmd": "/usr/share/repoman/helper/repomanager",
         "prefix": "net.lliurex.repoman",
         "nameaction": "manager",
 		"domain": "repoman",
