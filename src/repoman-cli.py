@@ -7,7 +7,7 @@ import gettext
 gettext.textdomain('repoman')
 _ = gettext.gettext
 
-repoman=repomanager.manager()
+manager=repomanager.manager()
 action={}
 unattended=False
 REPOHELPER="/usr/share/repoman/helper/repomanager"
@@ -95,7 +95,8 @@ def _runHelper(*args):
 	cmd.extend(args)
 	proc=subprocess.run(cmd)
 	if proc.returncode!=0:
-		print(i18n.get("ERROR"))
+		error=repomanager.errorEnum(proc.returncode)
+		print(i18n.get(error.name,i18n.get("ERROR")))
 	quit(proc.returncode)
 #def _runHelper
 
@@ -135,7 +136,7 @@ def addRepo():
 #def addRepo
 
 def _getRepoName(targetrepo):
-	repomanRepos=repoman.getRepos(includeAll=True)
+	repomanRepos=manager.getRepos(includeAll=True)
 	output=_formatOutput(repomanRepos,False,False)
 	reponame=""
 	if targetrepo.isdigit():
@@ -164,7 +165,7 @@ def editRepo():
 		sys.exit(1)
 	resp=input("{0} {1}{2} {3}{4} {5}. {6} {7} [{8}]: ".format(i18n.get("MSG_YOU"),color.RED,i18n.get("MSG_EDIT"),i18n.get("REPOSITORY"),color.END,reponame,i18n.get("MSG_CONTINUE"),i18n.get("OPTIONS"),i18n.get("OPTIONS")[-1]))
 	if resp.lower()==i18n.get("OPTIONS")[0].lower():
-		repomanRepos=repoman.getRepos()
+		repomanRepos=manager.getRepos()
 		output=_formatOutput(repomanRepos,True,False,True)
 		sw_print=False
 		file=""
@@ -298,7 +299,7 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 
 def listRepos(enabled=False,disabled=False,show=False):
 	index=0
-	repomanRepos=repoman.getRepos(includeAll=True)
+	repomanRepos=manager.getRepos(includeAll=True)
 	output=_formatOutput(repomanRepos,enabled,disabled,show)
 	for line in output:
 		if line.startswith("\t"):
