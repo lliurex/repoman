@@ -251,6 +251,7 @@ class systemRepos(QStackedWindowItem):
 			w.setEnabled(available)
 			self.lstRepositories.setRowCount(self.lstRepositories.rowCount()+1)
 			self.lstRepositories.setCellWidget(self.lstRepositories.rowCount()-1,0,w)
+			self.lstRepositories.setRowHeight(self.lstRepositories.rowCount()-1,w.sizeHint().height())
 	#def _udpate_screen
 
 	def _stateChanged(self,*args):
