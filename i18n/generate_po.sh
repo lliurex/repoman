@@ -25,3 +25,8 @@ echo 'msgstr ""'>> repoman/repoman.pot
 echo 'msgid "'${description}'"' >> repoman/repoman.pot
 echo 'msgstr ""'>> repoman/repoman.pot
 echo '' >> repoman/repoman.pot
+echo "#: qtextrawidgets" >> repoman/repoman.pot
+echo 'msgid "'Apply'"' >> repoman/repoman.pot
+echo 'msgstr ""'>> repoman/repoman.pot
+echo 'msgid "'Undo'"' >> repoman/repoman.pot
+echo 'msgstr ""'>> repoman/repoman.pot

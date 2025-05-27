@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 06:39+0200\n"
-"PO-Revision-Date: 2025-05-09 11:37+0200\n"
+"POT-Creation-Date: 2025-05-27 06:43+0200\n"
+"PO-Revision-Date: 2025-05-27 06:44+0200\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -139,7 +139,8 @@ msgstr "Signat per"
 
 #: ../src/repoman-cli.py:46
 msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign"
-msgstr "Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura"
+msgstr ""
+"Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura"
 
 #: ../src/repoman-cli.py:47
 msgid "Ok"
@@ -149,12 +150,12 @@ msgstr "Val"
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:320
+#: ../src/repoman-cli.py:321
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:321
+#: ../src/repoman-cli.py:322
 msgid ""
 "\n"
 "RepoMan"
@@ -162,7 +163,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:322
+#: ../src/repoman-cli.py:323
 msgid ""
 "\n"
 "Parameters:"
@@ -212,7 +213,9 @@ msgstr "Escomençant amb 'ppa:', 'http:', 'ftp:'..."
 
 #: ../src/stacks/addRepo.py:26
 msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign (optional)"
-msgstr "Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura (opcional)"
+msgstr ""
+"Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura "
+"(opcional)"
 
 #: ../src/stacks/addRepo.py:60
 msgid "Add custom repositories"
@@ -277,6 +280,13 @@ msgstr "Introduïu contrasenya"
 msgid "Repoman wants to change system settings"
 msgstr "Repoman vol modificar el sistema"
 
+#: qtextrawidgets
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Undo"
+msgstr "Cancelar"
+
 #~ msgid "Url for the repository"
 #~ msgstr "URL per al repositori"
 
@@ -325,7 +335,9 @@ msgstr "Repoman vol modificar el sistema"
 #~ msgstr "S'ha produït un error en afegir el repositori"
 
 #~ msgid "You must be root or supply a valid username/password"
-#~ msgstr "Heu de ser usuari primari o subministrar un nom d'usuari/contrasenya vàlids"
+#~ msgstr ""
+#~ "Heu de ser usuari primari o subministrar un nom d'usuari/contrasenya "
+#~ "vàlids"
 
 #~ msgid "Incorrect username/password"
 #~ msgstr "Nom d'usuari/contrasenya incorrectes"
@@ -352,8 +364,11 @@ msgstr "Repoman vol modificar el sistema"
 # #: ../src/stacks/systemTools.py:19
 # msgid "Update repositories/System upgrade"
 # msgstr "Actualitza els repositoris"
-#~ msgid "From here you can update the repositories info or launch lliurex-upgrade"
-#~ msgstr "Des d'ací podeu actualitzar la informació dels repositoris o llançar lliurex-upgrade"
+#~ msgid ""
+#~ "From here you can update the repositories info or launch lliurex-upgrade"
+#~ msgstr ""
+#~ "Des d'ací podeu actualitzar la informació dels repositoris o llançar "
+#~ "lliurex-upgrade"
 
 #~ msgid "Manage repositories requires admin authentification"
 #~ msgstr "Gestionar repositoris requereix permissos d'administrador"
@@ -371,8 +386,12 @@ msgstr "Repoman vol modificar el sistema"
 #~ msgstr "Servidor desconegut"
 
 #, python-format
-#~ msgid "You're going to add the repo present at %(color1)s%(url)s%(color2)s. Continue? %(options)s [%(default)s]: "
-#~ msgstr "Afegireu el repositori present a %(color1)s%(url)s%(color2)s. Voleu continuar? %(options)s [%(default)s]: "
+#~ msgid ""
+#~ "You're going to add the repo present at %(color1)s%(url)s%(color2)s. "
+#~ "Continue? %(options)s [%(default)s]: "
+#~ msgstr ""
+#~ "Afegireu el repositori present a %(color1)s%(url)s%(color2)s. Voleu "
+#~ "continuar? %(options)s [%(default)s]: "
 
 #, python-format
 #~ msgid "Name for the repository [%s]: "
@@ -386,12 +405,20 @@ msgstr "Repoman vol modificar el sistema"
 #~ msgstr "Repositori %(url)s %(color1)safegit correctament%(color2)s"
 
 #, python-format
-#~ msgid "You're going to %(color1)sdisable%(color2)s repository %(repo)s. Continue? %(options)s [%(default)s]: "
-#~ msgstr "Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu continuar? %(options)s [%(default)s]: "
+#~ msgid ""
+#~ "You're going to %(color1)sdisable%(color2)s repository %(repo)s. "
+#~ "Continue? %(options)s [%(default)s]: "
+#~ msgstr ""
+#~ "Aneu a %(color1)sinhabilitar%(color2)s el repositori %(repo)s. Voleu "
+#~ "continuar? %(options)s [%(default)s]: "
 
 #, python-format
-#~ msgid "You're going to enable repository %(repo)s. Continue? %(options)s [%(default)s]: "
-#~ msgstr "Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s [%(default)s]: "
+#~ msgid ""
+#~ "You're going to enable repository %(repo)s. Continue? %(options)s "
+#~ "[%(default)s]: "
+#~ msgstr ""
+#~ "Aneu a activar el repositori %(repo)s. Voleu continuar %(options)s "
+#~ "[%(default)s]: "
 
 #~ msgid "Couldn't write repo"
 #~ msgstr "No s'ha pogut escriure el repositori"
@@ -440,7 +467,9 @@ msgstr "Repoman vol modificar el sistema"
 #~ msgstr "Habilita/ inhabilita un repositori per defecte"
 
 #~ msgid "Temporaly SET THE SERVER  as source in a client for modify his repos"
-#~ msgstr "Activa temporalment la modificació dels repositoris DEL SERVIDOR a un client"
+#~ msgstr ""
+#~ "Activa temporalment la modificació dels repositoris DEL SERVIDOR a un "
+#~ "client"
 
 #~ msgid "Modify server repos"
 #~ msgstr "Modificar repositoris del servidor"
@@ -520,7 +549,9 @@ msgstr "Repoman vol modificar el sistema"
 #~ msgid "Add external repository"
 #~ msgstr "Afig un repositori extern"
 
-#~ msgid "From here you can invoke RepoMan's mighty powers to manage your repositories."
+#~ msgid ""
+#~ "From here you can invoke RepoMan's mighty powers to manage your "
+#~ "repositories."
 #~ msgstr "Invoca els superpoders de Repoman per a gestionar els repositoris"
 
 #~ msgid "Repositories Manager"
@@ -553,8 +584,12 @@ msgstr "Repoman vol modificar el sistema"
 #~ msgid "Enable/disable repository"
 #~ msgstr "Habilita/ inhabilita un repositori"
 
-#~ msgid "Usage: %s -n repository_name [ -d repository_description ] -u repository_url"
-#~ msgstr "Ús: %s -n nom del repositori [ -d descripció del repositori ] -u url del repositori"
+#~ msgid ""
+#~ "Usage: %s -n repository_name [ -d repository_description ] -u "
+#~ "repository_url"
+#~ msgstr ""
+#~ "Ús: %s -n nom del repositori [ -d descripció del repositori ] -u url del "
+#~ "repositori"
 
 #~ msgid "Mirror repositories"
 #~ msgstr "Repositoris del Mirror"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 06:39+0200\n"
-"PO-Revision-Date: 2025-05-09 11:38+0200\n"
+"POT-Creation-Date: 2025-05-27 06:43+0200\n"
+"PO-Revision-Date: 2025-05-27 06:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -150,12 +150,12 @@ msgstr "Vale"
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:320
+#: ../src/repoman-cli.py:321
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:321
+#: ../src/repoman-cli.py:322
 msgid ""
 "\n"
 "RepoMan"
@@ -163,7 +163,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:322
+#: ../src/repoman-cli.py:323
 msgid ""
 "\n"
 "Parameters:"
@@ -273,6 +273,13 @@ msgstr "Introducir contraseña"
 
 msgid "Repoman wants to change system settings"
 msgstr "Repoman quiere realizar cambios en el sistema"
+
+#: qtextrawidgets
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Undo"
+msgstr "Cancelar"
 
 #~ msgid "Url for the repository"
 #~ msgstr "URL del repositorio"

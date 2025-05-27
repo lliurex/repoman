@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 06:39+0200\n"
+"POT-Creation-Date: 2025-05-27 06:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,18 +149,18 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
-#: ../src/repoman-cli.py:320
+#: ../src/repoman-cli.py:321
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr ""
 
-#: ../src/repoman-cli.py:321
+#: ../src/repoman-cli.py:322
 msgid ""
 "\n"
 "RepoMan"
 msgstr ""
 
-#: ../src/repoman-cli.py:322
+#: ../src/repoman-cli.py:323
 msgid ""
 "\n"
 "Parameters:"
@@ -268,3 +268,8 @@ msgstr ""
 msgid "Repoman wants to change system settings"
 msgstr ""
 
+#: qtextrawidgets
+msgid "Apply"
+msgstr ""
+msgid "Undo"
+msgstr ""
