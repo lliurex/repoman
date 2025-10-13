@@ -1,4 +1,4 @@
-repoman (3.4.0-1lliurex25) noble; urgency=medium
+repoman (3.4.0-2lliurex25) noble; urgency=medium
 
   * Compat with new repomanager module for DEB822
 
