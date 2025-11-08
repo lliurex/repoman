@@ -43,4 +43,6 @@ elif len(sys.argv)>=3:
 		#		ret=err.SIGNED
 		#	else:
 				error=repo.addRepo(name,reponame,repodesc,reposign)
-sys.exit(error.value)
+	
+if error!=None:
+	sys.exit(error.value)
