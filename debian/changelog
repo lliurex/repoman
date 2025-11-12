@@ -1,7 +1,7 @@
-repoman (3.4.1-0lliurex25) noble; urgency=medium
+repoman (3.4.1-1lliurex25) noble; urgency=medium
 
   * Fix exit value in helper
-
+  * Fix wiki link
  -- Juanma1980 <juanma1980@gmail.com>  Sun, 09 Nov 2025 00:51:30 +0100
 
 repoman (3.4.0-2lliurex25) noble; urgency=medium
