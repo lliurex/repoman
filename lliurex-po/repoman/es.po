@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 15:31+0100\n"
-"PO-Revision-Date: 2024-03-06 15:33+0100\n"
+"POT-Creation-Date: 2026-03-09 12:13+0100\n"
+"PO-Revision-Date: 2026-03-09 12:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -79,71 +79,75 @@ msgid "(name|index)"
 msgstr "(nombre|indice)"
 
 #: ../src/repoman-cli.py:31
+msgid "Query state of Ubuntu repositories"
+msgstr "Consultar estado de los repositorios de Ubuntu"
+
+#: ../src/repoman-cli.py:32
 msgid "Show detailed information"
 msgstr "Mostrar detalles"
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:33
 msgid "Assume \"yes\" to all questions"
 msgstr "Si a todas las preguntas (desatendida)"
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:34
 msgid "You're going to add the repo present at"
 msgstr "Se va a añadir el repositorio presente en"
 
-#: ../src/repoman-cli.py:34
+#: ../src/repoman-cli.py:35
 msgid "Continue?"
 msgstr "¿Continuar?"
 
-#: ../src/repoman-cli.py:35
+#: ../src/repoman-cli.py:36
 msgid "disable"
 msgstr "desactivado"
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:37
 msgid "edit"
 msgstr "editar"
 
-#: ../src/repoman-cli.py:37
+#: ../src/repoman-cli.py:38
 msgid "enable"
 msgstr "activado"
 
-#: ../src/repoman-cli.py:38
+#: ../src/repoman-cli.py:39
 msgid "Repositories changed. Do you want to update info?"
 msgstr "¿Actualizar los repositorios?"
 
-#: ../src/repoman-cli.py:39
+#: ../src/repoman-cli.py:40
 msgid "You're going to"
 msgstr "Se va a"
 
-#: ../src/repoman-cli.py:40
+#: ../src/repoman-cli.py:41
 msgid "Y/N"
 msgstr "S/N"
 
-#: ../src/repoman-cli.py:41
+#: ../src/repoman-cli.py:42
 msgid "Description:"
 msgstr "Descripción:"
 
-#: ../src/repoman-cli.py:42
+#: ../src/repoman-cli.py:43
 msgid "Name for the repository"
 msgstr "Nombre del repositorio"
 
-#: ../src/repoman-cli.py:43
+#: ../src/repoman-cli.py:44
 msgid "repository"
 msgstr "repositorio"
 
-#: ../src/repoman-cli.py:44
+#: ../src/repoman-cli.py:45
 msgid "Ok"
 msgstr "Vale"
 
-#: ../src/repoman-cli.py:45
+#: ../src/repoman-cli.py:46
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:272
+#: ../src/repoman-cli.py:284
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:273
+#: ../src/repoman-cli.py:285
 msgid ""
 "\n"
 "RepoMan"
@@ -151,7 +155,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:274
+#: ../src/repoman-cli.py:286
 msgid ""
 "\n"
 "Parameters:"
@@ -159,59 +163,63 @@ msgstr ""
 "\n"
 "Parámetros:"
 
-#: ../src/stacks/addRepo.py:14
-msgid "An error ocurred"
-msgstr "Ocurrió un error"
-
-#: ../src/stacks/addRepo.py:15
-msgid "Insert repository name"
-msgstr "Introduce el nombre del repositorio"
-
-#: ../src/stacks/addRepo.py:16
-msgid "Repository added"
-msgstr "Repositorios agregado"
-
-#: ../src/stacks/addRepo.py:17
-msgid "Repository's contents"
-msgstr "Contenido del repositorio"
-
-#: ../src/stacks/addRepo.py:18
-msgid "Descriptive description (optional)"
-msgstr "Descripción del repositorio (opcional):"
-
-#: ../src/stacks/addRepo.py:19
-msgid "name of the repository"
-msgstr "nombre del repositorio"
-
-#: ../src/stacks/addRepo.py:20
-msgid "Repository's url"
-msgstr "URL del repositorio"
-
-#: ../src/stacks/addRepo.py:21
-msgid "Url for the repository"
-msgstr "URL del repositorio"
-
-#: ../src/stacks/addRepo.py:50
+#: ../src/stacks/addRepo.py:14 ../src/stacks/addRepo.py:15
 msgid "Add repositories"
 msgstr "Añadir repositorio"
 
-#: ../src/stacks/addRepo.py:52
+#: ../src/stacks/addRepo.py:16
+msgid "An error ocurred"
+msgstr "Ocurrió un error"
+
+#: ../src/stacks/addRepo.py:17
+msgid "Insert repository name"
+msgstr "Introduce el nombre del repositorio"
+
+#: ../src/stacks/addRepo.py:18
+msgid "Repository added"
+msgstr "Repositorios agregado"
+
+#: ../src/stacks/addRepo.py:19
+msgid "Repository's contents"
+msgstr "Contenido del repositorio"
+
+#: ../src/stacks/addRepo.py:20
+msgid "Descriptive description (optional)"
+msgstr "Descripción del repositorio (opcional):"
+
+#: ../src/stacks/addRepo.py:21
+msgid "name of the repository"
+msgstr "nombre del repositorio"
+
+#: ../src/stacks/addRepo.py:22
+msgid "Repository's url"
+msgstr "URL del repositorio"
+
+#: ../src/stacks/addRepo.py:23
+msgid "Url for the repository"
+msgstr "URL del repositorio"
+
+#: ../src/stacks/addRepo.py:59
 msgid "Add custom repositories"
 msgstr "Añadir repositorio personal"
 
 #: ../src/stacks/systemRepos.py:16
+msgid "Duplicated repositories"
+msgstr "Repositorios duplicados"
+
+#: ../src/stacks/systemRepos.py:17
 msgid "System repositories"
 msgstr "Repositorios del sistema"
 
-#: ../src/stacks/systemRepos.py:17
+#: ../src/stacks/systemRepos.py:18
 msgid "Error in:"
 msgstr "Error:"
 
-#: ../src/stacks/systemRepos.py:18
+#: ../src/stacks/systemRepos.py:19
 msgid "Manage system repositories"
 msgstr "Gestiona repositorios"
 
-#: ../src/stacks/systemRepos.py:19
+#: ../src/stacks/systemRepos.py:20
 msgid "Activate/deactivate the system repositories"
 msgstr "Activar/desactivar los repositorios del sistema"
 
@@ -219,25 +227,39 @@ msgstr "Activar/desactivar los repositorios del sistema"
 msgid "Update repositories"
 msgstr "Actualizar repositorios"
 
-#: ../src/stacks/systemTools.py:15
+#: ../src/stacks/systemTools.py:15 ../src/stacks/systemTools.py:16
 msgid "System tools"
 msgstr "Herramientas del sistema"
 
-#: ../src/stacks/systemTools.py:16
+#: ../src/stacks/systemTools.py:17
 msgid "Lliurex pinning ENABLED"
 msgstr "Preferir paquetes LliureX ACTIVADO"
 
-#: ../src/stacks/systemTools.py:17
+#: ../src/stacks/systemTools.py:18
+msgid ""
+"All repositories will be disabled.\n"
+"Lliurex repositories will be enabled\n"
+"Pinning will be restablished."
+msgstr ""
+"Se desactivarán todos los repositorios.\n"
+"Se activarán los repositorios de LliureX.\n"
+"Se reestablecerá el pinning."
+
+#: ../src/stacks/systemTools.py:19
 msgid "Lliurex pinning DISABLED"
 msgstr "Preferir paquetes LliureX DESACTIVADO"
 
-#: ../src/stacks/systemTools.py:18
-msgid "Other software related tools"
-msgstr "Otras herramientas relacionadas"
+#: ../src/stacks/systemTools.py:20
+msgid "This action can't be undone"
+msgstr "Esta acción es irreversible"
 
-#: ../src/stacks/systemTools.py:19
+#: ../src/stacks/systemTools.py:21
 msgid "Restore default repositories"
 msgstr "Restaurar repositorios"
+
+#: ../src/stacks/systemTools.py:22
+msgid "Other software related tools"
+msgstr "Otras herramientas relacionadas"
 
 #: json ../sources.d/default/lliurex_23.json
 msgid "Lliurex default repositories"
