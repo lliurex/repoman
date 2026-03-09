@@ -15,9 +15,11 @@ i18n={"BTNUP":_("Update repositories"),
 	"MENU":_("System tools"),
 	"DESC":_("System tools"),
 	"MSG_PIN":_("Lliurex pinning ENABLED"),
+	"MSG_RESET":_("All repositories will be disabled.\nLliurex repositories will be enabled\nPinning will be restablished."),
 	"MSG_UNPIN":_("Lliurex pinning DISABLED"),
-	"TOOLTIP":_("Other software related tools"),
+	"MSG_UNDON":_("This action can't be undone"),
 	"RESET":_("Restore default repositories")
+	"TOOLTIP":_("Other software related tools"),
 	}
 
 class systemTools(QStackedWindowItem):
@@ -44,26 +46,28 @@ class systemTools(QStackedWindowItem):
 		btnUpdate.setIcon(icn)
 		btnUpdate.setIconSize(QSize(48,48))
 		btnUpdate.clicked.connect(self._updateRepos)
-		box.addWidget(btnUpdate,0,0,1,1)
+		box.addWidget(btnUpdate,0,0,1,1,Qt.AlignLeft)
 		btnUpgrade=QPushButton("Lliurex-Up")
 		icn=QtGui.QIcon.fromTheme("lliurex-up")
 		btnUpgrade.setIcon(icn)
 		btnUpgrade.setIconSize(QSize(48,48))
 		btnUpgrade.clicked.connect(self._launchUpgrade)
-		box.addWidget(btnUpgrade,0,1,1,1)
+		box.addWidget(btnUpgrade,1,0,1,1,Qt.AlignLeft)
+		btnUpgrade.setMinimumSize(btnUpdate.sizeHint())
 		btnReset=QPushButton(i18n.get("RESET"))
 		icn=QtGui.QIcon.fromTheme("edit-undo")
 		btnReset.setIcon(icn)
 		btnReset.setIconSize(QSize(48,48))
 		btnReset.clicked.connect(self._launchReset)
-		box.addWidget(btnReset,1,0,1,1)
+		box.addWidget(btnReset,0,1,1,1,Qt.AlignRight)
+		btnReset.setMinimumSize(btnUpdate.sizeHint())
 		self.btnPin=QPushButton(i18n.get("MSG_PIN"))
 		self.btnPin.setCheckable(True)
 		icn=QtGui.QIcon.fromTheme("security-high")
 		self.btnPin.setIcon(icn)
 		self.btnPin.setIconSize(QSize(48,48))
 		self.btnPin.clicked.connect(self._reversePinning)
-		box.addWidget(self.btnPin,1,1,1,1)
+		#box.addWidget(self.btnPin,1,1,1,1)
 		self.setLayout(box)
 	#def _load_screen
 
@@ -97,8 +101,8 @@ class systemTools(QStackedWindowItem):
 	
 	def _launchReset(self):
 		dlg=QMessageBox()
-		dlg.setText("All repositories will be disabled.\nLliurex repositories will be enabled\nPinning will be restablished.")
-		dlg.setInformativeText("This action can't be undone")
+		dlg.setText(i18n.get("MSG_RESET"))
+		dlg.setInformativeText(i18n.get("MSG_UNDONE"))
 		dlg.setIcon(QMessageBox.Warning)
 		dlg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
 		dlg.setIcon
