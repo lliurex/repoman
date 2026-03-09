@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 06:43+0200\n"
-"PO-Revision-Date: 2025-05-27 06:44+0200\n"
+"POT-Creation-Date: 2026-03-09 10:34+0100\n"
+"PO-Revision-Date: 2026-03-09 10:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -79,83 +79,87 @@ msgid "Show detailed information"
 msgstr "Mostrar detalles"
 
 #: ../src/repoman-cli.py:31
+msgid "Show if ubuntu repositories are enabled"
+msgstr "Muestra si los repositorios de Ubuntu están activados"
+
+#: ../src/repoman-cli.py:32
 msgid "Assume \"yes\" to all questions"
 msgstr "Responde \"Sí\" a todas las preguntas (desatendida)"
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:33
 msgid "You're going to add the repo present at"
 msgstr "Se va a añadir el repositorio presente en"
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:34
 msgid "Continue?"
 msgstr "¿Continuar?"
 
-#: ../src/repoman-cli.py:34
+#: ../src/repoman-cli.py:35
 msgid "disable the"
 msgstr "desactivar el"
 
-#: ../src/repoman-cli.py:35
+#: ../src/repoman-cli.py:36
 msgid "edit the"
 msgstr "editar el"
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:37
 msgid "enable the"
 msgstr "activar el"
 
-#: ../src/repoman-cli.py:37
+#: ../src/repoman-cli.py:38
 msgid "Can't open. Ensure repo"
 msgstr "Error al abrir. Comprobar que el repo"
 
-#: ../src/repoman-cli.py:38
+#: ../src/repoman-cli.py:39
 msgid "is enabled"
 msgstr "está activado"
 
-#: ../src/repoman-cli.py:39 ../src/stacks/systemRepos.py:19
+#: ../src/repoman-cli.py:40 ../src/stacks/systemRepos.py:19
 msgid "Repositories changed. Do you want to update info?"
 msgstr "Se han modificado los repositorios. ¿Actualizarlos?"
 
-#: ../src/repoman-cli.py:40
+#: ../src/repoman-cli.py:41
 msgid "You're going to"
 msgstr "Se va a"
 
-#: ../src/repoman-cli.py:41
+#: ../src/repoman-cli.py:42
 msgid "Y/N"
 msgstr "S/N"
 
-#: ../src/repoman-cli.py:42
+#: ../src/repoman-cli.py:43
 msgid "Description:"
 msgstr "Descripción:"
 
-#: ../src/repoman-cli.py:43
+#: ../src/repoman-cli.py:44
 msgid "Name for the repository"
 msgstr "Nombre del repositorio"
 
-#: ../src/repoman-cli.py:44
+#: ../src/repoman-cli.py:45
 msgid "repository"
 msgstr "repositorio"
 
-#: ../src/repoman-cli.py:45 ../src/stacks/addRepo.py:25
+#: ../src/repoman-cli.py:46 ../src/stacks/addRepo.py:25
 msgid "Signed by"
 msgstr "Firmado por"
 
-#: ../src/repoman-cli.py:46
+#: ../src/repoman-cli.py:47
 msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign"
 msgstr "Ruta o url al fichero de firma (.asc o .gpg) o cadena de la firma pgp"
 
-#: ../src/repoman-cli.py:47
+#: ../src/repoman-cli.py:48
 msgid "Ok"
 msgstr "Vale"
 
-#: ../src/repoman-cli.py:48
+#: ../src/repoman-cli.py:49
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:321
+#: ../src/repoman-cli.py:341
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Uso: %s ACCIÓN"
 
-#: ../src/repoman-cli.py:322
+#: ../src/repoman-cli.py:342
 msgid ""
 "\n"
 "RepoMan"
@@ -163,7 +167,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:323
+#: ../src/repoman-cli.py:343
 msgid ""
 "\n"
 "Parameters:"
@@ -248,10 +252,20 @@ msgid "Lliurex pinning DISABLED"
 msgstr "Preferir paquetes LliureX DESACTIVADO"
 
 #: ../src/stacks/systemTools.py:19
+msgid ""
+"All repositories will be disabled.\n"
+"Lliurex repositories will be enabled\n"
+"Pinning will be restablished."
+msgstr ""
+"Se desactivaran todos los repositorios.\n"
+"Se activarán los repositorios de LliureX.\n"
+"Se reestablecerá el pinning."
+
+#: ../src/stacks/systemTools.py:20
 msgid "Other software related tools"
 msgstr "Otras herramientas relacionadas"
 
-#: ../src/stacks/systemTools.py:20
+#: ../src/stacks/systemTools.py:21
 msgid "Restore default repositories"
 msgstr "Restaurar repositorios"
 
