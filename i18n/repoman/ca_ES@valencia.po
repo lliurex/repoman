@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 06:43+0200\n"
-"PO-Revision-Date: 2025-05-27 06:44+0200\n"
+"POT-Creation-Date: 2026-03-09 10:34+0100\n"
+"PO-Revision-Date: 2026-03-09 10:36+0100\n"
 "Last-Translator: empar <montoro_mde@gva.es>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -78,84 +78,88 @@ msgid "Show detailed information"
 msgstr "Mostrar detalls"
 
 #: ../src/repoman-cli.py:31
+msgid "Show if ubuntu repositories are enabled"
+msgstr "Mostra l'estat dels repositoris d'Ubuntu"
+
+#: ../src/repoman-cli.py:32
 msgid "Assume \"yes\" to all questions"
 msgstr "Contesta \"Si\" a totes les preguntes (desatesa)"
 
-#: ../src/repoman-cli.py:32
+#: ../src/repoman-cli.py:33
 msgid "You're going to add the repo present at"
 msgstr "S'afegirá el repo present a"
 
-#: ../src/repoman-cli.py:33
+#: ../src/repoman-cli.py:34
 msgid "Continue?"
 msgstr "Continuar?"
 
-#: ../src/repoman-cli.py:34
+#: ../src/repoman-cli.py:35
 msgid "disable the"
 msgstr "desactivar el"
 
-#: ../src/repoman-cli.py:35
+#: ../src/repoman-cli.py:36
 msgid "edit the"
 msgstr "editar el"
 
-#: ../src/repoman-cli.py:36
+#: ../src/repoman-cli.py:37
 msgid "enable the"
 msgstr "activar el"
 
-#: ../src/repoman-cli.py:37
+#: ../src/repoman-cli.py:38
 msgid "Can't open. Ensure repo"
 msgstr "Error al obrir. Comproveu que el repo"
 
-#: ../src/repoman-cli.py:38
+#: ../src/repoman-cli.py:39
 msgid "is enabled"
 msgstr "està activat"
 
-#: ../src/repoman-cli.py:39 ../src/stacks/systemRepos.py:19
+#: ../src/repoman-cli.py:40 ../src/stacks/systemRepos.py:19
 msgid "Repositories changed. Do you want to update info?"
 msgstr "Actualitzar els repositoris?"
 
-#: ../src/repoman-cli.py:40
+#: ../src/repoman-cli.py:41
 msgid "You're going to"
 msgstr "Es va a"
 
-#: ../src/repoman-cli.py:41
+#: ../src/repoman-cli.py:42
 msgid "Y/N"
 msgstr "S/N"
 
-#: ../src/repoman-cli.py:42
+#: ../src/repoman-cli.py:43
 msgid "Description:"
 msgstr "Descripció:"
 
-#: ../src/repoman-cli.py:43
+#: ../src/repoman-cli.py:44
 msgid "Name for the repository"
 msgstr "Nom del repositori"
 
-#: ../src/repoman-cli.py:44
+#: ../src/repoman-cli.py:45
 msgid "repository"
 msgstr "repositori"
 
-#: ../src/repoman-cli.py:45 ../src/stacks/addRepo.py:25
+#: ../src/repoman-cli.py:46 ../src/stacks/addRepo.py:25
 msgid "Signed by"
 msgstr "Signat per"
 
-#: ../src/repoman-cli.py:46
+#: ../src/repoman-cli.py:47
 msgid "Path or url to sign file (.asc or .gpg) or pgp raw sign"
 msgstr ""
 "Ruta o url al fitxer de signatura (.asc o .gpg) o cadena amb la signatura"
 
-#: ../src/repoman-cli.py:47
+#: ../src/repoman-cli.py:48
 msgid "Ok"
 msgstr "Val"
 
-#: ../src/repoman-cli.py:48
+#: ../src/repoman-cli.py:49
 msgid "Unavailable"
 msgstr "No disponible"
 
-#: ../src/repoman-cli.py:321
+#: ../src/repoman-cli.py:341
 #, python-format
 msgid "Usage: %s ACTION"
 msgstr "Ús: %s ACCIÓ"
 
-#: ../src/repoman-cli.py:322
+#: ../src/repoman-cli.py:342
 msgid ""
 "\n"
 "RepoMan"
@@ -163,7 +167,7 @@ msgstr ""
 "\n"
 "RepoMan"
 
-#: ../src/repoman-cli.py:323
+#: ../src/repoman-cli.py:343
 msgid ""
 "\n"
 "Parameters:"
@@ -254,10 +258,20 @@ msgstr ""
 "(pinning desactivat)"
 
 #: ../src/stacks/systemTools.py:19
+msgid ""
+"All repositories will be disabled.\n"
+"Lliurex repositories will be enabled\n"
+"Pinning will be restablished."
+msgstr ""
+"Es desactivaran tots els repositoris.\n"
+"S'activaran els repositoris de LliureX.\n"
+"Es restableirà el pinning del sistema."
+
+#: ../src/stacks/systemTools.py:20
 msgid "Other software related tools"
 msgstr "Altres eines relacionades"
 
-#: ../src/stacks/systemTools.py:20
+#: ../src/stacks/systemTools.py:21
 msgid "Restore default repositories"
 msgstr "Restaurar repositoris"
 
