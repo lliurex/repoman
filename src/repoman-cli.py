@@ -28,6 +28,7 @@ i18n={
 	"HLP_LISTE":_("List enabled repositories"),
 	"HLP_LISTD":_("List disabled repositories"),
 	"HLP_OPTIONS":_("(name|index)"),
+	"HLP_UBUNTU":_("Query state of Ubuntu repositories"),
 	"HLP_SHOW":_("Show detailed information"),
 	"HLP_YES":_("Assume \"yes\" to all questions"),
 	"MSG_ADD":_("You're going to add the repo present at"),
@@ -60,13 +61,13 @@ parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL'}
 			'edit':{'args':1,'long':'edit','desc':i18n.get("HLP_EDIT"),'usage':i18n.get("HLP_OPTIONS")},
 			'e':{'args':1,'long':'enable','desc':i18n.get("HLP_ENABLE"),'usage':i18n.get("HLP_OPTIONS")},
 #			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
-#			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
+			'u':{'args':0,'long':'ubuntu','desc':i18n.get("HLP_UBUNTU"),'usage':''},
 #			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
 #			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
 #			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
 			'l':{'args':0,'long':'list','desc':i18n.get("HLP_LIST"),'usage':''},
 			's':{'args':0,'long':'show','desc':i18n.get("HLP_SHOW"),'usage':''},
-#			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
+			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
 			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':i18n.get("HLP_YES")},
 #			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
 			'h':{'args':0,'long':'help','desc':i18n.get("HLP_HLP"),'usage':''}
@@ -214,8 +215,7 @@ def updateRepos():
 	return(resp)
 #def updateRepos():
 
-def _formatOutput(repomanRepos,enabled,disabled,show=False):
-	output=[]
+def _formatOutput(repomanRepos,onlyEnabled,onlyDisabled,show=False):
 	if len(repomanRepos)>0:
 		output=[]
 		sortKeys=list(repomanRepos.keys())
@@ -228,9 +228,9 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 				if releasedata.get('enabled',False)==False:
 					printcolor=color.RED
 					msgEnabled=i18n.get("DISABLED")
-					if enabled==True:
+					if onlyEnabled==True:
 						sw_omit=True
-				elif disabled==True:
+				elif onlyDisabled==True:
 					sw_omit=True
 				if releasedata.get("available",True)==False:
 					printcolor=color.DARKCYAN
@@ -268,6 +268,17 @@ def listEnabledRepos():
 def listDisabledRepos():
 	listRepos(disabled=True)
 #def listDisabledRepos
+
+def queryUbuntuRepos():
+	sourcesRepo=repoman.readSourcesFile(repoman.sourcesFile)
+	msgEnabled=i18n.get("DISABLED")
+	ret=1
+	if "http://archive.ubuntu.com/ubuntu/" in sourcesRepo.keys():
+		msgEnabled=i18n.get("ENABLED")
+		ret=0
+	print(msgEnabled)
+	sys.exit(ret)
+#def queryUbuntuRepos
 
 def show_help():
 	print(_("Usage: %s ACTION")%(sys.argv[0]))
@@ -332,6 +343,10 @@ elif 'e' in action.keys():
 #		updateRepos()
 elif 'l' in action.keys():
 	listRepos()
+elif 'le' in action.keys():
+	listEnabledRepos()
+elif 'u' in action.keys():
+	queryUbuntuRepos()
 elif 's' in action.keys():
 	listRepos(show=True)
 
