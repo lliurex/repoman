@@ -1,3 +1,10 @@
+repoman (3.4.2-0lliurex25) noble; urgency=medium
+
+  * Re-enable show and list enabled options
+  * Add query for get ubuntu status (return value 0/1)
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 09 Mar 2026 10:23:24 +0100
+
 repoman (3.4.1-1lliurex25) noble; urgency=medium
 
   * Fix exit value in helper
