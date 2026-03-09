@@ -1,3 +1,10 @@
+repoman (3.3.3-0llx23) jammy; urgency=medium
+
+  * Reenable listEnabled option
+  * Add option for querying ubuntu repo status
+
+ -- Juanma1980 <juanma1980@gmail.com>  Mon, 09 Mar 2026 12:04:43 +0100
+
 repoman (3.3.2-1llx23) jammy; urgency=medium
 
   * Fix wiki url
