@@ -28,6 +28,7 @@ i18n={
 	"HLP_LISTD":_("List disabled repositories"),
 	"HLP_OPTIONS":_("(name|index)"),
 	"HLP_SHOW":_("Show detailed information"),
+	"HLP_UBUNTU":_("Show if ubuntu repositories are enabled"),
 	"HLP_YES":_("Assume \"yes\" to all questions"),
 	"MSG_ADD":_("You're going to add the repo present at"),
 	"MSG_CONTINUE":_("Continue?"),
@@ -63,7 +64,7 @@ parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL [
 			'edit':{'args':1,'long':'edit','desc':i18n.get("HLP_EDIT"),'usage':i18n.get("HLP_OPTIONS")},
 			'e':{'args':1,'long':'enable','desc':i18n.get("HLP_ENABLE"),'usage':i18n.get("HLP_OPTIONS")},
 #			'p':{'args':1,'long':'password','desc':_("User's password"),'usage':'=PASSWORD'},
-#			'u':{'args':1,'long':'username','desc':_("Username"),'usage':'=USERNAME'},
+			'u':{'args':0,'long':'ubuntu','desc':i18n.get("HLP_UBUNTU"),'usage':''},
 #			's':{'args':1,'long':'server','desc':_("Server url"),'usage':'=HOSTNAME/HOST_IP'},
 #			'n':{'args':1,'long':'name','desc':_("Name for the repository"),'usage':'=NAME'},
 #			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
@@ -324,6 +325,18 @@ def listDisabledRepos():
 	listRepos(disabled=True)
 #def listDisabledRepos
 
+def queryUbuntuRepos():
+	repos=manager.getRepos(includeAll=False)
+	ubuntuKey="http://archive.ubuntu.com/ubuntu/"
+	msgEnabled=i18n.get("ENABLED")
+	ret=0
+	if repos.get(ubuntuKey,{}).get("Enabled",False)==False:
+		msgEnabled=i18n.get("DISABLED")
+		ret=1
+	print(msgEnabled)
+	sys.exit(ret)
+#def queryUbuntuRepos
+
 def show_help():
 	print(_("Usage: %s ACTION")%(sys.argv[0]))
 	print(_("\nRepoMan"))
@@ -359,7 +372,7 @@ for parm in parms:
 		if parms_dict[parm_key]['args'] and parm.strip():
 			action.update({parm_key:parm.strip()})
 		elif parms_dict[parm_key]['args']:
-			msg="{} {}".format(i18n.get("BARDARGVALUE"),parm_array[0])
+			msg="{} {}".format(i18n.get("BADARGVALUE"),parm_array[0])
 		else:
 			action.update({parm_key:parm.strip()})
 	else:
@@ -391,4 +404,6 @@ elif 'le' in action.keys():
 	listEnabledRepos()
 elif 's' in action.keys():
 	listRepos(show=True)
+elif 'u' in action.keys():
+	queryUbuntuRepos()
 
