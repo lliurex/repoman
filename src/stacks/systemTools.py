@@ -18,8 +18,8 @@ i18n={"BTNUP":_("Update repositories"),
 	"MSG_RESET":_("All repositories will be disabled.\nLliurex repositories will be enabled\nPinning will be restablished."),
 	"MSG_UNPIN":_("Lliurex pinning DISABLED"),
 	"MSG_UNDON":_("This action can't be undone"),
-	"RESET":_("Restore default repositories")
-	"TOOLTIP":_("Other software related tools"),
+	"RESET":_("Restore default repositories"),
+	"TOOLTIP":_("Other software related tools")
 	}
 
 class systemTools(QStackedWindowItem):
