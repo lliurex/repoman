@@ -69,7 +69,7 @@ parms_dict={'a':{'args':1,'long':'add','desc':i18n.get("HLP_ADD"),'usage':'URL [
 #			'i':{'args':1,'long':'info','desc':_("Informative description of the repository"),'usage':'=INFO'},
 			'l':{'args':0,'long':'list','desc':i18n.get("HLP_LIST"),'usage':''},
 			's':{'args':0,'long':'show','desc':i18n.get("HLP_SHOW"),'usage':''},
-#			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
+			'le':{'args':0,'long':'list_enabled','desc':i18n.get("HLP_LISTE"),'usage':''},
 			'y':{'args':0,'long':'yes','desc':i18n.get("HLP_YES"),'usage':''},
 #			'ld':{'args':0,'long':'list_disabled','desc':_("List disabled repositories"),'usage':''},
 			'h':{'args':0,'long':'help','desc':i18n.get("HLP_HLP"),'usage':''}
@@ -240,7 +240,7 @@ def updateRepos():
 	exit(0)
 #def updateRepos():
 
-def _formatOutput(repomanRepos,enabled,disabled,show=False):
+def _formatOutput(repomanRepos,onlyEnabled,onlyDisabled,show=False):
 	output=[]
 	if len(repomanRepos)>0:
 		output=[]
@@ -251,7 +251,9 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 					enabled=False
 				else:
 					enabled=True
-			if enabled==False:
+			if enabled==False and onlyEnabled==True:
+				continue
+			elif enabled==False:
 				printcolor=color.RED
 				msgEnabled=i18n.get("DISABLED")
 			else:
@@ -264,6 +266,11 @@ def _formatOutput(repomanRepos,enabled,disabled,show=False):
 			file=urlData.get("file")
 			desc=urlData.get("desc","")
 			output.append("{0}: {1} {2}{3}{4}".format(name.split(".list")[0].split(".sources")[0],desc,printcolor,msgEnabled,color.END))
+			if show==True:
+				output.append("\tSource: {}".format(urlData.get("file")))
+				output.append("\tUri: {}".format(urlData.get("URIs")))
+				output.append("\tSuites: {}".format(urlData.get("Suites")))
+				output.append("\tComponents: {}".format(urlData.get("Components")))
 
 		#sortKeys=list(repomanRepos.keys())
 		#for sourcesUrl in sortKeys:
@@ -380,6 +387,8 @@ elif 'e' in action.keys():
 #		updateRepos()
 elif 'l' in action.keys():
 	listRepos()
+elif 'le' in action.keys():
+	listEnabledRepos()
 elif 's' in action.keys():
 	listRepos(show=True)
 
