@@ -1,3 +1,9 @@
+repoman (3.3.4) jammy; urgency=medium
+
+  * Enable preschool component for lliurex main
+
+ -- Juanma1980 <juanma1980@gmail.com>  Wed, 09 Sep 2026 09:26:26 +0200
+
 repoman (3.3.3-0llx23) jammy; urgency=medium
 
   * Reenable listEnabled option
