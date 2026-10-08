@@ -1,3 +1,9 @@
+repoman (3.4.3) noble; urgency=medium
+
+  * Update url repo to gva.es
+
+ -- Juanma1980 <juanma1980@gmail.com>  Thu, 08 Oct 2026 14:24:42 +0200
+
 repoman (3.4.2-0lliurex25) noble; urgency=medium
 
   * Re-enable show and list enabled options
