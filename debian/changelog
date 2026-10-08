@@ -1,3 +1,9 @@
+repoman (3.3.5) jammy; urgency=medium
+
+  * replace lliurex.net with lliurex.gva.es
+
+ -- Juanma1980 <juanma1980@gmail.com>  Thu, 08 Oct 2026 13:59:11 +0200
+
 repoman (3.3.4) jammy; urgency=medium
 
   * Enable preschool component for lliurex main
