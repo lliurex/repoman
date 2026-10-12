@@ -5,9 +5,9 @@
         "disabled_repos": [],
         "enabled": "True",
         "repos": [
-            "http://lliurex.gva.es/noble noble-security main restricted universe multiverse",
-            "http://lliurex.gva.es/noble noble-updates main restricted universe multiverse",
-            "http://lliurex.gva.es/noble noble main restricted universe multiverse preschool"
+            "http://archive.ubuntu.com/ubuntu noble-security main restricted universe multiverse",
+            "http://archive.ubuntu.com/ubuntu noble-updates main restricted universe multiverse",
+            "http://archive.ubuntu.com/ubuntu noble main restricted universe multiverse"
         ]
     }
 }
